@@ -69,7 +69,7 @@ export function SignUpPage() {
         setErrorMessage('');
         try {
             console.log("Submitting data:")
-            await axios.post("http://localhost:3000/api/auth/signup", {
+            await axios.post("/api/auth/signup", {
                 name: fullName,
                 email: email,
                 password: password

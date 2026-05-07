@@ -15,7 +15,7 @@ export function FavoriteHostels({ favoriteHostel, loadFavoriteHostel }) {
     const token = localStorage.getItem("token");
 
     const response = await axios.delete(
-      `http://localhost:3000/api/favorites/${hostelId}`,
+      `/api/favorites/${hostelId}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

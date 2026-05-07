@@ -1,7 +1,4 @@
 
-
-
-
 export function ProjectsCards({ project }){
 
 

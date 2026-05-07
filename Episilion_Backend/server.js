@@ -177,7 +177,7 @@ app.use("/api/favorites", require("./routes/favoritesRoutes.js"));
 
 app.get("/api/teamMembers", (req, res) => {
   try {
-    const teamMembers = readData("team_Members_data.json");
+    const teamMembers = readData("./data/team_Members_data.json");
     //console.log("Team Members data sent:", teamMembers);
     res.json({ success: true, teamMembers });
   } catch (err) {
@@ -190,7 +190,7 @@ app.get("/api/teamMembers", (req, res) => {
 // GET /api/moreProjects  → return only the moreProjects array
 app.get("/api/moreProjects", (req, res) => {
   try {
-    const moreProjects = readData("More_From_Us.json");
+    const moreProjects = readData("./data/More_From_Us.json");
     res.json({ success: true, moreProjects });
   } catch (err) {
     res
@@ -217,6 +217,10 @@ app.listen(PORT, () => {
   console.log(`   GET /api/reviews/:hostelId`);
   console.log(`   POST /api/signup`);
   console.log(`   POST /api/login`);
+  console.log(`   POST /api/intent/search`);
+  console.log(`   POST /api/favorites`);
+  console.log(`   GET /api/favorites`);
+  console.log(`   DELETE /api/favorites/:hostelId`);
 });
 
 // // GET /api/users  → return only the users array

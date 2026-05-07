@@ -8,7 +8,7 @@ import { SiteFooter } from "../SiteFooter/SiteFooter";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import {FavoriteHostels } from './FavoriteHostels'
-import { useNavigate } from "react-router-dom";
+//import { useNavigate } from "react-router-dom";
 
 export function UserProfilePage({ isLoggedIn }) {
   const [favoriteHostelResponse, setFavoriteHostelResponse] = useState([])
@@ -26,7 +26,7 @@ export function UserProfilePage({ isLoggedIn }) {
   }
 
   const loadFavoriteHostel = async () => {
-    const response = await axios.get("http://localhost:3000/api/favorites/", {
+    const response = await axios.get("/api/favorites/", {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },

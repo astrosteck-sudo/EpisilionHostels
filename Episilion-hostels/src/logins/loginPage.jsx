@@ -45,14 +45,14 @@ export function LoginPage({ setIsLoggedIn }) {
 
 
 
-    //const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3000";
+    //const API_URL = process.env.REACT_APP_API_URL || "";
 
     async function handleLogin(e) {
         e.preventDefault();
         setErrorMessage('');
 
         try {
-            const res = await axios.post(`http://localhost:3000/api/auth/login`, {
+            const res = await axios.post(`/api/auth/login`, {
                 email,
                 password
 
