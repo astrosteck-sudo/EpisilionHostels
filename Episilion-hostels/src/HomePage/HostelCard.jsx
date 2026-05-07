@@ -6,8 +6,8 @@ import './HostelCard.css'
 export function HostelCard({ hostel }) {
 
     //THIS IS THE URL FOR THE BACKEND, THIS IS USED TO ACCESS THE IMAGES IN THE PUBLIC FOLDER OF THE BACKEND
-    const url = "http://localhost:3000";
-    //const url = 'https://episilion-backend-2lt0.onrender.com'
+    //const url = "http://localhost:3000"
+    const url = 'https://episilion-backend-2lt0.onrender.com'
 
     const navigate = useNavigate();
     // function showHostelId(parameter){

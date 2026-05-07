@@ -16,7 +16,6 @@ export function AboutUsPage() {
     const [teamData, setTeamData] = useState([]);
 
     const loadTeamCards = async () => {
-        //const reposnse = await axios.get('https://episilion-backend-2lt0.onrender.com/api/teamMembers');
         const reposnse = await axios.get('/api/teamMembers');
         setTeamData(reposnse.data.teamMembers);
     }

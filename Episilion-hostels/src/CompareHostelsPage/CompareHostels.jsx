@@ -14,8 +14,8 @@ import { getDirectionsOnMap } from '../UTILS/mapFunctions.js';
 export function CompareHostels({ originalHostelCardData }) {
     const params = new URLSearchParams(window.location.search);
     const hostelId = params.get("hostelId");
-    //const url = 'https://episilion-backend-2lt0.onrender.com';
-    const url = 'http://localhost:3000'
+    const url = 'https://episilion-backend-2lt0.onrender.com';
+    //const url = 'http://localhost:3000'
     const [hostelNumber, setHostelNumber] = useState(hostelId)//THIS CONTOLS THE HOSTEL THAT SHOWS UP WHEN THE USER CLICKES THE ARROW KEYS
     const [controlsListIndex, setControlListIndex] = useState(0)
     //THIS CONTROL CODE WILL MAKE SURE THE controlsListIndex WILL ALWAYS UPDATE WHEN THE originalHostelCardData CHANGES

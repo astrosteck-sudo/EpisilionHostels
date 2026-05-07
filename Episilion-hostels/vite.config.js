@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "http://localhost:3000", // your backend
+        target: "https://episilion-backend-2lt0.onrender.com", // your backend
         changeOrigin: true,
         secure: false,
       },
