@@ -8,22 +8,26 @@ import { SiteFooter } from "../SiteFooter/SiteFooter";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import {FavoriteHostels } from './FavoriteHostels'
+import { useNavigate } from "react-router-dom";
 
 export function UserProfilePage({ isLoggedIn }) {
   const [favoriteHostelResponse, setFavoriteHostelResponse] = useState([])
   //THIS IS TO EXTRACT THE USER IMFORMATION FROM THE TOKEN
   const storedUser = localStorage.getItem("user");
   const user = storedUser ? JSON.parse(storedUser) : null;
+  const navigate = useNavigate();
   useEffect(() => {
     loadFavoriteHostel();
   }, []);
 
   if (!isLoggedIn) {
-    return (
-      <div className="user-profile-container">
-        <p>Please log in to view your profile.</p>
-      </div>
-    );
+    console.log("User is not logged in. Please log in to view the profile page.");
+    // return (
+    //   <div className="user-profile-container">
+    //     <p>Please log in to view your profile.</p>
+    //   </div>
+    // );
+    navigate("/login");
   }
 
   const loadFavoriteHostel = async () => {
@@ -63,7 +67,7 @@ export function UserProfilePage({ isLoggedIn }) {
       <div className="user-favorites-container">
         <div className={`reviews-and-ratings-display `}>
           {favoriteHostelResponse.map((favoriteHostel) => (
-            <FavoriteHostels key={favoriteHostel.hostel_id} favoriteHostel={favoriteHostel}></FavoriteHostels>
+            <FavoriteHostels key={favoriteHostel.hostel_id} favoriteHostel={favoriteHostel} loadFavoriteHostel={loadFavoriteHostel}></FavoriteHostels>
           ))}
         </div>
       </div>

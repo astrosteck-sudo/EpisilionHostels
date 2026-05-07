@@ -76,12 +76,36 @@ ORDER BY f.created_at DESC;
   // Return the array of favorite hostels
   return rows;
 
-   // Debug log to check the fetched data
+  // Debug log to check the fetched data
+};
+
+const removeFavoriteService = async (userId, hostelId) => {
+  const pool = db.promise();
+
+  // 1️⃣ Fetch the favorite before deleting
+  const [favorite] = await pool.query(
+    "SELECT * FROM favorites WHERE user_id = ? AND hostel_id = ?",
+    [userId, hostelId],
+  );
+
+  if (favorite.length === 0) {
+    throw new Error("Favorite not found");
+  }
+
+  // 2️⃣ Delete the favorite
+  await pool.query(
+    "DELETE FROM favorites WHERE user_id = ? AND hostel_id = ?",
+    [userId, hostelId],
+  );
+
+  // 3️⃣ Return the previously fetched favorite
+  return favorite[0];
 };
 
 module.exports = {
   addFavoriteService,
   getFavoritesService,
+  removeFavoriteService,
 };
 
 // module.exports = {

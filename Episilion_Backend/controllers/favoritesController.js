@@ -1,4 +1,4 @@
-const { addFavoriteService, getFavoritesService } = require("../services/favoritesService");
+const { addFavoriteService, getFavoritesService, removeFavoriteService } = require("../services/favoritesService");
 
 // Controller to handle adding a hostel to favorites
 const addFavoriteController = async (req, res) => {
@@ -36,7 +36,7 @@ const getFavoritesController = async (req, res) => {
 
     // Call the service to fetch all favorites for this user
     const favorites = await getFavoritesService(userId);
-    console.log("Feteched favorites:", favorites); // Debug log to check the fetched data
+    // console.log("Feteched favorites:", favorites); // Debug log to check the fetched data
     // Respond with success, count of favorites, and the data
     return res.status(200).json({
       success: true,
@@ -52,8 +52,46 @@ const getFavoritesController = async (req, res) => {
   }
 };
 
+// Controller to handle removing a hostel from favorites
+const removeFavoriteController = async (req, res) => {
+  try {
+
+    const userId = req.user.user_id;
+
+    const { hostelId } = req.params;
+    console.log("Stating")
+    console.log("Removing favorite - User ID:", userId, "Hostel ID:", hostelId); // Debug log to check the parameters
+
+    const removedFavorite = await removeFavoriteService(
+      userId,
+      hostelId
+    );
+
+    if (!removedFavorite) {
+      return res.status(404).json({
+        success: false,
+        message: "Favorite not found",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Hostel removed from favorites",
+    });
+
+  } catch (error) {
+
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+
+  }
+};
+
 // Export both controllers so they can be used in routes
 module.exports = {
   addFavoriteController,
   getFavoritesController,
+  removeFavoriteController,
 };
