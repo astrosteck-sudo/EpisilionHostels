@@ -7,6 +7,7 @@ import dayjs from "dayjs";
 import { SiteFooter } from "../SiteFooter/SiteFooter";
 import  axios  from "axios";
 import { useEffect } from "react";
+import pic from "../assets/hostel_image_2.jpg"
 
 export function UserProfilePage({ isLoggedIn }) {
   //THIS IS TO EXTRACT THE USER IMFORMATION FROM THE TOKEN
@@ -58,6 +59,29 @@ export function UserProfilePage({ isLoggedIn }) {
             </span>
           </div>
         </div>
+      </div>
+      
+      <div className="user-favorites-container">
+        <div className="user-favorite-hostel">
+          <img src={pic} alt="Profile" className="user-favorite-hostel-image" />
+          <div className="user-favorite-hostel-info">
+            <p className="user-favorite-hostel-name">King Hostels</p>
+            <p className="user-favorite-hostel-distance">15.1 km from campus</p>
+            <div className="user-favorite-hostel-amenities">
+              <p>Wifi</p>
+              <p>FreeWater</p>
+              <p>FreeLaundry</p>
+            </div>
+          </div>
+          <div className="user-favorite-hostel-price-and-button">
+            <p className="user-favorite-hostel-price">$800/sem</p>
+            <button className="user-favorite-hostel-button">View</button>
+            <p className="user-favorite-hostel-remove">Remove</p>
+          </div>
+        </div>
+        <div></div>
+        <div></div>
+        <div></div>
       </div>
 
       <SiteFooter></SiteFooter>
