@@ -58,7 +58,7 @@ export function UserProfilePage({ isLoggedIn }) {
         </div>
       </div>
 
-      <div className="user-favorites-title">Your Favorite Hostels(3)</div>
+      <div className="user-favorites-title">Your Favorite Hostels ({favoriteHostelResponse.length})</div>
 
       <div className="user-favorites-container">
         <div className={`reviews-and-ratings-display `}>
