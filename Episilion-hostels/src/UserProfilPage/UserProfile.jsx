@@ -15,19 +15,14 @@ export function UserProfilePage({ isLoggedIn }) {
   //THIS IS TO EXTRACT THE USER IMFORMATION FROM THE TOKEN
   const storedUser = localStorage.getItem("user");
   const user = storedUser ? JSON.parse(storedUser) : null;
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
   useEffect(() => {
     loadFavoriteHostel();
   }, []);
 
   if (!isLoggedIn) {
-    console.log("User is not logged in. Please log in to view the profile page.");
-    // return (
-    //   <div className="user-profile-container">
-    //     <p>Please log in to view your profile.</p>
-    //   </div>
-    // );
-    navigate("/login");
+    console.log("User is not logged in. Redirecting...");
+    return <p>Log in</p>
   }
 
   const loadFavoriteHostel = async () => {
