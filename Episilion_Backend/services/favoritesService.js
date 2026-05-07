@@ -33,6 +33,58 @@ const addFavoriteService = async (userId, hostelId) => {
   return favorite[0];
 };
 
+const getFavoritesService = async (userId) => {
+  // Wrap the db connection in a promise interface so we can use async/await
+  const pool = db.promise();
+
+  // Query to fetch all favorite hostels for a given user
+  // We join the favorites table with the hostels table to get hostel details
+  // Only rows where f.user_id matches the provided userId are returned
+  // Results are ordered by the time the favorite was created (newest first)
+  const [rows] = await pool.query(
+    `
+   SELECT
+    h.hostel_id,
+    h.name,
+    h.main_image,
+    l.latitude,
+    l.longitude,
+    (
+      SELECT JSON_ARRAYAGG(
+               JSON_OBJECT('id', a.id, 'name', a.amenity)
+             )
+      FROM (
+          SELECT id, amenity 
+          FROM amenities 
+          WHERE hostel_id = h.hostel_id 
+          ORDER BY amenity 
+          LIMIT 3
+      ) AS a
+    ) AS amenities,
+    p.price_min
+FROM favorites f
+JOIN hostels h ON f.hostel_id = h.hostel_id
+LEFT JOIN locations l ON h.hostel_id = l.hostel_id
+LEFT JOIN pricing p ON h.hostel_id = p.hostel_id
+WHERE f.user_id = 5
+ORDER BY f.created_at DESC;
+
+    `,
+    [userId], // Parameter binding to prevent SQL injection
+  );
+
+  console.log("starting");
+  // Return the array of favorite hostels
+  return rows;
+
+  console.log("Fetched favorites for user ID:", userId, "Favorites:", rows); // Debug log to check the fetched data
+};
+
 module.exports = {
   addFavoriteService,
+  getFavoritesService,
 };
+
+// module.exports = {
+//   addFavoriteService,
+// };

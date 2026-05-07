@@ -5,12 +5,17 @@ import CalenderImage from "../assets/icons/calendar.png";
 import { getInitials } from "../UTILS/initials";
 import dayjs from "dayjs";
 import { SiteFooter } from "../SiteFooter/SiteFooter";
+import  axios  from "axios";
+import { useEffect } from "react";
 
 export function UserProfilePage({ isLoggedIn }) {
   //THIS IS TO EXTRACT THE USER IMFORMATION FROM THE TOKEN
   const storedUser = localStorage.getItem("user");
   const user = storedUser ? JSON.parse(storedUser) : null;
-  console.log(user)
+  useEffect(() => {
+    loadFavoriteHostel();
+  }, []);
+  
 
   if (!isLoggedIn) {
     return (
@@ -19,6 +24,19 @@ export function UserProfilePage({ isLoggedIn }) {
       </div>
     );
   }
+
+  const loadFavoriteHostel = async () => {
+    const response = await axios.get("http://localhost:3000/api/favorites/", {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+    console.log("testing code", response.data);
+  };
+
+  
+  
+  
 
   return (
     <>
@@ -34,11 +52,13 @@ export function UserProfilePage({ isLoggedIn }) {
           <p className="user-profile-email">{user.email}</p>
           <div className="user-profile-joined">
             <img className="user-profile-icons" src={CalenderImage} alt="" />
-            Joined <span className="user-joined-date-span">{dayjs(user.createdAt).format("MMMM D, YYYY")}</span>
+            Joined{" "}
+            <span className="user-joined-date-span">
+              {dayjs(user.createdAt).format("MMMM D, YYYY")}
+            </span>
           </div>
         </div>
       </div>
-
 
       <SiteFooter></SiteFooter>
     </>

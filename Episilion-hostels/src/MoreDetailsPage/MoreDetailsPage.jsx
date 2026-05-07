@@ -113,7 +113,7 @@ export function MoreDetailsPage({ originalHostelCardData }) {
       setRating(0);
       setReviewTextValue("");
       setIsSubmitting(false);
-      loadingReviews(); //THIS FUNCTION WILL RELOAD THE REVIEWS TO SHOW THE NEWLY ADDED REVIEW
+      loadingReviews(hostelId); //THIS FUNCTION WILL RELOAD THE REVIEWS TO SHOW THE NEWLY ADDED REVIEW
     } catch (error) {
       if (error.response?.status === 401) {
         navigate("/login");
@@ -127,7 +127,7 @@ export function MoreDetailsPage({ originalHostelCardData }) {
   //THIS FUNCTION WILL LOAD THE REVIEWS FOR A PARTICULAR HOSTEL, THIS FUNCTION IS CALLED IN THE USEEFFECT BELOW TO LOAD THE REVIEWS WHEN THE PAGE LOADS
   async function loadingReviews(hostelId) {
     try {
-      //console.log("Loading reviews for hostel ID:", hostelId); // Debugging log to check the hostel ID being used
+      console.log("Loading reviews for hostel ID:", hostelId); // Debugging log to check the hostel ID being used
       const response = await axios.get(
         `http://localhost:3000/api/reviews/${hostelId}`,
       );
@@ -136,7 +136,7 @@ export function MoreDetailsPage({ originalHostelCardData }) {
         setReviewsResponse(["no reviews"]);
         return;
       }
-      //console.log("Reviews retrieved successfully:", response.data);
+      console.log("Reviews retrieved successfully:", response.data);
       console.log(response.data.length);
       setReviewsResponse(response.data);
     } catch (error) {
@@ -148,7 +148,7 @@ export function MoreDetailsPage({ originalHostelCardData }) {
   }
 
   useEffect(() => {
-    loadingReviews();
+    loadingReviews(hostelId);
   }, []);
 
   //THIS FUNCTION WILL TOGGLE THE DISPLAY OF THE REVIEWS WHEN THE "SHOW REVIEWS" BUTTON IS CLICKED
@@ -163,17 +163,15 @@ export function MoreDetailsPage({ originalHostelCardData }) {
 
   const addHostelToFavorite = async () => {
     try {
-        setIsFavorite(true);
+      setIsFavorite(true);
       const token = localStorage.getItem("token");
-      console.log("Token retrieved from localStorage:", token); // Debugging log to check the token value
-      //   if (!token) {
-      //     console.log("No token found, redirecting to login"); // Debugging log to check if token is missing
-      //     navigate("/login");
-      //     return;
-      //   }
-        console.log("Adding hostel to favorites with hostel ID:", hostelId); // Debugging log to check the hostel ID being used
+      if (!token) {
+        console.log("No token found, redirecting to login"); // Debugging log to check if token is missing
+        navigate("/login");
+        return;
+      }
       const response = await axios.post(
-        "http://localhost:3000/favorites/" + hostelId,
+        "http://localhost:3000/api/favorites/" + hostelId,
         {},
         {
           headers: {
@@ -181,10 +179,7 @@ export function MoreDetailsPage({ originalHostelCardData }) {
           },
         },
       );
-      console.log("Hostel added to favorites successfully:", response.data);
-      
       return response.data;
-
     } catch (error) {
       console.error(error);
       throw error;
@@ -221,13 +216,20 @@ export function MoreDetailsPage({ originalHostelCardData }) {
                         </div>
                         <div className="favorite-and-compare-buttons-container">
                           <button
-                            className="compare-button"
+                            className="favorite-button"
                             onClick={addHostelToFavorite}
                           >
-                            <img src={isFavorite ? selectedFavoriteImage : favoriteImage} alt="Favorite Button" />
+                            <img
+                              src={
+                                isFavorite
+                                  ? selectedFavoriteImage
+                                  : favoriteImage
+                              }
+                              alt="Favorite Button"
+                            />
                           </button>
                           <button
-                            className="favorite-button"
+                            className="compare-button"
                             onClick={() => comapareHostels(hostel.id)}
                           >
                             <img src={compareImage} alt="Compare Button" />

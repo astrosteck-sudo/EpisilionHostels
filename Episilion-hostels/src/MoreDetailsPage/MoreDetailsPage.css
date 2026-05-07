@@ -81,6 +81,7 @@
   padding-right: 10px;
   display: flex;
   padding-top: 5px;
+  gap: 20px;
 }
 
 .more-details-hostel-type {
@@ -103,6 +104,9 @@
   background-color: transparent;
   border-radius: 5px;
   padding: 2px;
+}
+.favorite-button{
+  border: none;
 }
 
 .compare-button:active {

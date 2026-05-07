@@ -6,7 +6,7 @@ import { useState } from "react";
 //import profilePicture from "../assets/icons/user.png";
 import downArrow from "../assets/icons/down-arrow.png";
 import userPopImage from "../assets/icons/user4.png";
-import userPopFavoriteImage from "../assets/icons/star-black-fivepointed-shape-symbol.png";
+//import userPopFavoriteImage from "../assets/icons/star-black-fivepointed-shape-symbol.png";
 import userPopLogOutImage from "../assets/icons/logout.png";
 import { getInitials } from "../UTILS/initials";
 
@@ -143,13 +143,13 @@ export function PageHeader({
                     <p>My Profile</p>
                   </Link>
                 </div>
-                <div className="user-option-pop-up-favorite-container">
+                {/* <div className="user-option-pop-up-favorite-container">
                   <img
                     src={userPopFavoriteImage}
                     className="user-option-pop-up-images"
                   />
                   <p>My Favorites</p>
-                </div>
+                </div> */}
                 <div
                   className="user-option-pop-up-logout-container logout"
                   onClick={() => setShowLogoutModal(true)}

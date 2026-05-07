@@ -169,7 +169,8 @@ app.use("/api/hostels", require("./routes/hostels"));
 app.use("/api/reviews", require("./routes/reviews"));
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/intent", require("./routes/intent"));
-app.use("/favorites", require("./routes/favoritesRoutes.js"));
+app.use("/api/favorites", require("./routes/favoritesRoutes.js"));
+
 
 // ── Routes ────────────────────────────────────────────────────────────────────
 // GET /api/teamMembers  → return only the teamMembers array
