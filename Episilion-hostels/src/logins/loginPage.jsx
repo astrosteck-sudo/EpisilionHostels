@@ -75,6 +75,7 @@ export function LoginPage({ setIsLoggedIn }) {
             navigate("/");
 
         } catch (error) {
+            console.log(error)
             setErrorMessage(error.response?.data || "Login failed");
         }
     }

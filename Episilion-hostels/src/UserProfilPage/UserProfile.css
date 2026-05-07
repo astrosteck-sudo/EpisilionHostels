@@ -49,10 +49,11 @@
 }
 
 .user-favorites-container {
-  /* border: solid red; */
-  /* padding: 20px; */
+  padding: 20px;
   width: 60%;
-  margin-top: 10px;
+  margin-top: 0px;
+  gap: 20px;
+
 }
 
 .user-favorite-hostel {
@@ -64,6 +65,7 @@
   gap: 20px;
   flex-wrap: wrap; /* This is the magic line */
   background-color: rgb(248, 246, 246);
+  margin-bottom: 15px;
 }
 .user-favorite-hostel-image {
   width: 120px;
@@ -156,5 +158,8 @@
   }
   .user-favorite-hostel-amenities {
     margin-top: 10px;
+  }
+  .user-favorite-hostel-price-and-button{
+    margin-left: auto;
   }
 }

@@ -66,18 +66,17 @@ FROM favorites f
 JOIN hostels h ON f.hostel_id = h.hostel_id
 LEFT JOIN locations l ON h.hostel_id = l.hostel_id
 LEFT JOIN pricing p ON h.hostel_id = p.hostel_id
-WHERE f.user_id = 5
+WHERE f.user_id = ?
 ORDER BY f.created_at DESC;
 
     `,
     [userId], // Parameter binding to prevent SQL injection
   );
 
-  console.log("starting");
   // Return the array of favorite hostels
   return rows;
 
-  console.log("Fetched favorites for user ID:", userId, "Favorites:", rows); // Debug log to check the fetched data
+   // Debug log to check the fetched data
 };
 
 module.exports = {

@@ -5,19 +5,18 @@ import CalenderImage from "../assets/icons/calendar.png";
 import { getInitials } from "../UTILS/initials";
 import dayjs from "dayjs";
 import { SiteFooter } from "../SiteFooter/SiteFooter";
-import  axios  from "axios";
-import { useEffect } from "react";
-import pic from "../assets/hostel_image_2.jpg"
+import axios from "axios";
+import { useEffect, useState } from "react";
+import {FavoriteHostels } from './FavoriteHostels'
 
 export function UserProfilePage({ isLoggedIn }) {
+  const [favoriteHostelResponse, setFavoriteHostelResponse] = useState([])
   //THIS IS TO EXTRACT THE USER IMFORMATION FROM THE TOKEN
   const storedUser = localStorage.getItem("user");
   const user = storedUser ? JSON.parse(storedUser) : null;
   useEffect(() => {
     loadFavoriteHostel();
   }, []);
-
-  
 
   if (!isLoggedIn) {
     return (
@@ -33,12 +32,9 @@ export function UserProfilePage({ isLoggedIn }) {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
-    console.log("testing code", response.data);
+    console.log("testing code", response.data.data);
+    setFavoriteHostelResponse(response.data.data)
   };
-
-  
-  
-  
 
   return (
     <>
@@ -63,28 +59,13 @@ export function UserProfilePage({ isLoggedIn }) {
       </div>
 
       <div className="user-favorites-title">Your Favorite Hostels(3)</div>
-      
+
       <div className="user-favorites-container">
-        <div className="user-favorite-hostel">
-          <img src={pic} alt="Profile" className="user-favorite-hostel-image" />
-          <div className="user-favorite-hostel-info">
-            <p className="user-favorite-hostel-name">King Hostels</p>
-            <p className="user-favorite-hostel-distance">15.1 km from campus</p>
-            <div className="user-favorite-hostel-amenities">
-              <p>Wifi</p>
-              <p>FreeWater</p>
-              <p>FreeLaundry</p>
-            </div>
-          </div>
-          <div className="user-favorite-hostel-price-and-button">
-            <p className="user-favorite-hostel-price">$800/sem</p>
-            <button className="user-favorite-hostel-button">View</button>
-            <p className="user-favorite-hostel-remove">Remove</p>
-          </div>
+        <div className={`reviews-and-ratings-display `}>
+          {favoriteHostelResponse.map((favoriteHostel) => (
+            <FavoriteHostels key={favoriteHostel.hostel_id} favoriteHostel={favoriteHostel}></FavoriteHostels>
+          ))}
         </div>
-        <div></div>
-        <div></div>
-        <div></div>
       </div>
 
       <SiteFooter></SiteFooter>
