@@ -1,3 +1,4 @@
+
 .user-profile-container {
   height: 10%;
   display: flex;
@@ -49,10 +50,9 @@
 
 .user-favorites-container {
   /* border: solid red; */
-  padding: 20px;
+  /* padding: 20px; */
   width: 60%;
-  margin: auto;
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
 .user-favorite-hostel {
@@ -120,8 +120,8 @@
   width: 100%;
 }
 .user-favorite-hostel-remove {
-  color: rgb(182, 182, 182);
-  font-weight: lighter;
+  color: rgb(82, 78, 78);
+  font-weight: bold;
   font-size: clamp(13px, 2vw, 16px);
   cursor: pointer;
   width: 100%;
@@ -130,6 +130,14 @@
 
 .user-favorite-hostel-info {
   flex-grow: 1;
+}
+
+.user-favorites-title{
+    font-size: clamp(13px, 3vw, 15px);
+    font-weight: bolder;
+    margin-top: 20px;
+    margin-left: 30px;
+    color: #30302f;
 }
 
 @media only screen and (max-width: 992px) {

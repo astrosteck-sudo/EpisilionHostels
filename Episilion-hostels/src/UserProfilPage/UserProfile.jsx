@@ -16,6 +16,7 @@ export function UserProfilePage({ isLoggedIn }) {
   useEffect(() => {
     loadFavoriteHostel();
   }, []);
+
   
 
   if (!isLoggedIn) {
@@ -60,6 +61,8 @@ export function UserProfilePage({ isLoggedIn }) {
           </div>
         </div>
       </div>
+
+      <div className="user-favorites-title">Your Favorite Hostels(3)</div>
       
       <div className="user-favorites-container">
         <div className="user-favorite-hostel">
