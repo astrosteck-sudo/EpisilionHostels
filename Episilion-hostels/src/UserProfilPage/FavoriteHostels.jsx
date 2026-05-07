@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export function FavoriteHostels({ favoriteHostel, loadFavoriteHostel }) {
-  const url = "http://localhost:3000";
+  const url = "https://episilion-backend-2lt0.onrender.com";
   const navigate = useNavigate();
   console.log(favoriteHostel.amenities[0].name);
 
