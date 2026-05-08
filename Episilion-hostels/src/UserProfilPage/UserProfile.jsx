@@ -26,7 +26,7 @@ export function UserProfilePage({ isLoggedIn }) {
   }
 
   const loadFavoriteHostel = async () => {
-    const response = await axios.get("/api/favorites/", {
+    const response = await axios.get("https://episilion-backend-2lt0.onrender.com/api/favorites/", {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
