@@ -1,4 +1,3 @@
-
 .user-profile-container {
   height: 10%;
   display: flex;
@@ -53,11 +52,10 @@
   width: 60%;
   margin-top: 0px;
   gap: 20px;
-
 }
 
 .user-favorite-hostel {
-  border: solid rgb(0, 0, 0) 0.5px;
+  /* border: solid rgb(0, 0, 0) 0.5px; */
   border-radius: 15px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding: 15px;
@@ -103,8 +101,6 @@
   font-weight: bolder;
 }
 
-
-
 .user-favorite-hostel-price {
   font-size: clamp(15px, 2vw, 20px);
   font-weight: bolder;
@@ -128,21 +124,26 @@
   cursor: pointer;
   width: 100%;
   text-align: right;
+  padding-right: 10px;
+  border: solid black 0.2px;
+  border-radius: 5px;
+  margin-top: 10px;
 }
 .user-favorite-hostel-remove:active {
-  color: black;
+  color: white;
+  background-color: rgb(82, 78, 78);
 }
 
 .user-favorite-hostel-info {
   flex-grow: 1;
 }
 
-.user-favorites-title{
-    font-size: clamp(13px, 3vw, 15px);
-    font-weight: bolder;
-    margin-top: 20px;
-    margin-left: 30px;
-    color: #30302f;
+.user-favorites-title {
+  font-size: clamp(13px, 3vw, 15px);
+  font-weight: bolder;
+  margin-top: 20px;
+  margin-left: 30px;
+  color: #30302f;
 }
 
 @media only screen and (max-width: 992px) {
@@ -162,7 +163,28 @@
   .user-favorite-hostel-amenities {
     margin-top: 10px;
   }
-  .user-favorite-hostel-price-and-button{
+  .user-favorite-hostel-price-and-button {
     margin-left: auto;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .user-favorite-hostel-info {
+    max-width: 60%;
+  }
+
+  .user-favorites-container {
+    padding: 0px;
+  }
+  .user-favorite-hostel {
+    padding: 3px;
+    gap: 3px;
+  }
+  .user-favorite-hostel-amenities p{
+    font-size: clamp(9px, 2vw, 10px);
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 1px;
+    padding-bottom: 1px;
   }
 }
