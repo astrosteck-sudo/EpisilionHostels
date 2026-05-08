@@ -39,7 +39,7 @@ export function FavoriteHostels({ favoriteHostel, loadFavoriteHostel }) {
         <p className="user-favorite-hostel-distance">15.1 km from campus</p>
         <div className="user-favorite-hostel-amenities">
           {favoriteHostel.amenities.map((amenity) => {
-            return <p>{amenity.name}</p>;
+            return <p key={amenity.name}>{amenity.name}</p>;
           })}
         </div>
       </div>
