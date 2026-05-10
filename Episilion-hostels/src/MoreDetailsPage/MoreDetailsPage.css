@@ -12,7 +12,11 @@
   overflow: hidden;
   border-radius: 7px;
   cursor: pointer;
-
+}
+@media only screen and (min-width: 1200px){
+  .hostel-image-card{
+    min-height: 400px;
+  }
 }
 
 .hostel-image-card img {

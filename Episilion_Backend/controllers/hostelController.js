@@ -95,7 +95,6 @@ exports.getHostels = async (req, res) => {
 
     res.json(fullData);
 
-    console.log(fullData);
 
   } catch (err) {
     console.log(err);

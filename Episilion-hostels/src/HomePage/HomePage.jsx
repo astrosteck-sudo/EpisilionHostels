@@ -339,7 +339,7 @@ export function HomePage({ hostelsCardData, sethostelsCardData, originalHostelCa
             setMixedActive(false)
             setAllActive(false)
             const filteredHostels = originalHostelCardData.filter(
-                (hostel) => hostel.pricing.priceMin <= 1000
+                (hostel) => hostel.pricing.priceMin <= 2500
             )
             if (filteredHostels.length === 0) {
                 sethostelsCardData([])//THIS WILL EMPTY ANY VALUE IN hostelsCardData
@@ -467,7 +467,7 @@ export function HomePage({ hostelsCardData, sethostelsCardData, originalHostelCa
                 <div className={`filter-buttons ${girlsActive ? 'active' : 'inactive'}`} onClick={() => handleFilterSelection('girlsActive')} >Girls</div>
                 <div className={`filter-buttons ${boysActive ? 'active' : 'inactive'}`} onClick={() => handleFilterSelection('boysActive')} >Boys</div>
                 <div className={`filter-buttons ${mixedActive ? 'active' : 'inactive'}`} onClick={() => handleFilterSelection('mixedActive')} >Mixed</div>
-                <div className={`filter-buttons ${underActive ? 'active' : 'inactive'}`} onClick={() => handleFilterSelection('underActive')} >{'<'}$1000</div>
+                <div className={`filter-buttons ${underActive ? 'active' : 'inactive'}`} onClick={() => handleFilterSelection('underActive')} >{'<'}$2500</div>
             </div>
 
             <section className="hostels-section">

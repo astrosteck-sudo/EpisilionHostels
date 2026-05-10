@@ -33,6 +33,7 @@ const getFavoritesController = async (req, res) => {
     // Extract userId from the decoded JWT payload
     // ⚠️ Make sure this matches your JWT field name (id vs user_id)
     const userId = req.user.user_id;
+    console.log(userId)
 
     // Call the service to fetch all favorites for this user
     const favorites = await getFavoritesService(userId);
@@ -43,6 +44,7 @@ const getFavoritesController = async (req, res) => {
       count: favorites.length,
       data: favorites,
     });
+    console.log(favorites)
   } catch (error) {
     // Handle errors (e.g., DB query failure)
     return res.status(500).json({

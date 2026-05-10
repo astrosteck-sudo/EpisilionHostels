@@ -197,7 +197,7 @@ export function MoreDetailsPage({ originalHostelCardData }) {
         <div className="more-details-container">
           {originalHostelCardData.map((hostel) => {
             if (hostel.id === hostelId) {
-              console.log('Hostel.id', hostel.id, "hostelId", hostelId)
+              console.log("Hostel.id", hostel.id, "hostelId", hostelId);
               return (
                 <>
                   <div className="hostel-image-card">
@@ -393,10 +393,14 @@ export function MoreDetailsPage({ originalHostelCardData }) {
                           className="contact-item js-email-address-link"
                           href={`https://${hostel.contact.email}`}
                         >
-                          <img src={Email} alt="Email"></img>
-                          <p className="font-paragraph js-email-address">
-                            {hostel.contact.email}
-                          </p>
+                          {hostel.contact.email && (
+                            <>
+                              <img src={Email} alt="Email"></img>
+                              <p className="font-paragraph js-email-address">
+                                {hostel.contact.email}
+                              </p>
+                            </>
+                          )}
                         </a>
                         <div className="contact-item">
                           <img src={Manager} alt="manager-name"></img>
@@ -410,18 +414,18 @@ export function MoreDetailsPage({ originalHostelCardData }) {
                             {hostel.contact.officeHours}
                           </p>
                         </div>
-                        {hostel.contact.website != "" ? (
+                        {hostel.contact.website && (
                           <a
-                            className="contact-item js-email-address-link"
-                            href={`https://${hostel.contact.email}`}
+                            className="contact-item"
+                            href={`https://${hostel.contact.website}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
                           >
                             <img src={websImage} alt="website"></img>
                             <p className="font-paragraph js-email-address">
                               {hostel.contact.website}
                             </p>
                           </a>
-                        ) : (
-                          ""
                         )}
                       </div>
                     </div>

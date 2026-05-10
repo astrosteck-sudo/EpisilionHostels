@@ -93,7 +93,7 @@ export function HostelCard({ hostel }) {
     </div>
   );
 }
-("5bf2d87a-dd16-42d9-b7a7-4aecdde9cedd");
+("7af2a906-6c09-4941-8227-6325aa6ab8c6");
 
 // UPDATE rooms
 // SET price_min = 3700,
