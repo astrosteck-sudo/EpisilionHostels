@@ -106,7 +106,7 @@ export function LoginPage({ setIsLoggedIn }) {
                     <div className="testimonial-login">
                         <p>
                             <p>"The staff made us feel so welcome. Best hostel experince we've ever had"</p>
-                            <p className="testimonial-person">- Maria T., Traveller from Portugal</p>
+                            <p className="testimonial-person">- Maria T., Traveller from Ghana</p>
                         </p>
                     </div>
 

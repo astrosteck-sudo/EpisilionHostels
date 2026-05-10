@@ -48,6 +48,7 @@ exports.getHostels = async (req, res) => {
             maintenance: price.maintenance_fee,
             cautionDeposit: price.caution_deposit
           },
+          installmentAllowed: price.installment_allowed,
           refundPolicy: price.refund_policy
         },
 
@@ -93,6 +94,8 @@ exports.getHostels = async (req, res) => {
     });
 
     res.json(fullData);
+
+    console.log(fullData);
 
   } catch (err) {
     console.log(err);

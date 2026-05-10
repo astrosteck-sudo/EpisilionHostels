@@ -33,10 +33,11 @@ export function MoreDetailsPage({ originalHostelCardData }) {
   const [maxReview, setMaxReview] = useState(5); //THIS CONTROLLS THE NUMBER OF REVIEWS SHOWN
   const [isFavorite, setIsFavorite] = useState(false); //THIS CONTROLS THE FAVORITE BUTTON TO SHOW IF THE HOSTEL IS IN THE FAVORITES OR NOT
 
-  const url = "https://episilion-backend-2lt0.onrender.com"; //THIS IS THE URL FOR THE BACKEND, THIS IS USED TO ACCESS THE IMAGES IN THE PUBLIC FOLDER OF THE BACKEND
+  const url = "http://localhost:3000"; //THIS IS THE URL FOR THE BACKEND, THIS IS USED TO ACCESS THE IMAGES IN THE PUBLIC FOLDER OF THE BACKEND
 
   const params = new URLSearchParams(window.location.search);
   const hostelId = params.get("hostelId");
+  console.log("Hostel ID from URL:", hostelId); // Debugging log to check the hostel ID being retrieved from the URL
   let hostelName = "Annex";
   originalHostelCardData.map((hostel) => {
     if (hostel.id === hostelId) {
@@ -98,7 +99,7 @@ export function MoreDetailsPage({ originalHostelCardData }) {
     setIsSubmitting(true);
     try {
       await axios.post(
-        "https://episilion-backend-2lt0.onrender.com/api/reviews",
+        "http://localhost:3000/api/reviews",
         {
           hostel_id: hostelId,
           rating: rating,
@@ -129,7 +130,7 @@ export function MoreDetailsPage({ originalHostelCardData }) {
     try {
       console.log("Loading reviews for hostel ID:", hostelId); // Debugging log to check the hostel ID being used
       const response = await axios.get(
-        `https://episilion-backend-2lt0.onrender.com/api/reviews/${hostelId}`,
+        `http://localhost:3000/api/reviews/${hostelId}`,
       );
       //console.log("Response from reviews API:", response.data); // Debugging log to check the response from the API
       if (response.data.length === 0) {
@@ -171,7 +172,7 @@ export function MoreDetailsPage({ originalHostelCardData }) {
         return;
       }
       const response = await axios.post(
-        "https://episilion-backend-2lt0.onrender.com/api/favorites/" + hostelId,
+        "http://localhost:3000/api/favorites/" + hostelId,
         {},
         {
           headers: {
@@ -185,6 +186,7 @@ export function MoreDetailsPage({ originalHostelCardData }) {
       throw error;
     }
   };
+  //http://localhost:5173/moreDetails?hostelId=d3582f55-470e-49d9-bd94-39dab2ba0cab
 
   return (
     <>
@@ -195,6 +197,7 @@ export function MoreDetailsPage({ originalHostelCardData }) {
         <div className="more-details-container">
           {originalHostelCardData.map((hostel) => {
             if (hostel.id === hostelId) {
+              console.log('Hostel.id', hostel.id, "hostelId", hostelId)
               return (
                 <>
                   <div className="hostel-image-card">

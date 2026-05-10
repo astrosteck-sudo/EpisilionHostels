@@ -135,7 +135,6 @@ export function AskEpisilionPage({ isLoggedIn }) {
   }
 
   function goToHostelPage(parameter) {
-    console.log(parameter);
     navigate(`/moreDetails?hostelId=${parameter}`);
   }
 
@@ -230,11 +229,6 @@ export function AskEpisilionPage({ isLoggedIn }) {
                 </p>
               </div>
             </div>
-            {isLoading && (
-              <div className="ask-episilion-loader-container">
-                <div className="ask-episilion-loader active"></div>
-              </div>
-            )}
             {/*Map over chatMessages array to render each bubble */}
             {chatMessages.map((chat, index) => (
               <div
