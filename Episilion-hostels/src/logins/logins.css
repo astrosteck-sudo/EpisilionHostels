@@ -113,7 +113,7 @@
 
 
 
-.sign-up-wrapper {
+.sign-up-wrapper, .hostel-manager-sign-up-wrapper {
   background-color: white;
   /* padding: 10px;
   padding-left: 10px;
@@ -122,6 +122,18 @@
   padding-bottom: 5px;
   border-radius: 20px;
   width: min(400px, 100%);
+}
+.sign-up-wrapper.openHostelManagerLoginPage{
+  display: none;
+}
+.hostel-manager-sign-up-wrapper{
+  padding-bottom: 20px;
+  border-radius: 0px 0px 20px 20px;
+  height: 550px;
+  border-radius: 0 0 20px 0;
+}
+.hostel-manager-sign-up-wrapper.closeHostelManagerLoginPage{
+  display: none;
 }
 
 .sign-up-wrapper.login {
@@ -241,6 +253,11 @@
   padding-left: 30px;
   padding-right: 30px;
 }
+.alternate-link-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
 
 .show-password-container {
   display: flex;
@@ -314,6 +331,7 @@
   color: #aca020;
   font-weight: bold;
   text-decoration: none;
+  cursor: pointer;
 }
 
 .perks-list {
@@ -367,4 +385,20 @@ li::marker {
     text-align: left;
   }
 
+}
+
+
+.hostel-manager-log-in{
+  width: 50%;
+  padding: 5px;
+  font-size: clamp(13px, 2vw, 15px);
+  border-radius: 20px;
+  margin: auto;
+  text-align: center;
+}
+
+.hostel-manager-caution-text p{
+  text-align: center;
+  padding: 10px;
+  font-family: 'Times New Roman', Times, serif;
 }

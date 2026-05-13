@@ -12,6 +12,7 @@ import './App.css'
 import { CompareHostels } from './CompareHostelsPage/CompareHostels.jsx';
 import { PageHeader } from './PageHeader/PageHeader.jsx';
 import { UserProfilePage } from './UserProfilPage/UserProfile.jsx';
+import { HostelManagerPage } from './HostelManagerPage/HostelManagerPage.jsx';
 
 
 function App() {
@@ -62,6 +63,7 @@ function App() {
         <Route path='morefromus' element={<MoreFromUsPage  />} />
         <Route path='comparehostels' element={<CompareHostels  originalHostelCardData={originalHostelCardData} />} />
         <Route path='userProfilePage' element={<UserProfilePage isLoggedIn={isLoggedIn}></UserProfilePage>} />
+        <Route path='hostelManagerPage' element={<HostelManagerPage></HostelManagerPage>}></Route>
       </Routes>
     </>
   )
