@@ -1,0 +1,190 @@
+.hostel-manager-info-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-bottom: 20px;
+  color: white;
+  background-color: black;
+  width: 95%;
+  margin: auto;
+  margin-top: 10px;
+  border-radius: 20px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+.dashboard-text {
+  font-family: AntipastoPro;
+  color: #d3c84d;
+  font-size: clamp(13px, 2vw, 20px);
+}
+.hostel-manager-welcome-text {
+  font-size: clamp(13px, 2vw, 30px);
+  font-family: Playfair Display;
+}
+
+.hostel-manger-welcome-text-second {
+  font-size: clamp(9px, 2vw, 13px);
+  font-family: lato;
+  color: grey;
+}
+
+.verified-account-container {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #d3c84d3c;
+  border-radius: 10px;
+}
+.verified-account-hostel-name {
+  color: #d3c84d;
+  font-size: clamP(8px, 2vw, 20px);
+  font-family: Playfair Display;
+}
+.verified-account-text {
+  font-size: clamp(3px, 2vw, 13px);
+  color: gray;
+  text-align: center;
+}
+
+.hostel-manager-updates-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  width: 98%;
+  padding: 20px;
+  margin: auto;
+}
+
+@media (max-width: 768px) {
+  .hostel-manager-updates-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 480px) {
+  .hostel-manager-updates-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+.hostel-manager-location-and-distance-container,
+.hostel-manager-pricing-container,
+.hostel-manager-additional-fees-container,
+.hostel-manager-room-types-and-price-container {
+  padding: 30px;
+  border-radius: 20px;
+  /* padding-bottom: 90px; */
+  background-color: rgb(244, 234, 234);
+}
+
+.hostel-manager-location-and-distance-header,
+.hostel-manager-pricing-header,
+.hostel-manager-additional-fees-header,
+.hostel-manager-room-types-and-price-header {
+  display: flex;
+  align-items: center;
+}
+.hostel-manager-location-and-distance-header,
+.hostel-manager-pricing-header,
+.hostel-manager-additional-fees-header,
+.hostel-manager-room-types-and-price-header p {
+  font-weight: bolder;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+.hostel-manager-location-pin,
+.hostel-manager-pricing-pin,
+.hostel-manager-additional-fees-pin,
+.hostel-manager-room-types-and-price-pin {
+  border-radius: 5px;
+  background-color: #d3c84d8c;
+  margin-right: 10px;
+}
+
+.hostel-manager-titles {
+  font-weight: bold;
+  margin: 5px;
+  font-size: clamp(12px, 2vw, 15px);
+  color: rgb(59, 57, 57);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: rgb(79, 78, 78);
+}
+
+.hostel-manager-textarea {
+  padding: 13px;
+  margin-left: 3px;
+  border-radius: 10px;
+  width: 90%;
+  border: 1px solid grey;
+  resize: none;
+}
+
+.hostel-manager-min-max-container {
+  display: flex;
+  /* justify-content: space-between; */
+}
+.hostel-manager-min-max-container div {
+  width: 50%;
+}
+.hostel-manager-installment-buttons {
+  display: flex;
+  gap: 30px;
+}
+.hostel-manager-installment-buttons button {
+  width: 50%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  background-color: whitesmoke;
+  border-radius: 10px;
+  border: solid 0.5px grey;
+  font-weight: bolder;
+}
+
+.hostel-manager-additional-fees-wrapper {
+  display: flex;
+}
+.hostel-manager-room-types-and-price-wrapper{
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+.hostel-manager-room-types-and-price-wrapper p{
+  text-align: center;
+  font-weight: bolder;
+}
+.hostel-manager-room-types-and-price-wrapper input{
+  padding: 7px;
+  border-radius: 10px;
+  width: 70%;
+  margin: auto;
+  border: solid .2px grey;
+}
+
+.hostel-manager-room-types-and-price-wrapper div{
+  padding: 7px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: whitesmoke;
+  border-radius: 10px;
+  border: solid .5px grey;
+}
+@media only screen and (max-width: 900px) {
+  .hostel-manager-info-container {
+    width: 100%;
+    margin-top: 0;
+    border-radius: 0 0 10px 10px;
+  }
+  .verified-account-container {
+    width: 30%;
+    padding: 5px;
+  }
+  .hostel-manager-room-types-and-price-wrapper{
+    flex-direction: column;
+  }
+}
