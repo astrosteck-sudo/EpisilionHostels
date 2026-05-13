@@ -31,7 +31,6 @@ export function UserProfilePage({ isLoggedIn }) {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
-    console.log("testing code", response.data.data);
     setFavoriteHostelResponse(response.data.data)
   };
 

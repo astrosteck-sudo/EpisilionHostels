@@ -1,11 +1,13 @@
 import "./UserProfile.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { getDistance } from "geolib";
+import { kilometersToMeters } from "../UTILS/kilometerConvertor";
+
 
 export function FavoriteHostels({ favoriteHostel, loadFavoriteHostel }) {
   const url = "http://localhost:3000";
   const navigate = useNavigate();
-  console.log(favoriteHostel.amenities[0].name);
 
   function showHostelId(parameter) {
     navigate(`/moreDetails?hostelId=${parameter}`);
@@ -36,7 +38,18 @@ export function FavoriteHostels({ favoriteHostel, loadFavoriteHostel }) {
       />
       <div className="user-favorite-hostel-info">
         <p className="user-favorite-hostel-name">{favoriteHostel.name}</p>
-        <p className="user-favorite-hostel-distance">15.1 km from campus</p>
+        <p className="user-favorite-hostel-distance">
+          {kilometersToMeters(
+            getDistance(
+              { latitude: 5.660969, longitude: -0.166374 },
+              {
+                latitude: favoriteHostel.latitude,
+                longitude: favoriteHostel.longitude,
+              },
+            ) / 1000,
+          ).toFixed(0)}
+          m from campus
+        </p>
         <div className="user-favorite-hostel-amenities">
           {favoriteHostel.amenities.map((amenity) => {
             return <p key={amenity.name}>{amenity.name}</p>;
@@ -53,7 +66,10 @@ export function FavoriteHostels({ favoriteHostel, loadFavoriteHostel }) {
         >
           View
         </button>
-        <p className="user-favorite-hostel-remove" onClick={() => removeFavorite(favoriteHostel.hostel_id)}>
+        <p
+          className="user-favorite-hostel-remove"
+          onClick={() => removeFavorite(favoriteHostel.hostel_id)}
+        >
           Remove
         </p>
       </div>

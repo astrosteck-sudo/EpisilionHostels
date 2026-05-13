@@ -431,7 +431,7 @@ export function MoreDetailsPage({ originalHostelCardData }) {
                     </div>
                   </div>
 
-                  <div className="media-information-cards js-media-information-cards">
+                  {/* <div className="media-information-cards js-media-information-cards">
                     {hostel.media.images.map((image) => {
                       return (
                         <div class="hostel-room-type-image">
@@ -458,7 +458,7 @@ export function MoreDetailsPage({ originalHostelCardData }) {
                       src={hostel.media.video}
                       poster={hostel.image}
                     ></video>
-                  </div>
+                  </div> */}
                 </>
               );
             }
