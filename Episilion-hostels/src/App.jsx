@@ -24,8 +24,8 @@ function App() {
   const loadHostelsCard = async () => {
     const response = await axios.get('http://localhost:3000/api/hostels')
     //console.log("testing code", response.data)
-    sethostelsCardData(response.data)//THIS DATA WILL CHANGE BASED ON THE FILTER OPTIONS
-    setOriginalHostelCardData(response.data)//THIS DATA WILL CHANGE BASED ON THE FILTER OPTIONS
+    sethostelsCardData(response.data.slice(0, 9))//THIS DATA WILL CHANGE BASED ON THE FILTER OPTIONS
+    setOriginalHostelCardData(response.data.slice(0, 9))//THIS DATA WILL CHANGE BASED ON THE FILTER OPTIONS
   }
   useEffect(() => {
     loadHostelsCard();
