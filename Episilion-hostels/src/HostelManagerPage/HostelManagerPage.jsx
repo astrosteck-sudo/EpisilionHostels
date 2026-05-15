@@ -94,17 +94,29 @@ export function HostelManagerPage() {
             <div className="hostel-manager-additional-fees-wrapper">
               <div>
                 <h3 className="hostel-manager-titles">UTILITIES</h3>
-                <input type="number" className="hostel-manager-textarea" placeholder="0.00" />
+                <input
+                  type="number"
+                  className="hostel-manager-textarea"
+                  placeholder="0.00"
+                />
               </div>
 
               <div>
                 <h3 className="hostel-manager-titles">MAINTENANCE</h3>
-                <input type="number" className="hostel-manager-textarea" placeholder="0.00" />
+                <input
+                  type="number"
+                  className="hostel-manager-textarea"
+                  placeholder="0.00"
+                />
               </div>
 
               <div>
                 <h3 className="hostel-manager-titles">CAUTION DEPOSIT</h3>
-                <input type="number" className="hostel-manager-textarea" placeholder="0.00" />
+                <input
+                  type="number"
+                  className="hostel-manager-textarea"
+                  placeholder="0.00"
+                />
               </div>
             </div>
           </div>
@@ -115,32 +127,41 @@ export function HostelManagerPage() {
               <p>Room Types & Price</p>
             </div>
 
-           <div className="hostel-manager-room-types-and-price-wrapper">
-            <div>
-              <p>1 in 1</p>
-              <input type="number" />
-              <p>GHS</p>
-            </div>
+            <div className="hostel-manager-room-types-and-price-wrapper">
+              <div>
+                <p>1 in 1</p>
+                <input type="number" />
+                <p>GHS</p>
+              </div>
 
-            <div>
-              <p>2 in 1</p>
-              <input type="number" />
-              <p>GHS</p>
-            </div>
+              <div>
+                <p>2 in 1</p>
+                <input type="number" />
+                <p>GHS</p>
+              </div>
 
-            <div>
-              <p>3 in 1</p>
-              <input type="number" />
-              <p>GHS</p>
-            </div>
+              <div>
+                <p>3 in 1</p>
+                <input type="number" />
+                <p>GHS</p>
+              </div>
 
-            <div>
-              <p>4 in 1</p>
-              <input type="number" />
-              <p>GHS</p>
+              <div>
+                <p>4 in 1</p>
+                <input type="number" />
+                <p>GHS</p>
+              </div>
             </div>
-           </div>
           </div>
+        </div>
+
+        <div className="hostel-manager-submit-button-container">
+          <button className="hostel-manager-discard-button" type="submit">
+            Discard Changes
+          </button>
+          <button className="hostel-manager-save-changes-button" type="submit">
+            Save Changes
+          </button>
         </div>
       </form>
 
