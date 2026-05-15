@@ -84,13 +84,28 @@ function formatHostels(hostels, pricing, locations, amenities) {
 // Smart filtering
 function applySmartFilter(data, query) {
   const q = query.toLowerCase();
+
   let filtered = [...data];
 
+  // CLOSE / NEAR
   if (q.includes("close") || q.includes("near")) {
-    filtered = filtered.sort((a, b) => a.location - b.location);
+    filtered.sort((a, b) => a.distanceMeters - b.distanceMeters);
   }
-  if (q.includes("cheap") || q.includes("budget")) {
-    filtered = filtered.sort((a, b) => a.price - b.price);
+
+  // CHEAP
+  if (q.includes("cheap") || q.includes("budget") || q.includes("affordable")) {
+    filtered.sort((a, b) => a.price - b.price);
+  }
+
+  // WITHIN X METERS
+  const metersMatch = q.match(/within\s+(\d+)\s*meters?/);
+
+  if (metersMatch) {
+    const maxMeters = parseInt(metersMatch[1]);
+
+    filtered = filtered.filter(
+      (h) => h.distanceMeters !== null && h.distanceMeters <= maxMeters,
+    );
   }
 
   return filtered;
