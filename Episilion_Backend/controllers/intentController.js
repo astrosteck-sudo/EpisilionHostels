@@ -1,5 +1,6 @@
 const OpenAI = require("openai");
 const db = require("../db");
+const { getDistance } = require("geolib");
 
 const client = new OpenAI({
   apiKey: process.env.NVIDIA_API_KEY,
@@ -41,15 +42,38 @@ function classifyQuery(query) {
 
 // Format DB data for AI
 function formatHostels(hostels, pricing, locations, amenities) {
+  // SCHOOL COORDINATES
+  const SCHOOL = {
+    latitude: 5.660969,
+    longitude: -0.166374,
+  };
+
   return hostels.map((h) => {
     const price = pricing.find((p) => p.hostel_id === h.hostel_id);
+
     const loc = locations.find((l) => l.hostel_id === h.hostel_id);
+
+    // DISTANCE CALCULATION
+    let distanceMeters = null;
+
+    if (loc?.latitude && loc?.longitude) {
+      distanceMeters = getDistance(SCHOOL, {
+        latitude: Number(loc.latitude),
+        longitude: Number(loc.longitude),
+      });
+    }
+
     return {
       id: h.hostel_id,
+
       name: h.name,
+
       type: h.type,
-      price: price?.price_min || 0,
-      location: loc?.distance_to_campus_in_minutes || 999,
+
+      price: price?.price_min || null,
+
+      distanceMeters,
+
       amenities: amenities
         .filter((a) => a.hostel_id === h.hostel_id)
         .map((a) => a.amenity),

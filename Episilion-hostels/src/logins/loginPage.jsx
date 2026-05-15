@@ -45,7 +45,7 @@ export function LoginPage({ setIsLoggedIn }) {
 
     try {
       const res = await axios.post(
-        `https://episilion-backend-2lt0.onrender.com/api/auth/login`,
+        `http://localhost:3000/api/auth/login`,
         {
           email,
           password,
