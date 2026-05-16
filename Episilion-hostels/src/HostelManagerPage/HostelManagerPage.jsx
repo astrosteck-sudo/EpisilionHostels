@@ -3,6 +3,12 @@ import "./HostelManagerPage.css";
 //import locationPin from "../assets/icons/pin.png";
 
 export function HostelManagerPage() {
+
+
+  const managerHostel = localStorage.getItem("managerUser")
+  //console.log("manager hostel name", JSON.parse(managerHostel))
+  //setManagerHostelName(JSON.parse(managerHostel).username)
+  
   return (
     <>
       <title>Hostel Manager | Episilion Hostels</title>
@@ -10,7 +16,7 @@ export function HostelManagerPage() {
         <div>
           <p className="dashboard-text">HOSTEL MANAGER DASHBOARD</p>
           <h1 className="hostel-manager-welcome-text">
-            Welcome back, Htc Towers👋
+            Welcome back, {JSON.parse(managerHostel).username}👋
           </h1>
 
           <p className="hostel-manger-welcome-text-second">
@@ -20,7 +26,7 @@ export function HostelManagerPage() {
         </div>
 
         <div className="verified-account-container">
-          <p className="verified-account-hostel-name">Htc Towers</p>
+          <p className="verified-account-hostel-name">{JSON.parse(managerHostel).username}</p>
           <p className="verified-account-text">Verified Manager Account</p>
         </div>
       </div>

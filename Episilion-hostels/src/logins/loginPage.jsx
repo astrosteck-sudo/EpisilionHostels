@@ -12,8 +12,11 @@ export function LoginPage({ setIsLoggedIn }) {
   const navigate = useNavigate();
   const [type, setType] = useState("password");
   const [email, setEmail] = useState("");
+  const [managerHostelName, setManagerHostelName] = useState("");
+  const [managerPassword, setManagerPassword] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [managerErrorMessage, setManagerErrorMessage] = useState("");
 
   //THIS USEEFFECT ADDS A BACKGROUND PICTURE TO THE BODY WHEN THE LOGIN PAGE IS RENDERED AND REMOVES IT WHEN THE COMPONENT UNMOUNTS
   useEffect(() => {
@@ -33,11 +36,47 @@ export function LoginPage({ setIsLoggedIn }) {
   function handleEmail(event) {
     setEmail(event.target.value);
   }
+  function handleManagerHostelName(event) {
+    setManagerHostelName(event.target.value);
+  }
+  function handleManagerPassword(event) {
+    setManagerPassword(event.target.value);
+  }
   function handlePasword(event) {
     setPassword(event.target.value);
   }
 
   //const API_URL = process.env.REACT_APP_API_URL || "";
+
+  async function handleHostelManagerLogin(e) {
+    e.preventDefault();
+
+    try {
+      const res = await axios.post(
+        `http://localhost:3000/api/manager/auth/login`,
+        {
+          managerHostelName,
+          managerPassword,
+        },
+      );
+
+      // const token = res.data.token;
+
+      // ✅ STORE TOKEN
+      localStorage.setItem("managerToken", res.data.token); // 1. store login proof
+      localStorage.setItem("managerUser", JSON.stringify(res.data.manager)); // 2. store manager info
+      console.log("Manager token stored:", res.data.manager);
+      // setManagerHostelName("");
+      // setManagerPassword("");
+      console.log("Login successful");
+      navigate("/hostelManagerPage");
+      setManagerErrorMessage('')
+    } catch (error) {
+      navigate("/login");
+      console.log(error);
+      setManagerErrorMessage('Something is wrong try again')
+    }
+  }
 
   async function handleLogin(e) {
     e.preventDefault();
@@ -241,18 +280,18 @@ export function LoginPage({ setIsLoggedIn }) {
             <span>log in with hostel name</span>
           </div>
 
-          <form method="POST" id="myForm" onSubmit={handleLogin}>
+          <form method="POST" id="myForm" onSubmit={handleHostelManagerLogin}>
             <div className="email-address-conatainer">
-              <p for="email-address" className="email-address-header">
+              <p for="hostel-name" className="email-address-header">
                 HOSTEL NAME
               </p>
               <input
-                type="email"
-                name="email"
+                type="text"
+                name="hostel-name"
                 placeholder="e.g. prestige hostel"
                 className="email-address-input"
-                value={email}
-                onChange={handleEmail}
+                value={managerHostelName}
+                onChange={handleManagerHostelName}
                 required
               />
             </div>
@@ -267,8 +306,8 @@ export function LoginPage({ setIsLoggedIn }) {
                   name="password"
                   placeholder="••••••••••••••••"
                   className="password-input"
-                  value={password}
-                  onChange={handlePasword}
+                  value={managerPassword}
+                  onChange={handleManagerPassword}
                   required
                 />
               </div>
@@ -289,6 +328,9 @@ export function LoginPage({ setIsLoggedIn }) {
               <button className="create-account-button" type="submit">
                 Login
               </button>
+            </div>
+            <div className="error-message-container login">
+              <p>{managerErrorMessage}</p>
             </div>
           </form>
           <div className="error-message-container login">
