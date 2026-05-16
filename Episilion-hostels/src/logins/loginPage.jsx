@@ -44,13 +44,10 @@ export function LoginPage({ setIsLoggedIn }) {
     setErrorMessage("");
 
     try {
-      const res = await axios.post(
-        `http://localhost:3000/api/auth/login`,
-        {
-          email,
-          password,
-        },
-      );
+      const res = await axios.post(`http://localhost:3000/api/auth/login`, {
+        email,
+        password,
+      });
 
       // const token = res.data.token;
 
@@ -252,7 +249,7 @@ export function LoginPage({ setIsLoggedIn }) {
               <input
                 type="email"
                 name="email"
-                placeholder="prestige hostel"
+                placeholder="e.g. prestige hostel"
                 className="email-address-input"
                 value={email}
                 onChange={handleEmail}
@@ -306,7 +303,10 @@ export function LoginPage({ setIsLoggedIn }) {
           </div>
 
           <div className="hostel-manager-caution-text">
-            <p>As hostel managers messages containing your hostel name and password where sent to your whatsapp numbers and emails</p>
+            <p>
+              As hostel managers messages containing your hostel name and
+              password where sent to your whatsapp numbers and emails
+            </p>
           </div>
         </div>
       </div>

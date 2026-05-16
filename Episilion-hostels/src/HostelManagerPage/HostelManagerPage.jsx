@@ -33,13 +33,13 @@ export function HostelManagerPage() {
               <p>Location & Distance</p>
             </div>
 
-            <h3 className="hostel-manager-titles">Hostel Directions</h3>
-            <textarea type="text" className="hostel-manager-textarea" />
+            <h3 className="hostel-manager-titles">HOSTEL DIRECTIONS</h3>
+            <textarea type="text" className="hostel-manager-textarea" placeholder="Exit the school from the main gate then...." />
 
             <h3 className="hostel-manager-titles">
-              Hostel Distance from campus in Minutes
+              HOSTEL DISTANCE FROM CAMPUS IN MINUTES
             </h3>
-            <input type="text" className="hostel-manager-textarea" />
+            <input type="number" className="hostel-manager-textarea" placeholder="2" />
           </div>
 
           <div className="hostel-manager-pricing-container">
@@ -130,25 +130,25 @@ export function HostelManagerPage() {
             <div className="hostel-manager-room-types-and-price-wrapper">
               <div>
                 <p>1 in 1</p>
-                <input type="number" />
+                <input type="number" placeholder="0.00" />
                 <p>GHS</p>
               </div>
 
               <div>
                 <p>2 in 1</p>
-                <input type="number" />
+                <input type="number" placeholder="0.00" />
                 <p>GHS</p>
               </div>
 
               <div>
                 <p>3 in 1</p>
-                <input type="number" />
+                <input type="number" placeholder="0.00" />
                 <p>GHS</p>
               </div>
 
               <div>
                 <p>4 in 1</p>
-                <input type="number" />
+                <input type="number" placeholder="0.00" />
                 <p>GHS</p>
               </div>
             </div>

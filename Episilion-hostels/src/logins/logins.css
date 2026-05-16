@@ -397,6 +397,18 @@ li::marker {
   text-align: center;
 }
 
+.hostel-manager-caution-text{
+  border: solid red .5px;
+  margin-left: 20px;
+  margin-right: 20px;
+  border-radius: 10px;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-weight: bold;
+  padding-left: 30px;
+  padding-right: 30px;
+  background-color: rgba(255, 0, 0, 0.215);
+}
+
 .hostel-manager-caution-text p{
   text-align: center;
   padding: 10px;
