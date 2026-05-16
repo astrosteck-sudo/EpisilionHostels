@@ -6,6 +6,10 @@ export function HostelManagerPage() {
 
 
   const managerHostel = localStorage.getItem("managerUser")
+  if (!managerHostel) {
+    console.log("User is not logged in. Redirecting...");
+    return <p>LOG IN AS A MANGER TO SEE THIS PAGE</p>
+  }
   //console.log("manager hostel name", JSON.parse(managerHostel))
   //setManagerHostelName(JSON.parse(managerHostel).username)
   
@@ -16,7 +20,7 @@ export function HostelManagerPage() {
         <div>
           <p className="dashboard-text">HOSTEL MANAGER DASHBOARD</p>
           <h1 className="hostel-manager-welcome-text">
-            Welcome back, {JSON.parse(managerHostel).username}👋
+            Welcome back, {managerHostel && (JSON.parse(managerHostel).username)}👋
           </h1>
 
           <p className="hostel-manger-welcome-text-second">
@@ -26,7 +30,7 @@ export function HostelManagerPage() {
         </div>
 
         <div className="verified-account-container">
-          <p className="verified-account-hostel-name">{JSON.parse(managerHostel).username}</p>
+          <p className="verified-account-hostel-name">{managerHostel && (JSON.parse(managerHostel).username)}</p>
           <p className="verified-account-text">Verified Manager Account</p>
         </div>
       </div>

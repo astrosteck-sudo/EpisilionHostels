@@ -46,6 +46,9 @@
   justify-content: space-around;
   gap: 10px;
 }
+.login-systems.close-login-sytems{
+  display: none;
+}
 
 .login-systems.logout {
   width: 18vw;
@@ -291,6 +294,26 @@
   background-color: grey;
 } */
 
+.hostel-manager-pill{
+  width: 18%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  background-color: white;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-radius: 20px; 
+}
+.hostel-manager-pill p{
+  color: black;
+  font-weight: bold;
+}
+.hostel-manager-pill img{
+  width: 10%;
+  background-color: white;
+  border-radius: 50%;
+}
 
 @media only screen and (max-width: 992px) {
 
@@ -371,6 +394,9 @@
 
   .login-systems a {
     margin-left: 0px;
+  }
+  .hostel-manager-pill{
+    width: 80%;
   }
 }
 

@@ -36,6 +36,10 @@ function App() {
     return !!localStorage.getItem("token");
   });
 
+  const [managerIsLoggedIn, setManagerIsLoggedIn] = useState(() => {
+    return !!localStorage.getItem("managerToken");
+  });
+
   // useEffect(() => {
   //   const token = localStorage.getItem("token");
   //   if (token) {
@@ -49,7 +53,7 @@ function App() {
 
   return (
     <>
-      <PageHeader navlink={navlink} setNavLink={setNavLink} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+      <PageHeader navlink={navlink} setNavLink={setNavLink} isLoggedIn={isLoggedIn} managerIsLoggedIn={managerIsLoggedIn} setManagerIsLoggedIn={setManagerIsLoggedIn} setIsLoggedIn={setIsLoggedIn} />
       <Routes>
         {/* <Route index element={<PageHeader/>}></Route> */}
         <Route index element={<HomePage hostelsCardData={hostelsCardData} sethostelsCardData={sethostelsCardData}
@@ -59,7 +63,7 @@ function App() {
         <Route path="aboutus" element={<AboutUsPage />} />
         <Route path="signup" element={<SignUpPage  />} />
         <Route path="askepisilion" element={<AskEpisilionPage  originalHostelCardData={originalHostelCardData} isLoggedIn={isLoggedIn} />} />
-        <Route path="login" element={<LoginPage  setIsLoggedIn={setIsLoggedIn} />} />
+        <Route path="login" element={<LoginPage  setIsLoggedIn={setIsLoggedIn} setManagerIsLoggedIn={setManagerIsLoggedIn} />} />
         <Route path='morefromus' element={<MoreFromUsPage  />} />
         <Route path='comparehostels' element={<CompareHostels  originalHostelCardData={originalHostelCardData} />} />
         <Route path='userProfilePage' element={<UserProfilePage isLoggedIn={isLoggedIn}></UserProfilePage>} />

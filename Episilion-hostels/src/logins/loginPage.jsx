@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 //import fullStar from '../assets/icons/favorite.png';
 
-export function LoginPage({ setIsLoggedIn }) {
+export function LoginPage({ setIsLoggedIn, setManagerIsLoggedIn }) {
   const navigate = useNavigate();
   const [type, setType] = useState("password");
   const [email, setEmail] = useState("");
@@ -69,6 +69,7 @@ export function LoginPage({ setIsLoggedIn }) {
       // setManagerHostelName("");
       // setManagerPassword("");
       console.log("Login successful");
+      setManagerIsLoggedIn(true)
       navigate("/hostelManagerPage");
       setManagerErrorMessage('')
     } catch (error) {

@@ -8,6 +8,7 @@ import downArrow from "../assets/icons/down-arrow.png";
 import userPopImage from "../assets/icons/user4.png";
 //import userPopFavoriteImage from "../assets/icons/star-black-fivepointed-shape-symbol.png";
 import userPopLogOutImage from "../assets/icons/logout.png";
+import managerProfileIcon from "../assets/icons/user-profile-icon.png";
 import { getInitials } from "../UTILS/initials";
 
 export function PageHeader({
@@ -18,6 +19,7 @@ export function PageHeader({
   setHostelFound,
   isLoggedIn,
   setIsLoggedIn,
+  managerIsLoggedIn,
 }) {
   const navigate = useNavigate();
   // const [navlink, setNavLink] = useState(false)
@@ -106,7 +108,20 @@ export function PageHeader({
             </NavLink>
           </div>
 
-          {isLoggedIn ? (
+          {managerIsLoggedIn ? (
+            <>
+              <div className="hostel-manager-pill">
+                <img src={managerProfileIcon} alt="" />
+                <Link className="user-profile-page-link" to="/hostelManagerPage">
+                  <p>Manager dashBoard</p>
+                </Link>
+              </div>
+            </>
+          ) : (
+            ""
+          )}
+
+          {isLoggedIn && !managerIsLoggedIn ? (
             <div>
               <div
                 className="user-button-pill-container"
@@ -163,7 +178,9 @@ export function PageHeader({
               </div>
             </div>
           ) : (
-            <div className="login-systems">
+            <div
+              className={`login-systems ${managerIsLoggedIn ? "close-login-sytems" : ""}`}
+            >
               <Link to="/login">LOGIN</Link>
               <Link to="/signup">SIGN UP</Link>
             </div>
