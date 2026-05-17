@@ -306,19 +306,22 @@
   align-items: center;
   justify-content: center;
   gap: 20px;
-  background-color: white;
+  background-color: #55185D;
   padding-top: 10px;
   padding-bottom: 10px;
   border-radius: 20px; 
 }
 .hostel-manager-pill p{
-  color: black;
+  color: white;
   font-weight: bold;
 }
 .hostel-manager-pill img{
   width: 10%;
   background-color: white;
   border-radius: 50%;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  background-color: #b682bd;
 }
 
 .manager-option-pop-up{

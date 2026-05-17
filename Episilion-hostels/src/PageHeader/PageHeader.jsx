@@ -162,7 +162,7 @@ export function PageHeader({
                     />
                     <Link
                       className="user-profile-page-link"
-                      to="/hostelManagerPage"
+                      to="/changePasswordPage"
                     >
                       <p>Change Password</p>
                     </Link>
