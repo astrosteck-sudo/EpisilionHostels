@@ -6,16 +6,17 @@ import { useEffect, useState } from "react";
 
 export function HostelManagerPage() {
   const [hostelManagerRoomTypes, setHostelManagerRoomTypes] = useState([]);
+  const [hostelGeneralInfo, setHostelGeneralInfo] = useState('')
   const managerHostel = localStorage.getItem("managerUser");
 
-  const [hostelDirections, setHostelDirections] = useState("");
+  const [hostelDirections, setHostelDirections] = useState('');
   const [
     hostelDistanceFromCampusInMinutes,
     setHostelDistanceFromCampusInMinutes,
   ] = useState("");
   const [hostelMinimumPrice, setHostelMinimumPrice] = useState("");
   const [hostelMaximumPrice, setHostelMaximumPrice] = useState("");
-  const [installmentAllowed, setInstallmentAllowed] = useState("");
+  const [installmentAllowed, setInstallmentAllowed] = useState(0);
   const [refundsAllowed, setRefundsAllowed] = useState("");
   const [utilities, setUtilities] = useState("");
   const [maintenance, setMaintenance] = useState("");
@@ -73,7 +74,19 @@ export function HostelManagerPage() {
       );
 
       setHostelManagerRoomTypes(response.data.room_types);
-      console.log(response.data.room_types);
+      setHostelGeneralInfo(response.data)
+      setHostelDirections(response.data.location.directions)
+      setHostelDistanceFromCampusInMinutes(response.data.location.distance_to_campus_in_minutes)
+      setCautionDeposit(response.data.pricing.caution_deposit)
+      setMaintenance(response.data.pricing.maintenance_fee)
+      setUtilities(response.data.pricing.utilities_fee)
+
+      setHostelMinimumPrice(response.data.pricing.price_min)
+      setHostelMaximumPrice(response.data.pricing.price_max)
+      //setRefundsAllowed(response.data.pricing.refund_policy === 1 ? '' :'')
+      setInstallmentAllowed(response.data.pricing.installment_allowed)
+
+      console.log(response.data.pricing);
     } catch (error) {
       console.log(error);
     }

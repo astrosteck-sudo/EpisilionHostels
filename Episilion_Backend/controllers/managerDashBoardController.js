@@ -2,10 +2,13 @@ const db = require("../config/db.js");
 
 exports.getManagerDashboard = async (req, res) => {
   try {
-    // GET HOSTEL ID FROM TOKEN
+
     const hostelId = req.user.hostelId;
 
+    // =========================
     // GET ROOM TYPES
+    // =========================
+
     const roomQuery = `
       SELECT
         room_id,
@@ -16,68 +19,106 @@ exports.getManagerDashboard = async (req, res) => {
       WHERE hostel_id = ?
     `;
 
-    db.query(roomQuery, [hostelId], (err, roomResults) => {
-      if (err) {
-        console.error(err);
+    db.query(roomQuery, [hostelId], (roomErr, roomResults) => {
+
+      if (roomErr) {
+        console.error(roomErr);
 
         return res.status(500).json({
-          error: "Database error",
+          error: "Room query failed",
         });
       }
 
-    //   // GET HOSTEL DETAILS
-    //   const hostelQuery = `
-    //     SELECT
-    //       id,
-    //       hostel_name,
-    //       directions,
-    //       walking_time_minutes,
-    //       minimum_price,
-    //       maximum_price
-    //     FROM hostels
-    //     WHERE id = ?
-    //     LIMIT 1
-    //   `;
+      // =========================
+      // GET PRICING
+      // =========================
 
-    //   db.query(hostelQuery, [hostelId], (err, hostelResults) => {
-    //     if (err) {
-    //       console.error(err);
+      const pricingQuery = `
+        SELECT
+          price_min,
+          price_max,
+          installment_allowed,
+          refund_policy,
+          utilities_fee,
+          maintenance_fee,
+          caution_deposit
+        FROM pricing
+        WHERE hostel_id = ?
+        LIMIT 1
+      `;
 
-    //       return res.status(500).json({
-    //         error: "Database error",
-    //       });
-    //     }
+      db.query(pricingQuery, [hostelId], (pricingErr, pricingResults) => {
 
-    //     if (hostelResults.length === 0) {
-    //       return res.status(404).json({
-    //         error: "Hostel not found",
-    //       });
-    //     }
-    //   });
+        if (pricingErr) {
+          console.error(pricingErr);
 
-      return res.status(200).json({
-        //   hostel: hostelResults[0],
+          return res.status(500).json({
+            error: "Pricing query failed",
+          });
+        }
 
-          room_types: roomResults,
+        // =========================
+        // GET LOCATION
+        // =========================
+
+        const locationQuery = `
+          SELECT
+            directions,
+            distance_to_campus_in_minutes
+          FROM locations
+          WHERE hostel_id = ?
+          LIMIT 1
+        `;
+
+        db.query(locationQuery, [hostelId], (locationErr, locationResults) => {
+
+          if (locationErr) {
+            console.error(locationErr);
+
+            return res.status(500).json({
+              error: "Location query failed",
+            });
+          }
+
+          return res.status(200).json({
+
+            pricing:
+              pricingResults.length > 0
+                ? pricingResults[0]
+                : {},
+
+            location:
+              locationResults.length > 0
+                ? locationResults[0]
+                : {},
+
+            room_types: roomResults
+
+          });
+
         });
+
+      });
+
     });
+
   } catch (error) {
+
     console.error(error);
 
     return res.status(500).json({
       error: "Server error",
     });
+
   }
 };
 
 
 exports.updateManagerHostel = async (req, res) => {
-  console.log("Starting update manager hostel")
   try {
 
     // HOSTEL ID FROM TOKEN
     const hostelId = req.user.hostelId;
-    console.log(req.body)
 
     // DATA FROM FRONTEND
     const {
