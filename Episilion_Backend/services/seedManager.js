@@ -3,8 +3,10 @@ const bcrypt = require("bcrypt");
 async function hashPasswords() {
   const hashedPassword1 = await bcrypt.hash('password1', 10);
   const hashedPassword2 = await bcrypt.hash('password2', 10);
+  const hashedPassword3  = await bcrypt.hash('password3', 10);
   console.log("Hashed Password 1:", hashedPassword1);
   console.log("Hashed Password 2:", hashedPassword2);
+  console.log("Hashed Password 3:", hashedPassword3);
 }
 hashPasswords();
 

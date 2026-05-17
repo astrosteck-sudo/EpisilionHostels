@@ -202,7 +202,7 @@ export function HostelManagerPage() {
             <h3 className="hostel-manager-titles">HOSTEL DIRECTIONS</h3>
             <textarea
               type="text"
-              className="hostel-manager-textarea"
+              className="hostel-manager-textarea directions"
               placeholder="Exit the school from the main gate then...."
               value={hostelDirections}
               onChange={handleHostelDirectionsChange}
