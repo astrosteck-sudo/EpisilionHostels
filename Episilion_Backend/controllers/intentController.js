@@ -1,5 +1,5 @@
 const OpenAI = require("openai");
-const db = require("../db");
+const db = require("../config/db.js");
 const { getDistance } = require("geolib");
 
 const client = new OpenAI({

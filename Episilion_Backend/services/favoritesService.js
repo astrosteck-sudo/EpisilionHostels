@@ -1,4 +1,4 @@
-const db = require("../db");
+const db = require("../config/db.js");
 
 const addFavoriteService = async (userId, hostelId) => {
   const pool = db.promise(); // wrap for async/await

@@ -1,4 +1,4 @@
-const db = require("../db");
+const db = require("../config/db.js");
 
 // Helper function to run SQL queries with promises
 const queryDB = (sql, values = []) =>

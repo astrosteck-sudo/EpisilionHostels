@@ -5,7 +5,7 @@ const path = require("path");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const authMiddleware = require("./middleware/auth.js");
-const db = require("./db"); // Import the MySQL connection
+const db = require("./config/db.js"); // Import the MySQL connection
 
 const app = express();
 const PORT = process.env.PORT || 3000;
