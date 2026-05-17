@@ -1,18 +1,41 @@
 import { SiteFooter } from "../SiteFooter/SiteFooter";
 import "./HostelManagerPage.css";
+import axios from "axios";
+import { useEffect, useState } from "react";
 //import locationPin from "../assets/icons/pin.png";
 
 export function HostelManagerPage() {
-
-
-  const managerHostel = localStorage.getItem("managerUser")
+  const [hostelManagerRoomTypes, setHostelManagerRoomTypes] = useState([]);
+  const managerHostel = localStorage.getItem("managerUser");
   if (!managerHostel) {
     console.log("User is not logged in. Redirecting...");
-    return <p>LOG IN AS A MANGER TO SEE THIS PAGE</p>
+    return <p>LOG IN AS A MANGER TO SEE THIS PAGE</p>;
   }
   //console.log("manager hostel name", JSON.parse(managerHostel))
   //setManagerHostelName(JSON.parse(managerHostel).username)
-  
+  const managerToken = localStorage.getItem("managerToken");
+
+  const loadManagerDashBoardInfo = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:3000/api/manager/dashboard",
+        {
+          headers: {
+            Authorization: `Bearer ${managerToken}`,
+          },
+        },
+      );
+
+      setHostelManagerRoomTypes(response.data.room_types);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    loadManagerDashBoardInfo();
+  }, []);
+
   return (
     <>
       <title>Hostel Manager | Episilion Hostels</title>
@@ -20,7 +43,8 @@ export function HostelManagerPage() {
         <div>
           <p className="dashboard-text">HOSTEL MANAGER DASHBOARD</p>
           <h1 className="hostel-manager-welcome-text">
-            Welcome back, {managerHostel && (JSON.parse(managerHostel).username)}👋
+            Welcome back, {managerHostel && JSON.parse(managerHostel).username}
+            👋
           </h1>
 
           <p className="hostel-manger-welcome-text-second">
@@ -30,7 +54,9 @@ export function HostelManagerPage() {
         </div>
 
         <div className="verified-account-container">
-          <p className="verified-account-hostel-name">{managerHostel && (JSON.parse(managerHostel).username)}</p>
+          <p className="verified-account-hostel-name">
+            {managerHostel && JSON.parse(managerHostel).username}
+          </p>
           <p className="verified-account-text">Verified Manager Account</p>
         </div>
       </div>
@@ -44,12 +70,20 @@ export function HostelManagerPage() {
             </div>
 
             <h3 className="hostel-manager-titles">HOSTEL DIRECTIONS</h3>
-            <textarea type="text" className="hostel-manager-textarea" placeholder="Exit the school from the main gate then...." />
+            <textarea
+              type="text"
+              className="hostel-manager-textarea"
+              placeholder="Exit the school from the main gate then...."
+            />
 
             <h3 className="hostel-manager-titles">
               HOSTEL DISTANCE FROM CAMPUS IN MINUTES
             </h3>
-            <input type="number" className="hostel-manager-textarea" placeholder="2" />
+            <input
+              type="number"
+              className="hostel-manager-textarea"
+              placeholder="2"
+            />
           </div>
 
           <div className="hostel-manager-pricing-container">
@@ -138,29 +172,15 @@ export function HostelManagerPage() {
             </div>
 
             <div className="hostel-manager-room-types-and-price-wrapper">
-              <div>
-                <p>1 in 1</p>
-                <input type="number" placeholder="0.00" />
-                <p>GHS</p>
-              </div>
-
-              <div>
-                <p>2 in 1</p>
-                <input type="number" placeholder="0.00" />
-                <p>GHS</p>
-              </div>
-
-              <div>
-                <p>3 in 1</p>
-                <input type="number" placeholder="0.00" />
-                <p>GHS</p>
-              </div>
-
-              <div>
-                <p>4 in 1</p>
-                <input type="number" placeholder="0.00" />
-                <p>GHS</p>
-              </div>
+              {hostelManagerRoomTypes.map((room) => {
+                return (
+                  <div>
+                    <p>{room.room_type}</p>
+                    <input type="number" placeholder={room.price} />
+                    <p>GHS</p>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>

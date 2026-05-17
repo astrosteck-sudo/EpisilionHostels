@@ -172,6 +172,8 @@ app.use("/api/intent", require("./routes/intent"));
 app.use("/api/favorites", require("./routes/favoritesRoutes.js"));
 app.use("/api/manager/auth", require("./routes/managerAuthRoutes"));
 
+app.use("/api/manager", require("./routes/managerDashboardRoutes"));
+
 // ── Routes ────────────────────────────────────────────────────────────────────
 // GET /api/teamMembers  → return only the teamMembers array
 
