@@ -26,6 +26,7 @@ export function PageHeader({
   const navigate = useNavigate();
   // const [navlink, setNavLink] = useState(false)
   const [showLogoutModal, setShowLogoutModal] = useState(false);
+  const [showManagerLogoutModal, setShowManagerLogoutModal] = useState(false)
   const [openUserPopUpMenu, setOpenUserPopUpMenu] = useState(false);
   const [openManangerPopUpMenu, setOenManangerPopUpMenu] = useState(false);
 
@@ -49,6 +50,7 @@ export function PageHeader({
     localStorage.removeItem("managerToken");
     localStorage.removeItem("managerUser")
     setManagerIsLoggedIn(false);
+    setShowManagerLogoutModal(false)
   }
 
   //THIS WILL CHECK IF THE TARGET IS NOT THE HAMBURGER
@@ -166,7 +168,7 @@ export function PageHeader({
                     </Link>
                   </div>
 
-                  <div onClick={logOutHostelManager}>
+                  <div  onClick={() => setShowManagerLogoutModal(true)}>
                     <img
                       src={userPopLogOutImage}
                       className="user-option-pop-up-images"
@@ -180,7 +182,7 @@ export function PageHeader({
             ""
           )}
 
-          {isLoggedIn && !managerIsLoggedIn ? (
+          {isLoggedIn ? (
             <div>
               <div
                 className="user-button-pill-container"
@@ -270,6 +272,29 @@ export function PageHeader({
                   Cancel
                 </button>
                 <button className="modal-confirm" onClick={handleLogout}>
+                  Log Out
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {showManagerLogoutModal && (
+          <div
+            className="modal-overlay"
+            onClick={() => setShowLogoutModal(false)}
+          >
+            <div className="modal-box" onClick={(e) => e.stopPropagation()}>
+              <h3 className="modal-title">Log Out</h3>
+              <p className="modal-message">Are you sure you want to log out?</p>
+              <div className="modal-buttons">
+                <button
+                  className="modal-cancel"
+                  onClick={() => setShowManagerLogoutModal(false)}
+                >
+                  Cancel
+                </button>
+                <button className="modal-confirm" onClick={logOutHostelManager}>
                   Log Out
                 </button>
               </div>
