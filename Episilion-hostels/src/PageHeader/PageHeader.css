@@ -216,6 +216,7 @@
   background-color: black;
   color: #d3c84d;
   border-radius: 50%;
+  min-width: 40px;
 }
 .user-button-pill{
   display: flex;
@@ -294,8 +295,13 @@
   background-color: grey;
 } */
 
-.hostel-manager-pill{
+.hostel-manager-pill-container{
   width: 18%;
+  cursor: pointer;
+}
+
+.hostel-manager-pill{
+  
   display: flex;
   align-items: center;
   justify-content: center;
@@ -313,6 +319,28 @@
   width: 10%;
   background-color: white;
   border-radius: 50%;
+}
+
+.manager-option-pop-up{
+  margin-top: 10px;
+  position: fixed;
+  width: min(200px, 50%);
+  background-color: rgb(248, 246, 246);
+  text-align: left;
+  padding: 15px;
+  padding-bottom: 10px;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.manager-option-pop-up.close{
+  display: none;
+}
+.manager-option-pop-up div{
+  display: flex;
+  border-bottom: solid black .5px;
+  
 }
 
 @media only screen and (max-width: 992px) {
@@ -395,7 +423,7 @@
   .login-systems a {
     margin-left: 0px;
   }
-  .hostel-manager-pill{
+  .hostel-manager-pill-container{
     width: 80%;
   }
 }

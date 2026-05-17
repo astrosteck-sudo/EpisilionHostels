@@ -8,8 +8,6 @@ exports.loginManager = async (req, res) => {
     // const { username, password } = req.body;
     const username = req.body.managerHostelName;
     const password = req.body.managerPassword;
-    console.log("Received login request for hostel:",username,"with password:",password,
-    );
 
     // 1. Validate input
     if (!username || !password) {

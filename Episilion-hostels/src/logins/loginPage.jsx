@@ -169,7 +169,7 @@ export function LoginPage({ setIsLoggedIn, setManagerIsLoggedIn }) {
               <span className="join-us-span">WELCOME BACK</span>
             </p>
             <h4 className="create-account-text login">
-              <span className="create-account-span">LOGIN</span>
+              <span className="create-account-span">STUDENT LOGIN</span>
             </h4>
             <p className="start-journey-text">
               Good to see you again - let's get you in
@@ -271,7 +271,7 @@ export function LoginPage({ setIsLoggedIn, setManagerIsLoggedIn }) {
               <span className="join-us-span">THANKS FOR JOINING</span>
             </p>
             <h4 className="create-account-text login">
-              <span className="create-account-span">LOGIN</span>
+              <span className="create-account-span">HOSTEL MANAGER LOGIN</span>
             </h4>
             <p className="start-journey-text">
               Good to see you - let's get you in

@@ -8,6 +8,7 @@ import downArrow from "../assets/icons/down-arrow.png";
 import userPopImage from "../assets/icons/user4.png";
 //import userPopFavoriteImage from "../assets/icons/star-black-fivepointed-shape-symbol.png";
 import userPopLogOutImage from "../assets/icons/logout.png";
+import dashboardImage from "../assets/icons/dashboard.png";
 import managerProfileIcon from "../assets/icons/user-profile-icon.png";
 import { getInitials } from "../UTILS/initials";
 
@@ -20,11 +21,13 @@ export function PageHeader({
   isLoggedIn,
   setIsLoggedIn,
   managerIsLoggedIn,
+  setManagerIsLoggedIn,
 }) {
   const navigate = useNavigate();
   // const [navlink, setNavLink] = useState(false)
   const [showLogoutModal, setShowLogoutModal] = useState(false);
   const [openUserPopUpMenu, setOpenUserPopUpMenu] = useState(false);
+  const [openManangerPopUpMenu, setOenManangerPopUpMenu] = useState(false)
 
   function renderHamburgerMenu() {
     if (!navlink) {
@@ -40,6 +43,12 @@ export function PageHeader({
     setShowLogoutModal(false);
     // your logout logic here (clear token, redirect, etc.)
   };
+
+  function logOutHostelManager(){
+    navigate('/login')
+    localStorage.removeItem('managerToken')
+    setManagerIsLoggedIn(false)
+  }
 
   //THIS WILL CHECK IF THE TARGET IS NOT THE HAMBURGER
   // BUTTON, NAVLINKS MENU, AND IF THE NAVLINKS IS OPEN,
@@ -74,6 +83,14 @@ export function PageHeader({
     )
       setOpenUserPopUpMenu(false);
   });
+
+  function handleManagerDisplayPopUpMenu(){
+    if(openManangerPopUpMenu){
+      setOenManangerPopUpMenu(false)
+    }else{
+      setOenManangerPopUpMenu(true)
+    }
+  }
 
   //onClick={() => setShowLogoutModal(true)}
   return (
@@ -110,11 +127,34 @@ export function PageHeader({
 
           {managerIsLoggedIn ? (
             <>
-              <div className="hostel-manager-pill">
-                <img src={managerProfileIcon} alt="" />
-                <Link className="user-profile-page-link" to="/hostelManagerPage">
-                  <p>Manager dashBoard</p>
-                </Link>
+              <div className="hostel-manager-pill-container">
+                <div className="hostel-manager-pill" onClick={handleManagerDisplayPopUpMenu}>
+                  <img src={managerProfileIcon} alt="" />
+                  <p>Manager</p>
+                </div>
+
+                <div className={`manager-option-pop-up ${openManangerPopUpMenu ? 'open' : 'close'}`}>
+                  <div>
+                    <img
+                      src={dashboardImage}
+                      className="user-option-pop-up-images"
+                    />
+                    <Link
+                      className="user-profile-page-link"
+                      to="/hostelManagerPage"
+                    >
+                      <p>Manager dashboard</p>
+                    </Link>
+                  </div>
+
+                  <div onClick={logOutHostelManager}>
+                    <img
+                      src={userPopLogOutImage}
+                      className="user-option-pop-up-images"
+                    />
+                    <p>Log Out</p>
+                  </div>
+                </div>
               </div>
             </>
           ) : (
