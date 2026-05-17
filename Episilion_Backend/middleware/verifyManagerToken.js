@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 
 // Middleware: Verify manager JWT token
 const verifyManagerToken = (req, res, next) => {
+  
   try {
     const authHeader = req.headers.authorization;
 

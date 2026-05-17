@@ -174,6 +174,8 @@ app.use("/api/manager/auth", require("./routes/managerAuthRoutes"));
 
 app.use("/api/manager", require("./routes/managerDashboardRoutes"));
 
+app.use("/api/manager", require("./routes/managerDashboardRoutes.js"));
+
 // ── Routes ────────────────────────────────────────────────────────────────────
 // GET /api/teamMembers  → return only the teamMembers array
 

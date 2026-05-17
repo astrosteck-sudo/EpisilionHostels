@@ -10,4 +10,10 @@ const {
 
 router.get("/dashboard", verifyManagerToken, getManagerDashboard);
 
+const {
+  updateManagerHostel,
+} = require("../controllers/managerDashBoardController");
+
+router.put("/update-hostel", verifyManagerToken, updateManagerHostel);
+
 module.exports = router;

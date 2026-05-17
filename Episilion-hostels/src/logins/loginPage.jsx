@@ -186,7 +186,7 @@ export function LoginPage({ setIsLoggedIn, setManagerIsLoggedIn }) {
             <span>log in with email</span>
           </div>
 
-          <form method="POST" id="myForm" onSubmit={handleLogin}>
+          <form onSubmit={handleLogin}>
             <div className="email-address-conatainer">
               <p for="email-address" className="email-address-header">
                 EMAIL ADDRESS

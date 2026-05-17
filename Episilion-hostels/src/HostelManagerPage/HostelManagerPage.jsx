@@ -7,10 +7,56 @@ import { useEffect, useState } from "react";
 export function HostelManagerPage() {
   const [hostelManagerRoomTypes, setHostelManagerRoomTypes] = useState([]);
   const managerHostel = localStorage.getItem("managerUser");
-  if (!managerHostel) {
-    console.log("User is not logged in. Redirecting...");
-    return <p>LOG IN AS A MANGER TO SEE THIS PAGE</p>;
+
+  const [hostelDirections, setHostelDirections] = useState("");
+  const [
+    hostelDistanceFromCampusInMinutes,
+    setHostelDistanceFromCampusInMinutes,
+  ] = useState("");
+  const [hostelMinimumPrice, setHostelMinimumPrice] = useState("");
+  const [hostelMaximumPrice, setHostelMaximumPrice] = useState("");
+  const [installmentAllowed, setInstallmentAllowed] = useState("");
+  const [refundsAllowed, setRefundsAllowed] = useState("");
+  const [utilities, setUtilities] = useState("");
+  const [maintenance, setMaintenance] = useState("");
+  const [cautionDeposit, setCautionDeposit] = useState("");
+  // const [roomTypesAndPrice, setRoomTypesAndPrice] = useState(
+  //   hostelManagerRoomTypes,
+  // );
+  //const [installmentButtonActive, setInstallmentButtonActive] = useState(false)
+
+  function handleHostelDirectionsChange(e) {
+    setHostelDirections(e.target.value);
   }
+  function handleHostelDistanceFromCampusInMinutesChange(e) {
+    setHostelDistanceFromCampusInMinutes(e.target.value);
+  }
+  function handleHostelMinimumPriceChange(e) {
+    setHostelMinimumPrice(e.target.value);
+  }
+  function handleHostelMaximumPriceChange(e) {
+    setHostelMaximumPrice(e.target.value);
+  }
+  function handleInstallmentAllowedChange(parameter) {
+    setInstallmentAllowed(parameter);
+  }
+  function handleRefundsAllowedChange(parameter) {
+    setRefundsAllowed(parameter);
+  }
+  function handleUtilitiesChange(e) {
+    setUtilities(e.target.value);
+  }
+  function handleMaintenanceChange(e) {
+    setMaintenance(e.target.value);
+  }
+  function handleCautionDepositChange(e) {
+    setCautionDeposit(e.target.value);
+  }
+
+  // if (!managerHostel) {
+  //   console.log("User is not logged in. Redirecting...");
+  //   return <p>LOG IN AS A MANGER TO SEE THIS PAGE</p>;
+  // }
   //console.log("manager hostel name", JSON.parse(managerHostel))
   //setManagerHostelName(JSON.parse(managerHostel).username)
   const managerToken = localStorage.getItem("managerToken");
@@ -27,6 +73,7 @@ export function HostelManagerPage() {
       );
 
       setHostelManagerRoomTypes(response.data.room_types);
+      console.log(response.data.room_types);
     } catch (error) {
       console.log(error);
     }
@@ -36,6 +83,76 @@ export function HostelManagerPage() {
     loadManagerDashBoardInfo();
   }, []);
 
+  const updateHostel = async (e) => {
+    e.preventDefault();
+
+    console.log(
+      "hostelDirections",
+      hostelDirections,
+      "\n",
+      "\n",
+      "hostelDistanceFromCampusInMinutes",
+      hostelDistanceFromCampusInMinutes,
+      "\n",
+      "\n",
+      "installmentAllowed",
+      installmentAllowed,
+      "\n",
+      "\n",
+      "refundsAllowed",
+      refundsAllowed,
+      "\n",
+      "\n",
+      "utilities",
+      utilities,
+      "\n",
+      "\n",
+      "maintenance",
+      maintenance,
+      "\n",
+      "\n",
+      "cautionDeposit",
+      cautionDeposit,
+      "\n",
+      "\n",
+      "roomTypesAndPrice",
+      hostelManagerRoomTypes,
+    );
+
+    try {
+      const response = await axios.put(
+        "http://localhost:3000/api/manager/update-hostel",
+
+        {
+          minimum_price: Number(hostelMinimumPrice),
+          maximum_price: Number(hostelMaximumPrice),
+
+          installment_allowed: installmentAllowed === '' ? 0 : installmentAllowed,
+          refunds_allowed: refundsAllowed === '' ? 'No Refunds' : refundsAllowed,
+
+          utilities: Number(utilities),
+          maintenance: Number(maintenance),
+          caution_deposit: Number(cautionDeposit),
+
+          hostel_direction: hostelDirections,
+          distance_to_campus: Number(hostelDistanceFromCampusInMinutes),
+
+          room_types: hostelManagerRoomTypes,
+        },
+
+        {
+          headers: {
+            Authorization: `Bearer ${managerToken}`,
+            "Content-Type": "application/json",
+          },
+        },
+      );
+
+      console.log("Update success:", response.data);
+    } catch (error) {
+      console.error("Update failed:", error.response?.data || error.message);
+    }
+  };
   return (
     <>
       <title>Hostel Manager | Episilion Hostels</title>
@@ -61,7 +178,7 @@ export function HostelManagerPage() {
         </div>
       </div>
 
-      <form action="">
+      <form onSubmit={updateHostel}>
         <div className="hostel-manager-updates-container">
           <div className="hostel-manager-location-and-distance-container">
             <div className="hostel-manager-location-and-distance-header">
@@ -74,6 +191,8 @@ export function HostelManagerPage() {
               type="text"
               className="hostel-manager-textarea"
               placeholder="Exit the school from the main gate then...."
+              value={hostelDirections}
+              onChange={handleHostelDirectionsChange}
             />
 
             <h3 className="hostel-manager-titles">
@@ -83,6 +202,8 @@ export function HostelManagerPage() {
               type="number"
               className="hostel-manager-textarea"
               placeholder="2"
+              value={hostelDistanceFromCampusInMinutes}
+              onChange={handleHostelDistanceFromCampusInMinutesChange}
             />
           </div>
 
@@ -99,6 +220,8 @@ export function HostelManagerPage() {
                   type="number"
                   className="hostel-manager-textarea"
                   placeholder="e.g. 2500"
+                  value={hostelMinimumPrice}
+                  onChange={handleHostelMinimumPriceChange}
                 />
               </div>
               <div>
@@ -107,6 +230,8 @@ export function HostelManagerPage() {
                   type="number"
                   className="hostel-manager-textarea"
                   placeholder="e.g. 3000"
+                  value={hostelMaximumPrice}
+                  onChange={handleHostelMaximumPriceChange}
                 />
               </div>
             </div>
@@ -115,16 +240,16 @@ export function HostelManagerPage() {
               <h3 className="hostel-manager-titles">
                 IS INSTALLMENT PAYMENT ALLOWED
               </h3>
-              <div className="hostel-manager-installment-buttons">
-                <button>✔️YES</button>
-                <button>❌NO</button>
+              <div className="hostel-manager-binary-buttons">
+                <button className={`hostel-manager-installment-button ${installmentAllowed ===  1? 'allowed' : ''}`} onClick={() => handleInstallmentAllowedChange(1)}>✔️YES</button>
+                <button className={`hostel-manager-installment-button ${installmentAllowed === 0? 'notAllowed' : ''}`} onClick={() => handleInstallmentAllowedChange(0)}>❌NO</button>
               </div>
             </div>
-            <div className="hostel-manager-installment-container">
+            <div className="hostel-manager-refund-container">
               <h3 className="hostel-manager-titles">ARE REFUNDS ALLOWED</h3>
-              <div className="hostel-manager-installment-buttons">
-                <button>✔️YES</button>
-                <button>❌NO</button>
+              <div className="hostel-manager-binary-buttons">
+                <button className={`hostel-manager-refund-button ${refundsAllowed === 'Refunds Are Allowed' ? 'allowed' : '' }`} onClick={() => handleRefundsAllowedChange('Refunds Are Allowed')}>✔️YES</button>
+                <button className={`hostel-manager-refund-button ${refundsAllowed != 'Refunds Are Allowed' ? 'notAllowed' : '' }`} onClick={() => handleRefundsAllowedChange('No Refunds')}>❌NO</button>
               </div>
             </div>
           </div>
@@ -142,6 +267,8 @@ export function HostelManagerPage() {
                   type="number"
                   className="hostel-manager-textarea"
                   placeholder="0.00"
+                  value={utilities}
+                  onChange={handleUtilitiesChange}
                 />
               </div>
 
@@ -151,6 +278,8 @@ export function HostelManagerPage() {
                   type="number"
                   className="hostel-manager-textarea"
                   placeholder="0.00"
+                  value={maintenance}
+                  onChange={handleMaintenanceChange}
                 />
               </div>
 
@@ -160,6 +289,8 @@ export function HostelManagerPage() {
                   type="number"
                   className="hostel-manager-textarea"
                   placeholder="0.00"
+                  value={cautionDeposit}
+                  onChange={handleCautionDepositChange}
                 />
               </div>
             </div>
@@ -172,21 +303,27 @@ export function HostelManagerPage() {
             </div>
 
             <div className="hostel-manager-room-types-and-price-wrapper">
-              {hostelManagerRoomTypes.map((room) => {
-                return (
-                  <div>
-                    <p>{room.room_type}</p>
-                    <input type="number" placeholder={room.price} />
-                    <p>GHS</p>
-                  </div>
-                );
-              })}
+              {hostelManagerRoomTypes.map((room, index) => (
+                <div key={room.id}>
+                  <p>{room.room_type}</p>
+                  <input
+                    type="number"
+                    value={room.price}
+                    onChange={(e) => {
+                      const updated = [...hostelManagerRoomTypes];
+                      updated[index] = { ...room, price: Number(e.target.value) };
+                      setHostelManagerRoomTypes(updated);
+                    }}
+                  />
+                  <p>GHS</p>
+                </div>
+              ))}
             </div>
           </div>
         </div>
 
         <div className="hostel-manager-submit-button-container">
-          <button className="hostel-manager-discard-button" type="submit">
+          <button className="hostel-manager-discard-button" type="reset">
             Discard Changes
           </button>
           <button className="hostel-manager-save-changes-button" type="submit">

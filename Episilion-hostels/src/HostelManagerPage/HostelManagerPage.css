@@ -128,11 +128,11 @@
 .hostel-manager-min-max-container div {
   width: 50%;
 }
-.hostel-manager-installment-buttons {
+.hostel-manager-binary-buttons{
   display: flex;
   gap: 30px;
 }
-.hostel-manager-installment-buttons button {
+.hostel-manager-binary-buttons button {
   width: 50%;
   padding-top: 10px;
   padding-bottom: 10px;
@@ -143,28 +143,48 @@
   border: solid 0.5px grey;
   font-weight: bolder;
 }
+.hostel-manager-installment-button.allowed {
+  background-color: rgba(7, 114, 7, 0.164);
+  border: solid green 1px;
+  color: green;
+}
+.hostel-manager-installment-button.notAllowed {
+  background-color: rgba(114, 28, 7, 0.164);
+  border: solid red 1px;
+  color: red;
+}
+.hostel-manager-refund-button.allowed {
+  background-color: rgba(7, 114, 7, 0.164);
+  border: solid green 1px;
+  color: green;
+}
+.hostel-manager-refund-button.notAllowed {
+  background-color: rgba(114, 28, 7, 0.164);
+  border: solid red 1px;
+  color: red;
+}
 
 .hostel-manager-additional-fees-wrapper {
   display: flex;
 }
-.hostel-manager-room-types-and-price-wrapper{
+.hostel-manager-room-types-and-price-wrapper {
   display: flex;
   gap: 10px;
   margin-top: 10px;
 }
-.hostel-manager-room-types-and-price-wrapper p{
+.hostel-manager-room-types-and-price-wrapper p {
   text-align: center;
   font-weight: bolder;
 }
-.hostel-manager-room-types-and-price-wrapper input{
+.hostel-manager-room-types-and-price-wrapper input {
   padding: 7px;
   border-radius: 10px;
   width: 70%;
   margin: auto;
-  border: solid .2px grey;
+  border: solid 0.2px grey;
 }
 
-.hostel-manager-room-types-and-price-wrapper div{
+.hostel-manager-room-types-and-price-wrapper div {
   padding: 7px;
   display: flex;
   flex-direction: column;
@@ -172,10 +192,10 @@
   justify-content: center;
   background-color: whitesmoke;
   border-radius: 10px;
-  border: solid .5px grey;
+  border: solid 0.5px grey;
 }
 
-.hostel-manager-submit-button-container{
+.hostel-manager-submit-button-container {
   margin-bottom: 10px;
   display: flex;
   gap: 20px;
@@ -185,7 +205,7 @@
   justify-content: flex-end;
   margin-bottom: 30px;
 }
-.hostel-manager-submit-button-container button{
+.hostel-manager-submit-button-container button {
   padding-left: 20px;
   padding-right: 20px;
   padding-top: 10px;
@@ -194,11 +214,11 @@
   border-radius: 10px;
   font-size: clamp(13px, 2vw, 14px);
 }
-.hostel-manager-discard-button{
+.hostel-manager-discard-button {
   background-color: whitesmoke;
-  border: solid .5px grey;
+  border: solid 0.5px grey;
 }
-.hostel-manager-save-changes-button{
+.hostel-manager-save-changes-button {
   background-color: #d3c84d;
   color: white;
 }
@@ -212,8 +232,7 @@
     width: 30%;
     padding: 5px;
   }
-  .hostel-manager-room-types-and-price-wrapper{
+  .hostel-manager-room-types-and-price-wrapper {
     flex-direction: column;
   }
-  
 }
