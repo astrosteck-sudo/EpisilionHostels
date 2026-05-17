@@ -69,13 +69,13 @@ export function LoginPage({ setIsLoggedIn, setManagerIsLoggedIn }) {
       // setManagerHostelName("");
       // setManagerPassword("");
       console.log("Login successful");
-      setManagerIsLoggedIn(true)
+      setManagerIsLoggedIn(true);
       navigate("/hostelManagerPage");
-      setManagerErrorMessage('')
+      setManagerErrorMessage("");
     } catch (error) {
       navigate("/login");
       console.log(error);
-      setManagerErrorMessage('Something is wrong try again')
+      setManagerErrorMessage("Something is wrong try again");
     }
   }
 
@@ -101,6 +101,8 @@ export function LoginPage({ setIsLoggedIn, setManagerIsLoggedIn }) {
 
       // ✅ REDIRECT TO HOME
       setIsLoggedIn(true);
+      localStorage.removeItem("managerToken");
+      setManagerIsLoggedIn(false);
       navigate("/");
     } catch (error) {
       console.log(error);
