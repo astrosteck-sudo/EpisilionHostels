@@ -27,7 +27,7 @@ export function PageHeader({
   // const [navlink, setNavLink] = useState(false)
   const [showLogoutModal, setShowLogoutModal] = useState(false);
   const [openUserPopUpMenu, setOpenUserPopUpMenu] = useState(false);
-  const [openManangerPopUpMenu, setOenManangerPopUpMenu] = useState(false)
+  const [openManangerPopUpMenu, setOenManangerPopUpMenu] = useState(false);
 
   function renderHamburgerMenu() {
     if (!navlink) {
@@ -44,10 +44,11 @@ export function PageHeader({
     // your logout logic here (clear token, redirect, etc.)
   };
 
-  function logOutHostelManager(){
-    navigate('/login')
-    localStorage.removeItem('managerToken')
-    setManagerIsLoggedIn(false)
+  function logOutHostelManager() {
+    navigate("/login");
+    localStorage.removeItem("managerToken");
+    localStorage.removeItem("managerUser")
+    setManagerIsLoggedIn(false);
   }
 
   //THIS WILL CHECK IF THE TARGET IS NOT THE HAMBURGER
@@ -84,11 +85,11 @@ export function PageHeader({
       setOpenUserPopUpMenu(false);
   });
 
-  function handleManagerDisplayPopUpMenu(){
-    if(openManangerPopUpMenu){
-      setOenManangerPopUpMenu(false)
-    }else{
-      setOenManangerPopUpMenu(true)
+  function handleManagerDisplayPopUpMenu() {
+    if (openManangerPopUpMenu) {
+      setOenManangerPopUpMenu(false);
+    } else {
+      setOenManangerPopUpMenu(true);
     }
   }
 
@@ -128,12 +129,17 @@ export function PageHeader({
           {managerIsLoggedIn ? (
             <>
               <div className="hostel-manager-pill-container">
-                <div className="hostel-manager-pill" onClick={handleManagerDisplayPopUpMenu}>
+                <div
+                  className="hostel-manager-pill"
+                  onClick={handleManagerDisplayPopUpMenu}
+                >
                   <img src={managerProfileIcon} alt="" />
                   <p>Manager</p>
                 </div>
 
-                <div className={`manager-option-pop-up ${openManangerPopUpMenu ? 'open' : 'close'}`}>
+                <div
+                  className={`manager-option-pop-up ${openManangerPopUpMenu ? "open" : "close"}`}
+                >
                   <div>
                     <img
                       src={dashboardImage}
@@ -144,6 +150,19 @@ export function PageHeader({
                       to="/hostelManagerPage"
                     >
                       <p>Manager dashboard</p>
+                    </Link>
+                  </div>
+
+                  <div>
+                    <img
+                      src={dashboardImage}
+                      className="user-option-pop-up-images"
+                    />
+                    <Link
+                      className="user-profile-page-link"
+                      to="/hostelManagerPage"
+                    >
+                      <p>Change Password</p>
                     </Link>
                   </div>
 

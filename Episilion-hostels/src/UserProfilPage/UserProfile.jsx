@@ -12,6 +12,10 @@ import {FavoriteHostels } from './FavoriteHostels'
 
 export function UserProfilePage({ isLoggedIn }) {
   const [favoriteHostelResponse, setFavoriteHostelResponse] = useState([])
+  if (!isLoggedIn) {
+    console.log("User is not logged in. Redirecting...");
+    return <p>Log in as student to see this page</p>
+  }
   //THIS IS TO EXTRACT THE USER IMFORMATION FROM THE TOKEN
   const storedUser = localStorage.getItem("user");
   const user = storedUser ? JSON.parse(storedUser) : null;
@@ -20,10 +24,7 @@ export function UserProfilePage({ isLoggedIn }) {
     loadFavoriteHostel();
   }, []);
 
-  if (!isLoggedIn) {
-    console.log("User is not logged in. Redirecting...");
-    return <p>Log in</p>
-  }
+  
 
   const loadFavoriteHostel = async () => {
     const response = await axios.get("http://localhost:3000/api/favorites/", {
