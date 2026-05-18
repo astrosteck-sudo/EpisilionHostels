@@ -9,6 +9,7 @@ import userPopImage from "../assets/icons/user4.png";
 //import userPopFavoriteImage from "../assets/icons/star-black-fivepointed-shape-symbol.png";
 import userPopLogOutImage from "../assets/icons/logout.png";
 import dashboardImage from "../assets/icons/dashboard.png";
+import passwordImage from "../assets/icons/shield.png";
 import managerProfileIcon from "../assets/icons/user-profile-icon.png";
 import { getInitials } from "../UTILS/initials";
 
@@ -157,7 +158,7 @@ export function PageHeader({
 
                   <div>
                     <img
-                      src={dashboardImage}
+                      src={passwordImage}
                       className="user-option-pop-up-images"
                     />
                     <Link

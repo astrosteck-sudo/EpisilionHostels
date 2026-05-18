@@ -2,7 +2,6 @@ const db = require("../config/db.js");
 
 exports.getManagerDashboard = async (req, res) => {
   try {
-
     const hostelId = req.user.hostelId;
 
     // =========================
@@ -20,7 +19,6 @@ exports.getManagerDashboard = async (req, res) => {
     `;
 
     db.query(roomQuery, [hostelId], (roomErr, roomResults) => {
-
       if (roomErr) {
         console.error(roomErr);
 
@@ -48,7 +46,6 @@ exports.getManagerDashboard = async (req, res) => {
       `;
 
       db.query(pricingQuery, [hostelId], (pricingErr, pricingResults) => {
-
         if (pricingErr) {
           console.error(pricingErr);
 
@@ -71,7 +68,6 @@ exports.getManagerDashboard = async (req, res) => {
         `;
 
         db.query(locationQuery, [hostelId], (locationErr, locationResults) => {
-
           if (locationErr) {
             console.error(locationErr);
 
@@ -81,42 +77,26 @@ exports.getManagerDashboard = async (req, res) => {
           }
 
           return res.status(200).json({
+            pricing: pricingResults.length > 0 ? pricingResults[0] : {},
 
-            pricing:
-              pricingResults.length > 0
-                ? pricingResults[0]
-                : {},
+            location: locationResults.length > 0 ? locationResults[0] : {},
 
-            location:
-              locationResults.length > 0
-                ? locationResults[0]
-                : {},
-
-            room_types: roomResults
-
+            room_types: roomResults,
           });
-
         });
-
       });
-
     });
-
   } catch (error) {
-
     console.error(error);
 
     return res.status(500).json({
       error: "Server error",
     });
-
   }
 };
 
-
 exports.updateManagerHostel = async (req, res) => {
   try {
-
     // HOSTEL ID FROM TOKEN
     const hostelId = req.user.hostelId;
 
@@ -134,7 +114,7 @@ exports.updateManagerHostel = async (req, res) => {
       around_hostel,
       distance_to_campus,
 
-      room_types
+      room_types,
     } = req.body;
 
     /*
@@ -179,10 +159,9 @@ exports.updateManagerHostel = async (req, res) => {
         utilities,
         maintenance,
         caution_deposit,
-        hostelId
+        hostelId,
       ],
       (pricingErr) => {
-
         if (pricingErr) {
           console.error(pricingErr);
 
@@ -205,13 +184,8 @@ exports.updateManagerHostel = async (req, res) => {
 
         db.query(
           locationQuery,
-          [
-            hostel_direction,
-            distance_to_campus,
-            hostelId
-          ],
+          [hostel_direction, distance_to_campus, hostelId],
           (locationErr) => {
-
             if (locationErr) {
               console.error(locationErr);
 
@@ -224,13 +198,8 @@ exports.updateManagerHostel = async (req, res) => {
             // UPDATE ROOM TYPES
             // =========================
 
-            if (
-              room_types &&
-              Array.isArray(room_types)
-            ) {
-
+            if (room_types && Array.isArray(room_types)) {
               room_types.forEach((room) => {
-
                 const roomQuery = `
                   UPDATE rooms
                   SET price = ?
@@ -238,36 +207,23 @@ exports.updateManagerHostel = async (req, res) => {
                   AND hostel_id = ?
                 `;
 
-                db.query(
-                  roomQuery,
-                  [
-                    room.price,
-                    room.room_id,
-                    hostelId
-                  ]
-                );
-
+                db.query(roomQuery, [room.price, room.room_id, hostelId]);
               });
-
             }
-
-            return res.status(200).json({
-              message: "Hostel updated successfully",
-            });
-
-          }
+            setTimeout(() => {
+              return res.status(200).json({
+                message: "Hostel updated successfully",
+              });
+            }, 2000);
+          },
         );
-
-      }
+      },
     );
-
   } catch (error) {
-
     console.error(error);
 
     return res.status(500).json({
       error: "Server error",
     });
-
   }
 };

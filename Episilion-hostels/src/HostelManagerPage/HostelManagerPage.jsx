@@ -6,8 +6,9 @@ import { useEffect, useState } from "react";
 
 export function HostelManagerPage() {
   const [hostelManagerRoomTypes, setHostelManagerRoomTypes] = useState([]);
-  const [hostelGeneralInfo, setHostelGeneralInfo] = useState('')
+  //const [hostelGeneralInfo, setHostelGeneralInfo] = useState('')
   const managerHostel = localStorage.getItem("managerUser");
+  const [isSubmittingUpdate, setIsSubmittingUpdate] = useState(false)
 
   const [hostelDirections, setHostelDirections] = useState('');
   const [
@@ -74,7 +75,7 @@ export function HostelManagerPage() {
       );
 
       setHostelManagerRoomTypes(response.data.room_types);
-      setHostelGeneralInfo(response.data)
+      //setHostelGeneralInfo(response.data)
       setHostelDirections(response.data.location.directions)
       setHostelDistanceFromCampusInMinutes(response.data.location.distance_to_campus_in_minutes)
       setCautionDeposit(response.data.pricing.caution_deposit)
@@ -98,6 +99,7 @@ export function HostelManagerPage() {
 
   const updateHostel = async (e) => {
     e.preventDefault();
+    setIsSubmittingUpdate(true)
 
     console.log(
       "hostelDirections",
@@ -160,6 +162,7 @@ export function HostelManagerPage() {
           },
         },
       );
+      setIsSubmittingUpdate(false)
 
       console.log("Update success:", response.data);
     } catch (error) {
@@ -339,8 +342,8 @@ export function HostelManagerPage() {
           <button className="hostel-manager-discard-button" type="reset">
             Discard Changes
           </button>
-          <button className="hostel-manager-save-changes-button" type="submit">
-            Save Changes
+          <button className={`hostel-manager-save-changes-button ${isSubmittingUpdate? 'submittingUpdate' :''}`} type="submit">
+            {`${isSubmittingUpdate? 'Submitting Update' :'Save Changes'}`}
           </button>
         </div>
       </form>

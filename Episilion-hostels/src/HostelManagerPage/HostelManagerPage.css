@@ -228,6 +228,14 @@
   background-color: #d3c84d;
   color: white;
 }
+.hostel-manager-save-changes-button:active{
+  transform: scale(.95);
+}
+.hostel-manager-save-changes-button.submittingUpdate{
+  background-color: grey;
+  transform: none;
+  color: black;
+}
 @media only screen and (max-width: 900px) {
   .hostel-manager-info-container {
     width: 100%;
