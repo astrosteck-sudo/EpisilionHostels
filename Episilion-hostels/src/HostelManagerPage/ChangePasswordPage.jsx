@@ -1,7 +1,7 @@
 import { SiteFooter } from "../SiteFooter/SiteFooter";
 import "./changePasswordPage.css";
 import passwordImage from "../assets/icons/shield.png";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 
 export function ChangePasswordPage({ managerIsLoggedIn }) {
@@ -9,6 +9,8 @@ export function ChangePasswordPage({ managerIsLoggedIn }) {
   const [hostelMangerNewPaswword, setHostelManagerNewPassword] = useState("");
   const [hostelManagerComfirmPassword, setHostelManagerComfirmPassword] =
     useState("");
+  const [passwordUpdateSuccessfull, setPasswordUpdateSuccessfull] =
+    useState();
 
   if (!managerIsLoggedIn) {
     console.log("User is not logged in. Redirecting...");
@@ -30,7 +32,7 @@ export function ChangePasswordPage({ managerIsLoggedIn }) {
   const managerToken = localStorage.getItem("managerToken");
   const updateManagerPassword = async (e) => {
     e.preventDefault();
-    console.log('submit pressesd')
+    console.log("submit pressesd");
 
     try {
       const response = await axios.put(
@@ -39,17 +41,25 @@ export function ChangePasswordPage({ managerIsLoggedIn }) {
         {
           hostelManagerOldpassword: hostelManagerOldpassword,
           hostelMangerNewPaswword: hostelMangerNewPaswword,
-          hostelManagerComfirmPassword: hostelManagerComfirmPassword
+          hostelManagerComfirmPassword: hostelManagerComfirmPassword,
         },
 
         {
           headers: {
-            Authorization: `Bearer ${managerToken}`
+            Authorization: `Bearer ${managerToken}`,
           },
         },
       );
-      console.log(response.data)
+      console.log(response.data);
+      setPasswordUpdateSuccessfull('Update Successful')
+      setTimeout(() => {
+        setPasswordUpdateSuccessfull('')
+      }, 2000)
     } catch (error) {
+      setPasswordUpdateSuccessfull('Update not Successful Try Again !!')
+      setTimeout(() => {
+        setPasswordUpdateSuccessfull('')
+      }, 2000)
       console.log("Update failed:", error.response?.data || error.message);
     }
   };
@@ -115,6 +125,10 @@ export function ChangePasswordPage({ managerIsLoggedIn }) {
             value={hostelManagerComfirmPassword}
             onChange={handleComfirmPassword}
           />
+
+          <div
+            className={`hostel-manager-password-change-update-success ${passwordUpdateSuccessfull === 'Update Successful' ? "success" : "notSuccess"}`}
+          >{passwordUpdateSuccessfull}</div>
 
           <div className="hostel-manager-password-change-password-warning">
             Use at least 8 characters with a mix of letters, number and symbols
