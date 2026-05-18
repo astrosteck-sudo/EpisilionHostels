@@ -63,6 +63,13 @@ export function ChangePasswordPage({ managerIsLoggedIn }) {
       console.log("Update failed:", error.response?.data || error.message);
     }
   };
+
+  function handleClearForm() {
+  setHostelManagerOldPassword("");
+  setHostelManagerNewPassword("");
+  setHostelManagerComfirmPassword("");
+}
+
   return (
     <>
       <form
@@ -142,10 +149,12 @@ export function ChangePasswordPage({ managerIsLoggedIn }) {
               className="hostel-manager-password-change-form-button-sumbit"
             />
             <input
-              type="reset"
+              type="button"
               value="Clear Form"
               className="hostel-manager-password-change-form-button-clearButton"
-            />
+              onClick={handleClearForm}
+            />  
+              
           </div>
         </div>
       </form>

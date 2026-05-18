@@ -81,6 +81,7 @@ export function HostelManagerPage() {
       setCautionDeposit(response.data.pricing.caution_deposit)
       setMaintenance(response.data.pricing.maintenance_fee)
       setUtilities(response.data.pricing.utilities_fee)
+      
 
       setHostelMinimumPrice(response.data.pricing.price_min)
       setHostelMaximumPrice(response.data.pricing.price_max)
@@ -101,39 +102,7 @@ export function HostelManagerPage() {
     e.preventDefault();
     setIsSubmittingUpdate(true)
 
-    console.log(
-      "hostelDirections",
-      hostelDirections,
-      "\n",
-      "\n",
-      "hostelDistanceFromCampusInMinutes",
-      hostelDistanceFromCampusInMinutes,
-      "\n",
-      "\n",
-      "installmentAllowed",
-      installmentAllowed,
-      "\n",
-      "\n",
-      "refundsAllowed",
-      refundsAllowed,
-      "\n",
-      "\n",
-      "utilities",
-      utilities,
-      "\n",
-      "\n",
-      "maintenance",
-      maintenance,
-      "\n",
-      "\n",
-      "cautionDeposit",
-      cautionDeposit,
-      "\n",
-      "\n",
-      "roomTypesAndPrice",
-      hostelManagerRoomTypes,
-    );
-
+  
     try {
       const response = await axios.put(
         "http://localhost:3000/api/manager/update-hostel",
@@ -257,15 +226,15 @@ export function HostelManagerPage() {
                 IS INSTALLMENT PAYMENT ALLOWED
               </h3>
               <div className="hostel-manager-binary-buttons">
-                <button className={`hostel-manager-installment-button ${installmentAllowed ===  1? 'allowed' : ''}`} onClick={() => handleInstallmentAllowedChange(1)}>✔️YES</button>
-                <button className={`hostel-manager-installment-button ${installmentAllowed === 0? 'notAllowed' : ''}`} onClick={() => handleInstallmentAllowedChange(0)}>❌NO</button>
+                <button className={`hostel-manager-installment-button ${installmentAllowed ===  1? 'allowed' : ''}`} onClick={() => handleInstallmentAllowedChange(1)} type="button">✔️YES</button>
+                <button className={`hostel-manager-installment-button ${installmentAllowed === 0? 'notAllowed' : ''}`} onClick={() => handleInstallmentAllowedChange(0)} type="button">❌NO</button>
               </div>
             </div>
             <div className="hostel-manager-refund-container">
               <h3 className="hostel-manager-titles">ARE REFUNDS ALLOWED</h3>
               <div className="hostel-manager-binary-buttons">
-                <button className={`hostel-manager-refund-button ${refundsAllowed === 'Refunds Are Allowed' ? 'allowed' : '' }`} onClick={() => handleRefundsAllowedChange('Refunds Are Allowed')}>✔️YES</button>
-                <button className={`hostel-manager-refund-button ${refundsAllowed != 'Refunds Are Allowed' ? 'notAllowed' : '' }`} onClick={() => handleRefundsAllowedChange('No Refunds')}>❌NO</button>
+                <button className={`hostel-manager-refund-button ${refundsAllowed === 'Refunds Are Allowed' ? 'allowed' : '' }`} onClick={() => handleRefundsAllowedChange('Refunds Are Allowed')} type="button">✔️YES</button>
+                <button className={`hostel-manager-refund-button ${refundsAllowed != 'Refunds Are Allowed' ? 'notAllowed' : '' }`} onClick={() => handleRefundsAllowedChange('No Refunds')} type="button">❌NO</button>
               </div>
             </div>
           </div>
@@ -339,7 +308,7 @@ export function HostelManagerPage() {
         </div>
 
         <div className="hostel-manager-submit-button-container">
-          <button className="hostel-manager-discard-button" type="reset">
+          <button className="hostel-manager-discard-button" type="button" onClick={loadManagerDashBoardInfo}>
             Discard Changes
           </button>
           <button className={`hostel-manager-save-changes-button ${isSubmittingUpdate? 'submittingUpdate' :''}`} type="submit">
