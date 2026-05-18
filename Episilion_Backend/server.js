@@ -171,9 +171,8 @@ app.use("/api/auth", require("./routes/auth"));
 app.use("/api/intent", require("./routes/intent"));
 app.use("/api/favorites", require("./routes/favoritesRoutes.js"));
 app.use("/api/manager/auth", require("./routes/managerAuthRoutes"));
-
 app.use("/api/manager", require("./routes/managerDashboardRoutes"));
-
+app.use("/api/manager", require("./routes/managerDashboardRoutes.js"));
 app.use("/api/manager", require("./routes/managerDashboardRoutes.js"));
 
 // ── Routes ────────────────────────────────────────────────────────────────────

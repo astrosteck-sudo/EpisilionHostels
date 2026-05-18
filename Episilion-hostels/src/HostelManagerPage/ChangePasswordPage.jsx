@@ -1,16 +1,65 @@
 import { SiteFooter } from "../SiteFooter/SiteFooter";
 import "./changePasswordPage.css";
 import passwordImage from "../assets/icons/shield.png";
+import { useState } from "react";
+import axios from "axios";
 
 export function ChangePasswordPage({ managerIsLoggedIn }) {
+  const [hostelManagerOldpassword, setHostelManagerOldPassword] = useState("");
+  const [hostelMangerNewPaswword, setHostelManagerNewPassword] = useState("");
+  const [hostelManagerComfirmPassword, setHostelManagerComfirmPassword] =
+    useState("");
+
   if (!managerIsLoggedIn) {
     console.log("User is not logged in. Redirecting...");
     return <p>LOG IN AS A MANGER TO SEE THIS PAGE</p>;
   }
 
+  function handleOldPassword(e) {
+    setHostelManagerOldPassword(e.target.value);
+  }
+
+  function handleNewPassword(e) {
+    setHostelManagerNewPassword(e.target.value);
+  }
+
+  function handleComfirmPassword(e) {
+    setHostelManagerComfirmPassword(e.target.value);
+  }
+
+  const managerToken = localStorage.getItem("managerToken");
+  const updateManagerPassword = async (e) => {
+    e.preventDefault();
+    console.log('submit pressesd')
+
+    try {
+      const response = await axios.put(
+        "http://localhost:3000/api/manager/update-hostel-password",
+
+        {
+          hostelManagerOldpassword: hostelManagerOldpassword,
+          hostelMangerNewPaswword: hostelMangerNewPaswword,
+          hostelManagerComfirmPassword: hostelManagerComfirmPassword
+        },
+
+        {
+          headers: {
+            Authorization: `Bearer ${managerToken}`
+          },
+        },
+      );
+      console.log(response.data)
+    } catch (error) {
+      console.log("Update failed:", error.response?.data || error.message);
+    }
+  };
   return (
     <>
-      <form action="" className="hostel-manager-change-password-form">
+      <form
+        action=""
+        className="hostel-manager-change-password-form"
+        onSubmit={updateManagerPassword}
+      >
         <div className="hostel-manager-password-change-header-container">
           <img
             src={passwordImage}
@@ -32,7 +81,12 @@ export function ChangePasswordPage({ managerIsLoggedIn }) {
           >
             OLD PASSWORD
           </label>
-          <input type="text" className="hostel-manager-password-change-input" />
+          <input
+            type="text"
+            className="hostel-manager-password-change-input"
+            value={hostelManagerOldpassword}
+            onChange={handleOldPassword}
+          />
 
           <label
             htmlFor=""
@@ -45,6 +99,8 @@ export function ChangePasswordPage({ managerIsLoggedIn }) {
             name=""
             id=""
             className="hostel-manager-password-change-input"
+            value={hostelMangerNewPaswword}
+            onChange={handleNewPassword}
           />
 
           <label
@@ -53,7 +109,12 @@ export function ChangePasswordPage({ managerIsLoggedIn }) {
           >
             COMFIRM PASSWORD
           </label>
-          <input type="text" className="hostel-manager-password-change-input" />
+          <input
+            type="text"
+            className="hostel-manager-password-change-input"
+            value={hostelManagerComfirmPassword}
+            onChange={handleComfirmPassword}
+          />
 
           <div className="hostel-manager-password-change-password-warning">
             Use at least 8 characters with a mix of letters, number and symbols
@@ -61,8 +122,16 @@ export function ChangePasswordPage({ managerIsLoggedIn }) {
           </div>
 
           <div className="hostel-manager-password-change-form-buttons">
-            <input type="submit" value="Update Password" className="hostel-manager-password-change-form-button-sumbit" />
-            <input type="reset" value="Clear Form" className="hostel-manager-password-change-form-button-clearButton" />
+            <input
+              type="submit"
+              value="Update Password"
+              className="hostel-manager-password-change-form-button-sumbit"
+            />
+            <input
+              type="reset"
+              value="Clear Form"
+              className="hostel-manager-password-change-form-button-clearButton"
+            />
           </div>
         </div>
       </form>

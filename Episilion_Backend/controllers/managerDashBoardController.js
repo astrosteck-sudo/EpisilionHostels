@@ -1,4 +1,5 @@
 const db = require("../config/db.js");
+const bcrypt = require("bcrypt");
 
 exports.getManagerDashboard = async (req, res) => {
   try {
@@ -225,5 +226,118 @@ exports.updateManagerHostel = async (req, res) => {
     return res.status(500).json({
       error: "Server error",
     });
+  }
+};
+
+exports.updateManagerPassword = async (req, res) => {
+  try {
+
+    // GET MANAGER ID FROM TOKEN
+    const managerId = req.user.managerId;
+    // GET PASSWORDS FROM FRONTEND
+    const {
+      hostelManagerOldpassword,
+      hostelMangerNewPaswword,
+      hostelManagerComfirmPassword,
+    } = req.body;
+
+
+    // hostelManagerOldpassword: hostelManagerOldpassword,
+    //       hostelMangerNewPaswword: hostelMangerNewPaswword,
+    //       hostelManagerComfirmPassword: hostelManagerComfirmPassword
+
+    // VALIDATION
+    if (!hostelManagerOldpassword || !hostelMangerNewPaswword) {
+      return res.status(400).json({
+        error: "All fields are required",
+      });
+    }
+    if(hostelMangerNewPaswword != hostelManagerComfirmPassword){
+      return res.status(400).json({
+        error: "Password mismatch",
+      });
+    }
+
+    // GET MANAGER
+    const query = `
+      SELECT *
+      FROM hostel_managers
+      WHERE id = ?
+      LIMIT 1
+    `;
+
+    db.query(query, [managerId], async (err, results) => {
+
+      if (err) {
+        console.error(err);
+
+        return res.status(500).json({
+          error: "Database error",
+        });
+      }
+
+      if (results.length === 0) {
+        return res.status(404).json({
+          error: "Manager not found",
+        });
+      }
+
+      const manager = results[0];
+
+      // CHECK CURRENT PASSWORD
+      const isMatch = await bcrypt.compare(
+        hostelManagerOldpassword,
+        manager.password_hash
+      );
+
+      if (!isMatch) {
+        return res.status(401).json({
+          error: "Current password is incorrect",
+        });
+      }
+
+      // HASH NEW PASSWORD
+      const hashedPassword = await bcrypt.hash(
+        hostelMangerNewPaswword,
+        10
+      );
+
+      // UPDATE PASSWORD
+      const updateQuery = `
+        UPDATE hostel_managers
+        SET password_hash = ?
+        WHERE id = ?
+      `;
+
+      db.query(
+        updateQuery,
+        [hashedPassword, managerId],
+        (updateErr) => {
+
+          if (updateErr) {
+            console.error(updateErr);
+
+            return res.status(500).json({
+              error: "Password update failed",
+            });
+          }
+
+          return res.status(200).json({
+            message: "Password updated successfully",
+          });
+
+        }
+      );
+
+    });
+
+  } catch (error) {
+
+    console.error(error);
+
+    return res.status(500).json({
+      error: "Server error",
+    });
+
   }
 };
