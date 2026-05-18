@@ -69,7 +69,7 @@ function App() {
         <Route path='comparehostels' element={<CompareHostels  originalHostelCardData={originalHostelCardData} />} />
         <Route path='userProfilePage' element={<UserProfilePage isLoggedIn={isLoggedIn}></UserProfilePage>} />
         <Route path='hostelManagerPage' element={<HostelManagerPage></HostelManagerPage>}></Route>
-        <Route path='changePasswordPage' element={<ChangePasswordPage></ChangePasswordPage>}></Route>
+        <Route path='changePasswordPage' element={<ChangePasswordPage managerIsLoggedIn={managerIsLoggedIn}></ChangePasswordPage>}></Route>
       </Routes>
     </>
   )
