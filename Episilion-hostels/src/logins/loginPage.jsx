@@ -72,6 +72,9 @@ export function LoginPage({ setIsLoggedIn, setManagerIsLoggedIn }) {
       setManagerIsLoggedIn(true);
       navigate("/hostelManagerPage");
       setManagerErrorMessage("");
+      localStorage.removeItem('token')
+      localStorage.removeItem('user')
+      setIsLoggedIn(false)
     } catch (error) {
       navigate("/login");
       console.log(error);
@@ -102,11 +105,16 @@ export function LoginPage({ setIsLoggedIn, setManagerIsLoggedIn }) {
       // ✅ REDIRECT TO HOME
       setIsLoggedIn(true);
       localStorage.removeItem("managerToken");
+      localStorage.removeItem('managerUser')
       setManagerIsLoggedIn(false);
       navigate("/");
     } catch (error) {
       console.log(error);
-      setErrorMessage(error.response?.data || "Login failed");
+      //setErrorMessage(error.response?.data || "Login failed");
+      setErrorMessage('Something is wrong, Try again !!')
+      setTimeout(() => {
+        setErrorMessage('')
+      }, 2000)
     }
   }
 

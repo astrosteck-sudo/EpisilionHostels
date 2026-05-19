@@ -11,7 +11,7 @@ const generatedUUIDs = new Set();
  * - Stores it in the Set
  * - Returns the unique UUID
  */
-function getUniqueUUID() {
+export function getUniqueUUID() {
   let newUUID;
 
   do {
