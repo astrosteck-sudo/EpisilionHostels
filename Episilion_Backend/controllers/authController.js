@@ -35,7 +35,7 @@ exports.signup = async (req, res) => {
 
     // 4. Get the auto-generated user_id
     const userId = result.insertId;
-    //console.log(userId)
+
 
     // 5. Create AI usage row linked to that user
     await query(
