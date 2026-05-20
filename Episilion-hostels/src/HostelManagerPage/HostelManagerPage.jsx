@@ -55,10 +55,10 @@ export function HostelManagerPage() {
     setCautionDeposit(e.target.value);
   }
 
-  // if (!managerHostel) {
-  //   console.log("User is not logged in. Redirecting...");
-  //   return <p>LOG IN AS A MANGER TO SEE THIS PAGE</p>;
-  // }
+  if (!managerHostel) {
+    console.log("User is not logged in. Redirecting...");
+    return <p className="login-To-see-this-page">LOG IN AS A MANGER TO SEE THIS PAGE</p>;
+  }
   //console.log("manager hostel name", JSON.parse(managerHostel))
   //setManagerHostelName(JSON.parse(managerHostel).username)
   const managerToken = localStorage.getItem("managerToken");

@@ -20,7 +20,7 @@ export function ChangePasswordPage({ managerIsLoggedIn }) {
 
   if (!managerIsLoggedIn) {
     console.log("User is not logged in. Redirecting...");
-    return <p>LOG IN AS A MANGER TO SEE THIS PAGE</p>;
+    return <p className="login-To-see-this-page">LOG IN AS A MANGER TO SEE THIS PAGE</p>;
   }
 
   function handleOldPassword(e) {

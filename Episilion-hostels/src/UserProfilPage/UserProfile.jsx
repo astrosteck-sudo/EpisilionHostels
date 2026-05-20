@@ -14,7 +14,7 @@ export function UserProfilePage({ isLoggedIn }) {
   const [favoriteHostelResponse, setFavoriteHostelResponse] = useState([])
   if (!isLoggedIn) {
     console.log("User is not logged in. Redirecting...");
-    return <p>Log in as student to see this page</p>
+    return <p className="login-To-see-this-page">Log in as student to see this page</p>
   }
   //THIS IS TO EXTRACT THE USER IMFORMATION FROM THE TOKEN
   const storedUser = localStorage.getItem("user");
