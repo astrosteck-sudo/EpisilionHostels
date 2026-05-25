@@ -35,7 +35,6 @@ app.use("/api/manager", require("../routes/managerDashboardRoutes.js"));
 // ── Routes ────────────────────────────────────────────────────────────────────
 // GET /api/teamMembers  → return only the teamMembers array
 app.get("/api/teamMembers", (req, res) => {
-  console.log("Received request for team members");
   try {
     const teamMembers = readData("../data/team_Members_data.json");
     res.json({ success: true, teamMembers });
