@@ -306,7 +306,7 @@
   align-items: center;
   justify-content: center;
   gap: 20px;
-  background-color: #55185D;
+  background-color: #5a52d5;
   padding-top: 10px;
   padding-bottom: 10px;
   border-radius: 20px; 
@@ -321,7 +321,7 @@
   border-radius: 50%;
   padding-top: 2px;
   padding-bottom: 2px;
-  background-color: #b682bd;
+  background-color: #5a52d5;
 }
 
 .manager-option-pop-up{

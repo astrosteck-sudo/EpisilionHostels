@@ -1,210 +1,280 @@
-.about-main {
-  padding: 10px;
-  margin-bottom: 80px;
-}
-
-
-.primary-header {
-  text-align: center;
-  font-family: Playfair Display;
-  font-size: clamp(20px, 2vw, 35px);
-}
-
-.about-hero,
-.about-paragraph {
-  font-size: clamp(15px, 2vw, 20px);
-  font-family: lato;
-}
-
-.about-main h3 {
-  font-size: clamp(15px, 2vw, 23px);
-  font-family: Playfair Display;
-  color: rgb(194, 8, 8);
-}
-
-.about-paragraph {
-  list-style: none;
-}
-
-.about-paragraph li::before {
-  list-style: none;
-  content: "";
-  background: url('../assets/icons/green_double_circle_check_mark.jpg') no-repeat center center;
-  background-size: contain;
-  /* scales image nicely */
-  width: 1em;
-  height: 1em;
-  display: inline-block;
-  margin-right: 0.5em;
-}
-
-
-.team-cards {
+.about-episilion-header {
   display: flex;
-  /*THIS WILL MAKE THE CARDS SIT SIDE BY SIDE*/
-  flex-wrap: wrap;
-  /*THIS WILL MAKE THE CARD WRAP TO THE NEXT LINE IF THERES NOT ENOUGHT SPACE*/
-  gap: 1rem;
+  flex-direction: column;
   justify-content: center;
-  /*THIS WILL MAKE THE CARDS CCENTER HORIZONTALLY*/
-  padding: 1rem;
-  box-sizing: border-box;
-  /*THIS WILL INLCUDE PADDING IN WIDTH*/
-  height: 100%;
+  align-items: center;
+  padding-top: 50px;
+  padding-bottom: 50px;
+  gap: 10px;
+  background-color: rgb(90, 82, 213);
 }
 
-.team-card {
-  background-color: inherit;
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  flex: 1 1 250px;
-  /*THE 250PX HERE IS THAT THE STARTING SIZE OF THE CARD WILL BE 250PX: THIS IS THE FLEX BASIS*/
-  max-width: 300px;
-  min-width: 200px;
-  box-sizing: border-box;
-  /*THIS WILL MAKE SURE THAT THE TOTAL WIDTH WILL ALWAYS BE 200PX NO MATTER HOW MUCH PADDING OR BORDER YOU ADD INSIDE*/
-  text-align: left;
-  transition: transform 0.3s;
-  margin-bottom: 50px;
+.about-episilion-who-we-are {
+  color: rgb(205, 201, 201);
+  font-weight: bold;
+  font-size: 14px;
 }
 
-.team-member-image {
-  height: 250px;
-  width: 100%;
-  position: relative;
-  /*ALLOWS ABOLUTE POSITIONING INSIDE*/
-  display: inline-block;
-  overflow: hidden;
+.about-epislion-about {
+  color: white;
+  font-weight: bold;
+  font-size: 30px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
-
-.team-member-image img {
-  height: 100%;
-  width: 100%;
-  border-radius: 7px 7px 0px 0px;
-  transition: transform .6s ease;
-}
-
-.team-member-image:hover img {
-  transform: scale(1.7);
-  /* object-fit: cover; */
-}
-
-.team-card h4 {
-  font-family: Sancreek;
-  font-weight: lighter;
+.about-epislion-helping-students {
+  color: rgb(205, 201, 201);
+  font-size: 16px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: clamp(14px, 2vw, 18px);
   text-align: center;
 }
 
-table {
-  border: none;
-}
-
-.member-position-text {
-  font-family: Playfair Display;
-  font-size: clamp(12px, 2vw, 13.5px);
-  color: hsl(120, 93%, 27%);
-  text-align: center;
-  font-weight: bolder;
-}
-
-.member-role-text {
-  font-family: lato;
-  font-weight: bolder;
-  text-align: center;
-}
-
-.site-footer {
-  position: fixed;
-}
-
-.browse-hostels-cta-button-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-}
-
-.cta-text {
-  font-size: clamp(15px, 2vw, 30px);
-}
-
-.browse-hostels-cta-button {
-  font-size: clamp(20px, 2vw, 30px);
-  font-weight: bolder;
-  font-family: Playfair Display;
-  color: #d3c84d;
-  width: 80%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 20px;
-  padding: 7px;
-  text-decoration: none;
-  background-image: url('../relay5.jpg');
-  animation: animate-scroll 28s linear infinite;
-  text-shadow: 2px 2px 5px rgba(0,0,0,0.9);
-}
-
-.browse-hostels-cta-button:hover {
-  backdrop-filter: blur(100px);
-  animation: animate-scroll 10s linear infinite;
-}
-
-@keyframes animate-scroll {
-  to {
-    background-position-y: -500px;
-  }
-}
-
-
-/*CONTACT US SECTION*/
-.contact-us-container{
-  display: flex;
-}
-.contact-items {
-  /* display: flex;
-  justify-content: space-evenly;
-  align-items: center; */
-  /* padding: 30px; */
-}
-.contact-us-paragraph{
-  width: 70%;
-  font-size: clamp(15px, 2vw, 20px);
-  font-family: lato;
-  padding: 20px;
-  /* font-family: Hezba; */
-  font-weight: lighter;
-  text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
-}
-.contact-us-icons-container{
-  display: flex;
-  padding: 10px;
-  text-decoration: none;
-}
-.contact-us-icons {
-  width: min(40px, 10%);
-  object-fit: contain;
-  margin: 5px;
-  transition: 0.4s ease;
-}
-.contact-us-icons:hover{
-  transform: scale(1.2);
-}
-.contact-us-icon-name{
-  display: flex;
-  justify-items: center;
-  align-items: center;
-  font-family: lobstar Two;
-  font-weight: lighter;
-}
-
-@media only screen and (max-width: 992px){
-  .contact-us-container{
-    display: block;
-  }
- .contact-us-paragraph{
-  width: 100vw;
+.about-epislion-icons {
+  width: 50px;
+  height: 50px;
+  border-radius: 14px;
   padding: 5px;
-  padding-right: 30px;
- }
+  background-color: rgba(91, 82, 213, 0.372);
+}
+
+.about-epislion-content {
+  display: flex;
+  gap: 10px;
+}
+.about-epislion-content p {
+  font-size: clamp(14px, 2vw, 18px);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+.about-epislion-content h2 {
+  font-size: clamp(18px, 2vw, 24px);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.about-epislion-what-we-offer-and-who-we-are-container {
+  width: 70%;
+  padding-left: 10px;
+}
+
+.about-epislion-who-we-are-section,
+.about-epislion-what-we-offer-section,
+.about-epislion-our-mission-section,
+.about-epislion-our-vision-section {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  /* border: solid red; */
+}
+.about-episilion-what-we-offer-paragraphs {
+  display: flex;
+  flex-direction: row;
+  gap: 2px;
+  display: flex;
+  /* padding-left: 10px; */
+}
+.about-episilion-what-we-offer-paragraphs p {
+  font-size: clamp(14px, 2vw, 15px);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  border-radius: 12px;
+  padding: 5px;
+  background-color: rgba(185, 213, 82, 0.372);
+}
+
+.about-epislion-team-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 50px;
+  padding-bottom: 50px;
+  gap: 10px;
+}
+.about-epislion-team-title {
+  color: rgb(205, 201, 201);
+  font-weight: bold;
+  font-size: 14px;
+}
+.about-epislion-team-heading {
+  color: black;
+  font-weight: bold;
+  font-size: 30px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.about-epislion-team-cards {
+  display: flex;
+  justify-content: center; /* centers cards horizontally */
+  align-items: flex-start; /* aligns cards at the top */
+  gap: 20px; /* spacing between cards */
+  flex-wrap: wrap; /* allows wrapping on smaller screens */
+  padding: 40px 20px;
+  background-color: #f9f9f9;
+}
+
+.about-epislion-team-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 20px;
+  border-radius: 12px;
+  /* background-color: rgba(82, 213, 185, 0.372); */
+  width: 40%;
+
+  border-top: 6px solid;
+  border-image: linear-gradient(to right, #800000, #d4a373, #cca000) 1;
+
+  flex: 1 1 250px; /* responsive sizing */
+  max-width: 300px;
+  background: #ffffff;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+.about-epislion-team-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+.about-epislion-team-image {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: solid rgb(225, 218, 9) 3px;
+}
+.about-epislion-team-name {
+  color: black;
+  font-weight: bold;
+  font-size: 18px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+.about-epislion-team-role {
+  color: rgb(217, 14, 14);
+  font-size: 14px;
+  font-family: Playfair Display;
+  font-weight: bolder;
+}
+.about-epislion-team-bio {
+  color: rgb(82, 82, 82);
+  font-size: 14px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  text-align: center;
+}
+
+
+.about-epislion-contact-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 50px;
+  padding-bottom: 30px;
+  gap: 10px;
+}
+.about-epislion-contact-title {
+  color: rgb(205, 201, 201);
+  font-weight: bold;
+  font-size: 14px;
+}
+.about-epislion-contact-heading {
+  color: black;
+  font-weight: bold;
+  font-size: 30px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+.about-epislion-contact-paragraph {
+  color: rgb(82, 82, 82);
+  font-size: 14px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  text-align: center;
+}
+
+.about-epislion-contact-options {
+  display: flex;
+  gap: 20px;
+  flex-direction: column;
+  /* margin-top: 20px; */
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+.about-epislion-contact-option img{
+  width: 30px;
+  height: 30px;
+}
+
+.about-epislion-contact-option {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  padding: 20px;
+  border-radius: 12px;
+  background-color: rgba(82, 213, 185, 0.372);
+  width: 20%;
+}
+.about-epislion-contact-option a{
+  text-decoration: none;
+  color: black;
+}
+
+.about-epislion-join-us-on-our-journey {
+  background-color: rgb(90, 82, 213);
+  font-size: 14px;
+  padding: 50px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  text-align: center;
+  padding-bottom: 50px;
+  color: black;
+}
+.about-epislion-join-us-on-our-paragraph {
+  text-decoration: none;
+  color: black;
+  font-weight: bold;
+}
+
+.about-epislion-browse-hostels-button{
+  width: 15%;
+  margin: auto;
+  background-color: gold;
+  border-radius: 50px;
+  margin-top: 20px;
+  padding: 20px;
+  color: black;
+  font-weight: bolder;
+  font-size: clamp(14px, 2vw, 18px);
+}
+.browse-hostels-cta-button{
+  text-decoration: none;
+  color: black;
+}
+
+@media only screen and (max-width: 992px) {
+  .about-epislion-icons {
+    width: 40px;
+    height: 40px;
+  }
+  .about-epislion-content {
+    flex-direction: column;
+    align-items: center;
+  }
+  .about-epislion-what-we-offer-and-who-we-are-container {
+    width: 100%;
+    padding-left: 0px;
+  }
+  .about-episilion-what-we-offer-paragraphs {
+    flex-direction: column;
+  }
+  .about-epislion-contact-options {
+    justify-content: flex-start;
+    align-items: self-start;
+    gap: 3px;
+  }
+  .about-epislion-contact-option {
+    width: 100%;
+    background-color: white;
+  }
+  .about-epislion-browse-hostels-button{
+    width: 80%;
+  }
 }
