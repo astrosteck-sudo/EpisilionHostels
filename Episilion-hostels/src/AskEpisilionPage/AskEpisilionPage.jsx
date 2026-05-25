@@ -16,7 +16,7 @@ export function AskEpisilionPage({ isLoggedIn }) {
   //THIS IS TO TRACK THE NUMBER OF REQUESTS THE USER HAS LEFT
   const [remainingRequests, setRemainingRequest] = useState(() => {
     const saved = localStorage.getItem("episilionRemainingRequests");
-    return saved !== null ? parseInt(saved) : 3;
+    return saved !== null ? parseInt(saved) : '3';
   });
 
   //THIS IS TO TRACK THE LOADING STATE OF THE AI RESPONSE

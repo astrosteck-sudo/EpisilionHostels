@@ -1,11 +1,21 @@
 const express = require("express");
 const cors = require("cors");
+const fs = require("fs");
+const path = require("path");
+
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 //THIS MAKES THE IMAGES IN THE PUBLIC FOLDER ACCESSIBLE TO THE FRONTEND
 app.use("/images", express.static("public/images")); // Serve images from the public/images directory
 console.log("Static Images served at /images");
+
+function readData(filename) {
+  const filePath = path.join(__dirname, filename);
+  const raw = fs.readFileSync(filePath, "utf-8");
+  return JSON.parse(raw);
+}
 
 // ── Middleware ────────────────────────────────────────────────────────────────
 app.use(cors()); // Allow requests from any frontend origin
@@ -25,11 +35,12 @@ app.use("/api/manager", require("../routes/managerDashboardRoutes.js"));
 // ── Routes ────────────────────────────────────────────────────────────────────
 // GET /api/teamMembers  → return only the teamMembers array
 app.get("/api/teamMembers", (req, res) => {
+  console.log("Received request for team members");
   try {
-    const teamMembers = readData("./data/team_Members_data.json");
-    //console.log("Team Members data sent:", teamMembers);
+    const teamMembers = readData("../data/team_Members_data.json");
     res.json({ success: true, teamMembers });
   } catch (err) {
+    console.error("Error reading team members file:", err);
     res
       .status(500)
       .json({ success: false, message: "Failed to read team Members file." });

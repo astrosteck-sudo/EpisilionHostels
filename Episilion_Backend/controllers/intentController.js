@@ -40,6 +40,27 @@ function classifyQuery(query) {
   return keywords.some((k) => query.toLowerCase().includes(k));
 }
 
+function normalizeGender(type) {
+  if (!type) return "mixed";
+
+  const t = type.toLowerCase();
+
+  if (
+    t.includes("girl") ||
+    t.includes("female") ||
+    t.includes("women") ||
+    t.includes("ladies")
+  ) {
+    return "female";
+  }
+
+  if (t.includes("boy") || t.includes("male") || t.includes("men")) {
+    return "male";
+  }
+
+  return "mixed";
+}
+
 // Format DB data for AI
 function formatHostels(hostels, pricing, locations, amenities) {
   // SCHOOL COORDINATES
@@ -68,7 +89,7 @@ function formatHostels(hostels, pricing, locations, amenities) {
 
       name: h.name,
 
-      type: h.type,
+      type: normalizeGender(h.type),
 
       price: price?.price_min || null,
 
@@ -106,6 +127,28 @@ function applySmartFilter(data, query) {
     filtered = filtered.filter(
       (h) => h.distanceMeters !== null && h.distanceMeters <= maxMeters,
     );
+  }
+
+  // FEMALE
+  if (
+    q.includes("girls") ||
+    q.includes("girl") ||
+    q.includes("female") ||
+    q.includes("ladies")
+  ) {
+    filtered = filtered.filter(
+      (h) => h.type === "female" || h.type === "mixed",
+    );
+  }
+
+  // MALE
+  if (
+    q.includes("boys") ||
+    q.includes("boy") ||
+    q.includes("male") ||
+    q.includes("men")
+  ) {
+    filtered = filtered.filter((h) => h.type === "male" || h.type === "mixed");
   }
 
   return filtered;

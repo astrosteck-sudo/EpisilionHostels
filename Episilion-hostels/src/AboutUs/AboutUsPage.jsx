@@ -16,7 +16,7 @@ export function AboutUsPage() {
 
   const loadTeamCards = async () => {
     const reposnse = await axios.get(
-      "https://episilion-backend-2lt0.onrender.com/api/teamMembers",
+      "http://localhost:3000/api/teamMembers",
     );
     setTeamData(reposnse.data.teamMembers);
   };
