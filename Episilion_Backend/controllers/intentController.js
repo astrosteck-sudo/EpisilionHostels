@@ -1,5 +1,5 @@
 const OpenAI = require("openai");
-const db = require("../config/db.js");
+const pool = require("../config/db.js");
 const { getDistance } = require("geolib");
 
 const client = new OpenAI({
@@ -9,12 +9,7 @@ const client = new OpenAI({
 
 // DB helper
 const queryDB = (sql, values = []) =>
-  new Promise((resolve, reject) => {
-    db.query(sql, values, (err, result) => {
-      if (err) reject(err);
-      else resolve(result);
-    });
-  });
+  pool.query(sql, values).then(([rows]) => rows);
 
 // Classify query
 function classifyQuery(query) {

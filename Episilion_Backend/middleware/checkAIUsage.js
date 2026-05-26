@@ -1,35 +1,19 @@
-const db = require("../config/db.js");
-
-// Helper function to run SQL queries with promises
-const query = (sql, values = []) =>
-  new Promise((resolve, reject) => {
-    db.query(sql, values, (err, result) => {
-      if (err) reject(err);   // Reject if query fails
-      else resolve(result);   // Resolve with query result
-    });
-  });
+const pool = require("../config/db.js"); // ✅ import pool
 
 // Middleware to check a user's AI usage quota
 const checkAIUsage = async (req, res, next) => {
   try {
     // Get the authenticated user's ID from request object
     const userId = req.user.user_id;
-    //console.log(userId)
 
-    // Fetch AI usage record for this user
-    const usage = await query(
-      `
-      SELECT *
-      FROM ai_usage
-      WHERE user_id = ?
-      `,
+    // ✅ Fetch AI usage record for this user
+    const [usage] = await pool.query(
+      `SELECT * FROM ai_usage WHERE user_id = ?`,
       [userId]
     );
 
-    // console.log(usage)
-
     // If no usage record exists, return 404
-    if (!usage.length) {
+    if (usage.length === 0) {
       return res.status(404).json({
         error: "AI usage record not found",
       });
@@ -51,16 +35,12 @@ const checkAIUsage = async (req, res, next) => {
 
     // Allow request to continue
     next();
-
   } catch (err) {
-    // Log error and return 500 if something goes wrong
-    console.log(err);
-
+    console.error("AI usage check error:", err);
     res.status(500).json({
       error: "AI usage check failed",
     });
   }
 };
 
-// Export middleware for use in routes
 module.exports = checkAIUsage;

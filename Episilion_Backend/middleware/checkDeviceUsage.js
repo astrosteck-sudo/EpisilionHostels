@@ -1,13 +1,4 @@
-const db = require("../config/db.js");
-
-// Helper function to run SQL queries with promises
-const queryDB = (sql, values = []) =>
-  new Promise((resolve, reject) => {
-    db.query(sql, values, (err, result) => {
-      if (err) reject(err);   // Reject if query fails
-      else resolve(result);   // Resolve with query result
-    });
-  });
+const pool = require("../config/db.js"); // ✅ import pool
 
 // Middleware to check AI usage quota per device
 const checkDeviceUsage = async (req, res, next) => {
@@ -22,34 +13,22 @@ const checkDeviceUsage = async (req, res, next) => {
       });
     }
 
-    // Query database for existing device usage record
-    let rows = await queryDB(
-      `
-      SELECT *
-      FROM device_ai_usage
-      WHERE device_id = ?
-      `,
+    // ✅ Query database for existing device usage record
+    let [rows] = await pool.query(
+      `SELECT * FROM device_ai_usage WHERE device_id = ?`,
       [deviceId]
     );
 
     // If no record exists, insert a new one for this device
     if (rows.length === 0) {
-      await queryDB(
-        `
-        INSERT INTO device_ai_usage
-        (device_id)
-        VALUES (?)
-        `,
+      await pool.query(
+        `INSERT INTO device_ai_usage (device_id) VALUES (?)`,
         [deviceId]
       );
 
       // Fetch the newly created record
-      rows = await queryDB(
-        `
-        SELECT *
-        FROM device_ai_usage
-        WHERE device_id = ?
-        `,
+      [rows] = await pool.query(
+        `SELECT * FROM device_ai_usage WHERE device_id = ?`,
         [deviceId]
       );
     }
@@ -70,16 +49,12 @@ const checkDeviceUsage = async (req, res, next) => {
 
     // Allow request to continue
     next();
-
   } catch (err) {
-    // Log error and return 500 if something goes wrong
-    console.log(err);
-
+    console.error("Device check error:", err);
     res.status(500).json({
       error: "Device check failed",
     });
   }
 };
 
-// Export middleware for use in routes
 module.exports = checkDeviceUsage;

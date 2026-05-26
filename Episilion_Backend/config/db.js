@@ -1,33 +1,42 @@
 require("dotenv").config();
+const mysql = require("mysql2/promise"); 
 
-const mysql = require("mysql2");
-
-
-const db = mysql.createConnection({
+const pool = mysql.createPool({
   host: process.env.DB_HOST,
   port: process.env.DB_PORT,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
   ssl: {
-    rejectUnauthorized: false
-  }// important for Railway
-})
+    rejectUnauthorized: false // important for Railway
+  },
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0
+});
 
+// ✅ Test connection once at startup
+(async () => {
+  try {
+    const conn = await pool.getConnection();
+    console.log("Connected to MySQL database ✅");
+    conn.release(); // release back to pool
+  } catch (err) {
+    console.error("Database connection failed ❌:", err.message);
+  }
+})();
 
-//THIS CODE RUNS EVERY MIDNIGHT TO DELETE ANY REVIEW THAT IS MORE THAN 2 MONTHS OLD and then it recalculates the average rating and total reviews for all hostels in the database every 24 hours
-const cron = require("node-cron")
-cron.schedule("0 0 * * *", () => {
+// Cron job: delete old reviews + recalc ratings
+const cron = require("node-cron");
+cron.schedule("0 0 * * *", async () => {
   console.log("Running cleanup...");
 
-  // 1️⃣ Delete old reviews
-  db.query(`
-    DELETE FROM reviews
-    WHERE created_at <= NOW() - INTERVAL 2 MONTH
-  `, (err) => {
-    if (err) return console.log(err);
+  try {
+    await pool.query(`
+      DELETE FROM reviews
+      WHERE created_at <= NOW() - INTERVAL 2 MONTH
+    `);
 
-    // 2️⃣ Recalculate ALL hostels
     const updateSql = `
       UPDATE hostels h
       LEFT JOIN (
@@ -43,19 +52,11 @@ cron.schedule("0 0 * * *", () => {
         h.average_rating = IFNULL(r.avg_rating, 0);
     `;
 
-    db.query(updateSql, (err2) => {
-      if (err2) console.log(err2);
-      else console.log("Hostels updated after cleanup ✅");
-    });
-  });
-});
-
-db.connect((err) => {
-  if (err) {
-    console.log("Database connection failed:", err);
-  } else {
-    console.log("Connected to MySQL database ✅");
+    await pool.query(updateSql);
+    console.log("Hostels updated after cleanup ✅");
+  } catch (err) {
+    console.error("Cleanup error:", err);
   }
 });
 
-module.exports = db;
+module.exports = pool;

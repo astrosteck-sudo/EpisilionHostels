@@ -1,27 +1,21 @@
-const db = require("../config/db.js");
-
-const query = (sql, values = []) =>
-  new Promise((resolve, reject) => {
-    db.query(sql, values, (err, result) => {
-      if (err) reject(err);
-      else resolve(result);
-    });
-  });
+const pool = require("../config/db.js"); // ✅ import pool
 
 exports.getHostels = async (req, res) => {
   try {
-    const hostels = await query("SELECT * FROM hostels");
-    const pricing = await query("SELECT * FROM pricing");
-    const locations = await query("SELECT * FROM locations");
-    const rooms = await query("SELECT * FROM rooms");
-    const rules = await query("SELECT * FROM rules");
-    const amenities = await query("SELECT * FROM amenities");
-    const furnishing = await query("SELECT * FROM furnishing");
-    const contacts = await query("SELECT * FROM contact");
-    const media = await query("SELECT * FROM media");
+    // ✅ Run queries with async/await
+    const [hostels]   = await pool.query("SELECT * FROM hostels");
+    const [pricing]   = await pool.query("SELECT * FROM pricing");
+    const [locations] = await pool.query("SELECT * FROM locations");
+    const [rooms]     = await pool.query("SELECT * FROM rooms");
+    const [rules]     = await pool.query("SELECT * FROM rules");
+    const [amenities] = await pool.query("SELECT * FROM amenities");
+    const [furnishing]= await pool.query("SELECT * FROM furnishing");
+    const [contacts]  = await pool.query("SELECT * FROM contact");
+    const [media]     = await pool.query("SELECT * FROM media");
 
+    // ✅ Build full hostel data
     const fullData = hostels.map(h => {
-      const loc = locations.find(l => l.hostel_id === h.hostel_id);
+      const loc   = locations.find(l => l.hostel_id === h.hostel_id);
       const price = pricing.find(p => p.hostel_id === h.hostel_id);
 
       return {
@@ -53,20 +47,29 @@ exports.getHostels = async (req, res) => {
         },
 
         rooms: {
-          //THIS FILTERS THE ROOMS TO ONLY SHOW THE ROOMS THAT BELONG TO THE HOSTEL AND THEN MAPS THEM TO THE CORRECT FORMAT
-          types: rooms.filter(r => r.hostel_id === h.hostel_id).map(r => ({
-            type: r.room_type,
-            price: r.price,
-            availableRooms: r.available_rooms
-          }))
+          types: rooms
+            .filter(r => r.hostel_id === h.hostel_id)
+            .map(r => ({
+              type: r.room_type,
+              price: r.price,
+              availableRooms: r.available_rooms
+            }))
         },
-        amenities: amenities.filter(a => a.hostel_id === h.hostel_id).map(a => a.amenity),
-        furnishing: furnishing.filter(f => f.hostel_id === h.hostel_id).map(f => f.furnishing),
-        rules: rules.filter(r => r.hostel_id === h.hostel_id).map(r => r.rule),
+
+        amenities: amenities
+          .filter(a => a.hostel_id === h.hostel_id)
+          .map(a => a.amenity),
+
+        furnishing: furnishing
+          .filter(f => f.hostel_id === h.hostel_id)
+          .map(f => f.furnishing),
+
+        rules: rules
+          .filter(r => r.hostel_id === h.hostel_id)
+          .map(r => r.rule),
 
         contact: (() => {
           const c = contacts.find(x => x.hostel_id === h.hostel_id);
-
           return c && {
             managerName: c.manager_name,
             phone: c.phone,
@@ -83,21 +86,20 @@ exports.getHostels = async (req, res) => {
         },
 
         media: {
-          images: media.filter(m => m.hostel_id === h.hostel_id).map(m => ({
-            url: m.url,
-            type: m.type
-          })),
-
-          //video: videos.find(v => v.hostel_id === h.hostel_id)?.url || null
+          images: media
+            .filter(m => m.hostel_id === h.hostel_id)
+            .map(m => ({
+              url: m.url,
+              type: m.type
+            }))
         }
       };
     });
 
     res.json(fullData);
 
-
   } catch (err) {
-    console.log(err);
-    res.status(500).send("Error");
+    console.error("Error fetching hostels:", err);
+    res.status(500).send("Error fetching hostels");
   }
 };

@@ -20,6 +20,7 @@ import { getDirectionsOnMap } from "../UTILS/mapFunctions.js";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Reviews } from "./ReviewsData.jsx";
+import { Helmet } from "react-helmet-async";
 
 export function MoreDetailsPage({ originalHostelCardData }) {
   const [close, setClose] = useState(true); //THIS CONTROLS THE THE IFRAME, OPENING AND CLOSING IT
@@ -37,11 +38,13 @@ export function MoreDetailsPage({ originalHostelCardData }) {
 
   const params = new URLSearchParams(window.location.search);
   const hostelId = params.get("hostelId");
-  console.log("Hostel ID from URL:", hostelId); // Debugging log to check the hostel ID being retrieved from the URL
   let hostelName = "Annex";
+  let foundHostel = null;
   originalHostelCardData.map((hostel) => {
     if (hostel.id === hostelId) {
       hostelName = hostel.name;
+      foundHostel = hostel;
+      console.log("Found Hostel:", foundHostel); // Debugging log to check if the correct hostel is found
     }
   });
 
@@ -128,7 +131,6 @@ export function MoreDetailsPage({ originalHostelCardData }) {
   //THIS FUNCTION WILL LOAD THE REVIEWS FOR A PARTICULAR HOSTEL, THIS FUNCTION IS CALLED IN THE USEEFFECT BELOW TO LOAD THE REVIEWS WHEN THE PAGE LOADS
   async function loadingReviews(hostelId) {
     try {
-      console.log("Loading reviews for hostel ID:", hostelId); // Debugging log to check the hostel ID being used
       const response = await axios.get(
         `http://localhost:3000/api/reviews/${hostelId}`,
       );
@@ -137,8 +139,6 @@ export function MoreDetailsPage({ originalHostelCardData }) {
         setReviewsResponse(["no reviews"]);
         return;
       }
-      console.log("Reviews retrieved successfully:", response.data);
-      console.log(response.data.length);
       setReviewsResponse(response.data);
     } catch (error) {
       console.log(
@@ -167,7 +167,6 @@ export function MoreDetailsPage({ originalHostelCardData }) {
       setIsFavorite(true);
       const token = localStorage.getItem("token");
       if (!token) {
-        console.log("No token found, redirecting to login"); // Debugging log to check if token is missing
         navigate("/login");
         return;
       }
@@ -190,14 +189,49 @@ export function MoreDetailsPage({ originalHostelCardData }) {
 
   return (
     <>
-      <title>View Details | Episilion Hostels</title>
-      {/* <PageHeader navlink={navlink} setNavLink={setNavLink} /> */}
+      <Helmet>
+        <title>{`${foundHostel?.name || "Hostel"} near UPSA | Hostel Finder`}</title>
+        <meta
+          name="description"
+          content={`Affordable ${foundHostel?.type} hostel near UPSA with ${foundHostel?.amenities.join(", ")}.`}
+        />
+        <meta property="og:title" content={foundHostel?.name} />
+        <meta
+          property="og:description"
+          content={`Check out ${foundHostel?.name} near UPSA.`}
+        />
+        <meta property="og:image" content={foundHostel?.image} />
+        <meta
+          property="og:url"
+          content={`https://yourdomain.com/moreDetails?hostelId=${foundHostel?.id}`}
+        />
+        <meta name="twitter:card" content="summary_large_image" />
+
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "LodgingBusiness",
+            name: foundHostel?.name,
+            image: foundHostel?.image,
+            priceRange: foundHostel?.priceMin ? `GHS ${foundHostel.priceMin} - GHS ${foundHostel.priceMax}` : "Price not available",
+            address: {
+              "@type": "PostalAddress",
+              streetAddress: foundHostel?.latitude && foundHostel?.longitude ? `Latitude: ${foundHostel.latitude}, Longitude: ${foundHostel.longitude}` : "Address not available",
+              addressLocality: "Accra",
+              addressCountry: "GH"
+            },
+            telephone: foundHostel?.contact.phone,
+            email: foundHostel?.contact.email,
+            url: `https://yourdomain.com/moreDetails?hostelId=${foundHostel?.id}`,
+            description: `Affordable ${foundHostel?.type} hostel near UPSA with ${foundHostel?.amenities.join(", ")}.`
+          })}
+        </script>
+      </Helmet>
 
       <section className="more-details js-more-details">
         <div className="more-details-container">
           {originalHostelCardData.map((hostel) => {
             if (hostel.id === hostelId) {
-              console.log("Hostel.id", hostel.id, "hostelId", hostelId);
               return (
                 <>
                   <div className="hostel-image-card">

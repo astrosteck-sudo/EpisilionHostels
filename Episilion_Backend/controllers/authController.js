@@ -1,44 +1,34 @@
-const db = require("../config/db.js");
+const pool = require("../config/db.js"); // ✅ import pool
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-
-const query = (sql, values = []) =>
-  new Promise((resolve, reject) => {
-    db.query(sql, values, (err, result) => {
-      if (err) reject(err);
-      else resolve(result);
-    });
-  });
 
 /**
  * SIGNUP
  */
-
 exports.signup = async (req, res) => {
   const { name, email, password } = req.body;
 
   try {
-    // 1. Check if user already exists
-    const existing = await query("SELECT * FROM users WHERE email = ?", [email]);
+    // 1️⃣ Check if user already exists
+    const [existing] = await pool.query("SELECT * FROM users WHERE email = ?", [email]);
     if (existing.length > 0) {
       return res.status(400).send("User already exists");
     }
 
-    // 2. Hash password
+    // 2️⃣ Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // 3. Insert user and capture result
-    const result = await query(
+    // 3️⃣ Insert user and capture result
+    const [result] = await pool.query(
       "INSERT INTO users (name, email, password) VALUES (?, ?, ?)",
       [name, email, hashedPassword]
     );
 
-    // 4. Get the auto-generated user_id
+    // 4️⃣ Get the auto-generated user_id
     const userId = result.insertId;
 
-
-    // 5. Create AI usage row linked to that user
-    await query(
+    // 5️⃣ Create AI usage row linked to that user
+    await pool.query(
       `
       INSERT INTO ai_usage (
           user_id,
@@ -50,46 +40,47 @@ exports.signup = async (req, res) => {
       [userId]
     );
 
-    res.send("Signup successful");
+    res.send("Signup successful ✅");
   } catch (err) {
-    console.log(err);
+    console.error("Signup error:", err);
     res.status(500).send("Server error");
   }
 };
 
-
 /**
  * LOGIN
  */
-exports.login = (req, res) => {
+exports.login = async (req, res) => {
   const { email, password } = req.body;
 
-  const sql = "SELECT * FROM users WHERE email = ?";
-
-  db.query(sql, [email], async (err, result) => {
+  try {
+    // 1️⃣ Find user by email
+    const [result] = await pool.query("SELECT * FROM users WHERE email = ?", [email]);
     if (result.length === 0) {
       return res.status(400).send("User not found");
     }
 
     const user = result[0];
 
+    // 2️⃣ Compare password
     const isMatch = await bcrypt.compare(password, user.password);
-
     if (!isMatch) {
       return res.status(400).send("Wrong password");
     }
 
+    // 3️⃣ Generate JWT
     const token = jwt.sign(
       {
         user_id: user.user_id,
-        name: user.name, // use 'name' instead of 'username'
+        name: user.name,
         email: user.email,
         created_at: user.created_at
       },
       process.env.JWT_SECRET,
-      { expiresIn: "7d" },
+      { expiresIn: "7d" }
     );
 
+    // 4️⃣ Respond with token + user info
     res.json({
       token,
       user: {
@@ -97,7 +88,10 @@ exports.login = (req, res) => {
         name: user.name,
         email: user.email,
         createdAt: user.created_at
-      },
+      }
     });
-  });
+  } catch (err) {
+    console.error("Login error:", err);
+    res.status(500).send("Server error");
+  }
 };

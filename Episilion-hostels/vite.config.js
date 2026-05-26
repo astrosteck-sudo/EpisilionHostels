@@ -1,7 +1,21 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import sitemap from "vite-plugin-sitemap";
 
-// https://vite.dev/config/
 export default defineConfig({
-  plugins: [react()],
-})
+  plugins: [
+    react(),
+    sitemap({
+      hostname: "https://yourdomain.com",
+      routes: [
+        "/",
+        "/hostels/upsa",
+        "/hostels/upsa/affordable",
+        "/hostels/upsa/girls",
+        "/hostels/upsa/boys",
+        "/hostels/upsa/student-accommodation",
+        "/hostels/upsa/verified"
+      ]
+    })
+  ]
+});
