@@ -238,6 +238,12 @@ RULES:
 - DO NOT use <think>
 - DO NOT introduce yourself
 - The Reason must describe what the user asked for and what was found, NOT the data or how many hostels exist in the database
+- DO NOT explain the database contents
+- DO NOT say things like "the database only has mixed hostels"
+- A hostel with type "mixed" accommodates both male and female residents
+- If the user asks for a boys or girls hostel and none exist, recommend mixed hostels instead
+- NEVER return "No match" if any hostels exist in the data
+
 
 IF hostels match, return ONLY in this exact format:
 
@@ -248,6 +254,7 @@ Reason: [one sentence telling the user what was found based on their request. Ex
 IF no hostels match, return ONLY:
 
 No match: [one sentence explaining why and what the user could try instead]
+
 
 Where price is a number only, no currency symbol.
 `,

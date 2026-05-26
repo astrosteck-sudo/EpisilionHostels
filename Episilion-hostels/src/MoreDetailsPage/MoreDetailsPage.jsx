@@ -191,6 +191,11 @@ export function MoreDetailsPage({ originalHostelCardData }) {
     <>
       <Helmet>
         <title>{`${foundHostel?.name || "Hostel"} near UPSA | Hostel Finder`}</title>
+
+        <link
+          rel="canonical"
+          href={`https://yourdomain.com/moreDetails?hostelId=${foundHostel?.id}`}
+        />
         <meta
           name="description"
           content={`Affordable ${foundHostel?.type} hostel near UPSA with ${foundHostel?.amenities.join(", ")}.`}
@@ -213,17 +218,22 @@ export function MoreDetailsPage({ originalHostelCardData }) {
             "@type": "LodgingBusiness",
             name: foundHostel?.name,
             image: foundHostel?.image,
-            priceRange: foundHostel?.priceMin ? `GHS ${foundHostel.priceMin} - GHS ${foundHostel.priceMax}` : "Price not available",
+            priceRange: foundHostel?.priceMin
+              ? `GHS ${foundHostel.priceMin} - GHS ${foundHostel.priceMax}`
+              : "Price not available",
             address: {
               "@type": "PostalAddress",
-              streetAddress: foundHostel?.latitude && foundHostel?.longitude ? `Latitude: ${foundHostel.latitude}, Longitude: ${foundHostel.longitude}` : "Address not available",
+              streetAddress:
+                foundHostel?.latitude && foundHostel?.longitude
+                  ? `Latitude: ${foundHostel.latitude}, Longitude: ${foundHostel.longitude}`
+                  : "Address not available",
               addressLocality: "Accra",
-              addressCountry: "GH"
+              addressCountry: "GH",
             },
             telephone: foundHostel?.contact.phone,
             email: foundHostel?.contact.email,
             url: `https://yourdomain.com/moreDetails?hostelId=${foundHostel?.id}`,
-            description: `Affordable ${foundHostel?.type} hostel near UPSA with ${foundHostel?.amenities.join(", ")}.`
+            description: `Affordable ${foundHostel?.type} hostel near UPSA with ${foundHostel?.amenities.join(", ")}.`,
           })}
         </script>
       </Helmet>
