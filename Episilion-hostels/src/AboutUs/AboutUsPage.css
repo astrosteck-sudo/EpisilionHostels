@@ -141,6 +141,12 @@
   height: 150px;
   border-radius: 50%;
   border: solid rgb(225, 218, 9) 3px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: bolder;
 }
 .about-epislion-team-name {
   color: black;
