@@ -560,6 +560,10 @@ export function HomePage({
           })}
         </div>
       </section>
+
+      <div className="more-hostels-container">
+        <p>More Hostels on the way — stay tuned!</p>
+      </div>
       <SiteFooter />
     </>
   );

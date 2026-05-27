@@ -52,8 +52,9 @@
   justify-content: center;
   padding: 1rem;
   box-sizing: border-box;
+  padding-bottom: 0px;
   height: 100%;
-  margin-bottom: 5px;
+  /* margin-bottom: 5px; */
 }
 
 .hostel-card {
@@ -643,6 +644,13 @@ input[type=number] {
 }
 .filter-buttons.active{
   background-color: #cabd31;
+}
+.more-hostels-container{
+  text-align: center;
+  padding: 20px;
+  margin-bottom: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: bold;
 }
 
 @media only screen and (max-width: 600px) {
