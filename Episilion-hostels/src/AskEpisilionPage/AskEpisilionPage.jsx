@@ -112,7 +112,7 @@ export function AskEpisilionPage({ isLoggedIn }) {
           message: result,
           type: "episilionResults",
           sender: "episilion",
-          header: res.data.reason || "Episilion Results",
+          header: res.data.reason ,
         },
       ]);
     } catch (error) {
@@ -240,7 +240,7 @@ export function AskEpisilionPage({ isLoggedIn }) {
                 {chat.type === "episilionResults" ? (
                   <div className="episilion-response">
                     <p className="episilion-response-header">
-                      {chat.header || "Episilion Results"}
+                      {chat.header}
                     </p>
                     {Array.isArray(chat.message) ? (
                       chat.message.map((hostel) => (
