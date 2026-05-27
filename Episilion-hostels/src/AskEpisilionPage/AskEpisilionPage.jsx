@@ -87,7 +87,7 @@ export function AskEpisilionPage({ isLoggedIn }) {
 
     try {
       const res = await axios.post(
-        "http://localhost:3000/api/intent/search",
+        "https://episilion-backend-2lt0.onrender.com/api/intent/search",
         { query: userMessage },
         {
           headers: {

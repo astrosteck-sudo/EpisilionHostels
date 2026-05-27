@@ -6,7 +6,7 @@ import { kilometersToMeters } from "../UTILS/kilometerConvertor";
 
 
 export function FavoriteHostels({ favoriteHostel, loadFavoriteHostel }) {
-  const url = "http://localhost:3000";
+  const url = "https://episilion-backend-2lt0.onrender.com";
   const navigate = useNavigate();
 
   function showHostelId(parameter) {
@@ -17,7 +17,7 @@ export function FavoriteHostels({ favoriteHostel, loadFavoriteHostel }) {
     const token = localStorage.getItem("token");
 
     const response = await axios.delete(
-      `http://localhost:3000/api/favorites/${hostelId}`,
+      `https://episilion-backend-2lt0.onrender.com/api/favorites/${hostelId}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

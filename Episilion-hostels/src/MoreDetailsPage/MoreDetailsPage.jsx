@@ -34,7 +34,7 @@ export function MoreDetailsPage({ originalHostelCardData }) {
   const [maxReview, setMaxReview] = useState(5); //THIS CONTROLLS THE NUMBER OF REVIEWS SHOWN
   const [isFavorite, setIsFavorite] = useState(false); //THIS CONTROLS THE FAVORITE BUTTON TO SHOW IF THE HOSTEL IS IN THE FAVORITES OR NOT
 
-  const url = "http://localhost:3000"; //THIS IS THE URL FOR THE BACKEND, THIS IS USED TO ACCESS THE IMAGES IN THE PUBLIC FOLDER OF THE BACKEND
+  const url = "https://episilion-backend-2lt0.onrender.com"; //THIS IS THE URL FOR THE BACKEND, THIS IS USED TO ACCESS THE IMAGES IN THE PUBLIC FOLDER OF THE BACKEND
 
   const params = new URLSearchParams(window.location.search);
   const hostelId = params.get("hostelId");
@@ -102,7 +102,7 @@ export function MoreDetailsPage({ originalHostelCardData }) {
     setIsSubmitting(true);
     try {
       await axios.post(
-        "http://localhost:3000/api/reviews",
+        "https://episilion-backend-2lt0.onrender.com/api/reviews",
         {
           hostel_id: hostelId,
           rating: rating,
@@ -132,7 +132,7 @@ export function MoreDetailsPage({ originalHostelCardData }) {
   async function loadingReviews(hostelId) {
     try {
       const response = await axios.get(
-        `http://localhost:3000/api/reviews/${hostelId}`,
+        `https://episilion-backend-2lt0.onrender.com/api/reviews/${hostelId}`,
       );
       //console.log("Response from reviews API:", response.data); // Debugging log to check the response from the API
       if (response.data.length === 0) {
@@ -171,7 +171,7 @@ export function MoreDetailsPage({ originalHostelCardData }) {
         return;
       }
       const response = await axios.post(
-        "http://localhost:3000/api/favorites/" + hostelId,
+        "https://episilion-backend-2lt0.onrender.com/api/favorites/" + hostelId,
         {},
         {
           headers: {
