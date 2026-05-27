@@ -48,7 +48,7 @@ export function UserProfilePage({ isLoggedIn }) {
           <p className="user-profile-name">{user.name}</p>
           <p className="user-profile-email">{user.email}</p>
           <div className="user-profile-joined">
-            <img className="user-profile-icons" src={CalenderImage} alt="" />
+            <img loading='lazy'className="user-profile-icons" src={CalenderImage} alt="" />
             Joined{" "}
             <span className="user-joined-date-span">
               {dayjs(user.createdAt).format("MMMM D, YYYY")}

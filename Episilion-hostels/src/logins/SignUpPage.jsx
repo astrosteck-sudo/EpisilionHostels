@@ -104,7 +104,7 @@ export function SignUpPage() {
                     </div>
 
                     {/* <div className="external-sign-up-buttons">
-                        <button className="external-sign-up-button"><img src={googleImage} className="external-sign-up-image"></img><span className="external-sign-up-button-span">Sign up with</span>Google</button>
+                        <button className="external-sign-up-button"><img loading='lazy'src={googleImage} className="external-sign-up-image"></img><span className="external-sign-up-button-span">Sign up with</span>Google</button>
                     </div> */}
 
                     <div className="divider">

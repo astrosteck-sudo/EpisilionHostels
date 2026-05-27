@@ -38,7 +38,7 @@ export function Reviews({ item }) {
 
           <div className="users-ratings-display">
             {[...Array(item.rating)].map((_, i) => (
-              <img key={i} src={fullStar} alt="star" />
+              <img loading='lazy'key={i} src={fullStar} alt="star" />
             ))}
           </div>
         </div>

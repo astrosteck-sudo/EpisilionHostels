@@ -356,8 +356,8 @@ export function HomePage({
       {/* <PageHeader navlink={navlink} setNavLink={setNavLink} sethostelsCardData={sethostelsCardData} originalHostelCardData={originalHostelCardData} setHostelsFound={setHostelsFound} /> */}
 
       {/* <div className="side-bar-buttons-container">
-                <button className="filter-image" onClick={openFilterMenu}><img src={filterImage}></img>Filter</button>
-                <button><img src={favoriteImage}></img>Fav</button>
+                <button className="filter-image" onClick={openFilterMenu}><img loading='lazy'src={filterImage}></img>Filter</button>
+                <button><img loading='lazy'src={favoriteImage}></img>Fav</button>
             </div> */}
 
 
@@ -374,7 +374,7 @@ export function HomePage({
             className="filter-close-button js-close-button"
             onClick={closeFilterMenu}
           >
-            <img className="filter-close-image" src={closeFilterImage}></img>
+            <img loading='lazy'className="filter-close-image" src={closeFilterImage}></img>
           </div>
           <div className="filter-by-items js-filter">
             <h3 className="filter-header">By Gender</h3>
@@ -383,21 +383,21 @@ export function HomePage({
                 className="gender-button male-gender-button"
                 onClick={() => filterHostelsByGender("Boys")}
               >
-                <img className="male-filter-icon" src={boyImage}></img>Boys
+                <img loading='lazy'className="male-filter-icon" src={boyImage}></img>Boys
               </button>
               <button
                 className="gender-button female-gender-button"
                 data-gender-name="Girls"
                 onClick={() => filterHostelsByGender("Girls")}
               >
-                <img className="female-filter-icon" src={girlImage}></img>Girls
+                <img loading='lazy'className="female-filter-icon" src={girlImage}></img>Girls
               </button>
               <button
                 className="gender-button mixed-gender-button"
                 data-gender-name="Mixed"
                 onClick={() => filterHostelsByGender("Mixed")}
               >
-                <img className="mixed-filter-icon" src={mixedImage}></img>
+                <img loading='lazy'className="mixed-filter-icon" src={mixedImage}></img>
                 <p id="mixed-text">Mixed</p>
               </button>
             </div>
@@ -438,14 +438,14 @@ export function HomePage({
               <p className="filter-search-box-text js-search-box-text">
                 {genderText}
               </p>
-              <img className="filter-search-icon" src={searchButton}></img>
+              <img loading='lazy'className="filter-search-icon" src={searchButton}></img>
             </div>
             <div
               className="filter-search-box js-search-box"
               onClick={resetValues}
             >
               <p className="filter-search-box-text js-search-box-text">Reset</p>
-              <img className="filter-search-icon" src={resetImage}></img>
+              <img loading='lazy'className="filter-search-icon" src={resetImage}></img>
             </div>
           </div>
         </div>
@@ -503,7 +503,7 @@ export function HomePage({
       >
         <div className={`filter-buttons main-filter`} onClick={openFilterMenu}>
           <div className="filter-button ">
-            <img src={filterImage} alt="" className="filter-button-image" />
+            <img loading='lazy'src={filterImage} alt="" className="filter-button-image" />
             <p>Filter</p>
           </div>
         </div>

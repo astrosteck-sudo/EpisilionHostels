@@ -208,7 +208,7 @@ export function AskEpisilionPage({ isLoggedIn }) {
 
           <div className="messages">
             <div className="episilion-message-and-bot-conatainer">
-              <img src={robotImage} className="ask-episilion-robot-image" />
+              <img loading='lazy'src={robotImage} className="ask-episilion-robot-image" />
               <div className="episilion-message">
                 <p className="ask-episilion-message-first-Paragraph">
                   Hi {!isLoggedIn ? "student" : user?.name || "student"}! 👋 How
@@ -245,7 +245,7 @@ export function AskEpisilionPage({ isLoggedIn }) {
                     {Array.isArray(chat.message) ? (
                       chat.message.map((hostel) => (
                         <div key={hostel.id}>
-                          {/* <img src={hostel.image} alt={`${hostel.name} image`} className="episilion-response-image" /> */}
+                          {/* <img loading='lazy'src={hostel.image} alt={`${hostel.name} image`} className="episilion-response-image" /> */}
                           <div className="episilion-response-card-details">
                             <p className="episilion-response-hostel-name">
                               {hostel.name}
@@ -295,7 +295,7 @@ export function AskEpisilionPage({ isLoggedIn }) {
                 className="ask-episilion-search-button"
                 onClick={sendMessage}
               >
-                <img src={sendImage} className="send-image-epislion" />
+                <img loading='lazy'src={sendImage} className="send-image-epislion" />
               </button>
             </div>
             <div className="ask-epislion-warning-message">

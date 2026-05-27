@@ -14,7 +14,7 @@ export function HostelDetails({ hostelsCardData, hostelId }) {
                 return (
                     <>
                         <div className="hostel-image-card">
-                            <img src="" alt=""></img>
+                            <img loading='lazy'src="" alt=""></img>
                             <div className="overlay">
                                 <span className="overlay-text">{hostel.name}</span>
                             </div>
@@ -64,23 +64,23 @@ export function HostelDetails({ hostelsCardData, hostelId }) {
                                 <div className="management-contact">
                                     <h2 className="font-header">Contacts</h2>
                                     <a className="contact-item js-phone-number-link" href="tel:">
-                                        <img src="../icons/phone.svg" alt="Phone"></img>
+                                        <img loading='lazy'src="../icons/phone.svg" alt="Phone"></img>
                                         <p className="font-paragraph js-phone-number"></p>
                                     </a>
                                     <a className="contact-item js-whatsApp-number-link" href="https://wa.me/">
-                                        <img src="../icons/whatsapp-128.svg" alt="WhatsApp"></img>
+                                        <img loading='lazy'src="../icons/whatsapp-128.svg" alt="WhatsApp"></img>
                                         <p className="font-paragraph js-whatsapp-number"></p>
                                     </a>
                                     <a className="contact-item js-email-address-link" href="https://">
-                                        <img src="../icons/email-14.svg" alt="Email"></img>
+                                        <img loading='lazy'src="../icons/email-14.svg" alt="Email"></img>
                                         <p className="font-paragraph js-email-address"></p>
                                     </a>
                                     <div className="contact-item">
-                                        <img src="../icons/manager-avatar.svg" alt="manager-name"></img>
+                                        <img loading='lazy'src="../icons/manager-avatar.svg" alt="manager-name"></img>
                                         <p className="font-paragraph js-manager-name"></p>
                                     </div>
                                     <div className="contact-item">
-                                        <img src="../icons/clock.svg" alt="clock"></img>
+                                        <img loading='lazy'src="../icons/clock.svg" alt="clock"></img>
                                         <p className="font-paragraph js-office-hours"></p>
                                     </div>
                                 </div>

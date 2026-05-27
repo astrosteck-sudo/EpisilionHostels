@@ -136,7 +136,7 @@ export function PageHeader({
                   className="hostel-manager-pill"
                   onClick={handleManagerDisplayPopUpMenu}
                 >
-                  <img src={managerProfileIcon} alt="" />
+                  <img loading='lazy'src={managerProfileIcon} alt="" />
                   <p>Manager</p>
                 </div>
 
@@ -254,7 +254,7 @@ export function PageHeader({
           aria-label="Menu"
           onClick={renderHamburgerMenu}
         >
-          <img src={HamburgerButton} alt="Menu"></img>
+          <img loading='lazy'src={HamburgerButton} alt="Menu"></img>
         </button>
 
         {showLogoutModal && (

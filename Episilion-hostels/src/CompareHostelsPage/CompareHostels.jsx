@@ -133,7 +133,7 @@ export function CompareHostels({ originalHostelCardData }) {
                             return (
                                 <>
                                     <h1 className="compared-hostel-name">{hostel.name}</h1>
-                                    <img className="compared-hostel-image" src={url + hostel.image} alt="" />
+                                    <img loading='lazy'className="compared-hostel-image" src={url + hostel.image} alt="" />
                                     <p className="compared-hostel-distance">Distance From Campus : {hostel.distance} <span className={`compared-hostel-diatance-advantage ${leftHostelDistanceAdvantage}`}>{leftHostelDistanceAdvantage ? 'Closer' : 'Further'}</span></p>
                                     <div className="view-location-container">
                                         <button className="view-location js-view-location" onClick={() =>showHostelLocationOnMap(setClose, setActivate, originalHostelCardData, hostelId, setGoogleMapSrc)}>View Location</button>
@@ -143,7 +143,7 @@ export function CompareHostels({ originalHostelCardData }) {
                                     <div className={`overlay-background ${activate ? 'activate' : ''}`}>
                                         <div className='map-modal'>
                                             <div className={`iframe-container ${close ? 'close' : ''}`}>
-                                                <div className='close-button'><img src={closeMapImage} alt="" className='close-image' onClick={closeMap} /></div>
+                                                <div className='close-button'><img loading='lazy'src={closeMapImage} alt="" className='close-image' onClick={closeMap} /></div>
                                                 <iframe
                                                     src={googleMapSrc}
                                                     className='iframe'
@@ -204,7 +204,7 @@ export function CompareHostels({ originalHostelCardData }) {
                                             return (
                                                 <div class="compared-hostel-room-type-image">
                                                     <a href={url + image.url}>
-                                                        <img class="hostel-room" src={url + image.url} alt={image.type}></img>
+                                                        <img loading='lazy'class="hostel-room" src={url + image.url} alt={image.type}></img>
                                                     </a>
                                                     <div class="hostel-room-type-overlay">
                                                         <span class="hostel-room-type-overlay-text">{image.type}</span>
@@ -224,9 +224,9 @@ export function CompareHostels({ originalHostelCardData }) {
                 </div>
                 <div className="compared-hostels">
                     {/* <div className="compared-hostels-switch">
-                        <button className="compare-hostels-arrow-button" onClick={() => reduceHostelNumber()}><img src={leftArrowImage} alt="" /></button>
+                        <button className="compare-hostels-arrow-button" onClick={() => reduceHostelNumber()}><img loading='lazy'src={leftArrowImage} alt="" /></button>
                         <p className="compare-hostels-switch-text">Switch Hostel</p>
-                        <button className="compare-hostels-arrow-button" onClick={() => increaseHostelNumber()}><img src={rightArrowImage} alt="" /></button>
+                        <button className="compare-hostels-arrow-button" onClick={() => increaseHostelNumber()}><img loading='lazy'src={rightArrowImage} alt="" /></button>
                     </div> */}
                     {originalHostelCardData.map((hostel) => {
                         if (hostel.id === hostelNumber) {
@@ -234,12 +234,12 @@ export function CompareHostels({ originalHostelCardData }) {
                                 <>
 
                                     <div className="compared-hostels-switch">
-                                        <button className="compare-hostels-arrow-button" onClick={() => reduceHostelNumber()}><img src={leftArrowImage} alt="" /></button>
+                                        <button className="compare-hostels-arrow-button" onClick={() => reduceHostelNumber()}><img loading='lazy'src={leftArrowImage} alt="" /></button>
                                         <h1 className="compared-hostel-name">{hostel.name}</h1>
-                                        <button className="compare-hostels-arrow-button" onClick={() => increaseHostelNumber()}><img src={rightArrowImage} alt="" /></button>
+                                        <button className="compare-hostels-arrow-button" onClick={() => increaseHostelNumber()}><img loading='lazy'src={rightArrowImage} alt="" /></button>
                                     </div>
                                     {/* <h1 className="compared-hostel-name">{hostel.name}</h1> */}
-                                    <img className="compared-hostel-image" src={url + hostel.image} alt="" />
+                                    <img loading='lazy'className="compared-hostel-image" src={url + hostel.image} alt="" />
                                     <p className="compared-hostel-distance">Distance From Campus : {hostel.distance} m <span className={`compared-hostel-diatance-advantage ${rightHostelDistanceAdvantage}`}>{rightHostelDistanceAdvantage ? 'Closer' : 'Further'}</span></p>
                                     <div className="view-location-container">
                                         <button className="view-location js-view-location" onClick={() =>showHostelLocationOnMap(setClose, setActivate, originalHostelCardData, hostelId, setGoogleMapSrc)}>View Location</button>
@@ -248,7 +248,7 @@ export function CompareHostels({ originalHostelCardData }) {
                                     <div className={`overlay-background ${activate ? 'activate' : ''}`}>
                                         <div className='map-modal'>
                                             <div className={`iframe-container ${close ? 'close' : ''}`}>
-                                                <div className='close-button'><img src={closeMapImage} alt="" className='close-image' onClick={closeMap} /></div>
+                                                <div className='close-button'><img loading='lazy'src={closeMapImage} alt="" className='close-image' onClick={closeMap} /></div>
                                                 <iframe
                                                     src={googleMapSrc}
                                                     className='iframe'
@@ -309,7 +309,7 @@ export function CompareHostels({ originalHostelCardData }) {
                                             return (
                                                 <div class="compared-hostel-room-type-image">
                                                     <a href={url + image.url}>
-                                                        <img class="hostel-room" src={url + image.url} alt={image.type}></img>
+                                                        <img loading='lazy'class="hostel-room" src={url + image.url} alt={image.type}></img>
                                                     </a>
                                                     <div class="hostel-room-type-overlay">
                                                         <span class="hostel-room-type-overlay-text">{image.type}</span>

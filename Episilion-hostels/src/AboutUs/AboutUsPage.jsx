@@ -129,11 +129,11 @@ export function AboutUsPage() {
 
       <div className="about-epislion-contact-options">
         <div className="about-epislion-contact-option">
-          <img src={facebook} alt="Facebook Icon" className="contact-icon" />
+          <img loading='lazy'src={facebook} alt="Facebook Icon" className="contact-icon" />
           <p>Follow us on Facebook</p>
         </div>
         <div className="about-epislion-contact-option">
-          <img src={email} alt="Email Icon" className="contact-icon" />
+          <img loading='lazy'src={email} alt="Email Icon" className="contact-icon" />
           <a
             href={`mailto:episilionhostels26@gmail.com?subject=${encodeURIComponent("Hostel Inquiry")}&body=${encodeURIComponent("Hello, I would like to inquire about...")}`}
           >
@@ -141,7 +141,7 @@ export function AboutUsPage() {
           </a>
         </div>
         <div className="about-epislion-contact-option">
-          <img src={whatsapp} alt="WhatsApp Icon" className="contact-icon" />
+          <img loading='lazy'src={whatsapp} alt="WhatsApp Icon" className="contact-icon" />
           <a
             href="https://wa.me/0537222558"
             target="_blank"
@@ -152,7 +152,7 @@ export function AboutUsPage() {
         </div>
 
         <div className="about-epislion-contact-option">
-          <img src={phone} alt="Phone Icon" className="contact-icon" />
+          <img loading='lazy'src={phone} alt="Phone Icon" className="contact-icon" />
           <a href="tel:0537222558">0537222558</a>
         </div>
       </div>

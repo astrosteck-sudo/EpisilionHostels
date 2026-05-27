@@ -85,7 +85,7 @@ export function MoreDetailsPage({ hostelsCardData, navlink, setNavLink, original
                             return (
                                 <>
                                     <div className="hostel-image-card">
-                                        <img src={hostel.image} alt={`${hostel.name} image`}></img>
+                                        <img loading='lazy'src={hostel.image} alt={`${hostel.name} image`}></img>
                                         <div className="overlay">
                                             <span className="overlay-text">{hostel.name}</span>
                                         </div>
@@ -106,7 +106,7 @@ export function MoreDetailsPage({ hostelsCardData, navlink, setNavLink, original
                                             <div className={`overlay-background ${activate ? 'activate' : ''}`}>
                                                 <div className='map-modal'>
                                                     <div className={`iframe-container ${close ? 'close' : ''}`}>
-                                                        <div className='close-button'><img src={closeMapImage} alt="" className='close-image' onClick={closeMap} /></div>
+                                                        <div className='close-button'><img loading='lazy'src={closeMapImage} alt="" className='close-image' onClick={closeMap} /></div>
                                                         <iframe
                                                             src={googleMapSrc}
                                                             className='iframe'
@@ -184,31 +184,31 @@ export function MoreDetailsPage({ hostelsCardData, navlink, setNavLink, original
                                             <div className="management-contact">
                                                 <h2 className="font-header">Contacts</h2>
                                                 <Link className="contact-item js-phone-number-link" href={hostel.contact.phone}>
-                                                    <img src={Phone} alt="Phone"></img>
+                                                    <img loading='lazy'src={Phone} alt="Phone"></img>
                                                     <p className="font-paragraph js-phone-number">
                                                         {hostel.contact.phone}
                                                     </p>
                                                 </Link>
                                                 <a className="contact-item js-whatsApp-number-link" href={`https://wa.me/${hostel.contact.whatsapp}`}>
-                                                    <img src={Whatsapp} alt="WhatsApp"></img>
+                                                    <img loading='lazy'src={Whatsapp} alt="WhatsApp"></img>
                                                     <p className="font-paragraph js-whatsapp-number">
                                                         {hostel.contact.whatsapp}
                                                     </p>
                                                 </a>
                                                 <a className="contact-item js-email-address-link" href={`https://${hostel.contact.email}`}>
-                                                    <img src={Email} alt="Email"></img>
+                                                    <img loading='lazy'src={Email} alt="Email"></img>
                                                     <p className="font-paragraph js-email-address">
                                                         {hostel.contact.email}
                                                     </p>
                                                 </a>
                                                 <div className="contact-item">
-                                                    <img src={Manager} alt="manager-name"></img>
+                                                    <img loading='lazy'src={Manager} alt="manager-name"></img>
                                                     <p className="font-paragraph js-manager-name">
                                                         {hostel.contact.managerName}
                                                     </p>
                                                 </div>
                                                 <div className="contact-item">
-                                                    <img src={Clock} alt="clock"></img>
+                                                    <img loading='lazy'src={Clock} alt="clock"></img>
                                                     <p className="font-paragraph js-office-hours">
                                                         {hostel.contact.officeHours}
                                                     </p>
@@ -223,7 +223,7 @@ export function MoreDetailsPage({ hostelsCardData, navlink, setNavLink, original
                                             return (
                                                 <div class="hostel-room-type-image">
                                                     <a href={image.url}>
-                                                        <img class="hostel-room" src={image.url} alt={image.type}></img>
+                                                        <img loading='lazy'class="hostel-room" src={image.url} alt={image.type}></img>
                                                     </a>
                                                     <div class="hostel-room-type-overlay">
                                                         <span class="hostel-room-type-overlay-text">{image.type}</span>
