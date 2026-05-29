@@ -91,13 +91,13 @@
   border-radius: 7px 7px 0px 0px;
   display: block;
   min-height: 190px;
-  min-width: 280px;
+  /* min-width: 280px; */
   /* min-width: 280px;
   max-height: 190px; */
 }
 @media only screen and (max-width: 600px) {
   #hostel-card-image {
-    min-width: 170px;
+    /* min-width: 170px; */
     max-height: 90px;
     min-height: 100px;
   }
