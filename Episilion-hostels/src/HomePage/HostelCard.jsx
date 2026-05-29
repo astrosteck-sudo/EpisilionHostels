@@ -1,21 +1,21 @@
-import { useNavigate } from "react-router-dom";
 import { getDistance } from "geolib";
 import { useEffect, useState } from "react";
 import "./HostelCard.css";
 import { kilometersToMeters } from "../UTILS/kilometerConvertor";
+import { Link } from "react-router-dom";
 
 export function HostelCard({ hostel }) {
   //THIS IS THE URL FOR THE BACKEND, THIS IS USED TO ACCESS THE IMAGES IN THE PUBLIC FOLDER OF THE BACKEND
   //const url = "https://episilion-backend-2lt0.onrender.com"
   const url = "https://episilion-backend-2lt0.onrender.com";
 
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
   // function showHostelId(parameter){
   //     window.location.href = `moreDetails?hostelId=${parameter}`;
   // }
-  function showHostelId(parameter) {
-    navigate(`/moreDetails?hostelId=${parameter}`);
-  }
+  // function showHostelId(parameter) {
+  //   navigate(`/moreDetails?hostelId=${parameter}`);
+  // }
 
   const [amenities, setAmenities] = useState([]);
 
@@ -55,15 +55,14 @@ export function HostelCard({ hostel }) {
         <tr width="20px">
           <td colSpan="2" className="td-vetical">
             <p id="hostel-distace">
-              {(
-                kilometersToMeters(getDistance(
+              {kilometersToMeters(
+                getDistance(
                   { latitude: 5.660969, longitude: -0.166374 },
                   {
                     latitude: hostel.location.latitude,
                     longitude: hostel.location.longitude,
                   },
-                ) / 1000)
-                
+                ) / 1000,
               ).toFixed(0)}
               m from campus
             </p>
@@ -82,13 +81,13 @@ export function HostelCard({ hostel }) {
           </td>
         </tr>
       </table>
-      <p>
-        <button
-          className="view-more-details js-view-more-details"
-          onClick={() => showHostelId(hostel.id)}
+      <p className="view-more-details">
+        <Link
+          to={`/moreDetails?hostelId=${hostel.id}`}
+          className="view-more-details-link js-view-more-details"
         >
           View Details
-        </button>
+        </Link>
       </p>
     </div>
   );

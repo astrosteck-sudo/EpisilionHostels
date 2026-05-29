@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [
     react(),
     sitemap({
-      hostname: "https://yourdomain.com",
+      hostname: "https://episilionhostels.com",
       routes: [
         "/",
         "/hostels/upsa",
