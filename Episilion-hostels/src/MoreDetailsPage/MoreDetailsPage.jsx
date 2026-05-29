@@ -274,12 +274,18 @@ export function MoreDetailsPage({ originalHostelCardData }) {
                               }
                               alt="Favorite Button"
                             />
+                            <p>Fav</p>
                           </button>
                           <button
                             className="compare-button"
                             onClick={() => comapareHostels(hostel.id)}
                           >
-                            <img loading='lazy'src={compareImage} alt="Compare Button" />
+                            <img
+                              loading="lazy"
+                              src={compareImage}
+                              alt="Compare Button"
+                            />
+                            <p>CF</p>
                           </button>
                         </div>
                       </div>
@@ -419,7 +425,7 @@ export function MoreDetailsPage({ originalHostelCardData }) {
                           className="contact-item js-phone-number-link"
                           href={hostel.contact.phone}
                         >
-                          <img loading='lazy'src={Phone} alt="Phone"></img>
+                          <img loading="lazy" src={Phone} alt="Phone"></img>
                           <p className="font-paragraph js-phone-number">
                             {hostel.contact.phone}
                           </p>
@@ -428,7 +434,11 @@ export function MoreDetailsPage({ originalHostelCardData }) {
                           className="contact-item js-whatsApp-number-link"
                           href={`https://wa.me/${hostel.contact.whatsapp}`}
                         >
-                          <img loading='lazy'src={Whatsapp} alt="WhatsApp"></img>
+                          <img
+                            loading="lazy"
+                            src={Whatsapp}
+                            alt="WhatsApp"
+                          ></img>
                           <p className="font-paragraph js-whatsapp-number">
                             {hostel.contact.whatsapp}
                           </p>
@@ -439,7 +449,7 @@ export function MoreDetailsPage({ originalHostelCardData }) {
                         >
                           {hostel.contact.email && (
                             <>
-                              <img loading='lazy'src={Email} alt="Email"></img>
+                              <img loading="lazy" src={Email} alt="Email"></img>
                               <p className="font-paragraph js-email-address">
                                 {hostel.contact.email}
                               </p>
@@ -447,13 +457,17 @@ export function MoreDetailsPage({ originalHostelCardData }) {
                           )}
                         </a>
                         <div className="contact-item">
-                          <img loading='lazy'src={Manager} alt="manager-name"></img>
+                          <img
+                            loading="lazy"
+                            src={Manager}
+                            alt="manager-name"
+                          ></img>
                           <p className="font-paragraph js-manager-name">
                             {hostel.contact.managerName}
                           </p>
                         </div>
                         <div className="contact-item">
-                          <img loading='lazy'src={Clock} alt="clock"></img>
+                          <img loading="lazy" src={Clock} alt="clock"></img>
                           <p className="font-paragraph js-office-hours">
                             {hostel.contact.officeHours}
                           </p>
@@ -465,7 +479,11 @@ export function MoreDetailsPage({ originalHostelCardData }) {
                             target="_blank"
                             rel="noopener noreferrer"
                           >
-                            <img loading='lazy'src={websImage} alt="website"></img>
+                            <img
+                              loading="lazy"
+                              src={websImage}
+                              alt="website"
+                            ></img>
                             <p className="font-paragraph js-email-address">
                               {hostel.contact.website}
                             </p>

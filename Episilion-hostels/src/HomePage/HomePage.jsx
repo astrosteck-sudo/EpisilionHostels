@@ -360,9 +360,6 @@ export function HomePage({
                 <button><img loading='lazy'src={favoriteImage}></img>Fav</button>
             </div> */}
 
-
-             
-
       <meta
         name="description"
         content="Find affordable and verified student hostels near UPSA. Browse our up-to-date listings, compare prices, and book your perfect stay with confidence. Your next home awaits!"
@@ -374,7 +371,11 @@ export function HomePage({
             className="filter-close-button js-close-button"
             onClick={closeFilterMenu}
           >
-            <img loading='lazy'className="filter-close-image" src={closeFilterImage}></img>
+            <img
+              loading="lazy"
+              className="filter-close-image"
+              src={closeFilterImage}
+            ></img>
           </div>
           <div className="filter-by-items js-filter">
             <h3 className="filter-header">By Gender</h3>
@@ -383,21 +384,35 @@ export function HomePage({
                 className="gender-button male-gender-button"
                 onClick={() => filterHostelsByGender("Boys")}
               >
-                <img loading='lazy'className="male-filter-icon" src={boyImage}></img>Boys
+                <img
+                  loading="lazy"
+                  className="male-filter-icon"
+                  src={boyImage}
+                ></img>
+                Boys
               </button>
               <button
                 className="gender-button female-gender-button"
                 data-gender-name="Girls"
                 onClick={() => filterHostelsByGender("Girls")}
               >
-                <img loading='lazy'className="female-filter-icon" src={girlImage}></img>Girls
+                <img
+                  loading="lazy"
+                  className="female-filter-icon"
+                  src={girlImage}
+                ></img>
+                Girls
               </button>
               <button
                 className="gender-button mixed-gender-button"
                 data-gender-name="Mixed"
                 onClick={() => filterHostelsByGender("Mixed")}
               >
-                <img loading='lazy'className="mixed-filter-icon" src={mixedImage}></img>
+                <img
+                  loading="lazy"
+                  className="mixed-filter-icon"
+                  src={mixedImage}
+                ></img>
                 <p id="mixed-text">Mixed</p>
               </button>
             </div>
@@ -438,14 +453,22 @@ export function HomePage({
               <p className="filter-search-box-text js-search-box-text">
                 {genderText}
               </p>
-              <img loading='lazy'className="filter-search-icon" src={searchButton}></img>
+              <img
+                loading="lazy"
+                className="filter-search-icon"
+                src={searchButton}
+              ></img>
             </div>
             <div
               className="filter-search-box js-search-box"
               onClick={resetValues}
             >
               <p className="filter-search-box-text js-search-box-text">Reset</p>
-              <img loading='lazy'className="filter-search-icon" src={resetImage}></img>
+              <img
+                loading="lazy"
+                className="filter-search-icon"
+                src={resetImage}
+              ></img>
             </div>
           </div>
         </div>
@@ -503,7 +526,12 @@ export function HomePage({
       >
         <div className={`filter-buttons main-filter`} onClick={openFilterMenu}>
           <div className="filter-button ">
-            <img loading='lazy'src={filterImage} alt="" className="filter-button-image" />
+            <img
+              loading="lazy"
+              src={filterImage}
+              alt=""
+              className="filter-button-image"
+            />
             <p>Filter</p>
           </div>
         </div>
@@ -559,11 +587,12 @@ export function HomePage({
             return <HostelCard key={hostel.id} hostel={hostel} />;
           })}
         </div>
+
+        <div className="more-hostels-container">
+          <p>More Hostels on the way — stay tuned!</p>
+        </div>
       </section>
 
-      <div className="more-hostels-container">
-        <p>More Hostels on the way — stay tuned!</p>
-      </div>
       <SiteFooter />
     </>
   );
