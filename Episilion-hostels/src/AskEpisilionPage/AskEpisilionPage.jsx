@@ -9,6 +9,8 @@ import lightBulbImage from "../assets/icons/light-bulb.png";
 import axios from "axios";
 import { getDeviceId } from "../UTILS/deviceId.js";
 
+import { initializePayment } from "../services/paymentService";
+
 export function AskEpisilionPage({ isLoggedIn }) {
   const [userSearchInput, setUserSearchInput] = useState(""); //THIS IS TO TRACK THE USER INPUT IN THE SEARCH BAR
   const [chatMessages, setChatMessages] = useState([]); //Initialize as array
@@ -16,7 +18,7 @@ export function AskEpisilionPage({ isLoggedIn }) {
   //THIS IS TO TRACK THE NUMBER OF REQUESTS THE USER HAS LEFT
   const [remainingRequests, setRemainingRequest] = useState(() => {
     const saved = localStorage.getItem("episilionRemainingRequests");
-    return saved !== null ? parseInt(saved) : '3';
+    return saved !== null ? parseInt(saved) : "3";
   });
 
   //THIS IS TO TRACK THE LOADING STATE OF THE AI RESPONSE
@@ -112,7 +114,7 @@ export function AskEpisilionPage({ isLoggedIn }) {
           message: result,
           type: "episilionResults",
           sender: "episilion",
-          header: res.data.reason ,
+          header: res.data.reason,
         },
       ]);
     } catch (error) {
@@ -157,6 +159,24 @@ export function AskEpisilionPage({ isLoggedIn }) {
     document.title = "Ask Episilion | Episilion Hostels";
   }, []);
 
+  const handleSubscribe = async () => {
+    try {
+      //setLoading(true);
+
+      const data = await initializePayment(1);
+      console.log(data)
+
+      window.location.href = data.authorization_url;
+    } catch (error) {
+      console.log(error);
+
+      alert(error.response?.data?.message || "Payment failed");
+    } finally {
+      //setLoading(false);
+    }
+  };
+
+
   return (
     <>
       <div className="main-epsilion-container">
@@ -185,7 +205,7 @@ export function AskEpisilionPage({ isLoggedIn }) {
           <div className="premuim-access-container">
             <p>Unlock Full Access</p>
             <p>Get 15 AI request per day for just GHS 10/month</p>
-            <button className="upgrade-now-button">Upgrade Now</button>
+            <button className="upgrade-now-button" onClick={handleSubscribe}>Upgrade Now</button>
           </div>
         </div>
 
@@ -208,7 +228,11 @@ export function AskEpisilionPage({ isLoggedIn }) {
 
           <div className="messages">
             <div className="episilion-message-and-bot-conatainer">
-              <img loading='lazy'src={robotImage} className="ask-episilion-robot-image" />
+              <img
+                loading="lazy"
+                src={robotImage}
+                className="ask-episilion-robot-image"
+              />
               <div className="episilion-message">
                 <p className="ask-episilion-message-first-Paragraph">
                   Hi {!isLoggedIn ? "student" : user?.name || "student"}! 👋 How
@@ -239,9 +263,7 @@ export function AskEpisilionPage({ isLoggedIn }) {
               >
                 {chat.type === "episilionResults" ? (
                   <div className="episilion-response">
-                    <p className="episilion-response-header">
-                      {chat.header}
-                    </p>
+                    <p className="episilion-response-header">{chat.header}</p>
                     {Array.isArray(chat.message) ? (
                       chat.message.map((hostel) => (
                         <div key={hostel.id}>
@@ -295,7 +317,11 @@ export function AskEpisilionPage({ isLoggedIn }) {
                 className="ask-episilion-search-button"
                 onClick={sendMessage}
               >
-                <img loading='lazy'src={sendImage} className="send-image-epislion" />
+                <img
+                  loading="lazy"
+                  src={sendImage}
+                  className="send-image-epislion"
+                />
               </button>
             </div>
             <div className="ask-epislion-warning-message">

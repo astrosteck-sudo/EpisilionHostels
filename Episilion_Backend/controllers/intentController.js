@@ -319,6 +319,17 @@ Return best matches only.
     const remaining =
       req.aiUsage.requests_limit - (req.aiUsage.requests_used + 1);
 
+    const today = new Date().toISOString().split("T")[0];
+
+    await pool.execute(
+      `UPDATE usage_logs
+   SET requests_used =
+   requests_used + 1
+   WHERE user_id = ?
+   AND usage_date = ?`,
+      [req.user.id, today],
+    );
+
     // 12. FINAL RESPONSE
     res.json({
       reason: overallReason,

@@ -3,7 +3,6 @@ const cors = require("cors");
 const fs = require("fs");
 const path = require("path");
 
-
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -31,6 +30,8 @@ app.use("/api/manager/auth", require("../routes/managerAuthRoutes.js"));
 app.use("/api/manager", require("../routes/managerDashboardRoutes.js"));
 app.use("/api/manager", require("../routes/managerDashboardRoutes.js"));
 app.use("/api/manager", require("../routes/managerDashboardRoutes.js"));
+app.use("/api/payments/webhook", express.raw({ type: "*/*" }));
+app.use("/api/payments", require("../routes/paymentRoutes.js"));
 
 // ── Routes ────────────────────────────────────────────────────────────────────
 // GET /api/teamMembers  → return only the teamMembers array

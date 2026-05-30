@@ -14,6 +14,7 @@ import { PageHeader } from './PageHeader/PageHeader.jsx';
 import { UserProfilePage } from './UserProfilPage/UserProfile.jsx';
 import { HostelManagerPage } from './HostelManagerPage/HostelManagerPage.jsx';
 import { ChangePasswordPage } from './HostelManagerPage/ChangePasswordPage.jsx';
+import PaymentSuccess from './AskEpisilionPage/PaymentSuccess.jsx';
 
 
 function App() {
@@ -70,6 +71,7 @@ function App() {
         <Route path='userProfilePage' element={<UserProfilePage isLoggedIn={isLoggedIn}></UserProfilePage>} />
         <Route path='hostelManagerPage' element={<HostelManagerPage></HostelManagerPage>}></Route>
         <Route path='changePasswordPage' element={<ChangePasswordPage managerIsLoggedIn={managerIsLoggedIn}></ChangePasswordPage>}></Route>
+        <Route path="/payment/success" element={<PaymentSuccess></PaymentSuccess>}></Route>
       </Routes>
     </>
   )
