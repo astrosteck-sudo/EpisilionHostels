@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "https://episilionhostels.com/api",
+  baseURL: "https://episilion-backend-2lt0.onrender.com/api",
 });
 
 //console.log('API', API)
