@@ -102,7 +102,7 @@ export function MoreDetailsPage({ originalHostelCardData }) {
     setIsSubmitting(true);
     try {
       await axios.post(
-        "http://localhost:3000/api/reviews",
+        "https://episilionhostels.com/api/reviews",
         {
           hostel_id: hostelId,
           rating: rating,
@@ -132,7 +132,7 @@ export function MoreDetailsPage({ originalHostelCardData }) {
   async function loadingReviews(hostelId) {
     try {
       const response = await axios.get(
-        `http://localhost:3000/api/reviews/${hostelId}`,
+        `https://episilionhostels.com/api/reviews/${hostelId}`,
       );
       //console.log("Response from reviews API:", response.data); // Debugging log to check the response from the API
       if (response.data.length === 0) {

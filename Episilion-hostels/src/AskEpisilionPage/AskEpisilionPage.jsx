@@ -91,7 +91,7 @@ export function AskEpisilionPage({ isLoggedIn }) {
 
     try {
       const res = await axios.post(
-        "http://localhost:3000/api/intent/search",
+        "https://episilionhostels.com/api/intent/search",
         { query: userMessage },
         {
           headers: {
@@ -182,7 +182,7 @@ export function AskEpisilionPage({ isLoggedIn }) {
   const getMe = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get(`http://localhost:3000/api/me`, {
+      const response = await axios.get(`https://episilionhostels.com/api/me`, {
         headers: {
           Authorization: token,
         },
