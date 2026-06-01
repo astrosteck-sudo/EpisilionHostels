@@ -80,14 +80,14 @@ export function LoginPage({ setIsLoggedIn, setManagerIsLoggedIn }) {
       console.log(error);
       setManagerErrorMessage("Something is wrong try again");
     }
-  }
+  } 
 
   async function handleLogin(e) {
     e.preventDefault();
     setErrorMessage("");
 
     try {
-      const res = await axios.post(`https://episilionhostels.com/api/auth/login`, {
+      const res = await axios.post(`https://episilion-backend-2lt0.onrender.com/api/auth/login`, {
         email,
         password,
       });

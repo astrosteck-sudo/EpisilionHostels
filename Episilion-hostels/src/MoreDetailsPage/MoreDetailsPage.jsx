@@ -102,7 +102,7 @@ export function MoreDetailsPage({ originalHostelCardData }) {
     setIsSubmitting(true);
     try {
       await axios.post(
-        "https://episilionhostels.com/api/reviews",
+        "https://episilion-backend-2lt0.onrender.com/api/reviews",
         {
           hostel_id: hostelId,
           rating: rating,
@@ -132,7 +132,7 @@ export function MoreDetailsPage({ originalHostelCardData }) {
   async function loadingReviews(hostelId) {
     try {
       const response = await axios.get(
-        `https://episilionhostels.com/api/reviews/${hostelId}`,
+        `https://episilion-backend-2lt0.onrender.com/api/reviews/${hostelId}`,
       );
       //console.log("Response from reviews API:", response.data); // Debugging log to check the response from the API
       if (response.data.length === 0) {
@@ -194,7 +194,7 @@ export function MoreDetailsPage({ originalHostelCardData }) {
 
         <link
           rel="canonical"
-          href={`https://episilionhostels.com/moreDetails?hostelId=${foundHostel?.id}`}
+          href={`https://episilion-backend-2lt0.onrender.com/moreDetails?hostelId=${foundHostel?.id}`}
         />
         <meta
           name="description"
@@ -208,7 +208,7 @@ export function MoreDetailsPage({ originalHostelCardData }) {
         <meta property="og:image" content={foundHostel?.image} />
         <meta
           property="og:url"
-          content={`https://episilionhostels.com/moreDetails?hostelId=${foundHostel?.id}`}
+          content={`https://episilion-backend-2lt0.onrender.com/moreDetails?hostelId=${foundHostel?.id}`}
         />
         <meta name="twitter:card" content="summary_large_image" />
 
@@ -232,7 +232,7 @@ export function MoreDetailsPage({ originalHostelCardData }) {
             },
             telephone: foundHostel?.contact.phone,
             email: foundHostel?.contact.email,
-            url: `https://episilionhostels.com/moreDetails?hostelId=${foundHostel?.id}`,
+            url: `https://episilion-backend-2lt0.onrender.com/moreDetails?hostelId=${foundHostel?.id}`,
             description: `Affordable ${foundHostel?.type} hostel near UPSA with ${foundHostel?.amenities.join(", ")}.`,
           })}
         </script>

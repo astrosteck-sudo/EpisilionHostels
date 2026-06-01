@@ -67,7 +67,7 @@ export function SignUpPage() {
         setErrorMessage('');
         try {
             console.log("Submitting data:")
-            await axios.post("https://episilionhostels.com/api/auth/signup", {
+            await axios.post("https://episilion-backend-2lt0.onrender.com/api/auth/signup", {
                 name: fullName,
                 email: email,
                 password: password

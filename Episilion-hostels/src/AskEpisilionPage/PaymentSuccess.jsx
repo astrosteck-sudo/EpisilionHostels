@@ -14,7 +14,7 @@ const PaymentSuccess = () => {
         const token = localStorage.getItem("token");
 
         const response = await axios.get(
-          `https://episilionhostels.com/api/payments/verify/${reference}`,
+          `https://episilion-backend-2lt0.onrender.com/api/payments/verify/${reference}`,
           {
             headers: { Authorization: token },
           }
