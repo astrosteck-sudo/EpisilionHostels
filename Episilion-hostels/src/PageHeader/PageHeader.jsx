@@ -2,7 +2,7 @@ import "./PageHeader.css";
 import HamburgerButton from "../assets/icons/hamburger-button-4.png";
 import { Link } from "react-router-dom";
 import { NavLink, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 //import profilePicture from "../assets/icons/user.png";
 import downArrow from "../assets/icons/down-arrow.png";
 import userPopImage from "../assets/icons/user4.png";
@@ -27,7 +27,7 @@ export function PageHeader({
   const navigate = useNavigate();
   // const [navlink, setNavLink] = useState(false)
   const [showLogoutModal, setShowLogoutModal] = useState(false);
-  const [showManagerLogoutModal, setShowManagerLogoutModal] = useState(false)
+  const [showManagerLogoutModal, setShowManagerLogoutModal] = useState(false);
   const [openUserPopUpMenu, setOpenUserPopUpMenu] = useState(false);
   const [openManangerPopUpMenu, setOenManangerPopUpMenu] = useState(false);
 
@@ -49,23 +49,33 @@ export function PageHeader({
   function logOutHostelManager() {
     navigate("/login");
     localStorage.removeItem("managerToken");
-    localStorage.removeItem("managerUser")
+    localStorage.removeItem("managerUser");
     setManagerIsLoggedIn(false);
-    setShowManagerLogoutModal(false)
+    setShowManagerLogoutModal(false);
   }
 
   //THIS WILL CHECK IF THE TARGET IS NOT THE HAMBURGER
   // BUTTON, NAVLINKS MENU, AND IF THE NAVLINKS IS OPEN,
   // IF THE CONDIOTIONS A TRUE , THE IF THE DOCUMENT IS
   // CLICKED THE NAVLINK MEMU IS REMOVED
-  document.addEventListener("click", (event) => {
-    if (
-      navlink &&
-      !event.target.closest(".navigation-links") &&
-      !event.target.closest(".hamburger-button")
-    )
-      setNavLink(false);
-  });
+  useEffect(() => {
+    function handleClick(event) {
+      if (
+        navlink &&
+        !event.target.closest(".navigation-links") &&
+        !event.target.closest(".hamburger-button")
+      ) {
+        setNavLink(false);
+      }
+    }
+
+    document.addEventListener("click", handleClick);
+
+    // Cleanup on unmount
+    return () => {
+      document.removeEventListener("click", handleClick);
+    };
+  }, [navlink, setNavLink]);
   function resetValues() {
     sethostelsCardData(originalHostelCardData);
     setHostelFound(true);
@@ -80,13 +90,19 @@ export function PageHeader({
       setOpenUserPopUpMenu(true);
     }
   }
-  document.addEventListener("click", (event) => {
-    if (
-      !event.target.closest(".user-option-pop-up-container") &&
-      !event.target.closest(".header-section")
-    )
-      setOpenUserPopUpMenu(false);
-  });
+  useEffect(() => {
+    function handleClick(event) {
+      if (
+        !event.target.closest(".user-option-pop-up-container") &&
+        !event.target.closest(".header-section")
+      ) {
+        setOpenUserPopUpMenu(false);
+      }
+    }
+
+    document.addEventListener("click", handleClick);
+    return () => document.removeEventListener("click", handleClick);
+  }, [setOpenUserPopUpMenu]);
 
   function handleManagerDisplayPopUpMenu() {
     if (openManangerPopUpMenu) {
@@ -136,7 +152,7 @@ export function PageHeader({
                   className="hostel-manager-pill"
                   onClick={handleManagerDisplayPopUpMenu}
                 >
-                  <img loading='lazy'src={managerProfileIcon} alt="" />
+                  <img loading="lazy" src={managerProfileIcon} alt="" />
                   <p>Manager</p>
                 </div>
 
@@ -169,7 +185,7 @@ export function PageHeader({
                     </Link>
                   </div>
 
-                  <div  onClick={() => setShowManagerLogoutModal(true)}>
+                  <div onClick={() => setShowManagerLogoutModal(true)}>
                     <img
                       src={userPopLogOutImage}
                       className="user-option-pop-up-images"
@@ -254,7 +270,7 @@ export function PageHeader({
           aria-label="Menu"
           onClick={renderHamburgerMenu}
         >
-          <img loading='lazy'src={HamburgerButton} alt="Menu"></img>
+          <img loading="lazy" src={HamburgerButton} alt="Menu"></img>
         </button>
 
         {showLogoutModal && (

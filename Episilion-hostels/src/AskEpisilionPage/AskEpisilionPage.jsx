@@ -16,7 +16,7 @@ export function AskEpisilionPage({ isLoggedIn }) {
   const [chatMessages, setChatMessages] = useState([]); //Initialize as array
   const [open, setOpen] = useState(false);
   const [userSubcriptionInfo, setUserSubcriptionInfo] = useState({});
-  const [aiSubscriptionRemaining, setAiSubscriptionRemaining] = useState(15)
+  const [aiSubscriptionRemaining, setAiSubscriptionRemaining] = useState(15);
   //THIS IS TO TRACK THE NUMBER OF REQUESTS THE USER HAS LEFT
   const [remainingRequests, setRemainingRequest] = useState(() => {
     const saved = localStorage.getItem("episilionRemainingRequests");
@@ -104,7 +104,7 @@ export function AskEpisilionPage({ isLoggedIn }) {
       const result = res.data.result;
       console.log(res.data);
       setRemainingRequest(res.data.remainingRequests);
-      setAiSubscriptionRemaining(res.data.remainingSubscriptionRequests)
+      setAiSubscriptionRemaining(res.data.remainingSubscriptionRequests);
       localStorage.setItem(
         "episilionRemainingRequests",
         res.data.remainingRequests,
@@ -182,14 +182,17 @@ export function AskEpisilionPage({ isLoggedIn }) {
   const getMe = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get(`https://episilion-backend-2lt0.onrender.com/api/me`, {
-        headers: {
-          Authorization: token,
+      const response = await axios.get(
+        `https://episilion-backend-2lt0.onrender.com/api/me`,
+        {
+          headers: {
+            Authorization: token,
+          },
         },
-      });
-      console.log(response.data)
+      );
+      console.log(response.data);
       setUserSubcriptionInfo(response.data);
-      setAiSubscriptionRemaining(response.data.subscription.remainingSearches)
+      setAiSubscriptionRemaining(response.data.subscription.remainingSearches);
     } catch (err) {
       console.error("Failed to fetch user data", err);
     }
@@ -198,6 +201,17 @@ export function AskEpisilionPage({ isLoggedIn }) {
   useEffect(() => {
     getMe();
   }, [aiSubscriptionRemaining]);
+
+  useEffect(() => {
+    function handleClick(event) {
+      if (!event.target.closest(".epsilion-wrapper-one") && !event.target.closest(".topbar .menu-btn")) {
+        setOpen(false);
+      }
+    }
+
+    document.addEventListener("click", handleClick);
+    return () => document.removeEventListener("click", handleClick);
+  }, [setOpen]);
 
   return (
     <>
@@ -213,7 +227,9 @@ export function AskEpisilionPage({ isLoggedIn }) {
             <p>AI powered hostel assistant</p>
           </div>
           <p className="your-usage-text">YOUR USAGE</p>
-          <div className={`user-AI-usage-container ${!userSubcriptionInfo?.subscription?.subscribed ? "" : "no-opacity"}`}>
+          <div
+            className={`user-AI-usage-container ${!userSubcriptionInfo?.subscription?.subscribed ? "" : "no-opacity"}`}
+          >
             <p className="free-request-text">
               Free Request{" "}
               <span className="user-number-request-left">
