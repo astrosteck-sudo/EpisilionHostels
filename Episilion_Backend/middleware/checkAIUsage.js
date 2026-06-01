@@ -1,43 +1,144 @@
-const pool = require("../config/db.js"); // ✅ import pool
+const pool = require("../config/db.js");
 
-// Middleware to check a user's AI usage quota
 const checkAIUsage = async (req, res, next) => {
   try {
-    // Get the authenticated user's ID from request object
     const userId = req.user.user_id;
 
-    // ✅ Fetch AI usage record for this user
-    const [usage] = await pool.query(
-      `SELECT * FROM ai_usage WHERE user_id = ?`,
+    // =========================
+    // 1. CHECK SUBSCRIPTION FIRST
+    // =========================
+    const [subs] = await pool.query(
+      `
+      SELECT *
+      FROM subscriptions
+      WHERE user_id = ?
+      AND status = 'active'
+      AND expires_at > NOW()
+      LIMIT 1
+      `,
       [userId]
     );
 
-    // If no usage record exists, return 404
-    if (usage.length === 0) {
-      return res.status(404).json({
-        error: "AI usage record not found",
+    const today = new Date().toISOString().split("T")[0];
+
+    // =========================
+    // 2. PREMIUM USER LOGIC
+    // =========================
+    if (subs.length > 0) {
+      const subscription = subs[0];
+
+      let [usageRows] = await pool.query(
+        `
+        SELECT *
+        FROM usage_logs
+        WHERE user_id = ?
+        AND usage_date = ?
+        `,
+        [userId, today]
+      );
+
+      // create usage row if missing
+      if (usageRows.length === 0) {
+        await pool.query(
+          `
+          INSERT INTO usage_logs (user_id, usage_date, requests_used)
+          VALUES (?, ?, 0)
+          `,
+          [userId, today]
+        );
+
+        [usageRows] = await pool.query(
+          `
+          SELECT *
+          FROM usage_logs
+          WHERE user_id = ?
+          AND usage_date = ?
+          `,
+          [userId, today]
+        );
+      }
+
+      const usage = usageRows[0];
+
+      if (usage.requests_used >= subscription.daily_limit) {
+        return res.status(403).json({
+          error: "premium_limit_reached",
+          message: "Daily AI limit reached. Try again tomorrow.",
+        });
+      }
+
+      req.isPremium = true;
+
+      req.aiUsage = {
+        requests_used: usage.requests_used,
+        requests_limit: subscription.daily_limit,
+      };
+
+      return next();
+    }
+
+    // =========================
+    // 3. FREE USER LOGIC (DEVICE)
+    // =========================
+    const deviceId = req.headers["x-device-id"];
+
+    if (!deviceId) {
+      return res.status(400).json({
+        error: "No device ID provided",
       });
     }
 
-    // Extract the usage row
-    const userUsage = usage[0];
+    let [rows] = await pool.query(
+      `
+      SELECT *
+      FROM device_ai_usage
+      WHERE device_id = ?
+      `,
+      [deviceId]
+    );
 
-    // Check if user has reached their request limit
-    if (userUsage.requests_used >= userUsage.requests_limit) {
+    if (rows.length === 0) {
+      await pool.query(
+        `
+        INSERT INTO device_ai_usage (device_id)
+        VALUES (?)
+        `,
+        [deviceId]
+      );
+
+      [rows] = await pool.query(
+        `
+        SELECT *
+        FROM device_ai_usage
+        WHERE device_id = ?
+        `,
+        [deviceId]
+      );
+    }
+
+    const deviceUsage = rows[0];
+
+    if (deviceUsage.requests_used >= deviceUsage.requests_limit) {
       return res.status(403).json({
-        error: "limit_reached",
-        message: "Upgrade to continue using AI search",
+        error: "device_limit_reached",
+        message: "This device has used all free AI requests.",
       });
     }
 
-    // Attach usage info to request for downstream handlers
-    req.aiUsage = userUsage;
+    req.isPremium = false;
 
-    // Allow request to continue
-    next();
+    req.aiUsage = {
+      requests_used: deviceUsage.requests_used,
+      requests_limit: deviceUsage.requests_limit,
+    };
+
+    req.deviceUsage = deviceUsage;
+
+    return next();
   } catch (err) {
     console.error("AI usage check error:", err);
-    res.status(500).json({
+
+    return res.status(500).json({
       error: "AI usage check failed",
     });
   }

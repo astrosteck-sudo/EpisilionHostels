@@ -15,6 +15,8 @@ export function AskEpisilionPage({ isLoggedIn }) {
   const [userSearchInput, setUserSearchInput] = useState(""); //THIS IS TO TRACK THE USER INPUT IN THE SEARCH BAR
   const [chatMessages, setChatMessages] = useState([]); //Initialize as array
   const [open, setOpen] = useState(false);
+  const [userSubcriptionInfo, setUserSubcriptionInfo] = useState({});
+  const [aiSubscriptionRemaining, setAiSubscriptionRemaining] = useState(15)
   //THIS IS TO TRACK THE NUMBER OF REQUESTS THE USER HAS LEFT
   const [remainingRequests, setRemainingRequest] = useState(() => {
     const saved = localStorage.getItem("episilionRemainingRequests");
@@ -89,7 +91,7 @@ export function AskEpisilionPage({ isLoggedIn }) {
 
     try {
       const res = await axios.post(
-        "https://episilion-backend-2lt0.onrender.com/api/intent/search",
+        "http://localhost:3000/api/intent/search",
         { query: userMessage },
         {
           headers: {
@@ -102,6 +104,7 @@ export function AskEpisilionPage({ isLoggedIn }) {
       const result = res.data.result;
       console.log(res.data);
       setRemainingRequest(res.data.remainingRequests);
+      setAiSubscriptionRemaining(res.data.remainingSubscriptionRequests)
       localStorage.setItem(
         "episilionRemainingRequests",
         res.data.remainingRequests,
@@ -164,7 +167,7 @@ export function AskEpisilionPage({ isLoggedIn }) {
       //setLoading(true);
 
       const data = await initializePayment(1);
-      console.log(data)
+      console.log(data);
 
       window.location.href = data.authorization_url;
     } catch (error) {
@@ -176,6 +179,25 @@ export function AskEpisilionPage({ isLoggedIn }) {
     }
   };
 
+  const getMe = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.get(`http://localhost:3000/api/me`, {
+        headers: {
+          Authorization: token,
+        },
+      });
+      console.log(response.data)
+      setUserSubcriptionInfo(response.data);
+      setAiSubscriptionRemaining(response.data.subscription.remainingSearches)
+    } catch (err) {
+      console.error("Failed to fetch user data", err);
+    }
+  };
+
+  useEffect(() => {
+    getMe();
+  }, [aiSubscriptionRemaining]);
 
   return (
     <>
@@ -190,9 +212,8 @@ export function AskEpisilionPage({ isLoggedIn }) {
             <p>Ask Episilion</p>
             <p>AI powered hostel assistant</p>
           </div>
-
           <p className="your-usage-text">YOUR USAGE</p>
-          <div className="user-AI-usage-container">
+          <div className={`user-AI-usage-container ${!userSubcriptionInfo?.subscription?.subscribed ? "" : "no-opacity"}`}>
             <p className="free-request-text">
               Free Request{" "}
               <span className="user-number-request-left">
@@ -201,11 +222,23 @@ export function AskEpisilionPage({ isLoggedIn }) {
             </p>
             <p className="upgrade-text">Upgrade for 15 request/day</p>
           </div>
-
+          {userSubcriptionInfo?.subscription?.subscribed && (
+            <div className="user-AI-usage-container-subscription">
+              <p className="free-request-text">
+                Free Request{" "}
+                <span className="user-number-request-left">
+                  {aiSubscriptionRemaining}/15 left
+                </span>
+              </p>
+              <p className="upgrade-text">Upgraded Access</p>
+            </div>
+          )}
           <div className="premuim-access-container">
             <p>Unlock Full Access</p>
             <p>Get 15 AI request per day for just GHS 10/month</p>
-            <button className="upgrade-now-button" onClick={handleSubscribe}>Upgrade Now</button>
+            <button className="upgrade-now-button" onClick={handleSubscribe}>
+              Upgrade Now
+            </button>
           </div>
         </div>
 

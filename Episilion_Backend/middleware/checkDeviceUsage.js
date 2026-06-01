@@ -1,56 +1,172 @@
-const pool = require("../config/db.js"); // ✅ import pool
+const pool = require("../config/db.js");
 
-// Middleware to check AI usage quota per device
 const checkDeviceUsage = async (req, res, next) => {
   try {
-    // Get device ID from request headers
     const deviceId = req.headers["x-device-id"];
 
-    // If no device ID is provided, return 400 error
     if (!deviceId) {
       return res.status(400).json({
         error: "No device ID provided",
       });
     }
 
-    // ✅ Query database for existing device usage record
+    const userId = req.user.user_id;
+
+    // =========================
+    // CHECK ACTIVE SUBSCRIPTION
+    // =========================
+
+    const [subscriptions] = await pool.query(
+      `
+      SELECT *
+      FROM subscriptions
+      WHERE user_id = ?
+      AND status = 'active'
+      AND expires_at > NOW()
+      ORDER BY created_at DESC
+      LIMIT 1
+      `,
+      [userId]
+    );
+
+    // =========================
+    // PREMIUM USER
+    // =========================
+
+    if (subscriptions.length > 0) {
+      const subscription = subscriptions[0];
+
+      const today = new Date()
+        .toISOString()
+        .split("T")[0];
+
+      let [usageRows] = await pool.query(
+        `
+        SELECT *
+        FROM usage_logs
+        WHERE user_id = ?
+        AND usage_date = ?
+        `,
+        [userId, today]
+      );
+
+      // Create row if it doesn't exist
+      if (usageRows.length === 0) {
+        await pool.query(
+          `
+          INSERT INTO usage_logs
+          (
+            user_id,
+            usage_date,
+            requests_used
+          )
+          VALUES (?, ?, 0)
+          `,
+          [userId, today]
+        );
+
+        [usageRows] = await pool.query(
+          `
+          SELECT *
+          FROM usage_logs
+          WHERE user_id = ?
+          AND usage_date = ?
+          `,
+          [userId, today]
+        );
+      }
+
+      const usage = usageRows[0];
+
+      if (
+        usage.requests_used >=
+        subscription.daily_limit
+      ) {
+        return res.status(403).json({
+          error: "premium_limit_reached",
+          message:
+            "You have reached your daily AI limit.",
+        });
+      }
+
+      req.isPremium = true;
+
+      req.aiUsage = {
+        requests_used:
+          usage.requests_used,
+
+        requests_limit:
+          subscription.daily_limit,
+      };
+
+      return next();
+    }
+
+    // =========================
+    // FREE USER
+    // =========================
+
     let [rows] = await pool.query(
-      `SELECT * FROM device_ai_usage WHERE device_id = ?`,
+      `
+      SELECT *
+      FROM device_ai_usage
+      WHERE device_id = ?
+      `,
       [deviceId]
     );
 
-    // If no record exists, insert a new one for this device
     if (rows.length === 0) {
       await pool.query(
-        `INSERT INTO device_ai_usage (device_id) VALUES (?)`,
+        `
+        INSERT INTO device_ai_usage
+        (device_id)
+        VALUES (?)
+        `,
         [deviceId]
       );
 
-      // Fetch the newly created record
       [rows] = await pool.query(
-        `SELECT * FROM device_ai_usage WHERE device_id = ?`,
+        `
+        SELECT *
+        FROM device_ai_usage
+        WHERE device_id = ?
+        `,
         [deviceId]
       );
     }
 
-    // Extract usage record
     const usage = rows[0];
 
-    // Check if device has reached its request limit
-    if (usage.requests_used >= usage.requests_limit) {
+    if (
+      usage.requests_used >=
+      usage.requests_limit
+    ) {
       return res.status(403).json({
         error: "device_limit_reached",
-        message: "This device has used all free AI requests.",
+        message:
+          "This device has used all free AI requests.",
       });
     }
 
-    // Attach usage info to request for downstream handlers
+    req.isPremium = false;
+
+    req.aiUsage = {
+      requests_used:
+        usage.requests_used,
+
+      requests_limit:
+        usage.requests_limit,
+    };
+
     req.deviceUsage = usage;
 
-    // Allow request to continue
     next();
   } catch (err) {
-    console.error("Device check error:", err);
+    console.error(
+      "Device check error:",
+      err
+    );
+
     res.status(500).json({
       error: "Device check failed",
     });

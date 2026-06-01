@@ -295,47 +295,51 @@ Return best matches only.
     // 9. LIMIT RESULTS
     const finalResults = results.slice(0, limit);
 
-    // 10. INCREMENT AI USAGE
-    await queryDB(
-      `
-  UPDATE ai_usage
-  SET requests_used = requests_used + 1
-  WHERE user_id = ?
-  `,
-      [req.user.user_id],
-    );
-
-    await queryDB(
-      `
-  UPDATE device_ai_usage
-  SET requests_used =
-      requests_used + 1
-  WHERE device_id = ?
-  `,
-      [req.headers["x-device-id"]],
-    );
-
-    // 11. CALCULATE REMAINING REQUESTS
-    const remaining =
-      req.aiUsage.requests_limit - (req.aiUsage.requests_used + 1);
-
+    // After AI results are parsed
     const today = new Date().toISOString().split("T")[0];
+    let remainingRequests;
 
-    await pool.execute(
-      `UPDATE usage_logs
-   SET requests_used =
-   requests_used + 1
-   WHERE user_id = ?
-   AND usage_date = ?`,
-      [req.user.id, today],
-    );
+    if (req.isPremium) {
+      await pool.execute(
+        `UPDATE usage_logs
+     SET requests_used = requests_used + 1
+     WHERE user_id = ? AND usage_date = ?`,
+        [req.user.user_id, today],
+      );
 
-    // 12. FINAL RESPONSE
+      const [updatedUsage] = await pool.query(
+        `SELECT requests_used, usage_date
+     FROM usage_logs
+     WHERE user_id = ? AND usage_date = ?`,
+        [req.user.user_id, today],
+      );
+
+      remainingRequests =
+        req.aiUsage.requests_limit - updatedUsage[0].requests_used;
+    } else {
+      await pool.query(
+        `UPDATE device_ai_usage
+     SET requests_used = requests_used + 1
+     WHERE device_id = ?`,
+        [req.headers["x-device-id"]],
+      );
+
+      const [updatedUsage] = await pool.query(
+        `SELECT requests_used, requests_limit
+     FROM device_ai_usage
+     WHERE device_id = ?`,
+        [req.headers["x-device-id"]],
+      );
+
+      remainingRequests =
+        updatedUsage[0].requests_limit - updatedUsage[0].requests_used;
+    }
+
+    // FINAL RESPONSE
     res.json({
       reason: overallReason,
       total: finalResults.length,
-      remainingRequests: remaining,
-
+      remainingRequests,
       result: finalResults.map((h) => ({
         id: h.id,
         name: h.name,

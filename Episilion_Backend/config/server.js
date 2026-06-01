@@ -32,6 +32,7 @@ app.use("/api/manager", require("../routes/managerDashboardRoutes.js"));
 app.use("/api/manager", require("../routes/managerDashboardRoutes.js"));
 app.use("/api/payments/webhook", express.raw({ type: "*/*" }));
 app.use("/api/payments", require("../routes/paymentRoutes.js"));
+app.use("/api", require("../routes/userRoutes"));
 
 // ── Routes ────────────────────────────────────────────────────────────────────
 // GET /api/teamMembers  → return only the teamMembers array
