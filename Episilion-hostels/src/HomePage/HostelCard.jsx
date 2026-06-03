@@ -49,7 +49,7 @@ export function HostelCard({ hostel }) {
             <p id="hostel-name">{hostel.name}</p>
           </td>
           <td className="td-vetical">
-            <p id="hostel-price">${hostel.pricing.priceMin}</p>
+            <p id="hostel-price">{hostel.pricing.priceMin}</p>
           </td>
         </tr>
         <tr width="20px">
