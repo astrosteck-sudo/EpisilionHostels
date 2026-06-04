@@ -100,6 +100,7 @@
     /* min-width: 170px; */
     max-height: 90px;
     min-height: 100px;
+    width: 100vw;
   }
 }
 

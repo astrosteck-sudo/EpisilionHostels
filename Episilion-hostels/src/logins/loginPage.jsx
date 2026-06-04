@@ -37,10 +37,10 @@ export function LoginPage({ setIsLoggedIn, setManagerIsLoggedIn }) {
     setEmail(event.target.value);
   }
   function handleManagerHostelName(event) {
-    setManagerHostelName(event.target.value);
+    setManagerHostelName(event.target.value.trim());
   }
   function handleManagerPassword(event) {
-    setManagerPassword(event.target.value);
+    setManagerPassword(event.target.value.trim());
   }
   function handlePasword(event) {
     setPassword(event.target.value);
