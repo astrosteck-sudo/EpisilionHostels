@@ -346,11 +346,11 @@ export function LoginPage({ setIsLoggedIn, setManagerIsLoggedIn }) {
             <div className="show-password-container">
               <input
                 type="checkbox"
-                id="showPassword"
+                id="managerShowPassword"
                 onClick={() => managerShowPassword(type)}
               />
-              <label for="showPassword" className="show-password">
-                Show passwordjjjj
+              <label for="managerShowPassword" className="show-password">
+                Show password
               </label>
             </div>
 
