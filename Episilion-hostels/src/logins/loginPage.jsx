@@ -93,6 +93,9 @@ export function LoginPage({ setIsLoggedIn, setManagerIsLoggedIn }) {
       navigate("/login");
       console.log(error);
       setManagerErrorMessage("Something is wrong try again");
+      setTimeout(() => {
+        setManagerErrorMessage('')
+      }, 2000)
     }
   }
 
