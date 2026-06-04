@@ -33,6 +33,13 @@ export function LoginPage({ setIsLoggedIn, setManagerIsLoggedIn }) {
       setType("password");
     }
   }
+  function managerShowPassword(parameter) {
+    if (parameter === "password") {
+      setType("text");
+    } else {
+      setType("password");
+    }
+  }
   function handleEmail(event) {
     setEmail(event.target.value);
   }
@@ -46,8 +53,12 @@ export function LoginPage({ setIsLoggedIn, setManagerIsLoggedIn }) {
     setPassword(event.target.value);
   }
   function handleBlur(event) {
-  setManagerHostelName(event.target.value.trim());
-}
+    setManagerPassword(event.target.value.trim());
+  }
+  function handleNameBlur(event){
+    setManagerHostelName(event.target.value.trim());
+  }
+
 
   //const API_URL = process.env.REACT_APP_API_URL || "";
 
@@ -75,25 +86,28 @@ export function LoginPage({ setIsLoggedIn, setManagerIsLoggedIn }) {
       setManagerIsLoggedIn(true);
       navigate("/hostelManagerPage");
       setManagerErrorMessage("");
-      localStorage.removeItem('token')
-      localStorage.removeItem('user')
-      setIsLoggedIn(false)
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      setIsLoggedIn(false);
     } catch (error) {
       navigate("/login");
       console.log(error);
       setManagerErrorMessage("Something is wrong try again");
     }
-  } 
+  }
 
   async function handleLogin(e) {
     e.preventDefault();
     setErrorMessage("");
 
     try {
-      const res = await axios.post(`https://episilion-backend-2lt0.onrender.com/api/auth/login`, {
-        email,
-        password,
-      });
+      const res = await axios.post(
+        `https://episilion-backend-2lt0.onrender.com/api/auth/login`,
+        {
+          email,
+          password,
+        },
+      );
 
       // const token = res.data.token;
 
@@ -108,16 +122,16 @@ export function LoginPage({ setIsLoggedIn, setManagerIsLoggedIn }) {
       // ✅ REDIRECT TO HOME
       setIsLoggedIn(true);
       localStorage.removeItem("managerToken");
-      localStorage.removeItem('managerUser')
+      localStorage.removeItem("managerUser");
       setManagerIsLoggedIn(false);
       navigate("/");
     } catch (error) {
       console.log(error);
       //setErrorMessage(error.response?.data || "Login failed");
-      setErrorMessage('Something is wrong, Try again !!')
+      setErrorMessage("Something is wrong, Try again !!");
       setTimeout(() => {
-        setErrorMessage('')
-      }, 2000)
+        setErrorMessage("");
+      }, 2000);
     }
   }
 
@@ -139,7 +153,7 @@ export function LoginPage({ setIsLoggedIn, setManagerIsLoggedIn }) {
       <div className="sign-up-container">
         <div className="side-bar-login">
           <div className="episilion-logo-login">
-            <img loading='lazy'src="/episilion_logo.svg" alt="" />
+            <img loading="lazy" src="/episilion_logo.svg" alt="" />
           </div>
           <div>
             <h3 className="episilion-name-login">EPISILION</h3>
@@ -306,7 +320,7 @@ export function LoginPage({ setIsLoggedIn, setManagerIsLoggedIn }) {
                 className="email-address-input"
                 value={managerHostelName}
                 onChange={handleManagerHostelName}
-                onBlur={handleBlur}
+                onBlur={handleNameBlur}
                 required
               />
             </div>
@@ -333,10 +347,10 @@ export function LoginPage({ setIsLoggedIn, setManagerIsLoggedIn }) {
               <input
                 type="checkbox"
                 id="showPassword"
-                onClick={() => showPassword(type)}
+                onClick={() => managerShowPassword(type)}
               />
               <label for="showPassword" className="show-password">
-                Show password
+                Show passwordjjjj
               </label>
             </div>
 
