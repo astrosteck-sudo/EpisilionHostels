@@ -37,14 +37,17 @@ export function LoginPage({ setIsLoggedIn, setManagerIsLoggedIn }) {
     setEmail(event.target.value);
   }
   function handleManagerHostelName(event) {
-    setManagerHostelName(event.target.value.trim());
+    setManagerHostelName(event.target.value);
   }
   function handleManagerPassword(event) {
-    setManagerPassword(event.target.value.trim());
+    setManagerPassword(event.target.value);
   }
   function handlePasword(event) {
     setPassword(event.target.value);
   }
+  function handleBlur(event) {
+  setManagerHostelName(event.target.value.trim());
+}
 
   //const API_URL = process.env.REACT_APP_API_URL || "";
 
@@ -303,6 +306,7 @@ export function LoginPage({ setIsLoggedIn, setManagerIsLoggedIn }) {
                 className="email-address-input"
                 value={managerHostelName}
                 onChange={handleManagerHostelName}
+                onBlur={handleBlur}
                 required
               />
             </div>
@@ -319,6 +323,7 @@ export function LoginPage({ setIsLoggedIn, setManagerIsLoggedIn }) {
                   className="password-input"
                   value={managerPassword}
                   onChange={handleManagerPassword}
+                  onBlur={handleBlur}
                   required
                 />
               </div>
