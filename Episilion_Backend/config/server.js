@@ -80,4 +80,5 @@ app.listen(PORT, () => {
   console.log(`   POST /api/manager/auth`);
   console.log(`   GET /api/manager`);
   console.log(`   PUT /api/manager`);
+  
 });
