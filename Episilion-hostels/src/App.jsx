@@ -57,7 +57,6 @@ function App() {
     <>
       <PageHeader navlink={navlink} setNavLink={setNavLink} isLoggedIn={isLoggedIn} managerIsLoggedIn={managerIsLoggedIn} setManagerIsLoggedIn={setManagerIsLoggedIn} setIsLoggedIn={setIsLoggedIn} />
       <Routes>
-        {/* <Route index element={<PageHeader/>}></Route> */}
         <Route index element={<HomePage hostelsCardData={hostelsCardData} sethostelsCardData={sethostelsCardData}
           navlink={navlink} setNavLink={setNavLink} originalHostelCardData={originalHostelCardData} setOriginalHostelCardData={setOriginalHostelCardData} />} />
 
