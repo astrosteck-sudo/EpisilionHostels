@@ -25,7 +25,7 @@ function App() {
 
 
   const loadHostelsCard = async () => {
-    const response = await axios.get('https://episilion-backend-2lt0.onrender.com/api/hostels')
+    const response = await axios.get('/api/hostels')
     //console.log("testing code", response.data)
     sethostelsCardData(response.data)//THIS DATA WILL CHANGE BASED ON THE FILTER OPTIONS
     setOriginalHostelCardData(response.data)//THIS DATA WILL CHANGE BASED ON THE FILTER OPTIONS
