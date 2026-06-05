@@ -42,7 +42,7 @@ export function ChangePasswordPage({ managerIsLoggedIn }) {
 
     try {
       const response = await axios.put(
-        "https://episilion-backend-2lt0.onrender.com/api/manager/update-hostel-password",
+        "/api/manager/update-hostel-password",
 
         {
           hostelManagerOldpassword: hostelManagerOldpassword,

@@ -66,7 +66,7 @@ export function HostelManagerPage() {
   const loadManagerDashBoardInfo = async () => {
     try {
       const response = await axios.get(
-        "https://episilion-backend-2lt0.onrender.com/api/manager/dashboard",
+        "/api/manager/dashboard",
         {
           headers: {
             Authorization: `Bearer ${managerToken}`,
@@ -105,7 +105,7 @@ export function HostelManagerPage() {
   
     try {
       const response = await axios.put(
-        "https://episilion-backend-2lt0.onrender.com/api/manager/update-hostel",
+        "/api/manager/update-hostel",
 
         {
           minimum_price: Number(hostelMinimumPrice),

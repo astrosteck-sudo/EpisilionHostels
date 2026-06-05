@@ -67,7 +67,7 @@ export function LoginPage({ setIsLoggedIn, setManagerIsLoggedIn }) {
 
     try {
       const res = await axios.post(
-        `https://episilion-backend-2lt0.onrender.com/api/manager/auth/login`,
+        `/api/manager/auth/login`,
         {
           managerHostelName,
           managerPassword,
@@ -105,7 +105,7 @@ export function LoginPage({ setIsLoggedIn, setManagerIsLoggedIn }) {
 
     try {
       const res = await axios.post(
-        `https://episilion-backend-2lt0.onrender.com/api/auth/login`,
+        `/api/auth/login`,
         {
           email,
           password,

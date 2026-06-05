@@ -11,7 +11,7 @@ export function MoreFromUsPage() {
 
   const loadMoreFromUsCards = async () => {
     const repsonse = await axios.get(
-      "https://episilion-backend-2lt0.onrender.com/api/moreProjects",
+      "/api/moreProjects",
     );
     setMoreFromUs(repsonse.data.moreProjects);
   };

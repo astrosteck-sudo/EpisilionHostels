@@ -102,7 +102,7 @@ export function MoreDetailsPage({ originalHostelCardData }) {
     setIsSubmitting(true);
     try {
       await axios.post(
-        "https://episilion-backend-2lt0.onrender.com/api/reviews",
+        "/api/reviews",
         {
           hostel_id: hostelId,
           rating: rating,
@@ -132,7 +132,7 @@ export function MoreDetailsPage({ originalHostelCardData }) {
   async function loadingReviews(hostelId) {
     try {
       const response = await axios.get(
-        `https://episilion-backend-2lt0.onrender.com/api/reviews/${hostelId}`,
+        `/api/reviews/${hostelId}`,
       );
       //console.log("Response from reviews API:", response.data); // Debugging log to check the response from the API
       if (response.data.length === 0) {
@@ -171,7 +171,7 @@ export function MoreDetailsPage({ originalHostelCardData }) {
         return;
       }
       const response = await axios.post(
-        "https://episilion-backend-2lt0.onrender.com/api/favorites/" + hostelId,
+        "/api/favorites/" + hostelId,
         {},
         {
           headers: {
