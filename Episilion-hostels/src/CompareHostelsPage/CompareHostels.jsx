@@ -302,7 +302,7 @@ export function CompareHostels({ originalHostelCardData }) {
                                         })}
                                     </ul>
 
-                                    <h1 className="compared-hostel-titles">Room Images</h1>
+                                    {/*<h1 className="compared-hostel-titles">Room Images</h1>
                                     <div className="compared-hostel-room-type-images-continer">
                                         {hostel.media.images.map((image) => {
 
@@ -317,7 +317,7 @@ export function CompareHostels({ originalHostelCardData }) {
                                                 </div>
                                             )
                                         })}
-                                    </div>
+                                    </div>*/}
 
 
                                 </>
