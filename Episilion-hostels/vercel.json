@@ -15,7 +15,7 @@
       "headers": [
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self' https://*.googleapis.com https://*.google.com https://js.paystack.co; img-src 'self' https://*.gstatic.com https://episilion-backend-2lt0.onrender.com data:; style-src 'self' 'unsafe-inline'; frame-src 'self' https://*.google.com; connect-src 'self' https://episilion-backend-2lt0.onrender.com https://www.episilionhostels.com;"
+          "value": "default-src 'self'; script-src 'self' https://*.googleapis.com https://*.google.com https://js.paystack.co; img-src 'self' https://*.gstatic.com https://episilion-backend-2lt0.onrender.com https://www.episilionhostels.com https://episilionhostels.com data:; style-src 'self' 'unsafe-inline'; frame-src 'self' https://*.google.com; connect-src 'self' https://episilion-backend-2lt0.onrender.com https://www.episilionhostels.com https://episilionhostels.com; object-src 'none'; base-uri 'self'; form-action 'self';"
         },
         {
           "key": "Strict-Transport-Security",
