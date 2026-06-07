@@ -7,6 +7,7 @@ export default defineConfig({
     react(),
     sitemap({
       hostname: "https://episilionhostels.com",
+      generateRobotsTxt: false,
       routes: [
         "/",
         "/hostels/upsa",
