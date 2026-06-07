@@ -22,6 +22,7 @@ import axios from "axios";
 import { Reviews } from "./ReviewsData.jsx";
 import { Helmet } from "react-helmet-async";
 
+
 export function MoreDetailsPage({ originalHostelCardData }) {
   const [close, setClose] = useState(true); //THIS CONTROLS THE THE IFRAME, OPENING AND CLOSING IT
   const [activate, setActivate] = useState(false); //THIS CONTROLS THE DARK BACKGROUND WHEN THE LOCATIONS BUTTONS ARE CLICKED

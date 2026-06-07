@@ -2,12 +2,14 @@
 import fullStar from "../assets/icons/favorite.png";
 import dayjs from "dayjs";
 import { getInitials } from "../UTILS/initials";
+import { sanitizeHTML } from "../utils/sanitize";
 
 export function Reviews({ item }) {
   if (item === "no reviews") {
     return <p className="no-review-text">No reviews</p>;
   }
 
+  const safeReview = sanitizeHTML(item.reviewText);
   //console.log("Review item:", item); // Debugging log to check the structure of the review item
 
   return (
@@ -43,7 +45,7 @@ export function Reviews({ item }) {
           </div>
         </div>
         <div className="users-review-display">
-          <div>{item.reviewText}</div>
+          <div dangerouslySetInnerHTML={{ __html: safeReview }} />
         </div>
       </div>
     </>
