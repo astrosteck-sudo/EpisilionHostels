@@ -44,7 +44,6 @@ const getFavoritesController = async (req, res) => {
       count: favorites.length,
       data: favorites,
     });
-    console.log(favorites)
   } catch (error) {
     // Handle errors (e.g., DB query failure)
     return res.status(500).json({
@@ -61,9 +60,7 @@ const removeFavoriteController = async (req, res) => {
     const userId = req.user.user_id;
 
     const { hostelId } = req.params;
-    console.log("Stating")
-    console.log("Removing favorite - User ID:", userId, "Hostel ID:", hostelId); // Debug log to check the parameters
-
+    
     const removedFavorite = await removeFavoriteService(
       userId,
       hostelId

@@ -38,7 +38,6 @@ export function ChangePasswordPage({ managerIsLoggedIn }) {
   const managerToken = localStorage.getItem("managerToken");
   const updateManagerPassword = async (e) => {
     e.preventDefault();
-    console.log("submit pressesd");
 
     try {
       const response = await axios.put(

@@ -88,7 +88,6 @@ export function HostelManagerPage() {
       //setRefundsAllowed(response.data.pricing.refund_policy === 1 ? '' :'')
       setInstallmentAllowed(response.data.pricing.installment_allowed)
 
-      console.log(response.data.pricing);
     } catch (error) {
       console.log(error);
     }

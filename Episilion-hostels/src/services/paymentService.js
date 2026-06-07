@@ -13,8 +13,6 @@ API.interceptors.request.use((config) => {
     config.headers.Authorization =
       token;
   }
-  console.log('CONFIG', config)
-
   return config;
 });
 
@@ -27,7 +25,6 @@ export const initializePayment = async (
       planId,
     }
   );
-  console.log(response.data)
 
   return response.data;
 };

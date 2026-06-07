@@ -102,14 +102,14 @@ export function AskEpisilionPage({ isLoggedIn }) {
       );
 
       const result = res.data.result;
-      console.log(res.data);
+      // console.log(res.data);
       setRemainingRequest(res.data.remainingRequests);
       setAiSubscriptionRemaining(res.data.remainingSubscriptionRequests);
       localStorage.setItem(
         "episilionRemainingRequests",
         res.data.remainingRequests,
       );
-      console.log(localStorage.getItem("episilionRemainingRequests"));
+      // console.log(localStorage.getItem("episilionRemainingRequests"));
 
       setChatMessages((prev) => [
         ...prev,
@@ -167,7 +167,7 @@ export function AskEpisilionPage({ isLoggedIn }) {
       //setLoading(true);
 
       const data = await initializePayment(1);
-      console.log(data);
+      // console.log(data);
 
       window.location.href = data.authorization_url;
     } catch (error) {
@@ -190,7 +190,7 @@ export function AskEpisilionPage({ isLoggedIn }) {
           },
         },
       );
-      console.log(response.data);
+      // console.log(response.data);
       setUserSubcriptionInfo(response.data);
       setAiSubscriptionRemaining(response.data.subscription.remainingSearches);
     } catch (err) {

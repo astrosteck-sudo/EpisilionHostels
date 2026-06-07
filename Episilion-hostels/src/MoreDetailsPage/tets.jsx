@@ -62,7 +62,6 @@ export function MoreDetailsPage({ hostelsCardData, navlink, setNavLink, original
     // }
 
     function closeMap() {
-        console.log('Close has bee clciked')
         if (!close) {
             setActivate(false)
             setClose(true)
