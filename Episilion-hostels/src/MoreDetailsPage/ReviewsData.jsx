@@ -2,7 +2,7 @@
 import fullStar from "../assets/icons/favorite.png";
 import dayjs from "dayjs";
 import { getInitials } from "../UTILS/initials";
-import { sanitizeHTML } from "../utils/sanitize";
+import { sanitizeHTML } from "../UTILS/sanitize";
 
 export function Reviews({ item }) {
   if (item === "no reviews") {
