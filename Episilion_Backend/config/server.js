@@ -18,6 +18,7 @@ function readData(filename) {
 
 // ── Middleware ────────────────────────────────────────────────────────────────
 app.use(cors()); // Allow requests from any frontend origin
+app.use("/api/payments/webhook", express.raw({ type: "*/*" }));
 app.use(express.json()); // Parse JSON request bodies
 
 // ── Database Routes ────────────────────────────────────────────────────────────────
