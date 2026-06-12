@@ -163,6 +163,11 @@ export function AskEpisilionPage({ isLoggedIn }) {
   }, []);
 
   const handleSubscribe = async () => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      navigate("/login");
+      return;
+    }
     try {
       //setLoading(true);
 
