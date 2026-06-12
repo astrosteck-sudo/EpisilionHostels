@@ -196,7 +196,7 @@ export function PageHeader({
               </div>
             </>
           ) : (
-            ""
+            null
           )}
 
           {isLoggedIn ? (
@@ -299,7 +299,7 @@ export function PageHeader({
         {showManagerLogoutModal && (
           <div
             className="modal-overlay"
-            onClick={() => setShowLogoutModal(false)}
+            onClick={() => setShowManagerLogoutModal(false)}
           >
             <div className="modal-box" onClick={(e) => e.stopPropagation()}>
               <h3 className="modal-title">Log Out</h3>

@@ -44,7 +44,7 @@ const initialize = async (req, res) => {
       reference,
 
       callback_url:
-        `http://localhost:5173/payment/success`,
+        `https://episilion-backend-2lt0.onrender.com/api/payment/success`,
 
       metadata: {
         userId,

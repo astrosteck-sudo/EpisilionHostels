@@ -195,7 +195,7 @@ export function MoreDetailsPage({ originalHostelCardData }) {
 
         <link
           rel="canonical"
-          href={`https://episilion-backend-2lt0.onrender.com/moreDetails?hostelId=${foundHostel?.id}`}
+          href={`https://www.episilionhostels.com/moreDetails?hostelId=${foundHostel?.id}`}
         />
         <meta
           name="description"
@@ -209,7 +209,7 @@ export function MoreDetailsPage({ originalHostelCardData }) {
         <meta property="og:image" content={foundHostel?.image} />
         <meta
           property="og:url"
-          content={`https://episilion-backend-2lt0.onrender.com/moreDetails?hostelId=${foundHostel?.id}`}
+          content={`https://www.episilionhostels.com/moreDetails?hostelId=${foundHostel?.id}`}
         />
         <meta name="twitter:card" content="summary_large_image" />
 
@@ -233,7 +233,7 @@ export function MoreDetailsPage({ originalHostelCardData }) {
             },
             telephone: foundHostel?.contact.phone,
             email: foundHostel?.contact.email,
-            url: `https://episilion-backend-2lt0.onrender.com/moreDetails?hostelId=${foundHostel?.id}`,
+            url: `https://www.episilionhostels.com/moreDetails?hostelId=${foundHostel?.id}`,
             description: `Affordable ${foundHostel?.type} hostel near UPSA with ${foundHostel?.amenities.join(", ")}.`,
           })}
         </script>
