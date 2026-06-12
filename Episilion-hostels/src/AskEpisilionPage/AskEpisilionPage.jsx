@@ -182,14 +182,11 @@ export function AskEpisilionPage({ isLoggedIn }) {
   const getMe = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get(
-        `/api/me`,
-        {
-          headers: {
-            Authorization: token,
-          },
+      const response = await axios.get(`/api/me`, {
+        headers: {
+          Authorization: token,
         },
-      );
+      });
       // console.log(response.data);
       setUserSubcriptionInfo(response.data);
       setAiSubscriptionRemaining(response.data.subscription.remainingSearches);
@@ -204,7 +201,10 @@ export function AskEpisilionPage({ isLoggedIn }) {
 
   useEffect(() => {
     function handleClick(event) {
-      if (!event.target.closest(".epsilion-wrapper-one") && !event.target.closest(".topbar .menu-btn")) {
+      if (
+        !event.target.closest(".epsilion-wrapper-one") &&
+        !event.target.closest(".topbar .menu-btn")
+      ) {
         setOpen(false);
       }
     }
@@ -249,13 +249,18 @@ export function AskEpisilionPage({ isLoggedIn }) {
               <p className="upgrade-text">Upgraded Access</p>
             </div>
           )}
-          <div className="premuim-access-container">
-            <p>Unlock Full Access</p>
-            <p>Get 15 AI request per day for just GHS 10/month</p>
-            <button className="upgrade-now-button" onClick={handleSubscribe}>
-              Upgrade Now
-            </button>
-          </div>
+
+          {userSubcriptionInfo?.subscription?.subscribed ? (
+            ""
+          ) : (
+            <div className="premuim-access-container">
+              <p>Unlock Full Access</p>
+              <p>Get 15 AI request per day for just GHS 10/month</p>
+              <button className="upgrade-now-button" onClick={handleSubscribe}>
+                Upgrade Now
+              </button>
+            </div>
+          )}
         </div>
 
         <div className={`epsilion-wrapper-two ${open ? "shift" : ""}`}>
