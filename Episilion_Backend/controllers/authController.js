@@ -6,11 +6,15 @@ const jwt = require("jsonwebtoken");
  * SIGNUP
  */
 exports.signup = async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email } = req.body;
+  const retrievedPassword = req.body.password || "";
+  const password = retrievedPassword.trim();
 
   try {
     // 1️⃣ Check if user already exists
-    const [existing] = await pool.query("SELECT * FROM users WHERE email = ?", [email]);
+    const [existing] = await pool.query("SELECT * FROM users WHERE email = ?", [
+      email,
+    ]);
     if (existing.length > 0) {
       return res.status(400).send("User already exists");
     }
@@ -21,7 +25,7 @@ exports.signup = async (req, res) => {
     // 3️⃣ Insert user and capture result
     const [result] = await pool.query(
       "INSERT INTO users (name, email, password) VALUES (?, ?, ?)",
-      [name, email, hashedPassword]
+      [name, email, hashedPassword],
     );
 
     // 4️⃣ Get the auto-generated user_id
@@ -37,7 +41,7 @@ exports.signup = async (req, res) => {
         )
         VALUES (?, 0, 3)
       `,
-      [userId]
+      [userId],
     );
 
     res.send("Signup successful ✅");
@@ -51,11 +55,15 @@ exports.signup = async (req, res) => {
  * LOGIN
  */
 exports.login = async (req, res) => {
-  const { email, password } = req.body;
+  const email = req.body.email;
+  const retrievedPassword = req.body.password || "";
+  const password = retrievedPassword.trim();
 
   try {
     // 1️⃣ Find user by email
-    const [result] = await pool.query("SELECT * FROM users WHERE email = ?", [email]);
+    const [result] = await pool.query("SELECT * FROM users WHERE email = ?", [
+      email,
+    ]);
     if (result.length === 0) {
       return res.status(400).send("User not found");
     }
@@ -74,10 +82,10 @@ exports.login = async (req, res) => {
         user_id: user.user_id,
         name: user.name,
         email: user.email,
-        created_at: user.created_at
+        created_at: user.created_at,
       },
       process.env.JWT_SECRET,
-      { expiresIn: "7d" }
+      { expiresIn: "7d" },
     );
 
     // 4️⃣ Respond with token + user info
@@ -87,8 +95,8 @@ exports.login = async (req, res) => {
         id: user.user_id,
         name: user.name,
         email: user.email,
-        createdAt: user.created_at
-      }
+        createdAt: user.created_at,
+      },
     });
   } catch (err) {
     console.error("Login error:", err);

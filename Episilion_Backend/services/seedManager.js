@@ -53,6 +53,7 @@ async function hashPasswords() {
   const hashedPassword9  = await bcrypt.hash('1bc05473-82cf-4bbf-b10d-f85019ede655', 10);
   const hashedPassword10  = await bcrypt.hash('4b45c974-637f-461d-8b4b-d34d09707e7f', 10);
   const hashedPassword11  = await bcrypt.hash('cf12c6a0-2aee-4eff-a286-b25fcd0e36d9', 10);
+  const hashedPassword12  = await bcrypt.hash('asteck2026flex', 10);
   console.log("Hashed Password Htc Hostel:",      hashedPassword1);
   console.log("Hashed Password Mab3 Hostels:",    hashedPassword2);
   console.log("Hashed Password Makassela:",       hashedPassword3);
@@ -63,7 +64,8 @@ async function hashPasswords() {
   console.log("Hashed Password New Century Hostel:", hashedPassword8);
   console.log("Hashed Password Obrempong Hostel:", hashedPassword9);
   console.log("Hashed Password Urbyn Hostel:", hashedPassword10);
-  console.log("Hashed Password OT Hostel:", hashedPassword11);
+  
+  console.log("Hashed Password:", hashedPassword12);
 }
 hashPasswords();
 
