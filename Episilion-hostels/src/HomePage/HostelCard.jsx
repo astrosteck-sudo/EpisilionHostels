@@ -35,12 +35,12 @@ export function HostelCard({ hostel }) {
         ></img>
         <div className="hostel-rating-text">
           <span className="overlay-text-hostel-rating">
-            {hostel.reviews.averageRating}({hostel.reviews.totalReviews})
+            {hostel?.reviews?.averageRating}({hostel?.reviews?.totalReviews})
           </span>
           <br></br>
         </div>
         <div className="hostel-type-text">
-          <span className="overlay-text-hostel-type">{hostel.type}</span>
+          <span className="overlay-text-hostel-type">{hostel?.type}</span>
         </div>
       </div>
       <table border="0" width="100%">
@@ -83,7 +83,7 @@ export function HostelCard({ hostel }) {
       </table>
       <p className="view-more-details">
         <Link
-          to={`/moreDetails?hostelId=${hostel.id}`}
+          to={`/moreDetails?hostelId=${hostel?.id}`}
           className="view-more-details-link js-view-more-details"
         >
           View Details

@@ -15,8 +15,18 @@ export default defineConfig({
         "/hostels/upsa/girls",
         "/hostels/upsa/boys",
         "/hostels/upsa/student-accommodation",
-        "/hostels/upsa/verified"
-      ]
-    })
-  ]
+        "/hostels/upsa/verified",
+      ],
+    }),
+  ],
+
+  server: {
+    proxy: {
+      "/api": {
+        target: "https://episilion-backend-2lt0.onrender.com",
+        changeOrigin: true,
+        secure: true,
+      },
+    },
+  },
 });

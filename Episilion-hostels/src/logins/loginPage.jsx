@@ -1,7 +1,7 @@
 import { PageHeader } from "../PageHeader/PageHeader";
 import "./logins.css";
 import { SiteFooter } from "../SiteFooter/SiteFooter";
-//import googleImage from '../assets/icons/google.png';
+import googleImage from '../assets/icons/google.png';
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -206,9 +206,9 @@ export function LoginPage({ setIsLoggedIn, setManagerIsLoggedIn }) {
             </p>
           </div>
 
-          {/* <div className="external-sign-up-buttons">
+          <div className="external-sign-up-buttons">
                         <button className="external-sign-up-button"><img loading='lazy'src={googleImage} className="external-sign-up-image"></img><span className="external-sign-up-button-span">Log in with</span>Google</button>
-                    </div> */}
+                    </div>
 
           <div className="divider">
             <span>log in with email</span>

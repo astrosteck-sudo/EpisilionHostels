@@ -24,7 +24,7 @@ export function HomePage({
   const [minPrice, setMinPrice] = useState(""); //THIS CONTROLS THE MIN PRICE IN THE FILTER
   const [maxPrice, setMaxPrice] = useState(""); //THIS CONTROLS THE MAX PRICE IN THE FILTER
   const [searchHostelName, setSearchHostelName] = useState(""); //THIS CONTROLS THE HOSTEL NAME TYPE SBY THE USER WHICH WILL BE USED IN THE searchHostelByName FUNCTION
-  const [filter, setFilter] = useState(); //THIS CONTROLS THE HOSTELS THAT PASSED THE CRITIRIA OF THE filter
+  const [filter, setFilter] = useState([]); //THIS CONTROLS THE HOSTELS THAT PASSED THE CRITIRIA OF THE filter
   const [suggestionBoxOpen, setSuggestionBoxOpen] = useState(true); //THIS CONTOLS THE CSS THAT DETERMINES WHEATHER OR NOT THE SUGGESTION BOX IS OPEN
   const [value, setValue] = useState(""); //THIS CONTROLLS THE TEXT THE USER TYPES IN THE SEARCH BOX
   const [hostelsFound, setHostelsFound] = useState(true); //THIS CONTROLS THE not found image AND text
@@ -39,7 +39,7 @@ export function HomePage({
 
   //console.log(hostelsCardData)
   useEffect(() => {
-    if (hostelsCardData.length > 0) {
+    if (hostelsCardData?.length > 0) {
       setLoading(false);
     }
   }, [hostelsCardData]);
@@ -101,7 +101,7 @@ export function HomePage({
     //OF THE PROGRAM, BUT hostelsCardData WILL ALWAYS CHANGE DEPENDING ON THE FILTER USED.
     //BUT THE FILTER WILL ALWAYS FILTER FROM THE UNCHANGING originalHostelCardData
     if (gender && userMinPrice && userMaxPrice) {
-      const filteredHostels = originalHostelCardData.filter(
+      const filteredHostels = originalHostelCardData?.filter(
         (hostel) =>
           hostel.type === gender &&
           hostel.pricing.priceMin >= userMinPrice &&
@@ -110,7 +110,7 @@ export function HomePage({
       sethostelsCardData(filteredHostels);
       setFilterMenu(false);
     } else if (gender || userMinPrice || userMaxPrice) {
-      const filteredHostels = originalHostelCardData.filter(
+      const filteredHostels = originalHostelCardData?.filter(
         (hostel) =>
           hostel.type === gender ||
           (hostel.pricing.priceMin >= userMinPrice &&
@@ -129,7 +129,7 @@ export function HomePage({
     //THIS RESET THE VALUES ON THE USER SCREEN
     setMinPrice("");
     setMaxPrice("");
-    setGender();
+    setGender("");
     setGenderText("Search");
     //THIS IS A MORE EIFFICIENT CODE TO REPLACE THE ONE ABOVE BUT I DONT UNDERSTAND IT YET SO ITS COMMENTED
     // const filteredData = originalHostelCardData.filter(hostel =>
@@ -161,7 +161,7 @@ export function HomePage({
 
     //THIS CODE FIRST RUNS THE typedtext TO SEE IF ANY OF THE HOSTEL NAME CONTAINS THE LETTER OR SEQUENCE OF LETTERS
     //THE IF THE typedtext LENGTH IS ZERO IT JUST HIDES THE SUGGESTION BOX, IF NOT IS SHOWS IT
-    let filtered = originalHostelCardData.filter((hostel) =>
+    let filtered = originalHostelCardData?.filter((hostel) =>
       hostel.name.toLowerCase().includes(typedtext),
     );
     setSearchHostelName(typedtext); //THIS IS THE USERS HOSTEL NAME HE TYPES
@@ -186,7 +186,7 @@ export function HomePage({
     setValue(parameter);
 
     //suggestionsDiv.current.style.display = 'none';
-    const filteredHostel = originalHostelCardData.filter(
+    const filteredHostel = originalHostelCardData?.filter(
       (hostel) =>
         hostel.name.trim().replace(/\s+/g, "").toLowerCase() ===
         parameter.trim().replace(/\s+/g, "").toLowerCase(),
@@ -202,7 +202,7 @@ export function HomePage({
       return;
     }
     let filteredHostels = false;
-    filteredHostels = originalHostelCardData.filter(
+    filteredHostels = originalHostelCardData?.filter(
       //(hostel) => hostel.name.trim().replace(/\s+/g, "").toLowerCase() === searchHostelName.replace(/\s+/g, "")
       (hostel) =>
         hostel.name
@@ -286,7 +286,7 @@ export function HomePage({
       setMixedActive(false);
     } else if (parameter === "boysActive") {
       setHostelsFound(true);
-      const filteredHostels = originalHostelCardData.filter(
+      const filteredHostels = originalHostelCardData?.filter(
         (hostel) => hostel.type === "Boys",
       );
       if (filteredHostels.length === 0) {
@@ -302,7 +302,7 @@ export function HomePage({
       setMixedActive(false);
     } else if (parameter === "girlsActive") {
       setHostelsFound(true);
-      const filteredHostels = originalHostelCardData.filter(
+      const filteredHostels = originalHostelCardData?.filter(
         (hostel) => hostel.type === "Girls",
       );
       if (filteredHostels.length === 0) {
@@ -318,7 +318,7 @@ export function HomePage({
       setMixedActive(false);
     } else if (parameter === "mixedActive") {
       setHostelsFound(true);
-      const filteredHostels = originalHostelCardData.filter(
+      const filteredHostels = originalHostelCardData?.filter(
         (hostel) => hostel.type === "Mixed",
       );
       if (filteredHostels.length === 0) {
@@ -339,7 +339,7 @@ export function HomePage({
       setGirlsActive(false);
       setMixedActive(false);
       setAllActive(false);
-      const filteredHostels = originalHostelCardData.filter(
+      const filteredHostels = originalHostelCardData?.filter(
         (hostel) => hostel.pricing.priceMin <= 2500,
       );
       if (filteredHostels.length === 0) {
@@ -350,6 +350,7 @@ export function HomePage({
       }
     }
   }
+  //console.log(originalHostelCardData);
 
   return (
     <>
@@ -360,10 +361,13 @@ export function HomePage({
                 <button><img loading='lazy'src={favoriteImage}></img>Fav</button>
             </div> */}
 
-      <meta
-        name="description"
-        content="Find affordable and verified student hostels near UPSA. Browse our up-to-date listings, compare prices, and book your perfect stay with confidence. Your next home awaits!"
-      />
+      <Helmet>
+        <title>Epsilion Hostels</title>
+        <meta
+          name="description"
+          content="Find affordable and verified student hostels near UPSA. Browse our up-to-date listings, compare prices, and book your perfect stay with confidence. Your next home awaits!"
+        />
+      </Helmet>
 
       <section>
         <div className={`filter ${filterMenu ? "open" : "close"}`}>
@@ -583,7 +587,7 @@ export function HomePage({
           </div>
         )}
         <div className="hostels-cards js-hostel-cards">
-          {hostelsCardData.map((hostel) => {
+          {hostelsCardData?.map((hostel) => {
             return <HostelCard key={hostel.id} hostel={hostel} />;
           })}
         </div>

@@ -22,14 +22,19 @@ function App() {
   const [originalHostelCardData, setOriginalHostelCardData] = useState([])
   const [navlink, setNavLink] = useState(false);//THIS HIDES ANDS SHOWS THE HAMBURGER MENU AND BUTTON
 
-
+  
 
   const loadHostelsCard = async () => {
-    const response = await axios.get('/api/hostels')
-    //console.log("testing code", response.data)
-    sethostelsCardData(response.data)//THIS DATA WILL CHANGE BASED ON THE FILTER OPTIONS
-    setOriginalHostelCardData(response.data)//THIS DATA WILL CHANGE BASED ON THE FILTER OPTIONS
+  try {
+    const response = await axios.get('/api/hostels');
+    sethostelsCardData(response.data);
+    setOriginalHostelCardData(response.data);
+  } catch (error) {
+    console.error("HOSTEL FETCH ERROR:", error);
+    sethostelsCardData([]);
+    setOriginalHostelCardData([]);
   }
+};
   useEffect(() => {
     loadHostelsCard();
   }, []);
