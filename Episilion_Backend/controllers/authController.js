@@ -159,10 +159,10 @@ exports.googleCallback = async (req, res) => {
     // ❌ Don’t do both JSON and redirect — pick one.
     // If you want OAuth redirect flow, replace res.json with:
     res.redirect(
-      `${process.env.CLIENT_URL}oauthsuccess?token=${token}&user=${userData}`,
+      `${process.env.CLIENT_URL}/oauthsuccess?token=${token}&user=${userData}`,
     );
   } catch (err) {
     console.error(err);
-    res.redirect(`${process.env.CLIENT_URL}oautherror`);
+    res.redirect(`${process.env.CLIENT_URL}/oautherror`);
   }
 };
