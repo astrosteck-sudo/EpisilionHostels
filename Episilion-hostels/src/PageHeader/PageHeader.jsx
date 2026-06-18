@@ -82,6 +82,7 @@ export function PageHeader({
   }
 
   const user = JSON.parse(localStorage.getItem("user"));
+  console.log(user)
 
   function handleDisplayUserPopUpMenu() {
     if (openUserPopUpMenu) {
@@ -208,10 +209,10 @@ export function PageHeader({
                 <button className="user-button-pill">
                   <div>
                     <div className="user-button-pill-initials">
-                      {getInitials(user.name)}
+                      {getInitials(user?.name)}
                     </div>
                   </div>
-                  {user.name}
+                  {user?.name}
                   <img
                     src={downArrow}
                     alt=""

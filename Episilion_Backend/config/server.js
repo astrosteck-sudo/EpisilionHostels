@@ -2,6 +2,12 @@ const express = require("express");
 const cors = require("cors");
 const fs = require("fs");
 const path = require("path");
+const passport = require("./passport.js");
+const session = require("express-session");
+
+require('dotenv').config();
+
+
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -21,6 +27,19 @@ app.use(cors()); // Allow requests from any frontend origin
 app.use("/api/payments/webhook", express.raw({ type: "*/*" }));
 app.use(express.json()); // Parse JSON request bodies
 
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use(passport.initialize());
+app.use(passport.session());
 // ── Database Routes ────────────────────────────────────────────────────────────────
 app.use("/api/hostels", require("../routes/hostels.js"));
 app.use("/api/reviews", require("../routes/reviews.js"));

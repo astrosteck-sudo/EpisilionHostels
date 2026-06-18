@@ -1,6 +1,7 @@
 const pool = require("../config/db.js"); // ✅ import pool
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const crypto = require("crypto");
 
 /**
  * SIGNUP
@@ -101,5 +102,67 @@ exports.login = async (req, res) => {
   } catch (err) {
     console.error("Login error:", err);
     res.status(500).send("Server error");
+  }
+};
+
+exports.googleCallback = async (req, res) => {
+  try {
+    const profile = req.user;
+    const email = profile.emails[0].value;
+
+    // console.log(profile);
+    // console.log("email", email);
+
+    // 🔍 Check if user exists in DB
+    const [rows] = await pool.query("SELECT * FROM users WHERE email = ?", [
+      email,
+    ]);
+    let user;
+
+    if (rows.length === 0) {
+      // 🆕 Create new user if not exists
+      const newUser = {
+        email,
+        name: profile.displayName,
+        password: crypto.randomBytes(16).toString("hex"), // placeholder
+        auth_provider: "google",
+      };
+
+      const [result] = await pool.query("INSERT INTO users SET ?", newUser);
+      user = { user_id: result.insertId, ...newUser, created_at: new Date() };
+    } else {
+      user = rows[0];
+    }
+
+    // 🔑 Generate JWT using DB user
+    const token = jwt.sign(
+      {
+        user_id: user.user_id,
+        name: user.name,
+        email: user.email,
+        created_at: user.created_at,
+      },
+      process.env.JWT_SECRET,
+      { expiresIn: "7d" },
+    );
+
+    // ✅ Send JSON response (API style)
+    const userData = encodeURIComponent(
+      JSON.stringify({
+        id: user.user_id,
+        name: user.name, // or user.username if you have it
+        email: user.email,
+        created_at: user.created_at,
+      })
+    );
+
+    // ❌ Don’t do both JSON and redirect — pick one.
+    // If you want OAuth redirect flow, replace res.json with:
+    res.redirect(
+      `${process.env.CLIENT_URL}/oauthsuccess?token=${token}&user=${userData}`,
+    );
+  } catch (err) {
+    console.error(err);
+    res.redirect(`${process.env.CLIENT_URL}/oautherror`);
   }
 };

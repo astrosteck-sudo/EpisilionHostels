@@ -15,6 +15,8 @@ import { UserProfilePage } from './UserProfilPage/UserProfile.jsx';
 import { HostelManagerPage } from './HostelManagerPage/HostelManagerPage.jsx';
 import { ChangePasswordPage } from './HostelManagerPage/ChangePasswordPage.jsx';
 import PaymentSuccess from './AskEpisilionPage/PaymentSuccess.jsx';
+import { OAuthSuccess } from './logins/OAuthSuccess.jsx';
+import { OAuthError } from './logins/OAuthError.jsx';
 
 
 function App() {
@@ -76,6 +78,8 @@ function App() {
         <Route path='hostelManagerPage' element={<HostelManagerPage></HostelManagerPage>}></Route>
         <Route path='changePasswordPage' element={<ChangePasswordPage managerIsLoggedIn={managerIsLoggedIn}></ChangePasswordPage>}></Route>
         <Route path="/payment/success" element={<PaymentSuccess></PaymentSuccess>}></Route>
+        <Route path='oauthsuccess' element={<OAuthSuccess setIsLoggedIn={setIsLoggedIn}/>}/>
+        <Route path='oautherror' element={<OAuthError/>}/>
       </Routes>
     </>
   )

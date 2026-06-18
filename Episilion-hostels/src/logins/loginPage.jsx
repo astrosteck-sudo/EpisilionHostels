@@ -1,7 +1,7 @@
 import { PageHeader } from "../PageHeader/PageHeader";
 import "./logins.css";
 import { SiteFooter } from "../SiteFooter/SiteFooter";
-import googleImage from '../assets/icons/google.png';
+//import googleImage from "../assets/icons/google.png";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -55,10 +55,9 @@ export function LoginPage({ setIsLoggedIn, setManagerIsLoggedIn }) {
   function handleBlur(event) {
     setManagerPassword(event.target.value.trim());
   }
-  function handleNameBlur(event){
+  function handleNameBlur(event) {
     setManagerHostelName(event.target.value.trim());
   }
-
 
   //const API_URL = process.env.REACT_APP_API_URL || "";
 
@@ -66,13 +65,10 @@ export function LoginPage({ setIsLoggedIn, setManagerIsLoggedIn }) {
     e.preventDefault();
 
     try {
-      const res = await axios.post(
-        `/api/manager/auth/login`,
-        {
-          managerHostelName,
-          managerPassword,
-        },
-      );
+      const res = await axios.post(`/api/manager/auth/login`, {
+        managerHostelName,
+        managerPassword,
+      });
 
       // const token = res.data.token;
 
@@ -94,8 +90,8 @@ export function LoginPage({ setIsLoggedIn, setManagerIsLoggedIn }) {
       console.log(error);
       setManagerErrorMessage("Something is wrong try again");
       setTimeout(() => {
-        setManagerErrorMessage('')
-      }, 2000)
+        setManagerErrorMessage("");
+      }, 2000);
     }
   }
 
@@ -104,13 +100,10 @@ export function LoginPage({ setIsLoggedIn, setManagerIsLoggedIn }) {
     setErrorMessage("");
 
     try {
-      const res = await axios.post(
-        `/api/auth/login`,
-        {
-          email,
-          password,
-        },
-      );
+      const res = await axios.post(`/api/auth/login`, {
+        email,
+        password,
+      });
 
       // const token = res.data.token;
 
@@ -207,8 +200,20 @@ export function LoginPage({ setIsLoggedIn, setManagerIsLoggedIn }) {
           </div>
 
           <div className="external-sign-up-buttons">
-                        <button className="external-sign-up-button"><img loading='lazy'src={googleImage} className="external-sign-up-image"></img><span className="external-sign-up-button-span">Log in with</span>Google</button>
-                    </div>
+            {/* <button className="external-sign-up-button">
+              <img
+                loading="lazy"
+                src={googleImage}
+                className="external-sign-up-image"
+              ></img>
+              <span className="external-sign-up-button-span">Log in with</span>
+              Google
+            </button> */}
+
+            <a href="https://episilion-backend-2lt0.onrender.com/api/auth/google">
+              Continue with Google
+            </a>
+          </div>
 
           <div className="divider">
             <span>log in with email</span>
