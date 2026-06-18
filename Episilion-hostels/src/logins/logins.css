@@ -209,6 +209,8 @@
   align-items: center;
   gap: 5px;
   border: 1px solid grey;
+  color: black;
+  text-decoration: none;
 }
 .external-sign-up-button-span{
   font-weight: lighter;
