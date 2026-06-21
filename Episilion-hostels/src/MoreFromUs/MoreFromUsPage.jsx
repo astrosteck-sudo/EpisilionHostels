@@ -72,7 +72,9 @@ export function MoreFromUsPage() {
               Completed
             </button>
             <button className="more-from-us-projects-card-button-learn-more">
-              <a href="href=https://flexpay26.vercel.app/">Learn More</a>
+              <a href="https://flexpay26.vercel.app/" target="_blank">
+                Learn More
+              </a>
             </button>
           </div>
         </div>
