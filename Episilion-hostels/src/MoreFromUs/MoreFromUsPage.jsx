@@ -10,9 +10,7 @@ export function MoreFromUsPage() {
   const [moreFromUsData, setMoreFromUs] = useState([]);
 
   const loadMoreFromUsCards = async () => {
-    const repsonse = await axios.get(
-      "/api/moreProjects",
-    );
+    const repsonse = await axios.get("/api/moreProjects");
     setMoreFromUs(repsonse.data.moreProjects);
   };
 
@@ -70,8 +68,12 @@ export function MoreFromUsPage() {
           />
 
           <div className="more-from-us-projects-card-buttons">
-            <button className="more-from-us-projects-card-button-in-progress">Completed</button>
-            <a href="https://flexpay26.vercel.app/" className="more-from-us-projects-card-button-learn-more">Learn More</a>
+            <button className="more-from-us-projects-card-button-in-progress">
+              Completed
+            </button>
+            <button className="more-from-us-projects-card-button-learn-more">
+              <a href="href=https://flexpay26.vercel.app/">Learn More</a>
+            </button>
           </div>
         </div>
       </div>
