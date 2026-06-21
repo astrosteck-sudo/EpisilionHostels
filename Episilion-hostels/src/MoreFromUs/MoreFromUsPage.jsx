@@ -70,8 +70,8 @@ export function MoreFromUsPage() {
           />
 
           <div className="more-from-us-projects-card-buttons">
-            <button className="more-from-us-projects-card-button-in-progress">In Progress</button>
-            <button className="more-from-us-projects-card-button-learn-more">Learn More</button>
+            <button className="more-from-us-projects-card-button-in-progress">Completed</button>
+            <a href="https://flexpay26.vercel.app/" className="more-from-us-projects-card-button-learn-more">Learn More</a>
           </div>
         </div>
       </div>
