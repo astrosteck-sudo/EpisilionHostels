@@ -2,7 +2,7 @@ const NodeCache = require("node-cache");
 
 // Cache items for 5 minutes (300 seconds)
 const cache = new NodeCache({
-  stdTTL: 300,
+  stdTTL: 86400,
   checkperiod: 320,
 });
 
