@@ -224,7 +224,7 @@ export function HomePage({
   // All sentences to cycle through
   const SENTENCES = [
     "ALWAYS UP-TO-DATE LISTINGS",
-    "OVER 100 HOSTELS LISTED",
+    "OVER 10 HOSTELS LISTED",
     "FIND YOUR PERFECT STAY",
     "COMPARE HOSTELS INSTANTLY",
     "BROWSE HOSTELS FROM HOME",
