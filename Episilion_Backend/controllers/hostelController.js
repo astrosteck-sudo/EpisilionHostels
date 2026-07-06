@@ -1,5 +1,6 @@
 const pool = require("../config/db.js"); // ✅ import pool
 const cache = require("../utils/cache");
+
 exports.getHostels = async (req, res) => {
   try {
     const cachedData = cache.get("allHostels");
