@@ -20,7 +20,6 @@
   overflow: scroll;
   overflow: hidden;
   scrollbar-width: none;
-
 }
 
 .episilion-logo {
@@ -46,7 +45,7 @@
   justify-content: space-around;
   gap: 10px;
 }
-.login-systems.close-login-sytems{
+.login-systems.close-login-sytems {
   display: none;
 }
 
@@ -68,7 +67,7 @@
   font-weight: bolder;
 }
 
-.login-systems>a {
+.login-systems > a {
   font-size: 20px;
   border-radius: 11px;
   width: 50%;
@@ -110,21 +109,22 @@
   padding-left: 50px;
   z-index: 1000;
 }
-.navigation-links-pages{
+.navigation-links-pages {
   width: 70%;
   display: flex;
   justify-content: center;
   gap: 50px;
   align-items: center;
 }
-@media only screen and (max-width: 992px) {
+/* @media only screen and (max-width: 992px) {
   .navigation-links-pages{
     width: 80%;
     flex-direction: column;
     gap: 20px;
+    border: solid red;
   }
   
-}
+} */
 
 .navigation-links .link {
   text-decoration: none;
@@ -135,11 +135,6 @@
 
 .link {
   float: left;
-}
-
-
-.hamburger-button {
-  display: none;
 }
 
 .about-us-link.active,
@@ -153,9 +148,6 @@
   padding-left: 20px;
   padding-right: 20px;
 }
-
-
-
 
 .modal-overlay {
   position: fixed;
@@ -171,8 +163,8 @@
   background: #fff;
   border-radius: 12px;
   padding: 2rem;
-  width: 90%;          /* mobile-friendly */
-  max-width: 400px;    /* caps width on desktop */
+  width: 90%; /* mobile-friendly */
+  max-width: 400px; /* caps width on desktop */
   text-align: center;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
 }
@@ -201,7 +193,7 @@
   cursor: pointer;
 }
 
-.user-button-pill-container{
+.user-button-pill-container {
   border: solid black 1px;
   padding-left: 10px;
   padding-right: 20px;
@@ -211,14 +203,14 @@
   background-color: white;
   overflow: hidden;
 }
-.user-button-pill-initials{
+.user-button-pill-initials {
   padding: 13px;
   background-color: black;
   color: #d3c84d;
   border-radius: 50%;
   min-width: 40px;
 }
-.user-button-pill{
+.user-button-pill {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -226,17 +218,16 @@
   border: none;
   color: black;
   font-weight: bold;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
-
-.user-pill-down-arrow{
+.user-pill-down-arrow {
   width: 15px;
   height: 15px;
   border-radius: 0px;
 }
 
-.user-option-pop-up-container{
+.user-option-pop-up-container {
   margin-top: 10px;
   position: absolute;
   position: fixed;
@@ -247,31 +238,33 @@
   padding-bottom: 0;
   border-radius: 15px;
 }
-.user-option-pop-up-container.close{
+.user-option-pop-up-container.close {
   display: none;
 }
-.user-option-pop-up-name-and-email-container{
-  border-bottom: solid grey .5px;
+.user-option-pop-up-name-and-email-container {
+  border-bottom: solid grey 0.5px;
   padding-bottom: 15px;
   margin-bottom: 10px;
 }
-.user-option-pop-up-email{
+.user-option-pop-up-email {
   font-size: 13px;
   color: grey;
 }
 
-.user-option-pop-up-profile-container, .user-option-pop-up-favorite-container, .user-option-pop-up-logout-container{
+.user-option-pop-up-profile-container,
+.user-option-pop-up-favorite-container,
+.user-option-pop-up-logout-container {
   display: flex;
   align-items: baseline;
 
-  border-bottom: solid grey .5px;
+  border-bottom: solid grey 0.5px;
   padding-bottom: 15px;
   margin-bottom: 10px;
   cursor: pointer;
 
   /* border: solid red; */
 }
-.user-profile-page-link{
+.user-profile-page-link {
   text-decoration: none;
   color: black;
   /* border: solid red; */
@@ -279,15 +272,14 @@
   margin: 0;
 }
 
-
-.user-option-pop-up-images{
+.user-option-pop-up-images {
   width: 15px;
   height: 15px;
   margin: 5px;
   margin-right: 10px;
 }
 
-.user-option-pop-up-logout-container.logout{
+.user-option-pop-up-logout-container.logout {
   margin-bottom: 0;
   border-bottom: none;
 }
@@ -295,13 +287,12 @@
   background-color: grey;
 } */
 
-.hostel-manager-pill-container{
+.hostel-manager-pill-container {
   width: 18%;
   cursor: pointer;
 }
 
-.hostel-manager-pill{
-  
+.hostel-manager-pill {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -309,13 +300,13 @@
   background-color: #5a52d5;
   padding-top: 10px;
   padding-bottom: 10px;
-  border-radius: 20px; 
+  border-radius: 20px;
 }
-.hostel-manager-pill p{
+.hostel-manager-pill p {
   color: white;
   font-weight: bold;
 }
-.hostel-manager-pill img{
+.hostel-manager-pill img {
   width: 10%;
   background-color: white;
   border-radius: 50%;
@@ -324,7 +315,7 @@
   background-color: #5a52d5;
 }
 
-.manager-option-pop-up{
+.manager-option-pop-up {
   margin-top: 10px;
   position: fixed;
   width: min(200px, 50%);
@@ -337,58 +328,20 @@
   flex-direction: column;
   gap: 15px;
 }
-.manager-option-pop-up.close{
+.manager-option-pop-up.close {
   display: none;
 }
-.manager-option-pop-up div{
+.manager-option-pop-up div {
   display: flex;
-  border-bottom: solid black .5px;
-  
+  border-bottom: solid black 0.5px;
 }
 
-
 @media only screen and (max-width: 992px) {
-
   /* Default hidden sidebar */
   .navigation-links {
-    position: fixed;
-    top: 0;
-    right: -5050px;
-    /*hide off-screen */
-    height: 100%;
-    width: 65%;
-    background-color: #d3c84d;
-    display: flex;
-    opacity: 1;
-    /*THIS MAKES IT DISAPEAR INITIALLY BUT ONLY REAPPEARS WHEN THE BUTTON IS CLICKED*/
-    flex-direction: column;
-    align-items: center;
-    justify-content: start;
-    padding-top: 1rem;
-    transition: right 0.3s ease-in-out;
-    overflow: scroll;
-    padding-left: 0px;
+    border: solid red;
+    display: none;
   }
-
-  /* Active state: visible sidebar */
-  .navigation-links.active {
-    right: 0;
-    opacity: 1;
-  }
-
-  /* Style links inside sidebar */
-  .navigation-links-pages > a {
-    padding: 1rem;
-    text-decoration: none;
-    width: 100%;
-    text-align: center;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-
-  }
-  .user-profile-page-link a{
-    border: solid blue;
-  }
-
   .login-systems {
     width: 60vw;
   }
@@ -399,52 +352,22 @@
   .login-systems.logout {
     width: 60vw;
     font-size: clamp(0.8rem, 1vw, 1rem);
-
   }
 
-  .login-systems>a {
+  .login-systems > a {
     padding: 8px;
-  }
-
-  .hamburger-button {
-    display: block;
-    cursor: pointer;
-    width: min(40px, 10%);
-    height: 100%;
-    border: none;
-  }
-
-  .hamburger-button img {
-    background-color: #d3c84d;
-    height: 100%;
-    width: 100%;
-  }
-
-  .navigation-links {
-    display: flex;
   }
 
   .login-systems a {
     margin-left: 0px;
   }
-  .hostel-manager-pill-container{
+  .hostel-manager-pill-container {
     width: 80%;
   }
 }
 
 /*Mobile Display*/
 @media screen and (max-width: 600px) {
-
-  .hamburger-button {
-    height: 20%;
-
-  }
-
-  .navigation-links.active {
-    right: 0;
-    opacity: 1;
-  }
-
   #all-rights-text {
     width: 100%;
     text-align: center;
@@ -455,16 +378,8 @@
     align-items: center;
     justify-content: space-between;
   }
-  .user-option-pop-up-container{
+  .user-option-pop-up-container {
     margin: auto;
     margin-top: 10px;
-  }
-}
-
-
-
-@media screen and (min-width: 600px) and (max-width: 992px) {
-  .hamburger-button {
-    height: 50%;
   }
 }

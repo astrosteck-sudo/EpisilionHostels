@@ -29,17 +29,9 @@ export function PageHeader({
   setShowManagerLogoutModal
 }) {
   const navigate = useNavigate();
-  // const [navlink, setNavLink] = useState(false)
   const [openUserPopUpMenu, setOpenUserPopUpMenu] = useState(false);
   const [openManangerPopUpMenu, setOenManangerPopUpMenu] = useState(false);
-
-  function renderHamburgerMenu() {
-    if (!navlink) {
-      setNavLink(true);
-    } else {
-      setNavLink(false);
-    }
-  }
+  
   const handleLogout = () => {
     console.log('logout clicked')
     navigate("/login");
@@ -57,28 +49,6 @@ export function PageHeader({
     setShowManagerLogoutModal(false);
   }
 
-  //THIS WILL CHECK IF THE TARGET IS NOT THE HAMBURGER
-  // BUTTON, NAVLINKS MENU, AND IF THE NAVLINKS IS OPEN,
-  // IF THE CONDIOTIONS A TRUE , THE IF THE DOCUMENT IS
-  // CLICKED THE NAVLINK MEMU IS REMOVED
-  useEffect(() => {
-    function handleClick(event) {
-      if (
-        navlink &&
-        !event.target.closest(".navigation-links") &&
-        !event.target.closest(".hamburger-button")
-      ) {
-        setNavLink(false);
-      }
-    }
-
-    document.addEventListener("click", handleClick);
-
-    // Cleanup on unmount
-    return () => {
-      document.removeEventListener("click", handleClick);
-    };
-  }, [navlink, setNavLink]);
   function resetValues() {
     sethostelsCardData(originalHostelCardData);
     setHostelFound(true);
@@ -267,14 +237,6 @@ export function PageHeader({
             </div>
           )}
         </nav>
-
-        <button
-          className="hamburger-button"
-          aria-label="Menu"
-          onClick={renderHamburgerMenu}
-        >
-          <img loading="lazy" src={HamburgerButton} alt="Menu"></img>
-        </button>
 
         {showLogoutModal && (
           <div
