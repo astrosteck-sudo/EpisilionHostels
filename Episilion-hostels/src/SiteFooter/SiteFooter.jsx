@@ -1,14 +1,12 @@
-import { useState } from "react";
 import "./SiteFooter.css";
 import { Link } from "react-router-dom";
 import { NavLink, useNavigate } from "react-router-dom";
 
 export function SiteFooter() {
-  const [loggedInUserDirection, ] =
-    useState("/userProfilePage");
   const token = localStorage.getItem("token");
   const managerToken = localStorage.getItem("managerToken");
   const navigate = useNavigate();
+  const profileLink = managerToken? '/hostelManagerPage': '/userProfilePage'
   function handleUserLoggedIn(e) {
     e.preventDefault();
     if (token) {
@@ -22,22 +20,6 @@ export function SiteFooter() {
       navigate("/login");
       return;
     }
-    // if (!token || !managerToken) {
-    //   e.preventDefault(); // <-- Stops NavLink from going to /userProfilePage
-    //   navigate("/login");
-    //   return;
-    // }else{
-    //     if (token){
-    //         navigate("userProfilePage")
-    //     }else{
-    //         navigate("/hostelManagerPage")
-    //     }
-    // }
-    // console.log(token)
-    // if(managerToken){
-    //     navigate("/hostelManagerPage")
-    // }
-    // navigate("userProfilePage")
   }
   return (
     <>
@@ -87,7 +69,7 @@ export function SiteFooter() {
           <NavLink
             className="bottom-tab-user"
             onClick={handleUserLoggedIn}
-            to={loggedInUserDirection}
+            to={profileLink}
           >
             <svg
               xmlns="http://w3.org"

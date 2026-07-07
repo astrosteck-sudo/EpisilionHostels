@@ -30,7 +30,7 @@ const verifyToken = (req, res, next) => {
     console.log(err);
 
     return res.status(401).json({
-      error: "Invalid or expired token",
+      error: "Something is wrong, try again !!",//Invalid or expired token
     });
   }
 };

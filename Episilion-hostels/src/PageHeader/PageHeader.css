@@ -7,7 +7,7 @@
   justify-content: space-between;
   flex-wrap: wrap;
   /*THIS LET ITEMS WRAP TO THE #d3c84d NEXT LINE IF THE SCREEN IS TO SMALL*/
-  background-color: gold;
+  background-color: #d3c84d;
 
   position: sticky;
   /*THIS MAKES THE HEADER STICKY WHEN SCOLLING IF YOU MAKE THIS sticky YOU WONT NEED THE WIDTH*/

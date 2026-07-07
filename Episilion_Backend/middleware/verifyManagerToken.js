@@ -32,7 +32,7 @@ const verifyManagerToken = (req, res, next) => {
 
     // If verification fails (invalid/expired token), deny access
     return res.status(401).json({
-      error: "Invalid or expired token",
+      error: "Something is wrong, try again !!",//Invalid or expired token
     });
   }
 };

@@ -49,15 +49,9 @@
   .footer-content {
     display: none;
   }
-  .site-footer{
-    background-color: transparent;
-  }
   .bottom-tabs {
     display: flex;
     justify-content: space-between;
-    padding: 5px;
-    background: rgb(239, 204, 3);
-    border-radius: 10px;
     padding: 10px;
   }
   .bottom-tabs a {
@@ -79,6 +73,6 @@
   .bottom-tab-more.active p,
   .bottom-tab-user.active svg,
   .bottom-tab-user.active p {
-    color: black;
+    color: gold;
   }
 }
