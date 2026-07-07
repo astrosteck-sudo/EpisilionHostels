@@ -73,7 +73,7 @@
   .bottom-tab-more.active svg,
   .bottom-tab-more.active p,
   .bottom-tab-user.active svg,
-  .bottom-tab-user.actuve p {
+  .bottom-tab-user.active p {
     color: #ffea00;
   }
 }

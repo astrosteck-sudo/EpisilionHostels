@@ -23,10 +23,11 @@ export function PageHeader({
   setIsLoggedIn,
   managerIsLoggedIn,
   setManagerIsLoggedIn,
+  showLogoutModal,
+  setShowLogoutModal
 }) {
   const navigate = useNavigate();
   // const [navlink, setNavLink] = useState(false)
-  const [showLogoutModal, setShowLogoutModal] = useState(false);
   const [showManagerLogoutModal, setShowManagerLogoutModal] = useState(false);
   const [openUserPopUpMenu, setOpenUserPopUpMenu] = useState(false);
   const [openManangerPopUpMenu, setOenManangerPopUpMenu] = useState(false);
@@ -39,6 +40,7 @@ export function PageHeader({
     }
   }
   const handleLogout = () => {
+    console.log('logout clicked')
     navigate("/login");
     localStorage.removeItem("token");
     setIsLoggedIn(false);
@@ -82,7 +84,7 @@ export function PageHeader({
   }
 
   const user = JSON.parse(localStorage.getItem("user"));
-  console.log(user)
+  // console.log(user)
 
   function handleDisplayUserPopUpMenu() {
     if (openUserPopUpMenu) {
@@ -120,7 +122,6 @@ export function PageHeader({
         <Link className="episilion" to="/" onClick={resetValues}>
           <div className="episilion-container">
             <p>
-              {" "}
               <img
                 src="/episilion_logo.svg"
                 alt=""

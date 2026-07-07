@@ -4,19 +4,40 @@ import { Link } from "react-router-dom";
 import { NavLink, useNavigate } from "react-router-dom";
 
 export function SiteFooter() {
-    const [loggedInUserDirection, setLoggedInUserDirection] = useState("/userProfilePage")
+  const [loggedInUserDirection, ] =
+    useState("/userProfilePage");
   const token = localStorage.getItem("token");
-  const managerToken = localStorage.getItem("managerToken")
+  const managerToken = localStorage.getItem("managerToken");
   const navigate = useNavigate();
   function handleUserLoggedIn(e) {
+    e.preventDefault();
+    if (token) {
+      navigate("/userProfilePage");
+      return;
+    } else if (managerToken) {
+      navigate("/hostelManagerPage");
+      return;
+    }
     if (!token || !managerToken) {
-      e.preventDefault(); // <-- Stops NavLink from going to /userProfilePage
       navigate("/login");
       return;
     }
-    if(managerToken){
-        navigate("/hostelManagerPage")
-    }
+    // if (!token || !managerToken) {
+    //   e.preventDefault(); // <-- Stops NavLink from going to /userProfilePage
+    //   navigate("/login");
+    //   return;
+    // }else{
+    //     if (token){
+    //         navigate("userProfilePage")
+    //     }else{
+    //         navigate("/hostelManagerPage")
+    //     }
+    // }
+    // console.log(token)
+    // if(managerToken){
+    //     navigate("/hostelManagerPage")
+    // }
+    // navigate("userProfilePage")
   }
   return (
     <>

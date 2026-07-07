@@ -78,8 +78,7 @@ export function LoginPage({ setIsLoggedIn, setManagerIsLoggedIn }) {
       console.log("Manager token stored:", res.data.manager);
       // setManagerHostelName("");
       // setManagerPassword("");
-      console.log("Login successful");
-      setManagerIsLoggedIn(true);
+      // setManagerIsLoggedIn(true);
       navigate("/hostelManagerPage");
       setManagerErrorMessage("");
       localStorage.removeItem("token");
