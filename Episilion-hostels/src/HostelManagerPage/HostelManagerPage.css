@@ -38,6 +38,7 @@
   align-items: center;
   background-color: #d3c84d3c;
   border-radius: 10px;
+  width: 100%;
 }
 .verified-account-hostel-name {
   color: #d3c84d;
@@ -241,10 +242,23 @@
     width: 100%;
     margin-top: 0;
     border-radius: 0 0 10px 10px;
+    flex-direction: column;
+    justify-content: first baseline;
+    gap: 10px;
+  }
+  .hostel-manager-info-container > div{
+    margin-right: auto;
+  }
+  .logout-and-verified-account-container{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
   .verified-account-container {
     width: 30%;
     padding: 5px;
+    margin-right: auto;
   }
   .hostel-manager-room-types-and-price-wrapper {
     flex-direction: column;

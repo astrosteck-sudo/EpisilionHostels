@@ -25,7 +25,8 @@ function App() {
   const [originalHostelCardData, setOriginalHostelCardData] = useState([])
   const [navlink, setNavLink] = useState(false);//THIS HIDES ANDS SHOWS THE HAMBURGER MENU AND BUTTON
   const [showLogoutModal, setShowLogoutModal] = useState(false);//this is for the pop up that appears when the user is trying to log out
-  
+  const [showManagerLogoutModal, setShowManagerLogoutModal] = useState(false);
+
 
   const loadHostelsCard = async () => {
   try {
@@ -63,7 +64,7 @@ function App() {
 
   return (
     <>
-      <PageHeader navlink={navlink} setNavLink={setNavLink} isLoggedIn={isLoggedIn} managerIsLoggedIn={managerIsLoggedIn} setManagerIsLoggedIn={setManagerIsLoggedIn} setIsLoggedIn={setIsLoggedIn} showLogoutModal={showLogoutModal} setShowLogoutModal={setShowLogoutModal} />
+      <PageHeader navlink={navlink} setNavLink={setNavLink} isLoggedIn={isLoggedIn} managerIsLoggedIn={managerIsLoggedIn} setManagerIsLoggedIn={setManagerIsLoggedIn} setIsLoggedIn={setIsLoggedIn} showLogoutModal={showLogoutModal} setShowLogoutModal={setShowLogoutModal} showManagerLogoutModal={showManagerLogoutModal} setShowManagerLogoutModal={setShowManagerLogoutModal}/>
       <Routes>
         <Route index element={<HomePage hostelsCardData={hostelsCardData} sethostelsCardData={sethostelsCardData}
           navlink={navlink} setNavLink={setNavLink} originalHostelCardData={originalHostelCardData} setOriginalHostelCardData={setOriginalHostelCardData} />} />
@@ -76,7 +77,7 @@ function App() {
         <Route path='morefromus' element={<MoreFromUsPage  />} />
         <Route path='comparehostels' element={<CompareHostels  originalHostelCardData={originalHostelCardData} />} />
         <Route path='userProfilePage' element={<UserProfilePage isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} showLogoutModal={showLogoutModal} setShowLogoutModal={setShowLogoutModal}></UserProfilePage>} />
-        <Route path='hostelManagerPage' element={<HostelManagerPage></HostelManagerPage>}></Route>
+        <Route path='hostelManagerPage' element={<HostelManagerPage setShowManagerLogoutModal={setShowManagerLogoutModal}></HostelManagerPage>}></Route>
         <Route path='changePasswordPage' element={<ChangePasswordPage managerIsLoggedIn={managerIsLoggedIn}></ChangePasswordPage>}></Route>
         <Route path="/payment/success" element={<PaymentSuccess></PaymentSuccess>}></Route>
         <Route path='oauthsuccess' element={<OAuthSuccess setIsLoggedIn={setIsLoggedIn}/>}/>

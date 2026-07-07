@@ -24,11 +24,12 @@ export function PageHeader({
   managerIsLoggedIn,
   setManagerIsLoggedIn,
   showLogoutModal,
-  setShowLogoutModal
+  setShowLogoutModal,
+  showManagerLogoutModal,
+  setShowManagerLogoutModal
 }) {
   const navigate = useNavigate();
   // const [navlink, setNavLink] = useState(false)
-  const [showManagerLogoutModal, setShowManagerLogoutModal] = useState(false);
   const [openUserPopUpMenu, setOpenUserPopUpMenu] = useState(false);
   const [openManangerPopUpMenu, setOenManangerPopUpMenu] = useState(false);
 

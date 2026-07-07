@@ -4,13 +4,13 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 //import locationPin from "../assets/icons/pin.png";
 
-export function HostelManagerPage() {
+export function HostelManagerPage({ setShowManagerLogoutModal }) {
   const [hostelManagerRoomTypes, setHostelManagerRoomTypes] = useState([]);
   //const [hostelGeneralInfo, setHostelGeneralInfo] = useState('')
   const managerHostel = localStorage.getItem("managerUser");
-  const [isSubmittingUpdate, setIsSubmittingUpdate] = useState(false)
+  const [isSubmittingUpdate, setIsSubmittingUpdate] = useState(false);
 
-  const [hostelDirections, setHostelDirections] = useState('');
+  const [hostelDirections, setHostelDirections] = useState("");
   const [
     hostelDistanceFromCampusInMinutes,
     setHostelDistanceFromCampusInMinutes,
@@ -57,7 +57,11 @@ export function HostelManagerPage() {
 
   if (!managerHostel) {
     console.log("User is not logged in. Redirecting...");
-    return <p className="login-To-see-this-page">LOG IN AS A MANGER TO SEE THIS PAGE</p>;
+    return (
+      <p className="login-To-see-this-page">
+        LOG IN AS A MANGER TO SEE THIS PAGE
+      </p>
+    );
   }
   //console.log("manager hostel name", JSON.parse(managerHostel))
   //setManagerHostelName(JSON.parse(managerHostel).username)
@@ -65,29 +69,26 @@ export function HostelManagerPage() {
 
   const loadManagerDashBoardInfo = async () => {
     try {
-      const response = await axios.get(
-        "/api/manager/dashboard",
-        {
-          headers: {
-            Authorization: `Bearer ${managerToken}`,
-          },
+      const response = await axios.get("/api/manager/dashboard", {
+        headers: {
+          Authorization: `Bearer ${managerToken}`,
         },
-      );
+      });
 
       setHostelManagerRoomTypes(response.data.room_types);
       //setHostelGeneralInfo(response.data)
-      setHostelDirections(response.data.location.directions)
-      setHostelDistanceFromCampusInMinutes(response.data.location.distance_to_campus_in_minutes)
-      setCautionDeposit(response.data.pricing.caution_deposit)
-      setMaintenance(response.data.pricing.maintenance_fee)
-      setUtilities(response.data.pricing.utilities_fee)
-      
+      setHostelDirections(response.data.location.directions);
+      setHostelDistanceFromCampusInMinutes(
+        response.data.location.distance_to_campus_in_minutes,
+      );
+      setCautionDeposit(response.data.pricing.caution_deposit);
+      setMaintenance(response.data.pricing.maintenance_fee);
+      setUtilities(response.data.pricing.utilities_fee);
 
-      setHostelMinimumPrice(response.data.pricing.price_min)
-      setHostelMaximumPrice(response.data.pricing.price_max)
+      setHostelMinimumPrice(response.data.pricing.price_min);
+      setHostelMaximumPrice(response.data.pricing.price_max);
       //setRefundsAllowed(response.data.pricing.refund_policy === 1 ? '' :'')
-      setInstallmentAllowed(response.data.pricing.installment_allowed)
-
+      setInstallmentAllowed(response.data.pricing.installment_allowed);
     } catch (error) {
       console.log(error);
     }
@@ -99,9 +100,8 @@ export function HostelManagerPage() {
 
   const updateHostel = async (e) => {
     e.preventDefault();
-    setIsSubmittingUpdate(true)
+    setIsSubmittingUpdate(true);
 
-  
     try {
       const response = await axios.put(
         "/api/manager/update-hostel",
@@ -110,8 +110,10 @@ export function HostelManagerPage() {
           minimum_price: Number(hostelMinimumPrice),
           maximum_price: Number(hostelMaximumPrice),
 
-          installment_allowed: installmentAllowed === '' ? 0 : installmentAllowed,
-          refunds_allowed: refundsAllowed === '' ? 'No Refunds' : refundsAllowed,
+          installment_allowed:
+            installmentAllowed === "" ? 0 : installmentAllowed,
+          refunds_allowed:
+            refundsAllowed === "" ? "No Refunds" : refundsAllowed,
 
           utilities: Number(utilities),
           maintenance: Number(maintenance),
@@ -130,7 +132,7 @@ export function HostelManagerPage() {
           },
         },
       );
-      setIsSubmittingUpdate(false)
+      setIsSubmittingUpdate(false);
 
       console.log("Update success:", response.data);
     } catch (error) {
@@ -154,11 +156,28 @@ export function HostelManagerPage() {
           </p>
         </div>
 
-        <div className="verified-account-container">
-          <p className="verified-account-hostel-name">
-            {managerHostel && JSON.parse(managerHostel).username}
-          </p>
-          <p className="verified-account-text">Verified Manager Account</p>
+        <div className="logout-and-verified-account-container">
+          <div className="verified-account-container">
+            <p className="verified-account-hostel-name">
+              {managerHostel && JSON.parse(managerHostel).username}
+            </p>
+            <p className="verified-account-text">Verified Manager Account</p>
+          </div>
+
+          <svg
+            xmlns="http://w3.org"
+            viewBox="0 0 24 24"
+            width="24"
+            height="24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            onClick={() => setShowManagerLogoutModal(true)}
+          >
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9" />
+          </svg>
         </div>
       </div>
 
@@ -225,15 +244,41 @@ export function HostelManagerPage() {
                 IS INSTALLMENT PAYMENT ALLOWED
               </h3>
               <div className="hostel-manager-binary-buttons">
-                <button className={`hostel-manager-installment-button ${installmentAllowed ===  1? 'allowed' : ''}`} onClick={() => handleInstallmentAllowedChange(1)} type="button">✔️YES</button>
-                <button className={`hostel-manager-installment-button ${installmentAllowed === 0? 'notAllowed' : ''}`} onClick={() => handleInstallmentAllowedChange(0)} type="button">❌NO</button>
+                <button
+                  className={`hostel-manager-installment-button ${installmentAllowed === 1 ? "allowed" : ""}`}
+                  onClick={() => handleInstallmentAllowedChange(1)}
+                  type="button"
+                >
+                  ✔️YES
+                </button>
+                <button
+                  className={`hostel-manager-installment-button ${installmentAllowed === 0 ? "notAllowed" : ""}`}
+                  onClick={() => handleInstallmentAllowedChange(0)}
+                  type="button"
+                >
+                  ❌NO
+                </button>
               </div>
             </div>
             <div className="hostel-manager-refund-container">
               <h3 className="hostel-manager-titles">ARE REFUNDS ALLOWED</h3>
               <div className="hostel-manager-binary-buttons">
-                <button className={`hostel-manager-refund-button ${refundsAllowed === 'Refunds Are Allowed' ? 'allowed' : '' }`} onClick={() => handleRefundsAllowedChange('Refunds Are Allowed')} type="button">✔️YES</button>
-                <button className={`hostel-manager-refund-button ${refundsAllowed != 'Refunds Are Allowed' ? 'notAllowed' : '' }`} onClick={() => handleRefundsAllowedChange('No Refunds')} type="button">❌NO</button>
+                <button
+                  className={`hostel-manager-refund-button ${refundsAllowed === "Refunds Are Allowed" ? "allowed" : ""}`}
+                  onClick={() =>
+                    handleRefundsAllowedChange("Refunds Are Allowed")
+                  }
+                  type="button"
+                >
+                  ✔️YES
+                </button>
+                <button
+                  className={`hostel-manager-refund-button ${refundsAllowed != "Refunds Are Allowed" ? "notAllowed" : ""}`}
+                  onClick={() => handleRefundsAllowedChange("No Refunds")}
+                  type="button"
+                >
+                  ❌NO
+                </button>
               </div>
             </div>
           </div>
@@ -295,7 +340,10 @@ export function HostelManagerPage() {
                     value={room.price}
                     onChange={(e) => {
                       const updated = [...hostelManagerRoomTypes];
-                      updated[index] = { ...room, price: Number(e.target.value) };
+                      updated[index] = {
+                        ...room,
+                        price: Number(e.target.value),
+                      };
                       setHostelManagerRoomTypes(updated);
                     }}
                   />
@@ -307,11 +355,18 @@ export function HostelManagerPage() {
         </div>
 
         <div className="hostel-manager-submit-button-container">
-          <button className="hostel-manager-discard-button" type="button" onClick={loadManagerDashBoardInfo}>
+          <button
+            className="hostel-manager-discard-button"
+            type="button"
+            onClick={loadManagerDashBoardInfo}
+          >
             Discard Changes
           </button>
-          <button className={`hostel-manager-save-changes-button ${isSubmittingUpdate? 'submittingUpdate' :''}`} type="submit">
-            {`${isSubmittingUpdate? 'Submitting Update' :'Save Changes'}`}
+          <button
+            className={`hostel-manager-save-changes-button ${isSubmittingUpdate ? "submittingUpdate" : ""}`}
+            type="submit"
+          >
+            {`${isSubmittingUpdate ? "Submitting Update" : "Save Changes"}`}
           </button>
         </div>
       </form>
