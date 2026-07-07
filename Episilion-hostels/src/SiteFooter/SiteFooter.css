@@ -3,7 +3,6 @@
   position: fixed;
   bottom: 0;
   left: 0;
-  background: #333;
   color: #fff;
   text-align: center;
   padding: 1rem;
@@ -50,10 +49,16 @@
   .footer-content {
     display: none;
   }
+  .site-footer{
+    background-color: transparent;
+  }
   .bottom-tabs {
     display: flex;
     justify-content: space-between;
     padding: 5px;
+    background: rgb(239, 204, 3);
+    border-radius: 10px;
+    padding: 10px;
   }
   .bottom-tabs a {
     text-decoration: none;
@@ -74,6 +79,6 @@
   .bottom-tab-more.active p,
   .bottom-tab-user.active svg,
   .bottom-tab-user.active p {
-    color: #ffea00;
+    color: black;
   }
 }
