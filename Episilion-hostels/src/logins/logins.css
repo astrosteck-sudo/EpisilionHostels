@@ -211,6 +211,10 @@
   border: 1px solid grey;
   color: black;
   text-decoration: none;
+  transition: transform 0.15s ease; /* smooth scaling */
+}
+.external-sign-up-button:active {
+  transform: scale(0.97); /* shrink slightly on click */
 }
 .external-sign-up-button-span{
   font-weight: lighter;
@@ -316,6 +320,11 @@
   color: white;
   font-weight: bold;
   font-size: .8rem;
+  transition: transform 0.15s ease; /* smooth scaling */
+}
+
+.create-account-button:active {
+  transform: scale(0.97); /* shrink slightly on click */
 }
 
 .error-message-container.login{
