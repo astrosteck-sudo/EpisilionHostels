@@ -26,14 +26,14 @@ export function PageHeader({
   showLogoutModal,
   setShowLogoutModal,
   showManagerLogoutModal,
-  setShowManagerLogoutModal
+  setShowManagerLogoutModal,
 }) {
   const navigate = useNavigate();
   const [openUserPopUpMenu, setOpenUserPopUpMenu] = useState(false);
   const [openManangerPopUpMenu, setOenManangerPopUpMenu] = useState(false);
-  
+
   const handleLogout = () => {
-    console.log('logout clicked')
+    console.log("logout clicked");
     navigate("/login");
     localStorage.removeItem("token");
     setIsLoggedIn(false);
@@ -90,18 +90,12 @@ export function PageHeader({
   return (
     <>
       <section className="header-section">
-        <Link className="episilion" to="/" onClick={resetValues}>
-          <div className="episilion-container">
-            <p>
-              <img
-                src="/episilion_logo.svg"
-                alt=""
-                className="episilion-logo"
-              />
-              Episilion <div>Hostels</div>
-            </p>
-          </div>
-        </Link>
+        
+          <Link className="episilion" to="/" onClick={resetValues}>
+            <img src="/episilion_logo.svg" alt="" className="episilion-logo" />
+            <p>EPISILION HOSTELS</p>
+          </Link>
+        
         <nav className={`navigation-links ${navlink ? "active" : ""}`}>
           <div className="navigation-links-pages">
             <NavLink className="link about-us-link" to="/">
@@ -117,126 +111,137 @@ export function PageHeader({
               More From Us
             </NavLink>
           </div>
+        </nav>
 
-          {managerIsLoggedIn ? (
-            <>
-              <div className="hostel-manager-pill-container">
-                <div
-                  className="hostel-manager-pill"
-                  onClick={handleManagerDisplayPopUpMenu}
-                >
-                  <img loading="lazy" src={managerProfileIcon} alt="" />
-                  <p>Manager</p>
-                </div>
-
-                <div
-                  className={`manager-option-pop-up ${openManangerPopUpMenu ? "open" : "close"}`}
-                >
-                  <div>
-                    <img
-                      src={dashboardImage}
-                      className="user-option-pop-up-images"
-                    />
-                    <Link
-                      className="user-profile-page-link"
-                      to="/hostelManagerPage"
-                    >
-                      <p>Manager dashboard</p>
-                    </Link>
-                  </div>
-
-                  <div>
-                    <img
-                      src={passwordImage}
-                      className="user-option-pop-up-images"
-                    />
-                    <Link
-                      className="user-profile-page-link"
-                      to="/changePasswordPage"
-                    >
-                      <p>Change Password</p>
-                    </Link>
-                  </div>
-
-                  <div onClick={() => setShowManagerLogoutModal(true)}>
-                    <img
-                      src={userPopLogOutImage}
-                      className="user-option-pop-up-images"
-                    />
-                    <p>Log Out</p>
-                  </div>
-                </div>
-              </div>
-            </>
-          ) : (
-            null
-          )}
-
-          {isLoggedIn ? (
-            <div>
+        {managerIsLoggedIn ? (
+          <>
+            <div className="hostel-manager-pill-container">
               <div
-                className="user-button-pill-container"
-                onClick={handleDisplayUserPopUpMenu}
+                className="hostel-manager-pill"
+                onClick={handleManagerDisplayPopUpMenu}
               >
-                <button className="user-button-pill">
-                  <div>
-                    <div className="user-button-pill-initials">
-                      {getInitials(user?.name)}
-                    </div>
-                  </div>
-                  {user?.name}
-                  <img
-                    src={downArrow}
-                    alt=""
-                    className="user-pill-down-arrow"
-                  />
-                </button>
+                <img loading="lazy" src={managerProfileIcon} alt="" />
+                <p>Manager</p>
               </div>
 
               <div
-                className={`user-option-pop-up-container ${openUserPopUpMenu ? "open" : "close"}`}
+                className={`manager-option-pop-up ${openManangerPopUpMenu ? "open" : "close"}`}
               >
-                <div className="user-option-pop-up-name-and-email-container">
-                  <p>{user.name}</p>
-                  <p className="user-option-pop-up-email">{user.email}</p>
-                </div>
-                <div className="user-option-pop-up-profile-container">
+                <div>
                   <img
-                    src={userPopImage}
+                    src={dashboardImage}
                     className="user-option-pop-up-images"
                   />
-                  <Link className="user-profile-page-link" to="userProfilePage">
-                    <p>My Profile</p>
+                  <Link
+                    className="user-profile-page-link"
+                    to="/hostelManagerPage"
+                  >
+                    <p>Manager dashboard</p>
                   </Link>
                 </div>
-                {/* <div className="user-option-pop-up-favorite-container">
+
+                <div>
+                  <img
+                    src={passwordImage}
+                    className="user-option-pop-up-images"
+                  />
+                  <Link
+                    className="user-profile-page-link"
+                    to="/changePasswordPage"
+                  >
+                    <p>Change Password</p>
+                  </Link>
+                </div>
+
+                <div onClick={() => setShowManagerLogoutModal(true)}>
+                  <img
+                    src={userPopLogOutImage}
+                    className="user-option-pop-up-images"
+                  />
+                  <p>Log Out</p>
+                </div>
+              </div>
+            </div>
+          </>
+        ) : null}
+
+        {isLoggedIn ? (
+          <div>
+            <div
+              className="user-button-pill-container"
+              onClick={handleDisplayUserPopUpMenu}
+            >
+              <button className="user-button-pill">
+                <div>
+                  <div className="user-button-pill-initials">
+                    {getInitials(user?.name)}
+                  </div>
+                </div>
+                {user?.name}
+                <img src={downArrow} alt="" className="user-pill-down-arrow" />
+              </button>
+            </div>
+
+            <div
+              className={`user-option-pop-up-container ${openUserPopUpMenu ? "open" : "close"}`}
+            >
+              <div className="user-option-pop-up-name-and-email-container">
+                <p>{user.name}</p>
+                <p className="user-option-pop-up-email">{user.email}</p>
+              </div>
+              <div className="user-option-pop-up-profile-container">
+                <img src={userPopImage} className="user-option-pop-up-images" />
+                <Link className="user-profile-page-link" to="userProfilePage">
+                  <p>My Profile</p>
+                </Link>
+              </div>
+              {/* <div className="user-option-pop-up-favorite-container">
                   <img
                     src={userPopFavoriteImage}
                     className="user-option-pop-up-images"
                   />
                   <p>My Favorites</p>
                 </div> */}
-                <div
-                  className="user-option-pop-up-logout-container logout"
-                  onClick={() => setShowLogoutModal(true)}
-                >
-                  <img
-                    src={userPopLogOutImage}
-                    className="user-option-pop-up-images"
-                  />
-                  <p>Log Out </p>
-                </div>
+              <div
+                className="user-option-pop-up-logout-container logout"
+                onClick={() => setShowLogoutModal(true)}
+              >
+                <img
+                  src={userPopLogOutImage}
+                  className="user-option-pop-up-images"
+                />
+                <p>Log Out </p>
               </div>
             </div>
-          ) : (
-            <div
-              className={`login-systems ${managerIsLoggedIn ? "close-login-sytems" : ""}`}
-            >
-              <Link to="/login">LOGIN</Link>
-              <Link to="/signup">SIGN UP</Link>
-            </div>
-          )}
-        </nav>
+          </div>
+        ) : (
+          <div
+            className={`login-systems ${managerIsLoggedIn ? "close-login-sytems" : ""}`}
+          >
+            <Link className="login-link" to="/login">
+              <svg
+                xmlns="http://w3.org"
+                viewBox="0 0 24 24"
+                width="24"
+                height="24"
+                fill="none"
+                stroke="#006644"
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <line x1="3" y1="12" x2="16" y2="12" />
+                <polyline points="11 7 16 12 11 17" />
+
+                <path d="M16 4h3v16h-3" />
+              </svg>
+              <p>Login</p>
+            </Link>
+            <Link to="/signup" className="signUp-link">
+              Sign Up
+            </Link>
+          </div>
+        )}
 
         {showLogoutModal && (
           <div

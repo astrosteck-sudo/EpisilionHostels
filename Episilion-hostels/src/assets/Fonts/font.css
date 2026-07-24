@@ -89,3 +89,24 @@
   font-weight: normal;
   font-style: normal;
 }
+
+@font-face{
+  font-family: OutfitSemiBold;
+  src: url(fonts/OutFilt/static/Outfit-SemiBold.ttf);
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face{
+  font-family: OutfitBold;
+  src: url(fonts/OutFilt/static/Outfit-Bold.ttf);
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face{
+  font-family: OutfitLight;
+  src: url(fonts/OutFilt/static/Outfit-Medium.ttf);
+  font-weight: normal;
+  font-style: normal;
+}
