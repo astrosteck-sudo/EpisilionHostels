@@ -66,40 +66,69 @@
   text-align: left;
   transition: transform 0.3s;
   margin-bottom: 50px;
+
+  /* let content define height */
+  height: auto; 
+  display: flex;
+  flex-direction: column;
+
+  min-height: 200px;         /* ensures a taller card */
+  display: flex;
+  flex-direction: column;
+}
+
+
+.view-more-details {
+  width: 100%;
+  height: 40px;
+  background-color: #1e8234;
+  border-radius: 10px;
+  cursor: pointer;
+  
+  /* 2. PUSHES THE BUTTON TO THE BOTTOM AUTOMATICALLY */
+  margin-top: auto; 
 }
 
 @media (max-width: 600px) {
   .hostel-card {
-    flex: 1 1 calc(50% - 0.5rem);
-    max-width: calc(50% - 0.5rem);
+    flex: 1 1 100%;
+    max-width: 100%;
     min-width: 0;
+    margin:15px;
+    margin-bottom: 24px; 
+
   }
 }
+
 
 .image-container {
   position: relative;
   /*ALLOWS ABOLUTE POSITIONING INSIDE*/
   display: inline-block;
+  max-height: 190px;
+  overflow: hidden;
 }
 
 #hostel-card-image {
   width: 100%;
-  height: 60%;
-  border-radius: 7px 7px 0px 0px;
+  height: auto;              /* don’t force height */
+  max-height: 190px;         /* cap it */
+  object-fit: cover;         /* crop instead of stretch */
+  border-radius: 7px 7px 0 0;
   display: block;
-  min-height: 190px;
-  /* min-width: 280px; */
-  /* min-width: 280px;
-  max-height: 190px; */
 }
-@media only screen and (max-width: 600px) {
+
+@media (max-width: 600px) {
   #hostel-card-image {
-    /* min-width: 170px; */
-    max-height: 90px;
-    min-height: 100px;
-    width: 100vw;
+    max-height: 200px;
+    object-fit: cover;
+  }
+  .hostel-card {
+    min-height: 300px;
+    margin-bottom: 24px;
   }
 }
+
 
 .hostel-rating-text {
   position: absolute;
@@ -109,12 +138,24 @@
   /* distance from right edge */
   color: white;
   padding: 4px 8px;
+  width: min(100px, 20%);
   border-radius: 4px;
-  font-size: clamp(9px, 2vw, 15px);
+  font-size: clamp(9px, 2vw, 13px);
   font-weight: bolder;
-  background: linear-gradient(45deg, #2e3192, #1bffff);
+  background: #1e8234;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  font-family: OutfitLight;
+}
+.hostel-rating-text svg{
+  width: 30%;
+  height: auto;
 }
 
+.hostel-card-info{
+  padding: 20px;
+}
 .hostel-type-text {
   position: absolute;
   font-size: clamp(9px, 2vw, 15px);
@@ -128,70 +169,87 @@
   border-radius: 4px;
   /* font-size: 0.9rem; */
   font-weight: bolder;
-  background: linear-gradient(45deg, #2e3192, #1bffff);
+  background: #1e8234;
+}
+
+.hostel-name-and-price{
+  display: flex;
 }
 
 #hostel-price {
   color: green;
   font-size: clamp(1rem, 2vw, 1.2rem);
-  font-family: PriceMart;
+  font-family: OutfitSemiBold;
 }
+
 
 #hostel-name {
   width: 100%;
-  font-size: clamp(0.8rem, 2vw, 1.2rem);
+  font-size: 22px;
   margin-top: 0px;
-  font-family: Playfair Display;
+  font-family: OutfitLight;
   font-weight: bolder;
   text-align: left;
 }
 
 #hostel-distace {
   margin: 0.2rem;
-  font-size: clamp(1rem, 2vw, 1.3rem);
+  font-size: 13px;
   /*RESPONSIVE FONT SIZE*/
-  font-family: Comorant-Garamond;
+  font-family: OutfitLight, sans-serif;
   text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }
 
 #hostel-perks {
-  font-family: Hezba;
+  font-family: OutfitLight;
   /* text-align: center; */
-  font-size: clamp(0.7rem, 2vw, 1.1rem);
+  font-size: 10px;
   text-decoration: solid;
+  /* border: solid red; */
+  display: flex;
+  justify-content: first baseline;
+  gap: 10px;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  color: rgb(37, 39, 38);
+}
+.amenity{
+  text-transform: uppercase;
+  background-color: rgb(240 243 255);
+  padding: 4px;
+  border: solid rgb(188 202 192 / 0.3);
+  border-radius: 5px;
 }
 
 .hostel-card:hover {
   transform: translateY(-5px);
 }
 
-.view-more-details {
+/* .view-more-details {
   width: 100%;
   height: 40px;
 
-  background-color: rgb(17, 175, 227);
+  background-color: #1e8234;
   border-radius: 10px;
   cursor: pointer;
-}
+  bottom: 0;
+} */
 .view-more-details-link {
   text-align: center;
   text-decoration: none;
-  color: black;
+  color: #ffffff;
   font-size: clamp(1rem, 2vw, 1rem);
   width: 100%;
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  font-family: OutfitSemiBold;
 }
 
-.view-more-details:hover {
-  background-color: rgb(8, 92, 120);
-}
-
-.td-vetical {
-  vertical-align: top;
-}
 
 .side-bar-buttons-container {
   /* border: solid red; */
@@ -230,6 +288,7 @@
   background-size: cover;
   background-position: center;
   position: relative;
+  margin-top: 80px;
   /* background-attachment: fixed; */
 }
 
@@ -276,7 +335,7 @@
 }
 .verified-hostel-number p {
   color: #ffffff;
-  font-family: OutfitLight;
+  font-family: OutfitMedium;
   font-size: clamp(12px, 2vw, 15px);
 }
 
@@ -291,7 +350,7 @@
 }
 .intro-text-two {
   color: rgb(222, 228, 224);
-  font-family: OutfitLight;
+  font-family: OutfitMedium;
   font-size: 1.1rem;
   width: 70%;
 }
@@ -311,7 +370,7 @@
   justify-content: center;
   /* center horizontally */
   margin-top: 10px;
-  min-height: 60px;
+  min-height: 40px;
   overflow: hidden;
 }
 
@@ -343,11 +402,11 @@
   justify-content: center;
   min-width: 50px;
 }
-
+/* 
 .search-container {
   position: relative;
   width: 300px;
-}
+} */
 
 .suggestions-dropdown {
   /* position: absolute; */
@@ -587,7 +646,7 @@ input[type="number"] {
 
 .not-found-text {
   margin-bottom: 20px;
-  font-family: OutfitLight;
+  font-family: OutfitMedium;
   font-size: clamp(90px, 10%);
   font-weight: bold;
   color: red;
@@ -619,10 +678,10 @@ input[type="number"] {
     radial-gradient(farthest-side, #ffa516 94%, #0000) top/8px 8px no-repeat,
     conic-gradient(#0000 30%, #ffa516);
   -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 8px), #000 0);
-  animation: l13 1s infinite linear;
+  animation: loader 1s infinite linear;
 }
 
-@keyframes l13 {
+@keyframes loader {
   100% {
     transform: rotate(1turn);
   }
@@ -689,8 +748,8 @@ input[type="number"] {
   border-radius: 10px;
   color: white;
   /* background-color: blue; */
-  font-size: clamp(13px, 2vw, 15px);
-  font-family: OutfitLight;
+  font-size: clamp(14px, 2vw, 15px);
+  font-family: OutfitMedium;
   cursor: pointer;
   background-color: inherit;
 }
@@ -698,7 +757,7 @@ input[type="number"] {
   border: solid rgb(193, 188, 188) 0.1px;
 }
 .filter-buttons.active {
-  background-color: rgb(22, 167, 121);
+  background-color: rgb(121, 246, 206);
 }
 .more-hostels-container {
   text-align: center;
@@ -714,7 +773,7 @@ input[type="number"] {
     padding-bottom: 5px;
     padding-left: 15px;
     padding-right: 15px;
-    font-size: clamp(10px, 2vw, 12px);
+    /* font-size: clamp(10px, 2vw, 12px); */
   }
   .filter-button-image {
     height: 15px;
@@ -722,6 +781,9 @@ input[type="number"] {
   .search-box-container {
     background-image: none;
     background-color: #ffffff;
+    height: auto;
+    /* overflow: scroll; */
+    padding-bottom: 10px;
   }
 
   .search-box-container::before {
@@ -729,6 +791,10 @@ input[type="number"] {
     background: none;
     z-index: auto;
     pointer-events: none; /* important */
+  }
+
+  .hostel-card-info{
+    padding: 4px;
   }
 
   .intro-text-container {
@@ -758,16 +824,11 @@ input[type="number"] {
   }
   .search-box{
     width: 90%;
-    height: 20px;
-  }
-  .search-box-container{
-    height: auto;
-    /* overflow: scroll; */
-    padding-bottom: 10px;
+    height: 50px;
   }
   .filter-buttons{
     height: 25px;
-     color: black;
+    color: black;
   }
   
 }

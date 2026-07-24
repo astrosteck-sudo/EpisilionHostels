@@ -105,8 +105,15 @@
 }
 
 @font-face{
-  font-family: OutfitLight;
+  font-family: OutfitMedium;
   src: url(fonts/OutFilt/static/Outfit-Medium.ttf);
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face{
+  font-family: OutfitLight;
+  src: url(fonts/OutFilt/static/Outfit-Light.ttf);
   font-weight: normal;
   font-style: normal;
 }

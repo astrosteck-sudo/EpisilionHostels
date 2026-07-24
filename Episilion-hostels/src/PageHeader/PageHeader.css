@@ -1,29 +1,34 @@
 .header-section {
-  /* border: solid red; */
   height: 80px;
   display: flex;
-  /* align-items: center; */
-  /* width: 100vw; */
   justify-content: space-evenly;
   align-items: center;
-
-  /* flex-wrap: wrap; */
-  /*THIS LET ITEMS WRAP TO THE #d3c84d NEXT LINE IF THE SCREEN IS TO SMALL*/
   background-color: rgba(255, 255, 255, 0.9);
 
-  position: sticky;
-  /*THIS MAKES THE HEADER STICKY WHEN SCOLLING IF YOU MAKE THIS sticky YOU WONT NEED THE WIDTH*/
+  /* Sticky Positioning */
+  position: fixed;
   top: 0;
-  /*STCIKS THE HEADER AT THE VERY TOP OF THE PAGE*/
   z-index: 1000;
-  /*THIS ENSURES THE HEADER STAYS ABOVE THE CONTENT*/
+  width: 100vw;
+  
   padding: 1.5rem;
   box-sizing: border-box;
-  overflow: scroll;
-  overflow: hidden;
-  scrollbar-width: none;
-  /* border: solid red; */
+  
+  /* REMOVED: overflow: hidden (This fixes cut-off menus or profile dropdowns) */
+
+  /* Smooth animations */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease, transform .4s ease;
 }
+
+.header-section.scrolled {
+  background-color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Smoothed out shadow */
+}
+
+.header-section.hidden {
+  transform: translateY(-100%); /* Slides the header smoothly up out of view */
+}
+
 
 .episilion-logo {
   width: 40px;
@@ -80,7 +85,7 @@
   /* padding: 8px; */
   /* font-weight: bolder; */
   /* border: solid red; */
-  font-family: OutfitLight;
+  font-family: OutfitMedium;
 }
 .login-link {
   display: flex;
@@ -141,7 +146,7 @@
 .navigation-links .link {
   text-decoration: none;
   /* border: solid red; */
-  font-family: OutfitLight;
+  font-family: OutfitMedium;
   font-size: clamp(1rem, 2vw, 1.2rem);
   color: black;
 }
@@ -322,7 +327,7 @@
 .hostel-manager-pill p {
   color: rgb(0, 0, 0);
   font-weight: bold;
-  font-family: OutfitLight;
+  font-family: OutfitMedium;
 
 }
 .hostel-manager-pill img {

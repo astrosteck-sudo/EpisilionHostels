@@ -34,22 +34,29 @@ export function HostelCard({ hostel }) {
           alt="hostel-image"
         ></img>
         <div className="hostel-rating-text">
-          <span className="overlay-text-hostel-rating">
-            {hostel?.reviews?.averageRating}({hostel?.reviews?.totalReviews})
-          </span>
-          <br></br>
+          <svg xmlns="http://w3.org" viewBox="0 0 24 24">
+            <polygon
+              points="12 1.5 15.4 8.5 23 9.6 17.5 15 18.8 22.5 12 19 5.2 22.5 6.5 15 1 9.6 8.6 8.5"
+              fill="#ffffff"
+              stroke="#ffffff"
+              stroke-width="1"
+              stroke-linejoin="miter"
+            />
+          </svg>
+
+          <p>{hostel?.reviews?.averageRating}</p>
         </div>
-        <div className="hostel-type-text">
+        {/* <div className="hostel-type-text">
           <span className="overlay-text-hostel-type">{hostel?.type}</span>
-        </div>
+        </div> */}
       </div>
-      <table border="0" width="100%">
+      {/* <table border="3" width="100%">
         <tr width="20px">
           <td className="td-vetical">
             <p id="hostel-name">{hostel.name}</p>
           </td>
           <td className="td-vetical">
-            <p id="hostel-price">{hostel.pricing.priceMin}</p>
+            <p id="hostel-price">₵{hostel.pricing.priceMin}</p>
           </td>
         </tr>
         <tr width="20px">
@@ -71,24 +78,68 @@ export function HostelCard({ hostel }) {
         <tr className="amenities-homepage">
           <td colSpan="2">
             <div id="hostel-perks">
-              {amenities.map((amenity, index) => (
+              {amenities.slice(0, 2).map((amenity, index) => (
                 <span key={index} className="amenity">
                   {amenity}
-                  {index < amenities.length - 1 ? " • " : ""}
                 </span>
               ))}
             </div>
           </td>
         </tr>
-      </table>
-      <p className="view-more-details">
+      </table> */}
+      {/* <p className="view-more-details">
         <Link
           to={`/moreDetails?hostelId=${hostel?.id}`}
           className="view-more-details-link js-view-more-details"
         >
           View Details
         </Link>
-      </p>
+      </p> */}
+
+      <div className="hostel-card-info">
+        <div className="hostel-name-and-price">
+          <p id="hostel-name">{hostel.name}</p>
+          <p id="hostel-price">₵{hostel.pricing.priceMin}</p>
+        </div>
+        <p id="hostel-distace">
+          <svg xmlns="http://w3.org" viewBox="0 0 24 24" width="15" height="15">
+            <path
+              d="M12 3c-3.87 0-7 3.13-7 7 0 5.25 7 11 7 11s7-5.75 7-11c0-3.87-3.13-7-7-7z"
+              fill="none"
+              stroke="#555555"
+              stroke-width="2"
+              stroke-linejoin="round"
+            />
+
+            <circle cx="12" cy="10" r="2" fill="#555555" />
+          </svg>
+          {kilometersToMeters(
+            getDistance(
+              { latitude: 5.660969, longitude: -0.166374 },
+              {
+                latitude: hostel.location.latitude,
+                longitude: hostel.location.longitude,
+              },
+            ) / 1000,
+          ).toFixed(0)}
+          m from campus
+        </p>
+        <div id="hostel-perks">
+          {amenities.slice(0, 2).map((amenity, index) => (
+            <span key={index} className="amenity">
+              {amenity}
+            </span>
+          ))}
+        </div>
+        <p className="view-more-details">
+          <Link
+            to={`/moreDetails?hostelId=${hostel?.id}`}
+            className="view-more-details-link js-view-more-details"
+          >
+            View Details
+          </Link>
+        </p>
+      </div>
     </div>
   );
 }

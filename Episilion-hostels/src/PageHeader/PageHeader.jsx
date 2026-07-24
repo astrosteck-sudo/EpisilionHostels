@@ -2,7 +2,7 @@ import "./PageHeader.css";
 import HamburgerButton from "../assets/icons/hamburger-button-4.png";
 import { Link } from "react-router-dom";
 import { NavLink, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 //import profilePicture from "../assets/icons/user.png";
 import downArrow from "../assets/icons/down-arrow.png";
 import userPopImage from "../assets/icons/user4.png";
@@ -31,6 +31,8 @@ export function PageHeader({
   const navigate = useNavigate();
   const [openUserPopUpMenu, setOpenUserPopUpMenu] = useState(false);
   const [openManangerPopUpMenu, setOenManangerPopUpMenu] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
 
   const handleLogout = () => {
     console.log("logout clicked");
@@ -53,6 +55,25 @@ export function PageHeader({
     sethostelsCardData(originalHostelCardData);
     setHostelFound(true);
   }
+
+  const handleScroll = () => {
+    console.log({
+      window: window.scrollY,
+      pageYOffset: window.pageYOffset,
+      doc: document.documentElement.scrollTop,
+      body: document.body.scrollTop,
+    });
+  };
+
+  handleScroll()
+
+  useEffect(() => {
+  document.addEventListener("scroll", () => {
+    console.log("DOCUMENT SCROLL");
+  });
+
+  return () => document.removeEventListener("scroll", () => {});
+}, []);
 
   const user = JSON.parse(localStorage.getItem("user"));
   // console.log(user)
@@ -86,10 +107,45 @@ export function PageHeader({
     }
   }
 
+  // Use a ref instead of state to track scroll position across renders
+  // without triggering listener rebuilds
+  const lastScrollY = useRef(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      // 1. Background opacity fade-in
+      if (currentScrollY > 50) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+
+      // 2. Hide/Show header depending on scroll direction
+      // Added a safety check (currentScrollY > 0) to prevent iOS bounce-scroll glitching
+      if (currentScrollY > lastScrollY.current && currentScrollY > 80) {
+        setHidden(true); // Scrolling Down
+      } else if (currentScrollY < lastScrollY.current) {
+        setHidden(false); // Scrolling Up
+      }
+
+      // Update the ref value instantly without forcing a re-render
+      lastScrollY.current = currentScrollY;
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []); // Empty array ensures this listener only runs once on mount
+
   //onClick={() => setShowLogoutModal(true)}
   return (
     <>
-      <section className="header-section">
+      <section
+        className={`header-section ${scrolled ? "scrolled" : ""} ${
+          hidden ? "hidden" : ""
+        }`}
+      >
         <Link className="episilion" to="/" onClick={resetValues}>
           <img src="/episilion_logo.svg" alt="" className="episilion-logo" />
           <p>EPISILION HOSTELS</p>
