@@ -10,12 +10,12 @@ import userPopImage from "../assets/icons/user4.png";
 import userPopLogOutImage from "../assets/icons/logout.png";
 import dashboardImage from "../assets/icons/dashboard.png";
 import passwordImage from "../assets/icons/shield.png";
-import managerProfileIcon from "../assets/icons/user-profile-icon.png";
+//import managerProfileIcon from "../assets/icons/user-profile-icon.png";
 import { getInitials } from "../UTILS/initials";
 
 export function PageHeader({
   navlink,
-  setNavLink,
+  // setNavLink,
   originalHostelCardData,
   sethostelsCardData,
   setHostelFound,
@@ -90,12 +90,11 @@ export function PageHeader({
   return (
     <>
       <section className="header-section">
-        
-          <Link className="episilion" to="/" onClick={resetValues}>
-            <img src="/episilion_logo.svg" alt="" className="episilion-logo" />
-            <p>EPISILION HOSTELS</p>
-          </Link>
-        
+        <Link className="episilion" to="/" onClick={resetValues}>
+          <img src="/episilion_logo.svg" alt="" className="episilion-logo" />
+          <p>EPISILION HOSTELS</p>
+        </Link>
+
         <nav className={`navigation-links ${navlink ? "active" : ""}`}>
           <div className="navigation-links-pages">
             <NavLink className="link about-us-link" to="/">
@@ -120,7 +119,25 @@ export function PageHeader({
                 className="hostel-manager-pill"
                 onClick={handleManagerDisplayPopUpMenu}
               >
-                <img loading="lazy" src={managerProfileIcon} alt="" />
+                <svg
+                  xmlns="http://w3.org"
+                  viewBox="0 0 24 24"
+                  width="44"
+                  height="44"
+                >
+                  <circle cx="12" cy="12" r="11" fill="rgb(0 105 72 / 0.1)" />
+
+                  <circle cx="12" cy="9.5" r="2.2" fill="#006644" />
+
+                  <path
+                    d="M7.5 17c0-2.2 1.8-4 4.5-4s4.5 1.8 4.5 4"
+                    fill="none"
+                    stroke="#006644"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                  />
+                </svg>
+
                 <p>Manager</p>
               </div>
 

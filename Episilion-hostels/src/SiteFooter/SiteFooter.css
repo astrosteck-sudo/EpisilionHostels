@@ -1,6 +1,6 @@
 /*THIS IS THE FOOTER SECTION*/
 .site-footer {
-  position: fixed;
+  /* position: static; */
   bottom: 0;
   left: 0;
   color: #fff;

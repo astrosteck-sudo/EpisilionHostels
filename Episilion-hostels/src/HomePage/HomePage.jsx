@@ -2,14 +2,13 @@ import { PageHeader } from "../PageHeader/PageHeader.jsx";
 import { HostelCard } from "./HostelCard.jsx";
 import "./HomePage.css";
 import { SiteFooter } from "../SiteFooter/SiteFooter.jsx";
-import filterImage from "../assets/icons/filter4.png";
+//import filterImage from "../assets/icons/filter4.png";
 import closeFilterImage from "../assets/icons/close.png";
 import boyImage from "../assets/icons/man.png";
 import girlImage from "../assets/icons/woman-avatar.png";
 import mixedImage from "../assets/icons/shuffle.png";
 import searchButton from "../assets/icons/search.png";
 import resetImage from "../assets/icons/refresh.png";
-import noResultImage from "../assets/icons/no-results-(1).png";
 import { useEffect, useState } from "react";
 //import { all } from "axios";
 import { Helmet } from "react-helmet-async";
@@ -25,7 +24,7 @@ export function HomePage({
   const [maxPrice, setMaxPrice] = useState(""); //THIS CONTROLS THE MAX PRICE IN THE FILTER
   const [searchHostelName, setSearchHostelName] = useState(""); //THIS CONTROLS THE HOSTEL NAME TYPE SBY THE USER WHICH WILL BE USED IN THE searchHostelByName FUNCTION
   const [filter, setFilter] = useState([]); //THIS CONTROLS THE HOSTELS THAT PASSED THE CRITIRIA OF THE filter
-  const [suggestionBoxOpen, setSuggestionBoxOpen] = useState(true); //THIS CONTOLS THE CSS THAT DETERMINES WHEATHER OR NOT THE SUGGESTION BOX IS OPEN
+  const [suggestionBoxOpen, setSuggestionBoxOpen] = useState(false); //THIS CONTOLS THE CSS THAT DETERMINES WHEATHER OR NOT THE SUGGESTION BOX IS OPEN
   const [value, setValue] = useState(""); //THIS CONTROLLS THE TEXT THE USER TYPES IN THE SEARCH BOX
   const [hostelsFound, setHostelsFound] = useState(true); //THIS CONTROLS THE not found image AND text
   const [loading, setLoading] = useState(true); //THIS CONTROLS THE CSS LOADING STATE
@@ -47,9 +46,9 @@ export function HomePage({
   //const filterMenu = useRef(null) //THIS WILL SELECT THE filter menu
 
   //THIS IS FOR THE FILTER MENU
-  function openFilterMenu() {
-    setFilterMenu(true);
-  }
+  // function openFilterMenu() {
+  //   setFilterMenu(true);
+  // }
   function closeFilterMenu() {
     setFilterMenu(false);
   }
@@ -219,61 +218,6 @@ export function HomePage({
       sethostelsCardData(filteredHostels);
     }
   }
-
-  //THIS IS FOR THE CHANGING HOSTEL TEXTS
-  // All sentences to cycle through
-  const SENTENCES = [
-    "ALWAYS UP-TO-DATE LISTINGS",
-    "OVER 10 HOSTELS LISTED",
-    "FIND YOUR PERFECT STAY",
-    "COMPARE HOSTELS INSTANTLY",
-    "BROWSE HOSTELS FROM HOME",
-    "BOOK WITH CONFIDENCE",
-    "REAL REVIEWS, REAL STAYS",
-    "FILTER BY PRICE & LOCATION",
-    "NEW HOSTELS ADDED DAILY",
-    "STUDENT-FRIENDLY OPTIONS",
-    "SAFE & VERIFIED HOSTELS",
-    "AFFORDABLE STAYS NEAR YOU",
-    "NO HIDDEN FEES",
-    "YOUR NEXT HOME AWAITS",
-    "EXPLORE. COMPARE. BOOK.",
-  ];
-
-  const [text, setText] = useState("");
-
-  useEffect(() => {
-    let sentenceIndex = 0; // Tracks which sentence we're currently typing
-    let charIndex = 0; // Tracks how many characters have been revealed
-    let timeoutId; // Stores the active timeout so we can cancel it on cleanup
-
-    const type = () => {
-      const current = SENTENCES[sentenceIndex];
-
-      // Reveal one more character of the current sentence
-      charIndex++;
-      setText(current.slice(0, charIndex));
-
-      if (charIndex < current.length) {
-        // Sentence not finished yet — schedule the next character in 200ms
-        timeoutId = setTimeout(type, 100);
-      } else {
-        // Sentence fully typed — pause for 1500ms, then clear and move to next
-        timeoutId = setTimeout(() => {
-          setText(""); // Clear the displayed text
-          charIndex = 0; // Reset character position
-          sentenceIndex = (sentenceIndex + 1) % SENTENCES.length; // Advance to next sentence, looping back to 0 after the last
-          timeoutId = setTimeout(type, 300); // Brief pause before starting to type the next sentence
-        }, 1500);
-      }
-    };
-
-    // Small initial delay before the first sentence starts typing
-    timeoutId = setTimeout(type, 300);
-
-    // Cleanup: cancel any pending timeout when the component unmounts
-    return () => clearTimeout(timeoutId);
-  }, []);
 
   function handleFilterSelection(parameter) {
     if (parameter === "allActive") {
@@ -479,24 +423,128 @@ export function HomePage({
       </section>
 
       <section className="search-box-container">
-        <div className="episilion-hostels-changing-texts">
-          <h1 className="changing-texts">{text}</h1>
-        </div>
-        <div className="search-box">
-          <input
-            type="text"
-            name="search-box"
-            id="search-box-text"
-            placeholder="Search Hostel By Name"
-            list="Hostels"
-            onChange={userSearchedHostelName}
-            value={value}
-          ></input>
-          <img
-            className="search-icon"
-            src={searchButton}
-            onClick={searchHostelByName}
-          ></img>
+        <div className="intro-text-container">
+          <div className="verified-hostel-number">
+            <svg
+              xmlns="http://w3.org"
+              viewBox="0 0 24 24"
+              width="24"
+              height="24"
+            >
+              <circle cx="12" cy="12" r="11" fill="" />
+
+              <path
+                d="M12 5.5s3.5-1 6-0.5v5c0 4-3.5 7-6 8.5-2.5-1.5-6-4.5-6-8.5v-5c2.5-0.5 6 0.5 6 0.5z"
+                fill="#FFFFFF"
+              />
+
+              <path
+                d="M9.5 12l1.5 1.5 3.5-3.5"
+                fill="none"
+                stroke="#003311"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+            <p>Over 10+ Verified Hostels</p>
+          </div>
+
+          <p className="intro-text-one">
+            Find Comfortable,{" "}
+            <span className="affodable-and-safe-text">Affordable & Safe </span>
+            Hostels Near You
+          </p>
+
+          <p className="intro-text-two">
+            Discover verified, student-friendly accommodations that match your
+            lifestyle and budget. Your home away from home starts here.
+          </p>
+
+          <div className="search-box">
+            <input
+              type="text"
+              name="search-box"
+              id="search-box-text"
+              placeholder="Search hostel by name"
+              list="Hostels"
+              onChange={userSearchedHostelName}
+              value={value}
+            ></input>
+
+            <div className="search-button">
+              <svg
+                xmlns="http://w3.org"
+                viewBox="0 0 24 24"
+                width="70%"
+                height="70%"
+                onClick={searchHostelByName}
+              >
+                <circle cx="12" cy="12" r="11" fill="#1E8234" />
+
+                <g
+                  stroke="#EBF7F2"
+                  stroke-width="1"
+                  stroke-linecap="round"
+                  fill="none"
+                >
+                  <circle cx="11.5" cy="11.5" r="4" />
+
+                  <line x1="14.5" y1="14.5" x2="17.5" x2="17.5" y2="17.5" />
+                </g>
+              </svg>
+            </div>
+          </div>
+
+          <div
+            className={`filter-horizontal-bar js-filters-container ${loading ? "inactive" : ""}`}
+          >
+            {/* <div
+              className={`filter-buttons main-filter`}
+              onClick={openFilterMenu}
+            >
+              <div className="filter-button ">
+                <img
+                  loading="lazy"
+                  src={filterImage}
+                  alt=""
+                  className="filter-button-image"
+                />
+                <p>Filter</p>
+              </div>
+            </div> */}
+            <div
+              className={`filter-buttons ${allActive ? "active" : "inactive"}`}
+              onClick={() => handleFilterSelection("allActive")}
+            >
+              All
+            </div>
+            <div
+              className={`filter-buttons ${girlsActive ? "active" : "inactive"}`}
+              onClick={() => handleFilterSelection("girlsActive")}
+            >
+              Girls
+            </div>
+            <div
+              className={`filter-buttons ${boysActive ? "active" : "inactive"}`}
+              onClick={() => handleFilterSelection("boysActive")}
+            >
+              Boys
+            </div>
+            <div
+              className={`filter-buttons ${mixedActive ? "active" : "inactive"}`}
+              onClick={() => handleFilterSelection("mixedActive")}
+            >
+              Mixed
+            </div>
+            <div
+              className={`filter-buttons ${underActive ? "active" : "inactive"}`}
+              onClick={() => handleFilterSelection("underActive")}
+            >
+              {"<"}$2500
+            </div>
+          </div>
+
           <div
             id="suggestions"
             className={`suggestions-dropdown ${!suggestionBoxOpen ? "close" : ""}`}
@@ -515,6 +563,9 @@ export function HomePage({
               : ""}
           </div>
         </div>
+        {/* <div className="episilion-hostels-changing-texts">
+          <h1 className="changing-texts">{text}</h1>
+        </div> */}
       </section>
 
       <div className={`loader-container ${loading ? "open" : "close"}`}>
@@ -525,65 +576,72 @@ export function HomePage({
         <p className="loading-hostels-text">Loading Hostels...</p>
       </div>
 
-      <div
-        className={`filter-horizontal-bar js-filters-container ${loading ? "inactive" : ""}`}
-      >
-        <div className={`filter-buttons main-filter`} onClick={openFilterMenu}>
-          <div className="filter-button ">
-            <img
-              loading="lazy"
-              src={filterImage}
-              alt=""
-              className="filter-button-image"
-            />
-            <p>Filter</p>
-          </div>
-        </div>
-        <div
-          className={`filter-buttons ${allActive ? "active" : "inactive"}`}
-          onClick={() => handleFilterSelection("allActive")}
-        >
-          All
-        </div>
-        <div
-          className={`filter-buttons ${girlsActive ? "active" : "inactive"}`}
-          onClick={() => handleFilterSelection("girlsActive")}
-        >
-          Girls
-        </div>
-        <div
-          className={`filter-buttons ${boysActive ? "active" : "inactive"}`}
-          onClick={() => handleFilterSelection("boysActive")}
-        >
-          Boys
-        </div>
-        <div
-          className={`filter-buttons ${mixedActive ? "active" : "inactive"}`}
-          onClick={() => handleFilterSelection("mixedActive")}
-        >
-          Mixed
-        </div>
-        <div
-          className={`filter-buttons ${underActive ? "active" : "inactive"}`}
-          onClick={() => handleFilterSelection("underActive")}
-        >
-          {"<"}$2500
-        </div>
-      </div>
-
       <section className="hostels-section">
         {hostelsFound ? (
           ""
         ) : (
           <div className="no-results">
             <p className="not-found-text">
-              No Hostel Found<span className="not-found-hostel-name"></span>
+              No Hostel Found
             </p>
-            <img
-              src={noResultImage}
-              className="not-found-icon"
-              alt="Sort"
-            ></img>
+            <svg
+              xmlns="http://w3.org"
+              viewBox="0 0 100 100"
+              width="150"
+              height="150"
+            >
+              <circle cx="50" cy="50" r="46" fill="#ffffff" />
+
+              <g transform="translate(4, -2)">
+                <circle
+                  cx="42"
+                  cy="42"
+                  r="16"
+                  fill="none"
+                  stroke="#006644"
+                  stroke-width="4.5"
+                />
+
+                <path
+                  d="M38 38l8 8M46 38l-8 8"
+                  stroke="#006644"
+                  stroke-width="3"
+                  stroke-linecap="round"
+                  opacity="0.4"
+                />
+
+                <line
+                  x1="54"
+                  y1="54"
+                  x2="68"
+                  y2="68"
+                  stroke="#006644"
+                  stroke-width="5.5"
+                  stroke-linecap="round"
+                />
+              </g>
+
+              <line
+                x1="28"
+                y1="72"
+                x2="48"
+                y2="72"
+                stroke="#006644"
+                stroke-width="3"
+                stroke-linecap="round"
+                opacity="0.25"
+              />
+              <line
+                x1="56"
+                y1="72"
+                x2="72"
+                y2="72"
+                stroke="#006644"
+                stroke-width="3"
+                stroke-linecap="round"
+                opacity="0.25"
+              />
+            </svg>
           </div>
         )}
         <div className="hostels-cards js-hostel-cards">
@@ -596,8 +654,6 @@ export function HomePage({
           <p>More Hostels on the way — stay tuned!</p>
         </div>
       </section>
-
-      <SiteFooter />
     </>
   );
 }
