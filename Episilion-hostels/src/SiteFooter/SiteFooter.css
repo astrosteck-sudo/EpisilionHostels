@@ -1,28 +1,23 @@
-/*THIS IS THE FOOTER SECTION*/
+/* THIS IS THE FOOTER SECTION
 .site-footer {
-  /* position: static; */
-  bottom: 0;
-  left: 0;
-  color: #fff;
-  text-align: center;
-  padding: 1rem;
   width: 100%;
   background: #333;
   color: #fff;
   text-align: center;
-  padding: 10px;
+  padding: 1rem;
+ 
 }
 .footer-content {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  max-width: 1200px; /*THIS LIMITS FOOTER WIDTH ON LARGE SCREENS*/
-  margin: 0 auto; /*THIS WILL CENTER THE CONTENT HORIZONTALLY*/
+  max-width: 1200px; 
+  margin: 0 auto; 
   gap: 1rem;
 }
 .site-footer p {
-  margin: 0; /*THIS WILL REMOVE THE DEFAULT MARGIN*/
+  margin: 0; 
   font-size: clamp(0.9rem, 1.5vw, 1rem);
 }
 .footer-links {
@@ -74,5 +69,98 @@
   .bottom-tab-user.active svg,
   .bottom-tab-user.active p {
     color: gold;
+  }
+} */
+
+.site-footer {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  background: linear-gradient(to bottom, #083111, #1e8234);
+  padding: 30px;
+  padding-bottom: 0;
+  /* border-radius: 25px 25px 0 0; */
+}
+.site-footer h2 {
+  font-family: OutfitMedium;
+  font-size: clamp(15px, 2vw, 20px);
+  color: #ffffff;
+}
+.site-footer-episilion-container {
+  width: 30%;
+}
+.site-footer-logo-and-name {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+.site-footer-logo-and-name img {
+  height: auto;
+  width: 30px;
+}
+
+.site-footer-short-descriptions {
+  font-family: OutfitLight;
+  color: #ddd;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.site-footer-links {
+  text-decoration: none;
+  color: #ddd;
+}
+.site-footer-newsletter-input {
+  display: flex;
+  height: auto;
+  width: 70%;
+  height: 25%;
+}
+.site-footer-newsletter-input input {
+  width: 85%;
+  height: 100%;
+  border: none;
+  border-radius: 10px 0px 0 10px;
+  font-size: clamp(14px, 2vw, 15px);
+  padding: 5px;
+  min-height: 40px;
+}
+.site-footer-newsletter-input input:focus {
+  outline: none;
+}
+.site-footer-newsletter-input div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 18%;
+  background-color: green;
+  height: 100%;
+  border-radius: 0 10px 10px 0;
+  min-height: 40px;
+  max-width: 50px;
+}
+.site-footer-all-rights {
+  width: 100vw;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  border-top: solid 0.5px #979494;
+  margin-top: 15px;
+  font-family: OutfitLight;
+  font-size: clamp(13px, 2vw, 15px);
+}
+
+@media only screen and (max-width: 600px) {
+  .site-footer {
+    flex-direction: column;
+    gap: 30px;
+  }
+  .site-footer div {
+    width: 100%;
+  }
+  .site-footer-newsletter-input input {
+    width: 90%;
   }
 }

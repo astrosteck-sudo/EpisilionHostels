@@ -84,7 +84,7 @@ export function MoreFromUsPage() {
         <p>More programmes on the way — stay tuned!</p>
       </div>
 
-      <SiteFooter />
+      
     </>
   );
 }

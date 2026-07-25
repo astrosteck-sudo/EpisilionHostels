@@ -446,6 +446,9 @@
   border-bottom: none;
 }
 
+.hostels-section{
+  flex: 1;
+}
 .filter {
   height: 30%;
   top: 0;

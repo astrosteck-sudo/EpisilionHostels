@@ -96,7 +96,7 @@ export function UserProfilePage({ isLoggedIn, setShowLogoutModal }) {
         </div>
       </div>
 
-      <SiteFooter></SiteFooter>
+      
     </>
   );
 }

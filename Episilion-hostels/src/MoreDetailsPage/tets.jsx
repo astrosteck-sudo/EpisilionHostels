@@ -243,7 +243,7 @@ export function MoreDetailsPage({ hostelsCardData, navlink, setNavLink, original
             </section>
 
 
-            <SiteFooter />
+            
         </>
     )
 }

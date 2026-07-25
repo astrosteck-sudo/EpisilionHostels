@@ -391,7 +391,7 @@ export function AskEpisilionPage({ isLoggedIn }) {
         </div>
       </div>
 
-      <SiteFooter />
+     
     </>
   );
 }

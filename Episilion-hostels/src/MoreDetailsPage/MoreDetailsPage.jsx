@@ -585,7 +585,7 @@ export function MoreDetailsPage({ originalHostelCardData }) {
       <div className="see-more-reviews-text" onClick={showAllReviews}>
         <p>{maxReview > 5 ? "Show less reviews" : "See all reviews"}</p>
       </div>
-      <SiteFooter />
+      
     </>
   );
 }

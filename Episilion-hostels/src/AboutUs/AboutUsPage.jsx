@@ -171,7 +171,6 @@ export function AboutUsPage() {
         </div>
       </div>
 
-      <SiteFooter />
     </>
   );
 }

@@ -167,7 +167,7 @@ export function ChangePasswordPage({ managerIsLoggedIn }) {
         </div>
       </form>
 
-      <SiteFooter></SiteFooter>
+      
     </>
   );
 }

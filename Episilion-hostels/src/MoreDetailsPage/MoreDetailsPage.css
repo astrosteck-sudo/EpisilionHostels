@@ -436,11 +436,11 @@ p.font-paragraph {
   /* remove default paragraph spacing */
 }
 
-.site-footer {
+/* .site-footer {
   clear: both;
-  /*THIS CANCELS THE FLOAT SO FLOAT WILL ONLY AFFECT THE MEDIA SECTION*/
+  
   position: sticky;
-}
+} */
 
 .ratings-and-reviews-header {
   display: flex;

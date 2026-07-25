@@ -1,7 +1,6 @@
 import { PageHeader } from "../PageHeader/PageHeader.jsx";
 import { HostelCard } from "./HostelCard.jsx";
 import "./HomePage.css";
-import { SiteFooter } from "../SiteFooter/SiteFooter.jsx";
 //import filterImage from "../assets/icons/filter4.png";
 import closeFilterImage from "../assets/icons/close.png";
 import boyImage from "../assets/icons/man.png";
@@ -581,9 +580,7 @@ export function HomePage({
           ""
         ) : (
           <div className="no-results">
-            <p className="not-found-text">
-              No Hostel Found
-            </p>
+            <p className="not-found-text">No Hostel Found</p>
             <svg
               xmlns="http://w3.org"
               viewBox="0 0 100 100"
@@ -654,6 +651,8 @@ export function HomePage({
           <p>More Hostels on the way — stay tuned!</p>
         </div>
       </section>
+
+     
     </>
   );
 }

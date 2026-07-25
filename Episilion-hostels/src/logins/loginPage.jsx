@@ -394,7 +394,7 @@ export function LoginPage({ setIsLoggedIn, setManagerIsLoggedIn }) {
         </div>
       </div>
 
-      <SiteFooter />
+      
     </>
   );
 }

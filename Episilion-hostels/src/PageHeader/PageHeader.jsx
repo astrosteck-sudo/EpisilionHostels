@@ -56,24 +56,6 @@ export function PageHeader({
     setHostelFound(true);
   }
 
-  const handleScroll = () => {
-    console.log({
-      window: window.scrollY,
-      pageYOffset: window.pageYOffset,
-      doc: document.documentElement.scrollTop,
-      body: document.body.scrollTop,
-    });
-  };
-
-  handleScroll()
-
-  useEffect(() => {
-  document.addEventListener("scroll", () => {
-    console.log("DOCUMENT SCROLL");
-  });
-
-  return () => document.removeEventListener("scroll", () => {});
-}, []);
 
   const user = JSON.parse(localStorage.getItem("user"));
   // console.log(user)

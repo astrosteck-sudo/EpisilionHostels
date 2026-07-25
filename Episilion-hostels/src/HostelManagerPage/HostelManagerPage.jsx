@@ -371,7 +371,7 @@ export function HostelManagerPage({ setShowManagerLogoutModal }) {
         </div>
       </form>
 
-      <SiteFooter></SiteFooter>
+      
     </>
   );
 }
