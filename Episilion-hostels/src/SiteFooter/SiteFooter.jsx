@@ -1,26 +1,7 @@
 import "./SiteFooter.css";
 import { Link } from "react-router-dom";
-import { NavLink, useNavigate } from "react-router-dom";
 
 export function SiteFooter() {
-  const token = localStorage.getItem("token");
-  const managerToken = localStorage.getItem("managerToken");
-  const navigate = useNavigate();
-  const profileLink = managerToken ? "/hostelManagerPage" : "/userProfilePage";
-  function handleUserLoggedIn(e) {
-    e.preventDefault();
-    if (token) {
-      navigate("/userProfilePage");
-      return;
-    } else if (managerToken) {
-      navigate("/hostelManagerPage");
-      return;
-    }
-    if (!token || !managerToken) {
-      navigate("/login");
-      return;
-    }
-  }
   return (
     <>
       {/* <section className="hostels-section">
@@ -195,6 +176,8 @@ export function SiteFooter() {
           <p>© 2026 Episilion Hostels. All rights reserved.</p>
         </div>
       </section>
+
+      
     </>
   );
 }

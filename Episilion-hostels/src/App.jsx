@@ -20,6 +20,7 @@ import { OAuthError } from './logins/OAuthError.jsx';
 import { PrivacyPolicy } from './services/PrivacyPolicy.jsx';
 import { SiteFooter } from './SiteFooter/SiteFooter.jsx';
 import { useLocation } from "react-router-dom";
+import { MobileNavButtons } from './SiteFooter/MobileNavButtons.jsx';
 
 
 function App() {
@@ -98,6 +99,7 @@ const hideFooter = [
       </Routes>
 
        {!hideFooter && <SiteFooter />}
+       <MobileNavButtons/>
       
     </>
   )
