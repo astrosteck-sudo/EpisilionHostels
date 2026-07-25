@@ -3,7 +3,7 @@ import { PageHeader } from "../PageHeader/PageHeader";
 import { Link } from "react-router-dom";
 import { SiteFooter } from "../SiteFooter/SiteFooter";
 import Phone from "../assets/icons/phone.svg";
-import Whatsapp from "../assets/icons/whatsapp-128.svg";
+// import Whatsapp from "../assets/icons/whatsapp-128.svg";
 import Email from "../assets/icons/email-14.svg";
 import Manager from "../assets/icons/manager-avatar.svg";
 import Clock from "../assets/icons/clock.svg";
@@ -21,6 +21,16 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Reviews } from "./ReviewsData.jsx";
 import { Helmet } from "react-helmet-async";
+import {
+  CheckCircleFill,
+  InfoCircle,
+  ExclamationTriangle,
+
+  Telephone,
+  Whatsapp,
+  Envelope,
+  Person
+} from "react-bootstrap-icons"
 
 
 export function MoreDetailsPage({ originalHostelCardData }) {
@@ -239,7 +249,7 @@ export function MoreDetailsPage({ originalHostelCardData }) {
         </script>
       </Helmet>
 
-      <section className="more-details js-more-details">
+      {/* <section className="more-details js-more-details">
         <div className="more-details-container">
           {originalHostelCardData.map((hostel) => {
             if (hostel.id === hostelId) {
@@ -350,8 +360,8 @@ export function MoreDetailsPage({ originalHostelCardData }) {
 
                   <div className="price-and-payment">
                     <h2 className="font-header">Payment Details</h2>
-                    <p className="font-paragraph js-minimum-price">{`Minimum Price : ${hostel.pricing.priceMin}/${hostel.pricing.billingPeriod}`}</p>
-                    <p className="font-paragraph js-maximum-price">{`Maximum: ${hostel.pricing.priceMax}/${hostel.pricing.billingPeriod}`}</p>
+                    <p className="font-paragraph js-minimum-price">{`Minimum Price : ${hostel{hostel.pricing.priceMax}.pricing.priceMin}/${hostel.pricing.billingPeriod}`}</p>
+                    <p className="font-paragraph js-maximum-price">{`Maximum: $/${hostel.pricing.billingPeriod}`}</p>
                     <p className="font-paragraph js-installment-allowed">{`${hostel.pricing.installmentAllowed ? "Installment Is Allowed" : "Installment Is Not Allowed"}`}</p>
                     <p className="font-paragraph additional-fees-header">
                       Additional Fees
@@ -493,41 +503,12 @@ export function MoreDetailsPage({ originalHostelCardData }) {
                       </div>
                     </div>
                   </div>
-
-                  {/* <div className="media-information-cards js-media-information-cards">
-                    {hostel.media.images.map((image) => {
-                      return (
-                        <div class="hostel-room-type-image">
-                          <a href={url + image.url}>
-                            <img
-                              class="hostel-room"
-                              src={url + image.url}
-                              alt={image.type}
-                            ></img>
-                          </a>
-                          <div class="hostel-room-type-overlay">
-                            <span class="hostel-room-type-overlay-text">
-                              {image.type}
-                            </span>
-                          </div>
-                        </div>
-                      );
-                    })}
-                    <video
-                      class="hostel-room"
-                      muted
-                      loop
-                      controls
-                      src={hostel.media.video}
-                      poster={hostel.image}
-                    ></video>
-                  </div> */}
                 </>
               );
             }
           })}
         </div>
-      </section>
+      </section> */}
 
       <div className={`loader-container ${loading ? "open" : "close"}`}>
         <div className="loading-animation-conatainer">
@@ -537,7 +518,7 @@ export function MoreDetailsPage({ originalHostelCardData }) {
         <p className="loading-hostels-text">Loading Hostel Details...</p>
       </div>
 
-      <div className="ratings-and-reviews-section">
+      {/* <div className="ratings-and-reviews-section">
         <h2 className="ratings-and-reviews-header">Leave a Review</h2>
         <h2 className="ratings-and-reviews-header minitext">
           Share your experience at {hostelName}
@@ -556,7 +537,6 @@ export function MoreDetailsPage({ originalHostelCardData }) {
           ))}
         </div>
         <div className="reviews-input">
-          {/* <input type="text" name="" id="" /> */}
           <textarea
             maxLength={100}
             placeholder="Share your honest experience - what did you love? What could be improved"
@@ -573,19 +553,178 @@ export function MoreDetailsPage({ originalHostelCardData }) {
             {!isSubmitting ? "Submit Review" : "Submitting Review"}
           </button>
         </div>
-      </div>
+      </div> */}
 
-      {/* <div className='show-reviews-button' onClick={toggleReviewsDisplay}><button>{toggleReview === 'close' ? 'Show Reviews' : 'Hide Reviews'}</button></div> */}
-      <div className={`reviews-and-ratings-display `}>
+      {/* <div className={`reviews-and-ratings-display `}>
         {reviewsResponse.slice(0, maxReview).map((item) => (
           <Reviews key={item.reviewId} item={item}></Reviews>
         ))}
-      </div>
+      </div> */}
 
-      <div className="see-more-reviews-text" onClick={showAllReviews}>
+      {/* <div className="see-more-reviews-text" onClick={showAllReviews}>
         <p>{maxReview > 5 ? "Show less reviews" : "See all reviews"}</p>
-      </div>
+      </div> */}
       
+      
+          {originalHostelCardData.map((hostel) => {
+            if(hostel.id === hostelId){
+              return(
+                <>
+                <section className="more-details-main-container">
+                  <div className="scrollable-side-bar">
+
+                    <div className="more-details-hostel-image">
+                      <img
+                        src={url + hostel.image}
+                        alt={`${hostel.name} image`}
+                      ></img>
+                    </div>
+
+                    <h2 className="more-details-hostel-name">{hostel.name}</h2>
+
+                    <h2 className="sub-headings">Hostel Facilities & Amenities</h2>
+                    <div className="facilities-and-amenities-container">
+                      {hostel.amenities.map((amenity) => {
+                        return (
+                          <div className="facilities-and-amenities">
+                            <CheckCircleFill className="more-details-room-types-icon"/>
+                            <p>{amenity}</p>
+                          </div>
+                        );
+                      })}
+                    </div>
+
+                    <h2 className="sub-headings">How to get here</h2>
+                    <div className="locations-directions-container">
+                      <p>{hostel.location.directions}</p>
+                    </div>
+
+                    <iframe src={`https://www.google.com/maps?q=${hostel.location.latitude},${hostel.location.longitude}&hl=en&z=15&output=embed`} frameborder="0" className="hostel-map-location"></iframe>
+                  
+                  <div className="rules-and-contact-container">
+                    <div>
+                        <h2 className="sub-headings">Rules & Regulations</h2>
+                        
+                          {hostel.rules.map((rule) => {
+                          return (
+                            <div className="rules-container">
+                              <ExclamationTriangle className="rules-icon"/>
+                              <p>{rule}</p>
+                            </div>
+                          );
+                        })}
+                        
+                    </div>
+
+                    <div>
+                      <h2 className="sub-headings">Contact Details</h2>
+                      
+                        <div className="more-details-contact">
+                          <Telephone className="more-details-contact-icon"/>
+                          <p>{hostel.contact.phone}</p>
+                        </div>
+                        <div className="more-details-contact">
+                          <Envelope className="more-details-contact-icon"/>
+                          <p>{hostel.contact.email}</p>
+                        </div>
+                        <div className="more-details-contact">
+                          <Whatsapp className="more-details-contact-icon" />
+                          <p>{hostel.contact.whatsapp}</p>
+                        </div>
+                        <div className="more-details-contact">
+                          <Person className="more-details-contact-icon"/>
+                          <p>{hostel.contact.managerName}</p>
+                        </div>
+                      
+                    </div>
+                  </div>
+
+                  <div>
+                    <h2 className="sub-headings">Leave a Review</h2>
+
+                    <div className="review-container">
+                      <h1>Your Rating</h1>
+                      <div className="star-container">
+                        {[1, 2, 3, 4, 5].map((star) => (
+                          <img
+                            key={star}
+                            value={star}
+                            className="star"
+                            src={star <= rating ? fullStar : emptyStar}
+                            alt={`star-${star}`}
+                            onClick={() => handleStarClick(star)}
+                          />
+                        ))}
+                      </div>
+                      <h1>Share your experience</h1>
+                      <textarea className="more-details-text-area"
+                        maxLength={100}
+                        placeholder="Share your honest experience - what did you love? What could be improved"
+                        onChange={userTypedReview}
+                        value={reviewTextValue}
+                        onKeyDown={listenForEnterKey}>
+
+                        </textarea>
+
+                        <button
+                          onClick={handleSubmit}
+                          className={`review-submit-button  ${!isSubmitting ? "notSubmitting" : "submitting"}`}
+                        >
+                          {!isSubmitting ? "Submit Review" : "Submitting Review"}
+                        </button>
+                      
+                    </div>
+
+                    <div className={`reviews-and-ratings-display `}>
+                      {reviewsResponse.slice(0, maxReview).map((item) => (
+                        <Reviews key={item.reviewId} item={item}></Reviews>
+                      ))}
+                    </div>
+                  </div>
+                  
+                  
+                  
+                  </div>
+
+                  <div className="sticky-side-Bar-container">  
+                      <div className="more-details-price-container">
+                        <p className="more-details-prices">{hostel.pricing.priceMin} - {hostel.pricing.priceMax}</p>
+                      <p className="more-details-ghs">GHS / semester</p> 
+                    <div className="more-details-info-container">
+                      <h2>PAYMENT MODE</h2>
+                      <p>{`${hostel.pricing.installmentAllowed ? "Installment Is Allowed" : "Installment Is Not Allowed"}`}</p>
+                    </div>
+
+                    <div className="more-details-info-container">
+                      <h2>ROOM TYPE</h2>
+                      {hostel.rooms.types.map((room) => {
+                        return (
+                          <div className="more-details-room-types">
+                            <CheckCircleFill className="more-details-room-types-icon"/>
+                            <p>{room.type} - GHS {room.price}</p>
+                          </div>
+                        );
+                      })}
+                    </div>
+                      </div>
+                      <div className="more-details-caution-text">
+                        <div className="more-details-caution-header">
+                          <InfoCircle/>
+                          <p>Quick Note </p>
+                        </div>
+                        <p className="more-details-caution">This hostel is highly sought after 
+                          due to its proximity to Legon campus. 
+                          We recommend reserving at least 1 month 
+                          before the semester begins. 
+                        </p>
+                      </div>
+                  </div>
+                </section>
+                </>
+              )
+            }
+          })}
+        
     </>
   );
 }
