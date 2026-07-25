@@ -17,9 +17,11 @@ body.episilion-bg {
 .ask-episilion-page-header-robot-image {
   width: 40px;
   padding: 5px;
-  background-color: #d3c84d;
+  background-color: rgb(0 133 93);
   border-radius: 10px;
   margin-bottom: 10px;
+  height: auto;
+  color: white;
 }
 
 .ask-episilion-page-header-AI-description p:first-of-type {
@@ -42,8 +44,9 @@ body.episilion-bg {
 
 .main-epsilion-container {
   display: flex;
-  height: 84vh;
   overflow: hidden;
+  margin-top: 80px;
+  height: calc(100vh - 80px);
 }
 
 .epsilion-wrapper-one {
@@ -118,8 +121,7 @@ body.episilion-bg {
 
 .user-AI-usage-container, .user-AI-usage-container-subscription {
   padding: 10px;
-  background: rgba(252, 215, 8, 0.128);
-  color: rgb(255, 217, 0);
+  background: rgba(0, 133, 93, 0.247);
   border-radius: 10px;
 }
 .user-AI-usage-container.no-opacity {
@@ -127,7 +129,7 @@ body.episilion-bg {
 }
 
 .free-request-text {
-  color: gold;
+  color: rgb(0 133 93);
   font-family: AntipastoPro;
   margin-bottom: 10px;
 }
@@ -174,7 +176,8 @@ body.episilion-bg {
   padding-top: 5px;
   padding-bottom: 5px;
   border-radius: 10px;
-  background-color: gold;
+  background-color: rgb(0 133 93);
+  color: white;
   font-weight: bold;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
@@ -202,9 +205,9 @@ body.episilion-bg {
 }
 
 .ask-episilion-search-conatainer {
-  position: fixed;
+  /* position: fixed; */
   bottom: 40px;
-  width: 80%;
+  width: 100%;
   /* left: 50%; */
   /* position: fixed;
   bottom: 40px;
@@ -268,7 +271,7 @@ body.episilion-bg {
   justify-content: center;
   align-items: center;
   border: none;
-  background-color: #d3c84d;
+  background-color: rgb(0 133 93);
   width: 4%;
   height: 40px;
   max-width: 50px;
@@ -277,6 +280,7 @@ body.episilion-bg {
 .send-image-epislion {
   width: 50%;
   height: 50%;
+  color: white;
 }
 
 .ask-epislion-warning-message {
@@ -321,7 +325,7 @@ body.episilion-bg {
 .user-message {
   align-self: flex-end;
   /* pushes bubble to far right */
-  background: black;
+  background: rgb(0 133 93);
   color: white;
   font-family: karla;
   padding: 10px 15px;
@@ -341,11 +345,13 @@ body.episilion-bg {
 
 .ask-episilion-robot-image {
   width: min(30px, 20%);
+  min-width: 40px;
   /* height: min(40px, 20%); */
   height: 40px;
   padding: 5px;
-  background-color: #d3c84d;
+  background-color: rgb(0 133 93);
   border-radius: 20px;
+  color: white;
 }
 
 .ask-episilion-message-first-Paragraph {
@@ -362,21 +368,21 @@ body.episilion-bg {
 }
 
 .ask-episilion-light-bulb {
-  width: 3%;
-  height: 15px;
-  min-width: 15px;
+  width: 20px;
+  height: auto;
+  color: gold;
 }
 
 .ask-episilion-message-third-Paragraph {
   display: flex;
   align-items: center;
-  border: solid gold;
+  border: solid rgb(0 133 93);
   padding: 5px;
   font-size: clamp(10px, 2vw, 15px);
   border-radius: 10px;
   margin-top: 10px;
   font-weight: bold;
-  color: rgb(255, 217, 0);
+  color: rgb(3, 143, 101);
   background-color: rgba(232, 230, 220, 0.217);
 }
 

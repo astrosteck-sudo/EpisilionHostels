@@ -3,13 +3,12 @@ import { SiteFooter } from "../SiteFooter/SiteFooter";
 import { useNavigate } from "react-router-dom";
 import "./AskEpisilion.css";
 import { useState, useEffect } from "react";
-import sendImage from "../assets/icons/send.png";
-import robotImage from "../assets/icons/robot.png";
-import lightBulbImage from "../assets/icons/light-bulb.png";
 import axios from "axios";
 import { getDeviceId } from "../UTILS/deviceId.js";
 
 import { initializePayment } from "../services/paymentService";
+
+import { Robot, Send, LightbulbFill } from "react-bootstrap-icons";
 
 export function AskEpisilionPage({ isLoggedIn }) {
   const [userSearchInput, setUserSearchInput] = useState(""); //THIS IS TO TRACK THE USER INPUT IN THE SEARCH BAR
@@ -274,10 +273,11 @@ export function AskEpisilionPage({ isLoggedIn }) {
               ☰
             </button>
             <div className="ask-episilion-page-header">
-              <img
+              <Robot className="ask-episilion-page-header-robot-image"/>
+              {/* <img
                 src={robotImage}
                 className="ask-episilion-page-header-robot-image"
-              />
+              /> */}
               <div className="ask-episilion-page-header-AI-description">
                 <p>Episilion AI</p>
                 <p>Online • Powered By Open AI • Hostel Specialist</p>
@@ -287,11 +287,7 @@ export function AskEpisilionPage({ isLoggedIn }) {
 
           <div className="messages">
             <div className="episilion-message-and-bot-conatainer">
-              <img
-                loading="lazy"
-                src={robotImage}
-                className="ask-episilion-robot-image"
-              />
+              <Robot className="ask-episilion-robot-image"/>
               <div className="episilion-message">
                 <p className="ask-episilion-message-first-Paragraph">
                   Hi {!isLoggedIn ? "student" : user?.name || "student"}! 👋 How
@@ -303,10 +299,7 @@ export function AskEpisilionPage({ isLoggedIn }) {
                   I'll find the best options for you.
                 </p>
                 <p className="ask-episilion-message-third-Paragraph">
-                  <img
-                    src={lightBulbImage}
-                    className="ask-episilion-light-bulb"
-                  />
+                  <LightbulbFill className="ask-episilion-light-bulb"/>
                   Tip: Keep questions short and direct for the most accurate
                   answers
                 </p>
@@ -376,11 +369,7 @@ export function AskEpisilionPage({ isLoggedIn }) {
                 className="ask-episilion-search-button"
                 onClick={sendMessage}
               >
-                <img
-                  loading="lazy"
-                  src={sendImage}
-                  className="send-image-epislion"
-                />
+                <Send className="send-image-epislion"/>
               </button>
             </div>
             <div className="ask-epislion-warning-message">
