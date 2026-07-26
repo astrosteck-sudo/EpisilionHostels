@@ -2,20 +2,11 @@ import "./MoreDetailsPage.css";
 import { PageHeader } from "../PageHeader/PageHeader";
 import { Link } from "react-router-dom";
 import { SiteFooter } from "../SiteFooter/SiteFooter";
-import Phone from "../assets/icons/phone.svg";
-// import Whatsapp from "../assets/icons/whatsapp-128.svg";
-import Email from "../assets/icons/email-14.svg";
-import Manager from "../assets/icons/manager-avatar.svg";
-import Clock from "../assets/icons/clock.svg";
-import closeMapImage from "../assets/icons/close.png";
-import websImage from "../assets/icons/web.png";
-import compareImage from "../assets/icons/compare.png";
-import favoriteImage from "../assets/icons/wishlist.png";
-import selectedFavoriteImage from "../assets/icons/wishlist_2.png";
+// import favoriteImage from "../assets/icons/wishlist.png";
+// import selectedFavoriteImage from "../assets/icons/wishlist_2.png";
 import emptyStar from "../assets/icons/empty-star.png";
 import fullStar from "../assets/icons/star.png";
 import { useState, useEffect } from "react";
-import { showHostelLocationOnMap } from "../UTILS/mapFunctions.js";
 import { getDirectionsOnMap } from "../UTILS/mapFunctions.js";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -25,55 +16,45 @@ import {
   CheckCircleFill,
   InfoCircle,
   ExclamationTriangle,
-
   Telephone,
   Whatsapp,
   Envelope,
-  Person
-} from "react-bootstrap-icons"
-
+  Person,
+} from "react-bootstrap-icons";
 
 export function MoreDetailsPage({ originalHostelCardData }) {
-  const [close, setClose] = useState(true); //THIS CONTROLS THE THE IFRAME, OPENING AND CLOSING IT
-  const [activate, setActivate] = useState(false); //THIS CONTROLS THE DARK BACKGROUND WHEN THE LOCATIONS BUTTONS ARE CLICKED
+  // const [close, setClose] = useState(true); //THIS CONTROLS THE THE IFRAME, OPENING AND CLOSING IT
+  // const [activate, setActivate] = useState(false); //THIS CONTROLS THE DARK BACKGROUND WHEN THE LOCATIONS BUTTONS ARE CLICKED
   const [reviewTextValue, setReviewTextValue] = useState(""); //THIS CONTROLS WHAT THE USER TYPOES IN THE TEXT AREA
   const [isSubmitting, setIsSubmitting] = useState(false); // THIS CONTROLLS SUBMIT BUTTON SO FREEZE WHEN SUBMITTING
   //const [toggleReview, setToggleReview] = useState('close');//THIS CONTROLLS THE SHOWING AND HIDING OF THE SUBMITTED REVIEWS
   const [reviewsResponse, setReviewsResponse] = useState([]); //THIS STATE VARIABLE STORES THE RESPONSE FROM THE BACKEND WHEN WE RETRIEVE THE REVIEWS FOR A PARTICULAR HOSTEL
   const [loading, setLoading] = useState(true); //THIS CONTROLS THE LOADING ANIMATION WHEN THE HOSTELS ARE BEING LOADED
   const [rating, setRating] = useState(0); //THIS CONTROLS HOW THE STARS SELECTED BEHAVE
-  const [maxReview, setMaxReview] = useState(5); //THIS CONTROLLS THE NUMBER OF REVIEWS SHOWN
-  const [isFavorite, setIsFavorite] = useState(false); //THIS CONTROLS THE FAVORITE BUTTON TO SHOW IF THE HOSTEL IS IN THE FAVORITES OR NOT
+  const [maxReview, setMaxReview] = useState(2); //THIS CONTROLLS THE NUMBER OF REVIEWS SHOWN
+  //const [isFavorite, setIsFavorite] = useState(false); //THIS CONTROLS THE FAVORITE BUTTON TO SHOW IF THE HOSTEL IS IN THE FAVORITES OR NOT
 
   const url = "https://episilion-backend-2lt0.onrender.com"; //THIS IS THE URL FOR THE BACKEND, THIS IS USED TO ACCESS THE IMAGES IN THE PUBLIC FOLDER OF THE BACKEND
 
   const params = new URLSearchParams(window.location.search);
   const hostelId = params.get("hostelId");
-  let hostelName = "Annex";
   let foundHostel = null;
-  originalHostelCardData.map((hostel) => {
-    if (hostel.id === hostelId) {
-      hostelName = hostel.name;
-      foundHostel = hostel;
-      console.log("Found Hostel:", foundHostel); // Debugging log to check if the correct hostel is found
-    }
-  });
 
-  const [googleMapSrc, setGoogleMapSrc] = useState("");
+  // const [googleMapSrc, setGoogleMapSrc] = useState("");
 
-  function closeMap() {
-    if (!close) {
-      setActivate(false);
-      setClose(true);
-    } else {
-      setClose(false);
-    }
-  }
+  // function closeMap() {
+  //   if (!close) {
+  //     setActivate(false);
+  //     setClose(true);
+  //   } else {
+  //     setClose(false);
+  //   }
+  // }
 
   const navigate = useNavigate();
-  function comapareHostels(parameter) {
-    navigate(`/comparehostels?hostelId=${parameter}`);
-  }
+  // function comapareHostels(parameter) {
+  //   navigate(`/comparehostels?hostelId=${parameter}`);
+  // }
 
   //THIS USEEFFECT WILL CHECK IF THE HOSTEL DATA HAS BEEN LOADED, IF IT HAS THEN IT WILL CLOSE THE LOADING ANIMATION
   useEffect(() => {
@@ -142,9 +123,7 @@ export function MoreDetailsPage({ originalHostelCardData }) {
   //THIS FUNCTION WILL LOAD THE REVIEWS FOR A PARTICULAR HOSTEL, THIS FUNCTION IS CALLED IN THE USEEFFECT BELOW TO LOAD THE REVIEWS WHEN THE PAGE LOADS
   async function loadingReviews(hostelId) {
     try {
-      const response = await axios.get(
-        `/api/reviews/${hostelId}`,
-      );
+      const response = await axios.get(`/api/reviews/${hostelId}`);
       //console.log("Response from reviews API:", response.data); // Debugging log to check the response from the API
       if (response.data.length === 0) {
         setReviewsResponse(["no reviews"]);
@@ -166,36 +145,37 @@ export function MoreDetailsPage({ originalHostelCardData }) {
   //THIS FUNCTION WILL TOGGLE THE DISPLAY OF THE REVIEWS WHEN THE "SHOW REVIEWS" BUTTON IS CLICKED
   function showAllReviews() {
     setMaxReview(reviewsResponse.length);
-    if (maxReview > 5) {
-      setMaxReview(5);
+    console.log("clicked");
+    if (maxReview > 2) {
+      setMaxReview(2);
     } else {
       setMaxReview(reviewsResponse.length);
     }
   }
 
-  const addHostelToFavorite = async () => {
-    try {
-      setIsFavorite(true);
-      const token = localStorage.getItem("token");
-      if (!token) {
-        navigate("/login");
-        return;
-      }
-      const response = await axios.post(
-        "/api/favorites/" + hostelId,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      );
-      return response.data;
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
-  };
+  // const addHostelToFavorite = async () => {
+  //   try {
+  //     setIsFavorite(true);
+  //     const token = localStorage.getItem("token");
+  //     if (!token) {
+  //       navigate("/login");
+  //       return;
+  //     }
+  //     const response = await axios.post(
+  //       "/api/favorites/" + hostelId,
+  //       {},
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //       },
+  //     );
+  //     return response.data;
+  //   } catch (error) {
+  //     console.error(error);
+  //     throw error;
+  //   }
+  // };
   //http://localhost:5173/moreDetails?hostelId=d3582f55-470e-49d9-bd94-39dab2ba0cab
 
   return (
@@ -249,267 +229,6 @@ export function MoreDetailsPage({ originalHostelCardData }) {
         </script>
       </Helmet>
 
-      {/* <section className="more-details js-more-details">
-        <div className="more-details-container">
-          {originalHostelCardData.map((hostel) => {
-            if (hostel.id === hostelId) {
-              return (
-                <>
-                  <div className="hostel-image-card">
-                    <img
-                      src={url + hostel.image}
-                      alt={`${hostel.name} image`}
-                    ></img>
-                    <div className="overlay">
-                      <span className="overlay-text">{hostel.name}</span>
-                    </div>
-                  </div>
-
-                  <div className="hostel-information-contaniner">
-                    <div className="location-details">
-                      <div className="location-header-favorite-button-and-compare-hostel-button">
-                        <h2 className="font-header">Location</h2>
-                        <div className="more-details-hostel-type">
-                          {hostel.type}
-                        </div>
-                        <div className="favorite-and-compare-buttons-container">
-                          <button
-                            className="favorite-button"
-                            onClick={addHostelToFavorite}
-                          >
-                            <img
-                              src={
-                                isFavorite
-                                  ? selectedFavoriteImage
-                                  : favoriteImage
-                              }
-                              alt="Favorite Button"
-                            />
-                            <p>Fav</p>
-                          </button>
-                          <button
-                            className="compare-button"
-                            onClick={() => comapareHostels(hostel.id)}
-                          >
-                            <img
-                              loading="lazy"
-                              src={compareImage}
-                              alt="Compare Button"
-                            />
-                            <p>CF</p>
-                          </button>
-                        </div>
-                      </div>
-
-                      <p className="font-paragraph js-location-paragraph">
-                        {hostel.location.directions}
-                        <p className="font-paragraph js-distance-from-campus">{`Its about ${hostel.location.distanceToCampusMinutes} minute${hostel.location.distanceToCampusMinutes > 1 ? "s" : ""} walk from campus`}</p>
-                      </p>
-
-                      <div className="view-location-container">
-                        <button
-                          className="view-location js-view-location"
-                          onClick={() =>
-                            showHostelLocationOnMap(
-                              setClose,
-                              setActivate,
-                              originalHostelCardData,
-                              hostelId,
-                              setGoogleMapSrc,
-                            )
-                          }
-                        >
-                          View Location
-                        </button>
-                        <button
-                          className="view-location js-get-directions"
-                          onClick={() =>
-                            getDirectionsOnMap(originalHostelCardData, hostelId)
-                          }
-                        >
-                          Get Directions
-                        </button>
-                      </div>
-                      <div
-                        className={`overlay-background ${activate ? "activate" : ""}`}
-                      >
-                        <div className="map-modal">
-                          <div
-                            className={`iframe-container ${close ? "close" : ""}`}
-                          >
-                            <div className="close-button">
-                              <img
-                                src={closeMapImage}
-                                alt=""
-                                className="close-image"
-                                onClick={closeMap}
-                              />
-                            </div>
-                            <iframe
-                              src={googleMapSrc}
-                              className="iframe"
-                              frameborder="1"
-                              loading="lazy"
-                              title="Hostel Location"
-                            ></iframe>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="price-and-payment">
-                    <h2 className="font-header">Payment Details</h2>
-                    <p className="font-paragraph js-minimum-price">{`Minimum Price : ${hostel{hostel.pricing.priceMax}.pricing.priceMin}/${hostel.pricing.billingPeriod}`}</p>
-                    <p className="font-paragraph js-maximum-price">{`Maximum: $/${hostel.pricing.billingPeriod}`}</p>
-                    <p className="font-paragraph js-installment-allowed">{`${hostel.pricing.installmentAllowed ? "Installment Is Allowed" : "Installment Is Not Allowed"}`}</p>
-                    <p className="font-paragraph additional-fees-header">
-                      Additional Fees
-                    </p>
-                    <ul className="additional-fees js-additional-fees">
-                      <li class="special-font">
-                        Utilities ({hostel.pricing.additionalFees.utilities})
-                      </li>
-                      <li class="special-font">
-                        Maintenance ({hostel.pricing.additionalFees.maintenance}
-                        )
-                      </li>
-                      <li class="special-font">
-                        Caution Deposit (
-                        {hostel.pricing.additionalFees.cautionDeposit})
-                      </li>
-                    </ul>
-                    <p className="font-paragraph js-refund-policy">
-                      {hostel.pricing.refundPolicy}
-                    </p>
-                  </div>
-
-                  <div className="room-information">
-                    <h2 className="font-header">Room Information</h2>
-                    <ul className="types-of-rooms js-rooms-types">
-                      {hostel.rooms.types.map((room) => {
-                        return (
-                          <li className="special-font">
-                            {room.type}
-                            <p>Price {room.price}</p>
-                          </li>
-                        );
-                      })}
-                    </ul>
-                  </div>
-
-                  <div className="facilities-and-amenities">
-                    <h2
-                      id="facilities-and-amenities-header"
-                      className="font-header"
-                    >
-                      Facilities And Amenities
-                    </h2>
-                    <ul className="facilities-and-amenities-perks grid js-facilities-and-amenities-perks">
-                      {hostel.amenities.map((amenity) => {
-                        return (
-                          <>
-                            <li class="special-font">{amenity}</li>
-                          </>
-                        );
-                      })}
-                      {hostel.furnishing.map((funish) => {
-                        return <li class="special-font">{funish}</li>;
-                      })}
-                    </ul>
-                  </div>
-                  <br></br>
-
-                  <div className="rules-and-contact-container">
-                    <div className="rules-and-policies">
-                      <h2 className="font-header">Rules And Regulations</h2>
-                      <ul className="grid rules-and-policies-style js-rules-and-regulations">
-                        {hostel.rules.map((rule) => {
-                          return <li class="special-font">{rule}</li>;
-                        })}
-                      </ul>
-                    </div>
-                    <div className="info-container">
-                      <div className="management-contact">
-                        <h2 className="font-header">Contacts</h2>
-                        <Link
-                          className="contact-item js-phone-number-link"
-                          href={hostel.contact.phone}
-                        >
-                          <img loading="lazy" src={Phone} alt="Phone"></img>
-                          <p className="font-paragraph js-phone-number">
-                            {hostel.contact.phone}
-                          </p>
-                        </Link>
-                        <a
-                          className="contact-item js-whatsApp-number-link"
-                          href={`https://wa.me/${hostel.contact.whatsapp}`}
-                        >
-                          <img
-                            loading="lazy"
-                            src={Whatsapp}
-                            alt="WhatsApp"
-                          ></img>
-                          <p className="font-paragraph js-whatsapp-number">
-                            {hostel.contact.whatsapp}
-                          </p>
-                        </a>
-                        <a
-                          className="contact-item js-email-address-link"
-                          href={`https://${hostel.contact.email}`}
-                        >
-                          {hostel.contact.email && (
-                            <>
-                              <img loading="lazy" src={Email} alt="Email"></img>
-                              <p className="font-paragraph js-email-address">
-                                {hostel.contact.email}
-                              </p>
-                            </>
-                          )}
-                        </a>
-                        <div className="contact-item">
-                          <img
-                            loading="lazy"
-                            src={Manager}
-                            alt="manager-name"
-                          ></img>
-                          <p className="font-paragraph js-manager-name">
-                            {hostel.contact.managerName}
-                          </p>
-                        </div>
-                        <div className="contact-item">
-                          <img loading="lazy" src={Clock} alt="clock"></img>
-                          <p className="font-paragraph js-office-hours">
-                            {hostel.contact.officeHours}
-                          </p>
-                        </div>
-                        {hostel.contact.website && (
-                          <a
-                            className="contact-item"
-                            href={`https://${hostel.contact.website}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            <img
-                              loading="lazy"
-                              src={websImage}
-                              alt="website"
-                            ></img>
-                            <p className="font-paragraph js-email-address">
-                              {hostel.contact.website}
-                            </p>
-                          </a>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                </>
-              );
-            }
-          })}
-        </div>
-      </section> */}
-
       <div className={`loader-container ${loading ? "open" : "close"}`}>
         <div className="loading-animation-conatainer">
           <div className="loader"></div>
@@ -518,124 +237,88 @@ export function MoreDetailsPage({ originalHostelCardData }) {
         <p className="loading-hostels-text">Loading Hostel Details...</p>
       </div>
 
-      {/* <div className="ratings-and-reviews-section">
-        <h2 className="ratings-and-reviews-header">Leave a Review</h2>
-        <h2 className="ratings-and-reviews-header minitext">
-          Share your experience at {hostelName}
-        </h2>
-        <p className="your-rating-text">Your Rating</p>
-        <div className="star-container">
-          {[1, 2, 3, 4, 5].map((star) => (
-            <img
-              key={star}
-              value={star}
-              className="star"
-              src={star <= rating ? fullStar : emptyStar}
-              alt={`star-${star}`}
-              onClick={() => handleStarClick(star)}
-            />
-          ))}
-        </div>
-        <div className="reviews-input">
-          <textarea
-            maxLength={100}
-            placeholder="Share your honest experience - what did you love? What could be improved"
-            onChange={userTypedReview}
-            value={reviewTextValue}
-            onKeyDown={listenForEnterKey}
-          ></textarea>
-        </div>
-        <div className="review-submit-container">
-          <button
-            onClick={handleSubmit}
-            className={`review-submit-button  ${!isSubmitting ? "notSubmitting" : "submitting"}`}
-          >
-            {!isSubmitting ? "Submit Review" : "Submitting Review"}
-          </button>
-        </div>
-      </div> */}
+      {originalHostelCardData.map((hostel) => {
+        if (hostel.id === hostelId) {
+          return (
+            <>
+              <section className="more-details-main-container">
+                <div className="scrollable-side-bar">
+                  <div className="more-details-hostel-image">
+                    <img
+                      src={url + hostel.image}
+                      alt={`${hostel.name} image`}
+                    ></img>
+                  </div>
 
-      {/* <div className={`reviews-and-ratings-display `}>
-        {reviewsResponse.slice(0, maxReview).map((item) => (
-          <Reviews key={item.reviewId} item={item}></Reviews>
-        ))}
-      </div> */}
+                  <h2 className="more-details-hostel-name">{hostel.name}</h2>
 
-      {/* <div className="see-more-reviews-text" onClick={showAllReviews}>
-        <p>{maxReview > 5 ? "Show less reviews" : "See all reviews"}</p>
-      </div> */}
-      
-      
-          {originalHostelCardData.map((hostel) => {
-            if(hostel.id === hostelId){
-              return(
-                <>
-                <section className="more-details-main-container">
-                  <div className="scrollable-side-bar">
+                  <h2 className="sub-headings">
+                    Hostel Facilities & Amenities
+                  </h2>
+                  <div className="facilities-and-amenities-container">
+                    {hostel.amenities.map((amenity) => {
+                      return (
+                        <div className="facilities-and-amenities">
+                          <CheckCircleFill className="more-details-room-types-icon" />
+                          <p>{amenity}</p>
+                        </div>
+                      );
+                    })}
+                  </div>
 
-                    <div className="more-details-hostel-image">
-                      <img
-                        src={url + hostel.image}
-                        alt={`${hostel.name} image`}
-                      ></img>
-                    </div>
+                  <h2 className="sub-headings">How to get here</h2>
+                  <div className="locations-directions-container">
+                    <p>{hostel.location.directions}</p>
+                  </div>
 
-                    <h2 className="more-details-hostel-name">{hostel.name}</h2>
+                  <button
+                    className="view-location-button"
+                    onClick={() =>
+                      getDirectionsOnMap(originalHostelCardData, hostelId)
+                    }
+                  >
+                    Get Directions
+                  </button>
 
-                    <h2 className="sub-headings">Hostel Facilities & Amenities</h2>
-                    <div className="facilities-and-amenities-container">
-                      {hostel.amenities.map((amenity) => {
+                  <iframe
+                    src={`https://www.google.com/maps?q=${hostel.location.latitude},${hostel.location.longitude}&hl=en&z=15&output=embed`}
+                    frameborder="0"
+                    className="hostel-map-location"
+                  ></iframe>
+
+                  <div className="rules-and-contact-container">
+                    <div>
+                      <h2 className="sub-headings">Rules & Regulations</h2>
+
+                      {hostel.rules.map((rule) => {
                         return (
-                          <div className="facilities-and-amenities">
-                            <CheckCircleFill className="more-details-room-types-icon"/>
-                            <p>{amenity}</p>
+                          <div className="rules-container">
+                            <ExclamationTriangle className="rules-icon" />
+                            <p>{rule}</p>
                           </div>
                         );
                       })}
                     </div>
 
-                    <h2 className="sub-headings">How to get here</h2>
-                    <div className="locations-directions-container">
-                      <p>{hostel.location.directions}</p>
-                    </div>
-
-                    <iframe src={`https://www.google.com/maps?q=${hostel.location.latitude},${hostel.location.longitude}&hl=en&z=15&output=embed`} frameborder="0" className="hostel-map-location"></iframe>
-                  
-                  <div className="rules-and-contact-container">
-                    <div>
-                        <h2 className="sub-headings">Rules & Regulations</h2>
-                        
-                          {hostel.rules.map((rule) => {
-                          return (
-                            <div className="rules-container">
-                              <ExclamationTriangle className="rules-icon"/>
-                              <p>{rule}</p>
-                            </div>
-                          );
-                        })}
-                        
-                    </div>
-
                     <div>
                       <h2 className="sub-headings">Contact Details</h2>
-                      
-                        <div className="more-details-contact">
-                          <Telephone className="more-details-contact-icon"/>
-                          <p>{hostel.contact.phone}</p>
-                        </div>
-                        <div className="more-details-contact">
-                          <Envelope className="more-details-contact-icon"/>
-                          <p>{hostel.contact.email}</p>
-                        </div>
-                        <div className="more-details-contact">
-                          <Whatsapp className="more-details-contact-icon" />
-                          <p>{hostel.contact.whatsapp}</p>
-                        </div>
-                        <div className="more-details-contact">
-                          <Person className="more-details-contact-icon"/>
-                          <p>{hostel.contact.managerName}</p>
-                        </div>
-                      
+
+                      <div className="more-details-contact">
+                        <Telephone className="more-details-contact-icon" />
+                        <p>{hostel.contact.phone}</p>
+                      </div>
+                      <div className="more-details-contact">
+                        <Envelope className="more-details-contact-icon" />
+                        <p>{hostel.contact.email}</p>
+                      </div>
+                      <div className="more-details-contact">
+                        <Whatsapp className="more-details-contact-icon" />
+                        <p>{hostel.contact.whatsapp}</p>
+                      </div>
+                      <div className="more-details-contact">
+                        <Person className="more-details-contact-icon" />
+                        <p>{hostel.contact.managerName}</p>
+                      </div>
                     </div>
                   </div>
 
@@ -657,22 +340,32 @@ export function MoreDetailsPage({ originalHostelCardData }) {
                         ))}
                       </div>
                       <h1>Share your experience</h1>
-                      <textarea className="more-details-text-area"
+                      <textarea
+                        className="more-details-text-area"
                         maxLength={100}
                         placeholder="Share your honest experience - what did you love? What could be improved"
                         onChange={userTypedReview}
                         value={reviewTextValue}
-                        onKeyDown={listenForEnterKey}>
+                        onKeyDown={listenForEnterKey}
+                      ></textarea>
 
-                        </textarea>
+                      <button
+                        onClick={handleSubmit}
+                        className={`review-submit-button  ${!isSubmitting ? "notSubmitting" : "submitting"}`}
+                      >
+                        {!isSubmitting ? "Submit Review" : "Submitting Review"}
+                      </button>
+                    </div>
 
-                        <button
-                          onClick={handleSubmit}
-                          className={`review-submit-button  ${!isSubmitting ? "notSubmitting" : "submitting"}`}
-                        >
-                          {!isSubmitting ? "Submit Review" : "Submitting Review"}
-                        </button>
-                      
+                    <div
+                      className="see-more-reviews-text"
+                      onClick={showAllReviews}
+                    >
+                      <p>
+                        {maxReview > 2
+                          ? "Show less reviews"
+                          : "See all reviews"}
+                      </p>
                     </div>
 
                     <div className={`reviews-and-ratings-display `}>
@@ -681,15 +374,14 @@ export function MoreDetailsPage({ originalHostelCardData }) {
                       ))}
                     </div>
                   </div>
-                  
-                  
-                  
-                  </div>
+                </div>
 
-                  <div className="sticky-side-Bar-container">  
-                      <div className="more-details-price-container">
-                        <p className="more-details-prices">{hostel.pricing.priceMin} - {hostel.pricing.priceMax}</p>
-                      <p className="more-details-ghs">GHS / semester</p> 
+                <div className="sticky-side-Bar-container">
+                  <div className="more-details-price-container">
+                    <p className="more-details-prices">
+                      {hostel.pricing.priceMin} - {hostel.pricing.priceMax}
+                    </p>
+                    <p className="more-details-ghs">GHS / semester</p>
                     <div className="more-details-info-container">
                       <h2>PAYMENT MODE</h2>
                       <p>{`${hostel.pricing.installmentAllowed ? "Installment Is Allowed" : "Installment Is Not Allowed"}`}</p>
@@ -700,31 +392,32 @@ export function MoreDetailsPage({ originalHostelCardData }) {
                       {hostel.rooms.types.map((room) => {
                         return (
                           <div className="more-details-room-types">
-                            <CheckCircleFill className="more-details-room-types-icon"/>
-                            <p>{room.type} - GHS {room.price}</p>
+                            <CheckCircleFill className="more-details-room-types-icon" />
+                            <p>
+                              {room.type} - GHS {room.price}
+                            </p>
                           </div>
                         );
                       })}
                     </div>
-                      </div>
-                      <div className="more-details-caution-text">
-                        <div className="more-details-caution-header">
-                          <InfoCircle/>
-                          <p>Quick Note </p>
-                        </div>
-                        <p className="more-details-caution">This hostel is highly sought after 
-                          due to its proximity to Legon campus. 
-                          We recommend reserving at least 1 month 
-                          before the semester begins. 
-                        </p>
-                      </div>
                   </div>
-                </section>
-                </>
-              )
-            }
-          })}
-        
+                  <div className="more-details-caution-text">
+                    <div className="more-details-caution-header">
+                      <InfoCircle />
+                      <p>Quick Note </p>
+                    </div>
+                    <p className="more-details-caution">
+                      This hostel is highly sought after due to its proximity to
+                      Legon campus. We recommend reserving at least 1 month
+                      before the semester begins.
+                    </p>
+                  </div>
+                </div>
+              </section>
+            </>
+          );
+        }
+      })}
     </>
   );
 }

@@ -636,8 +636,8 @@ input[type="number"] {
   aspect-ratio: 1;
   border-radius: 50%;
   background:
-    radial-gradient(farthest-side, #ffa516 94%, #0000) top/8px 8px no-repeat,
-    conic-gradient(#0000 30%, #ffa516);
+    radial-gradient(farthest-side, rgb(0 105 72) 94%, #0000) top/8px 8px no-repeat,
+    conic-gradient(#0000 30%, rgb(0 105 72));
   -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 8px), #000 0);
   animation: loader 1s infinite linear;
 }
@@ -653,7 +653,7 @@ input[type="number"] {
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #ffa516;
+  color: rgb(0 105 72);
   font-weight: bolder;
   font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
 }

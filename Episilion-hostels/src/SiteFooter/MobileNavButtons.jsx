@@ -95,7 +95,7 @@ export function MobileNavButtons() {
                 <Robot className="nav-icon" />
               )}
 
-              <p>About Us</p>
+              <p>Episilion</p>
             </>
           )}
         </NavLink>

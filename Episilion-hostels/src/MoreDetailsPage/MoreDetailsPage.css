@@ -7,6 +7,7 @@
 }
 .sticky-side-Bar-container {
   width: 35%;
+  min-width: 300px;
   overflow: hidden;
 }
 .scrollable-side-bar {
@@ -35,12 +36,12 @@
 
 .more-details-prices {
   font-family: OutfitBold;
-  font-size: clamp(10px, 2vw, 25px);
+  font-size: clamp(18px, 2vw, 25px);
   color: rgb(5 150 105);
 }
 .more-details-ghs {
   font-family: OutfitMedium;
-  font-size: clamp(10px, 2vw, 18px);
+  font-size: clamp(16px, 2vw, 18px);
   color: rgb(0, 0, 0);
 }
 
@@ -50,7 +51,7 @@
   border-radius: 10px;
 }
 .more-details-info-container h2 {
-  font-size: clamp(10px, 2vw, 13px);
+  font-size: clamp(11px, 2vw, 13px);
   font-family: OutfitMedium;
   color: rgb(75, 72, 72);
   margin-bottom: 3px;
@@ -93,7 +94,7 @@
 }
 .sub-headings {
   font-family: OutfitLight;
-  font-size: clamp(10px, 2vw, 25px);
+  font-size: clamp(18px, 2vw, 25px);
   margin-bottom: 30px;
 }
 .facilities-and-amenities-container {
@@ -114,7 +115,7 @@
   border-left: solid rgb(5 150 105) 3px;
   background-color: rgb(240 243 255);
   font-family: OutfitLight;
-  font-size: clamp(10px, 2vw, 18px);
+  font-size: clamp(15px, 2vw, 18px);
   margin-bottom: 30px;
 }
 .hostel-map-location {
@@ -123,6 +124,13 @@
   min-height: 400px;
   margin-bottom: 30px;
 }
+.view-location-button{
+  padding: 10px;
+  color: white;
+  background-color: rgb(4 120 87);
+  border: none;
+  border-radius: 10px;
+}
 
 .rules-and-contact-container {
   margin-bottom: 30px;
@@ -130,6 +138,8 @@
   gap: 20px;
   border-bottom: solid .5px rgb(102, 136, 82);
   padding-bottom: 20px;
+  width: 80%;
+  margin-top: 20px;
   /* border: solid red; */
   /* justify-content: space-around; */
 }
@@ -142,7 +152,6 @@
   align-items: center;
   gap: 10px;
   font-family: OutfitLight;
-  margin: 10px;
 }
 
 .more-details-contact{
@@ -151,6 +160,7 @@
     gap: 10px;
     align-items: center;
     font-family: OutfitMedium;
+    margin-bottom: 18px;
 }
 .more-details-contact-icon{
     height: auto;
@@ -166,7 +176,7 @@
 }
 .review-container h1{
     font-family: OutfitLight;
-    font-size: clamp(10px, 2vw, 15px);
+    font-size: clamp(14px, 2vw, 15px);
     margin-bottom: 20px;
 }
 
@@ -185,10 +195,11 @@
 .more-details-text-area{
     width: 90%;
     height: 100px;
-    border-radius: 20px;
+    border-radius: 15px;
+    overflow: hidden;
     padding: 20px;
     margin-bottom: 30px;
-    font-size: 15px;
+    font-size: clamp(13px, 2vw, 15px);
 }
 
 .review-submit-button{
@@ -205,4 +216,69 @@
 .users-ratings-display{
     display: flex;
     width: 20px;
+}
+
+.user-review-wrapper{
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+.user-review-name-and-star-container{
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.user-review-name-and-star-container h1{
+  font-family: OutfitMedium;
+  font-size: clamp(10px, 2vw, 20px);
+}
+
+.users-review-time{
+  font-family: OutfitLight;
+  font-style: italic;
+  margin-bottom: 20px;
+  margin-top: 10px;
+}
+
+.user-review-text{
+  font-family: OutfitLight;
+  color: black;
+}
+
+.see-more-reviews-text{
+  margin-top: 30px;
+  color: rgb(5 150 105);
+  font-family: OutfitSemiBold;
+}
+
+
+
+@media only screen and (max-width: 992px){
+  .more-details-main-container{
+    padding: 13px;
+    flex-direction: column;
+  }
+  .more-details-hostel-image{
+    width: 100%;
+  }
+  .more-details-hostel-name{
+    font-size: 2rem;
+  }
+  .locations-directions-container{
+    width: 100%;
+  }
+  .hostel-map-location{
+    width: 100%;
+  }
+  .rules-and-contact-container{
+    flex-direction: column;
+  }
+  .review-container{
+    width: 100%;
+  }
+  .more-details-text-area{
+    width: 100%;
+  }
+  .sticky-side-Bar-container{
+    width: 100%;
+  }
 }
