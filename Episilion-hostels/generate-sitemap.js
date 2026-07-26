@@ -12,7 +12,7 @@ async function generateSitemap() {
 
     // 2. Start building the XML structure with your static pages
     let xml = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://sitemaps.org">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <!-- Static Pages -->
   <url>
     <loc>${BASE_URL}/</loc>
