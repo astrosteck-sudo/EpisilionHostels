@@ -263,6 +263,10 @@
   .more-details-hostel-name{
     font-size: 2rem;
   }
+  .scrollable-side-bar{
+    overflow:visible;
+    height: auto;
+  }
   .locations-directions-container{
     width: 100%;
   }
