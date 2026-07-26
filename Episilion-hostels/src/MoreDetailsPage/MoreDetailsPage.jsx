@@ -38,7 +38,11 @@ export function MoreDetailsPage({ originalHostelCardData }) {
 
   const params = new URLSearchParams(window.location.search);
   const hostelId = params.get("hostelId");
-  let foundHostel = null;
+  //let foundHostel = null;
+
+  const foundHostel = originalHostelCardData.find(
+    (hostel) => hostel.id === hostelId,
+  );
 
   // const [googleMapSrc, setGoogleMapSrc] = useState("");
 

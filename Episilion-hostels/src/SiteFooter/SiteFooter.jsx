@@ -130,17 +130,14 @@ export function SiteFooter() {
             </Link>
           </p>
           <p>
-            <Link className="site-footer-links" to="/aboutus">
-              Contact US
+            <Link className="site-footer-links" to="/morefromus">
+              More From Us
             </Link>
           </p>
           <p>
             <Link className="site-footer-links" to="/privacyPolicy">
               Privacy Policy
             </Link>
-          </p>
-          <p>
-            <Link className="site-footer-links">About Us</Link>
           </p>
         </div>
 
