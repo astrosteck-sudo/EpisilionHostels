@@ -141,7 +141,7 @@
   height: 50px;
   min-height: 45px;
   border-radius: 10px;
-  font-size: clamp(10px, 2vw, 18px);
+  font-size: clamp(18px, 2vw, 18px);
   font-family: OutfitMedium;
 }
 
