@@ -23,7 +23,6 @@ export function HostelCard({ hostel }) {
     setAmenities(hostel.amenities.slice(1, 4)); // first 3 amenities
   }, [hostel]);
 
-  // console.log("hostel data in hostel card", hostel)
 
   return (
     <div className="hostel-card">

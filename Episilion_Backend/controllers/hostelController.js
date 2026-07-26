@@ -106,6 +106,7 @@ exports.getHostels = async (req, res) => {
 
     cache.set("allHostels", fullData);
     console.log("Hostels cached");
+    console.log(fullData)
     res.json(fullData);
   } catch (err) {
     console.error("Error fetching hostels:", err);

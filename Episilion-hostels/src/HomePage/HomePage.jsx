@@ -26,7 +26,7 @@ export function HomePage({
   const [suggestionBoxOpen, setSuggestionBoxOpen] = useState(false); //THIS CONTOLS THE CSS THAT DETERMINES WHEATHER OR NOT THE SUGGESTION BOX IS OPEN
   const [value, setValue] = useState(""); //THIS CONTROLLS THE TEXT THE USER TYPES IN THE SEARCH BOX
   const [hostelsFound, setHostelsFound] = useState(true); //THIS CONTROLS THE not found image AND text
-  const [loading, setLoading] = useState(true); //THIS CONTROLS THE CSS LOADING STATE
+  
   const [filterMenu, setFilterMenu] = useState(false); // THIS CONTROLS THE FILTER MENU OPEN AND CLOSE
   //THESE CONTROLS THE COLOR OF THE BACKGROUND OF THE TEXT WHEN IT IS CLICKED
   const [allActive, setAllActive] = useState(true);
@@ -36,11 +36,7 @@ export function HomePage({
   const [underActive, setUnderActive] = useState(false);
 
   //console.log(hostelsCardData)
-  useEffect(() => {
-    if (hostelsCardData?.length > 0) {
-      setLoading(false);
-    }
-  }, [hostelsCardData]);
+  
 
   //const filterMenu = useRef(null) //THIS WILL SELECT THE filter menu
 
@@ -496,7 +492,7 @@ export function HomePage({
           </div>
 
           <div
-            className={`filter-horizontal-bar js-filters-container ${loading ? "inactive" : ""}`}
+            className={`filter-horizontal-bar`}
           >
             {/* <div
               className={`filter-buttons main-filter`}
@@ -566,14 +562,6 @@ export function HomePage({
           <h1 className="changing-texts">{text}</h1>
         </div> */}
       </section>
-
-      <div className={`loader-container ${loading ? "open" : "close"}`}>
-        <div className="loading-animation-conatainer">
-          <div className="loader"></div>
-        </div>
-
-        <p className="loading-hostels-text">Loading Hostels...</p>
-      </div>
 
       <section className="hostels-section">
         {hostelsFound ? (
@@ -651,8 +639,6 @@ export function HomePage({
           <p>More Hostels on the way — stay tuned!</p>
         </div>
       </section>
-
-     
     </>
   );
 }
