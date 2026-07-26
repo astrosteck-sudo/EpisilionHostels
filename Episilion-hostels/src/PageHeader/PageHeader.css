@@ -1,31 +1,39 @@
 .header-section {
-  /* border: solid red; */
-  height: 10%;
+  height: 80px;
   display: flex;
+  justify-content: space-evenly;
   align-items: center;
-  /* width: 100vw; */
-  justify-content: space-between;
-  flex-wrap: wrap;
-  /*THIS LET ITEMS WRAP TO THE #d3c84d NEXT LINE IF THE SCREEN IS TO SMALL*/
-  background-color: #d3c84d;
+  background-color: rgba(255, 255, 255, 0.9);
 
-  position: sticky;
-  /*THIS MAKES THE HEADER STICKY WHEN SCOLLING IF YOU MAKE THIS sticky YOU WONT NEED THE WIDTH*/
+  /* Sticky Positioning */
+  position: fixed;
   top: 0;
-  /*STCIKS THE HEADER AT THE VERY TOP OF THE PAGE*/
   z-index: 1000;
-  /*THIS ENSURES THE HEADER STAYS ABOVE THE CONTENT*/
-  padding: 1rem;
+  width: 100vw;
+  
+  padding: 1.5rem;
   box-sizing: border-box;
-  overflow: scroll;
-  overflow: hidden;
-  scrollbar-width: none;
+  
+  /* REMOVED: overflow: hidden (This fixes cut-off menus or profile dropdowns) */
+
+  /* Smooth animations */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease, transform .4s ease;
 }
+
+.header-section.scrolled {
+  background-color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Smoothed out shadow */
+}
+
+.header-section.hidden {
+  transform: translateY(-100%); /* Slides the header smoothly up out of view */
+}
+
 
 .episilion-logo {
   width: 40px;
   background: white;
-  float: left;
+  /* float: left; */
   margin-right: 5px;
   border-radius: 5px;
   padding: 2px;
@@ -37,7 +45,7 @@
 }
 
 .login-systems {
-  width: 20vw;
+  width: 15%;
   display: flex;
   /* flex-wrap: wrap; */
   text-align: center;
@@ -56,7 +64,7 @@
   justify-content: flex-end;
 }
 
-.login-systems button {
+/* .login-systems button {
   font-size: clamp(0.8rem, 1vw, 1rem);
   border-radius: 11px;
   width: 50%;
@@ -65,43 +73,52 @@
   text-decoration: none;
   padding: 8px;
   font-weight: bolder;
-}
+} */
 
 .login-systems > a {
   font-size: 20px;
-  border-radius: 11px;
+  /* border-radius: 11px; */
   width: 50%;
-  background: black;
-  color: white;
+  /* background: black;
+  color: white; */
   text-decoration: none;
+  /* padding: 8px; */
+  /* font-weight: bolder; */
+  /* border: solid red; */
+  font-family: OutfitMedium;
+}
+.login-link {
+  display: flex;
+  gap: 5px;
+  color: rgb(0 105 72);
+  align-items: center;
+}
+.signUp-link {
+  background-color: rgb(0 133 93);
   padding: 8px;
-  font-weight: bolder;
+  border-radius: 11px;
+  color: #ffffff;
 }
 
 .episilion {
   font-size: 15px;
   text-decoration: none;
-  color: rgb(194, 8, 8);
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  /* width: 15%; */
+  display: flex;
+  align-items: center;
 }
-/* 
-.episilion:hover {
-  border: white solid;
-} */
 
 .episilion p {
-  font-family: BBHBartle;
+  font-family: OutfitBold;
+  color: rgb(0 105 72);
+  font-size: clamp(20px, 2vw, 25px);
 }
 
-/* .episilion:active {
-  border: solid white;
-  border-radius: 10px;
-} */
 .navigation-links {
-  display: flex;
-  flex-wrap: wrap;
+  /* display: flex;
+  flex-wrap: wrap; */
   gap: 1rem;
-  flex: 1 1 auto;
+  /* flex: 1 1 auto; */
   /*(flex_grow: 1)NAV TAKES REMAINING SPACE (flex_shrink: 1)SHRINKS IF SCREEN IS NARROW (flex-basis: auto)NATURAL SIZE.THIS MAKES NAV AUTOMATICALLY ADJUST TO DIFFRENT WIDTHS*/
   text-align: right;
   align-items: center;
@@ -110,7 +127,7 @@
   z-index: 1000;
 }
 .navigation-links-pages {
-  width: 70%;
+  /* width: 70%; */
   display: flex;
   justify-content: center;
   gap: 50px;
@@ -129,24 +146,26 @@
 .navigation-links .link {
   text-decoration: none;
   /* border: solid red; */
-  font-family: AntipastoPro;
+  font-family: OutfitMedium;
   font-size: clamp(1rem, 2vw, 1.2rem);
+  color: black;
 }
 
-.link {
+/* .link {
   float: left;
-}
+} */
 
 .about-us-link.active,
 .more-from-us.active,
 .ask-episilion.active {
   /* background: linear-gradient(45deg, #2e3192, #1bffff); */
-  background-color: black;
-  color: #d3c84d;
+  /* background-color: black; */
+  color: rgb(0 105 72);
   padding: 10px;
-  border-radius: 10px;
+  /* border-radius: 10px; */
   padding-left: 20px;
   padding-right: 20px;
+  border-bottom: solid 3px rgb(0 105 72);
 }
 
 .modal-overlay {
@@ -194,19 +213,20 @@
 }
 
 .user-button-pill-container {
-  border: solid black 1px;
+  /* border: solid black 1px; */
   padding-left: 10px;
   padding-right: 20px;
   padding-top: 3px;
   padding-bottom: 3px;
   border-radius: 60px;
-  background-color: white;
+  background-color: rgb(255 255 255);
   overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 .user-button-pill-initials {
   padding: 13px;
-  background-color: black;
-  color: #d3c84d;
+  background-color: rgb(0 33 21);
+  color: rgb(133 248 196);
   border-radius: 50%;
   min-width: 40px;
 }
@@ -288,7 +308,7 @@
 } */
 
 .hostel-manager-pill-container {
-  width: 18%;
+  width: 10%;
   cursor: pointer;
 }
 
@@ -296,15 +316,19 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 20px;
-  background-color: #5a52d5;
+  gap: 10px;
+  background-color: rgb(226 232 248);
   padding-top: 10px;
   padding-bottom: 10px;
-  border-radius: 20px;
+  border-radius: 40px;
+  max-height: 55px;
 }
+
 .hostel-manager-pill p {
-  color: white;
+  color: rgb(0, 0, 0);
   font-weight: bold;
+  font-family: OutfitMedium;
+
 }
 .hostel-manager-pill img {
   width: 10%;
@@ -337,14 +361,21 @@
 }
 
 @media only screen and (max-width: 992px) {
+  .header-section{
+    padding: 1rem;
+    display: block;
+    height: 80px;
+  }
   /* Default hidden sidebar */
-  .navigation-links {
+  .navigation-links,
+  .hostel-manager-pill-container,
+  .user-button-pill-container, .login-systems {
     border: solid red;
     display: none;
   }
-  .login-systems {
+  /* .login-systems {
     width: 60vw;
-  }
+  } */
   .login-systems.logout {
     justify-content: center;
   }
@@ -354,13 +385,13 @@
     font-size: clamp(0.8rem, 1vw, 1rem);
   }
 
-  .login-systems > a {
+  /* .login-systems > a {
     padding: 8px;
-  }
+  } */
 
-  .login-systems a {
+  /* .login-systems a {
     margin-left: 0px;
-  }
+  } */
   .hostel-manager-pill-container {
     width: 80%;
   }

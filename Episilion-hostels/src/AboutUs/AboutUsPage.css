@@ -6,77 +6,183 @@
   padding-top: 50px;
   padding-bottom: 50px;
   gap: 10px;
-  background-color: rgb(90, 82, 213);
-}
-
-.about-episilion-who-we-are {
-  color: rgb(205, 201, 201);
-  font-weight: bold;
-  font-size: 14px;
+  margin-top: 120px;
 }
 
 .about-epislion-about {
-  color: white;
-  font-weight: bold;
-  font-size: 30px;
+  color: rgb(0 33 20);
+  font-size: clamp(12px, 2vw, 13px);
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  border-radius: 10px;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: rgb(133 248 196);
+  font-family: OutfitLight;
 }
 .about-epislion-helping-students {
-  color: rgb(205, 201, 201);
-  font-size: 16px;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  font-size: clamp(14px, 2vw, 18px);
+  color: rgb(21 28 39);
+  font-family: OutfitBold;
+  font-size: 3rem;
+  text-align: center;
+  width: 70%;
+}
+.about-epislion-header-short-description {
+  font-family: OutfitLight;
+  font-size: clamp(15px, 2vw, 20px);
+  width: 60%;
   text-align: center;
 }
 
-.about-epislion-icons {
-  width: 50px;
-  height: 50px;
-  border-radius: 14px;
-  padding: 5px;
-  background-color: rgba(91, 82, 213, 0.372);
-}
-
-.about-epislion-content {
+.who-we-are-container {
   display: flex;
-  gap: 10px;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 100px;
+  background-color: rgb(240 243 255);
 }
-.about-epislion-content p {
+.unity-image {
+  width: 40%;
+  height: auto;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  border-radius: 40px;
+  overflow: hidden;
+}
+.who-we-are-description {
+  width: 40%;
+}
+.who-we-are-description h2,
+.what-we-offer-container h2,
+.about-epislion-team-section h2 {
+  font-family: OutfitSemiBold;
+  color: rgb(0 105 72);
+  font-size: clamp(23px, 2vw, 40px);
+  margin-bottom: 20px;
+}
+.who-we-are-description p {
+  color: rgb(61 74 66);
   font-size: clamp(14px, 2vw, 18px);
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-}
-.about-epislion-content h2 {
-  font-size: clamp(18px, 2vw, 24px);
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  margin-bottom: 20px;
+  font-family: OutfitLight;
 }
 
-.about-epislion-what-we-offer-and-who-we-are-container {
-  width: 70%;
-  padding-left: 10px;
-}
-
-.about-epislion-who-we-are-section,
-.about-epislion-what-we-offer-section,
-.about-epislion-our-mission-section,
-.about-epislion-our-vision-section {
+.mission-and-vision-container {
+  background-color: #e5e7eb;
   display: flex;
+  align-items: center;
+  padding: 80px;
+  justify-content: space-evenly;
+}
+.mission-and-vision-container div {
+  width: 40%;
+  display: flex;
+  flex-direction: column;
   gap: 20px;
-  padding: 20px;
-  /* border: solid red; */
+  border-radius: 30px;
+  padding: 60px;
+  border: solid rgb(0 133 93) 0.5px;
 }
-.about-episilion-what-we-offer-paragraphs {
-  display: flex;
-  flex-direction: row;
-  gap: 2px;
-  display: flex;
-  /* padding-left: 10px; */
+.about-us-icon {
+  height: auto;
+  width: 35px;
 }
-.about-episilion-what-we-offer-paragraphs p {
-  font-size: clamp(14px, 2vw, 15px);
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  border-radius: 12px;
-  padding: 5px;
-  background-color: rgba(185, 213, 82, 0.372);
+.mission-and-vision-container h2 {
+  font-family: OutfitMedium;
+  font-size: clamp(18px, 2vw, 30px);
+}
+
+.mission-and-vision-container p {
+  font-family: OutfitLight;
+  font-size: clamp(16px, 2vw, 17px);
+}
+.mission {
+  background-color: rgb(255 255 255);
+}
+.vision h2 {
+  color: white;
+}
+.vision p {
+  color: white;
+}
+.vision .about-us-icon {
+  color: white;
+}
+
+.vision {
+  background-color: rgb(0 133 93);
+}
+
+.what-we-offer-container {
+  background-color: rgb(255 255 255);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px;
+}
+.what-we-offer-container .about-us-icon {
+  color: green;
+}
+
+.what-we-offer-container h1,
+.about-epislion-team-section h1 {
+  font-family: OutfitLight;
+  font-size: clamp(13px, 2vw, 15px);
+  color: rgb(65, 64, 64);
+}
+.what-we-offers-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  margin-top: 30px;
+}
+.what-we-offers-container h3 {
+  font-family: OutfitMedium;
+}
+.what-we-offers-container p {
+  font-family: OutfitLight;
+}
+
+.what-we-offer-long-container {
+  width: 50%;
+  background-color: rgb(195 236 215 / 0.3);
+  padding: 45px;
+  border: solid rgb(0 133 93) 0.5px;
+  /* max-height: 300px; */
+  min-height: 280px;
+  max-height: 290px;
+  border-radius: 20px;
+  gap: 25px;
+
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  justify-content: center;
+}
+.contact {
+  background-color: rgb(0 105 72);
+}
+.contact h3,
+.contact p {
+  color: white;
+}
+
+.what-we-offer-short-container {
+  width: 20%;
+  border: solid rgb(27, 29, 28) 0.5px;
+  padding: 30px;
+  /* max-height: 200px; */
+  min-height: 280px;
+  max-height: 290px;
+  border-radius: 20px;
+  gap: 25px;
+
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  justify-content: center;
 }
 
 .about-epislion-team-section {
@@ -87,17 +193,7 @@
   padding-top: 50px;
   padding-bottom: 50px;
   gap: 10px;
-}
-.about-epislion-team-title {
-  color: rgb(205, 201, 201);
-  font-weight: bold;
-  font-size: 14px;
-}
-.about-epislion-team-heading {
-  color: black;
-  font-weight: bold;
-  font-size: 30px;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #e5e7eb;
 }
 
 .about-epislion-team-cards {
@@ -107,7 +203,6 @@
   gap: 20px; /* spacing between cards */
   flex-wrap: wrap; /* allows wrapping on smaller screens */
   padding: 40px 20px;
-  background-color: #f9f9f9;
 }
 
 .about-epislion-team-card {
@@ -120,157 +215,114 @@
   /* background-color: rgba(82, 213, 185, 0.372); */
   width: 40%;
 
-  border-top: 6px solid;
-  border-image: linear-gradient(to right, #800000, #d4a373, #cca000) 1;
-
   flex: 1 1 250px; /* responsive sizing */
   max-width: 300px;
-  background: #ffffff;
+  background: inherit;
   text-align: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition:
     transform 0.2s ease,
-    box-shadow 0.2s ease;
+    box-shadow 0.2s ease; */
 }
-.about-epislion-team-card:hover {
+/* .about-epislion-team-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-}
+} */
 .about-epislion-team-image {
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-  border: solid rgb(225, 218, 9) 3px;
+  width: 100%;
+  height: auto;
+  min-height: 330px;
+  max-height: 300px;
   text-align: center;
+  border-radius: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-weight: bolder;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 .about-epislion-team-name {
   color: black;
   font-weight: bold;
   font-size: 18px;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-family: OutfitMedium;
 }
 .about-epislion-team-role {
-  color: rgb(217, 14, 14);
+  color: rgb(39, 148, 14);
   font-size: 14px;
-  font-family: Playfair Display;
+  font-family: OutfitLight;
   font-weight: bolder;
 }
-.about-epislion-team-bio {
-  color: rgb(82, 82, 82);
-  font-size: 14px;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  text-align: center;
-}
 
-
-.about-epislion-contact-section {
+.contacts-container {
+  background-color: rgb(240 243 255);
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding-top: 50px;
-  padding-bottom: 30px;
-  gap: 10px;
-}
-.about-epislion-contact-title {
-  color: rgb(205, 201, 201);
-  font-weight: bold;
-  font-size: 14px;
-}
-.about-epislion-contact-heading {
-  color: black;
-  font-weight: bold;
-  font-size: 30px;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-}
-.about-epislion-contact-paragraph {
-  color: rgb(82, 82, 82);
-  font-size: 14px;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  text-align: center;
-}
-
-.about-epislion-contact-options {
-  display: flex;
-  gap: 20px;
-  flex-direction: column;
-  /* margin-top: 20px; */
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 30px;
-}
-.about-epislion-contact-option img{
-  width: 30px;
-  height: 30px;
-}
-
-.about-epislion-contact-option {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 10px;
-  padding: 20px;
-  border-radius: 12px;
-  background-color: rgba(82, 213, 185, 0.372);
-  width: 20%;
-}
-.about-epislion-contact-option a{
-  text-decoration: none;
-  color: black;
-}
-
-.about-epislion-join-us-on-our-journey {
-  background-color: rgb(90, 82, 213);
-  font-size: 14px;
   padding: 50px;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  text-align: center;
-  padding-bottom: 85px;
-  color: black;
-}
-.about-epislion-join-us-on-our-paragraph {
-  text-decoration: none;
-  color: black;
-  font-weight: bold;
 }
 
-.about-epislion-browse-hostels-button{
-  width: 15%;
-  margin: auto;
-  background-color: gold;
-  border-radius: 50px;
-  margin-top: 20px;
-  padding: 20px;
-  color: black;
-  font-weight: bolder;
-  font-size: clamp(14px, 2vw, 18px);
+.about-us-contacts {
+  background: linear-gradient(135deg, #006948 0%, #00855d 100%);
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  height: 400px;
+  width: 30%;
+  border-radius: 25px 0 0 25px;
 }
-.browse-hostels-cta-button{
+
+.about-us-contacts h2 {
+  font-family: OutfitSemiBold;
+  color: #ffffff;
+  font-size: clamp(20px, 2vw, 40px);
+}
+.about-us-contacts p {
+  font-family: OutfitLight;
+  color: #ffffff;
+  font-size: clamp(12px, 2vw, 15px);
+  width: 70%;
+}
+.about-us-contact {
+  display: flex;
+  background-color: inherit;
+  gap: 5px;
+  align-items: center;
+}
+.about-us-contact a {
   text-decoration: none;
-  color: black;
+  font-family: OutfitMedium;
+  color: white;
+  font-size: 12px;
+}
+.contacts-icon {
+  color: rgb(0, 255, 0);
+}
+
+.message-container {
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  background-color: #ffffff;
+  height: 400px;
+  width: 30%;
+  border-radius: 0 25px 25px 0;
+}
+
+.inputs-container p {
+  font-family: OutfitMedium;
+}
+
+.inputs-container input {
+  height: 30px;
+  width: 80%;
+  border-radius: 10px;
+  border: solid 0.5px;
+  padding: 5px;
 }
 
 @media only screen and (max-width: 992px) {
-  .about-epislion-icons {
-    width: 40px;
-    height: 40px;
-  }
-  .about-epislion-content {
-    flex-direction: column;
-    align-items: center;
-  }
-  .about-epislion-what-we-offer-and-who-we-are-container {
-    width: 100%;
-    padding-left: 0px;
-  }
-  .about-episilion-what-we-offer-paragraphs {
-    flex-direction: column;
-  }
   .about-epislion-contact-options {
     justify-content: flex-start;
     align-items: self-start;
@@ -280,7 +332,54 @@
     width: 100%;
     background-color: white;
   }
-  .about-epislion-browse-hostels-button{
-    width: 80%;
+  .about-epislion-helping-students {
+    font-size: 2.5rem;
+  }
+  .about-epislion-header-short-description {
+    width: 90%;
+  }
+  .who-we-are-container {
+    flex-direction: column;
+    padding: 13px;
+  }
+  .unity-image {
+    width: 100%;
+    margin-bottom: 30px;
+  }
+  .who-we-are-description {
+    width: 100%;
+  }
+  .mission-and-vision-container {
+    flex-direction: column;
+    padding: 13px;
+    gap: 15px;
+  }
+  .mission-and-vision-container div {
+    width: 100%;
+  }
+  .what-we-offers-container {
+    flex-direction: column;
+    width: 100vw;
+    padding: 13px;
+  }
+  .what-we-offer-long-container,
+  .what-we-offer-short-container {
+    width: 100%;
+  }
+  .contacts-container {
+    flex-direction: column;
+    padding: 13px;
+  }
+
+  .about-us-contacts,
+  .message-container {
+    width: 100%;
+  }
+  .about-us-contacts {
+    border-radius: 20px 20px 0 0;
+  }
+
+  .message-container {
+    border-radius: 0 0 20px 20px;
   }
 }

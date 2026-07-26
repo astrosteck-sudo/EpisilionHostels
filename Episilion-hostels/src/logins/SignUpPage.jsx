@@ -227,7 +227,7 @@ export function SignUpPage() {
         </div>
       </div>
 
-      <SiteFooter />
+      
     </>
   );
 }

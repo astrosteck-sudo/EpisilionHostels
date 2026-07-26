@@ -330,7 +330,7 @@ export function CompareHostels({ originalHostelCardData }) {
             </div>
 
 
-            <SiteFooter />
+            
         </>
     )
 }

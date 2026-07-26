@@ -9,7 +9,7 @@
 
 /* styles.css */
 .body-bg {
-  background-image: url('/image.png');
+  background-image: url('/pexels-designecologist-1248582.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -26,8 +26,9 @@
 
   background: rgba(250, 249, 249, 0.1);
   backdrop-filter: blur(30px);
-  height: 85vh;
+  height: calc(100vh - 80px);
   -webkit-backdrop-filter: blur(15px);
+  margin-top: 80px;
 }
 
 .side-bar-login {

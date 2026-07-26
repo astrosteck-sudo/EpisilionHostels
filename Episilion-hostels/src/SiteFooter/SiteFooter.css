@@ -1,28 +1,23 @@
-/*THIS IS THE FOOTER SECTION*/
+/* THIS IS THE FOOTER SECTION
 .site-footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  color: #fff;
-  text-align: center;
-  padding: 1rem;
   width: 100%;
   background: #333;
   color: #fff;
   text-align: center;
-  padding: 10px;
+  padding: 1rem;
+ 
 }
 .footer-content {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  max-width: 1200px; /*THIS LIMITS FOOTER WIDTH ON LARGE SCREENS*/
-  margin: 0 auto; /*THIS WILL CENTER THE CONTENT HORIZONTALLY*/
+  max-width: 1200px; 
+  margin: 0 auto; 
   gap: 1rem;
 }
 .site-footer p {
-  margin: 0; /*THIS WILL REMOVE THE DEFAULT MARGIN*/
+  margin: 0; 
   font-size: clamp(0.9rem, 1.5vw, 1rem);
 }
 .footer-links {
@@ -74,5 +69,185 @@
   .bottom-tab-user.active svg,
   .bottom-tab-user.active p {
     color: gold;
+  }
+} */
+
+.site-footer {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  background: linear-gradient(to bottom, #083111, #1e8234);
+  padding: 30px;
+  padding-bottom: 0;
+  /* border-radius: 25px 25px 0 0; */
+}
+.site-footer h2 {
+  font-family: OutfitMedium;
+  font-size: clamp(15px, 2vw, 20px);
+  color: #ffffff;
+}
+.site-footer-episilion-container {
+  width: 30%;
+}
+.site-footer-logo-and-name {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+.site-footer-logo-and-name img {
+  height: auto;
+  width: 30px;
+}
+
+.site-footer-short-descriptions {
+  font-family: OutfitLight;
+  color: #ddd;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.site-footer-links {
+  text-decoration: none;
+  color: #ddd;
+}
+.site-footer-newsletter-input {
+  display: flex;
+  height: auto;
+  width: 70%;
+  height: 25%;
+}
+.site-footer-newsletter-input input {
+  width: 85%;
+  height: 100%;
+  border: none;
+  border-radius: 10px 0px 0 10px;
+  font-size: clamp(14px, 2vw, 15px);
+  padding: 5px;
+  min-height: 40px;
+}
+.site-footer-newsletter-input input:focus {
+  outline: none;
+}
+.site-footer-newsletter-input div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 18%;
+  background-color: green;
+  height: 100%;
+  border-radius: 0 10px 10px 0;
+  min-height: 40px;
+  max-width: 50px;
+}
+.site-footer-all-rights {
+  width: 100vw;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  border-top: solid 0.5px #979494;
+  margin-top: 15px;
+  font-family: OutfitLight;
+  font-size: clamp(13px, 2vw, 15px);
+}
+
+@media only screen and (min-width: 601px) {
+  .mobile-nav-buttons {
+    display: none;
+  }
+}
+@media only screen and (max-width: 600px) {
+  .site-footer {
+    flex-direction: column;
+    gap: 30px;
+    margin-bottom: 65px;
+  }
+  .site-footer div {
+    width: 100%;
+  }
+  .site-footer-newsletter-input input {
+    width: 90%;
+  }
+  /* Base navigation button layout */
+
+  .mobile-nav-buttons {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 2000;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.95);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    height: 65px;
+
+    /* 
+      CRISP UPWARD SHADOW:
+      0px horizontal shift, -4px vertical shift (upward), 
+      16px soft blur radius, dark opacity layer (0.06) 
+    */
+    box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.06);
+
+    /* Optional: Keep your thin border, but make it lighter so it blends smoothly */
+    border-top: 1px solid rgba(0, 0, 0, 0.04);
+
+    /* Layout heights and iOS padding offsets */
+    height: calc(65px + env(safe-area-inset-bottom));
+    padding-bottom: env(safe-area-inset-bottom);
+    padding-left: 1rem;
+    padding-right: 1rem;
+    box-sizing: border-box;
+  }
+
+  .mobile-nav-button {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    text-decoration: none;
+    color: black;
+  }
+  .mobile-nav-buttons p {
+    font-family: OutfitLight;
+    font-size: 13px;
+  }
+
+  /* Targeting the icon component class */
+  .nav-icon {
+    width: 24px;
+    height: 24px;
+    color: #555555; /* Default Gray color */
+    transition:
+      color 0.2s ease,
+      transform 0.2s ease;
+  }
+
+  /* Base style for both icons */
+  .mobile-nav-button .nav-icon {
+    width: 24px;
+    height: 24px;
+    color: #555555; /* Default unselected gray */
+    transition: color 0.2s ease;
+  }
+
+  .mobile-nav-button p {
+    margin: 4px 0 0 0;
+    font-size: 0.75rem;
+    color: #555555;
+  }
+
+  /* --- Active State (When Selected) --- */
+  .mobile-nav-button.active p {
+    color: #1e8234; /* Text turns green */
+    font-weight: 600;
+  }
+
+  /* The solid filled icon gets your green theme color */
+  .nav-icon.active-style {
+    color: #1e8234 !important;
   }
 }

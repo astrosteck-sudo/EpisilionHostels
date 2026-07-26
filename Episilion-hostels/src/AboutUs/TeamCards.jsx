@@ -11,7 +11,6 @@ export function TeamCards({ teamMember }){
           <img loading='lazy'src={teamMember.Picture} alt={teamMember.Name} className="about-epislion-team-image" />
           <p className="about-epislion-team-name">{teamMember.Name}</p>
           <p className="about-epislion-team-role">{teamMember.Position}</p>
-          <p className="about-epislion-team-bio">{teamMember.Role}</p>
         </div>
     )
 }

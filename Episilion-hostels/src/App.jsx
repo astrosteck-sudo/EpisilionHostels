@@ -18,6 +18,9 @@ import PaymentSuccess from './AskEpisilionPage/PaymentSuccess.jsx';
 import { OAuthSuccess } from './logins/OAuthSuccess.jsx';
 import { OAuthError } from './logins/OAuthError.jsx';
 import { PrivacyPolicy } from './services/PrivacyPolicy.jsx';
+import { SiteFooter } from './SiteFooter/SiteFooter.jsx';
+import { useLocation } from "react-router-dom";
+import { MobileNavButtons } from './SiteFooter/MobileNavButtons.jsx';
 
 
 function App() {
@@ -61,9 +64,19 @@ function App() {
   // }, []);
 
 
+  const location = useLocation();
+
+const hideFooter = [
+  "/login",
+  "/signup",
+  "/oauthsuccess",
+  "/oautherror",
+].includes(location.pathname);
+
 
   return (
     <>
+    
       <PageHeader navlink={navlink} setNavLink={setNavLink} isLoggedIn={isLoggedIn} managerIsLoggedIn={managerIsLoggedIn} setManagerIsLoggedIn={setManagerIsLoggedIn} setIsLoggedIn={setIsLoggedIn} showLogoutModal={showLogoutModal} setShowLogoutModal={setShowLogoutModal} showManagerLogoutModal={showManagerLogoutModal} setShowManagerLogoutModal={setShowManagerLogoutModal}/>
       <Routes>
         <Route index element={<HomePage hostelsCardData={hostelsCardData} sethostelsCardData={sethostelsCardData}
@@ -84,6 +97,10 @@ function App() {
         <Route path='oautherror' element={<OAuthError/>}/>
         <Route path='privacypolicy' element={<PrivacyPolicy/>}/>
       </Routes>
+
+       {!hideFooter && <SiteFooter />}
+       <MobileNavButtons/>
+      
     </>
   )
 }
