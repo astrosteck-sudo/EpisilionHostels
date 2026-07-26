@@ -29,7 +29,6 @@ export function MoreDetailsPage({ originalHostelCardData }) {
   const [isSubmitting, setIsSubmitting] = useState(false); // THIS CONTROLLS SUBMIT BUTTON SO FREEZE WHEN SUBMITTING
   //const [toggleReview, setToggleReview] = useState('close');//THIS CONTROLLS THE SHOWING AND HIDING OF THE SUBMITTED REVIEWS
   const [reviewsResponse, setReviewsResponse] = useState([]); //THIS STATE VARIABLE STORES THE RESPONSE FROM THE BACKEND WHEN WE RETRIEVE THE REVIEWS FOR A PARTICULAR HOSTEL
-  const [loading, setLoading] = useState(true); //THIS CONTROLS THE LOADING ANIMATION WHEN THE HOSTELS ARE BEING LOADED
   const [rating, setRating] = useState(0); //THIS CONTROLS HOW THE STARS SELECTED BEHAVE
   const [maxReview, setMaxReview] = useState(2); //THIS CONTROLLS THE NUMBER OF REVIEWS SHOWN
   //const [isFavorite, setIsFavorite] = useState(false); //THIS CONTROLS THE FAVORITE BUTTON TO SHOW IF THE HOSTEL IS IN THE FAVORITES OR NOT
@@ -232,14 +231,6 @@ export function MoreDetailsPage({ originalHostelCardData }) {
           })}
         </script>
       </Helmet>
-
-      <div className={`loader-container ${loading ? "open" : "close"}`}>
-        <div className="loading-animation-conatainer">
-          <div className="loader"></div>
-        </div>
-
-        <p className="loading-hostels-text">Loading Hostel Details...</p>
-      </div>
 
       {originalHostelCardData.map((hostel) => {
         if (hostel.id === hostelId) {
