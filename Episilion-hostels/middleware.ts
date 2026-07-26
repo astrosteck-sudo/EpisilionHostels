@@ -1,6 +1,6 @@
-// middleware.ts - Place in your root folder
+// middleware.ts - MUST be in your absolute root folder (next to package.json)
 export const config = {
-  // Catch all pages, but completely ignore backend API routes and static asset types
+  // Catch all routes except backend APIs and static asset folders
   matcher: ['/((?!api|_next/static|_next/image|favicon.ico|.*\\..*).*)'],
 };
 
@@ -8,21 +8,21 @@ export default async function middleware(request: Request) {
   const url = new URL(request.url);
   const userAgent = request.headers.get('user-agent')?.toLowerCase() || '';
 
-  // Comprehensive list of search bots to intercept
   const bots = [
     'googlebot', 'bingbot', 'yandexbot', 'baiduspider', 'facebookexternalhit',
     'twitterbot', 'rogerbot', 'linkedinbot', 'embedly', 'quora link preview',
     'showyoubot', 'outbrain', 'pinterest/0.', '://google.com',
-    'slackbot', 'vkshare', 'w3c_validator', 'redditbot', 'applebot', 'whatsapp', 'flipboard', 'tumblr'
+    'slackbot', 'vkshare', 'w3c_validator', 'redditbot', 'applebot', 'whatsapp', 'flipboard', 'tumblr',
+    'prerender' // 🌟 REQUIRED: Allows Prerender.io's verification wizard to see your integration!
   ];
 
   const isBot = bots.some(bot => userAgent.includes(bot));
 
   if (isBot) {
     const token = process.env.PRERENDER_TOKEN;
-    if (!token) return; // Standard edge middleware bypass: returning nothing continues the request normally
+    if (!token) return; // Silent fallback if token env variable is missing
 
-    const prerenderUrl = `https://prerender.io{url.href}`;
+    const prerenderUrl = `https://prerender.io${url.href}`;
     
     try {
       const response = await fetch(prerenderUrl, {
@@ -37,6 +37,4 @@ export default async function middleware(request: Request) {
       console.error('Prerender proxy transmission failed:', e);
     }
   }
-
-  // Returning nothing tells Vercel to let real human traffic pass straight through
 }
