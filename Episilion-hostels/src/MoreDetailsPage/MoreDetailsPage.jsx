@@ -60,11 +60,6 @@ export function MoreDetailsPage({ originalHostelCardData }) {
   // }
 
   //THIS USEEFFECT WILL CHECK IF THE HOSTEL DATA HAS BEEN LOADED, IF IT HAS THEN IT WILL CLOSE THE LOADING ANIMATION
-  useEffect(() => {
-    if (originalHostelCardData.length > 0) {
-      setLoading(false);
-    }
-  }, [originalHostelCardData]);
 
   function handleStarClick(value) {
     if (rating === value) {
