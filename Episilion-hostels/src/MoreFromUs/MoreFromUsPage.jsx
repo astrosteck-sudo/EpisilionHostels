@@ -1,22 +1,23 @@
-import { useEffect, useState } from "react";
+//import { useEffect, useState } from "react";
 import { PageHeader } from "../PageHeader/PageHeader";
 import { SiteFooter } from "../SiteFooter/SiteFooter";
 import "./MoreFromUsPage.css";
 import { Link } from "react-router-dom";
-import axios from "axios";
+//import axios from "axios";
 import { ProjectsCards } from "./ProjectsCards";
+import { ArrowBarRight, RocketTakeoff } from "react-bootstrap-icons";
 
 export function MoreFromUsPage() {
-  const [moreFromUsData, setMoreFromUs] = useState([]);
+  //const [moreFromUsData, setMoreFromUs] = useState([]);
 
-  const loadMoreFromUsCards = async () => {
-    const repsonse = await axios.get("/api/moreProjects");
-    setMoreFromUs(repsonse.data.moreProjects);
-  };
+  // const loadMoreFromUsCards = async () => {
+  //   const repsonse = await axios.get("/api/moreProjects");
+  //   setMoreFromUs(repsonse.data.moreProjects);
+  // };
 
-  useEffect(() => {
-    loadMoreFromUsCards();
-  }, []);
+  // useEffect(() => {
+  //   loadMoreFromUsCards();
+  // }, []);
 
   return (
     <>
@@ -24,67 +25,49 @@ export function MoreFromUsPage() {
       {/* <PageHeader navlink={navlink} setNavLink={setNavLink} /> */}
 
       <div className="more-from-us-header">
-        <p className="more-from-us-subtitle">EPISILION EXTRAS</p>
-        <h2 className="more-from-us-title">Get More From Us</h2>
-        <p className="more-from-us-description">
-          Exclusive programmes and services for the Episilion community
+        <h2>Get More From Us</h2>
+        <p>
+          Exclusive programmes and services for the Episilion community. We go
+          beyond housing to power your student lifestyle.
         </p>
       </div>
 
-      <div className="more-from-us-coming-soon-container">
-        <p className="more-from-us-coming-soon">Coming Soon</p>
-        <p className="more-from-us-coming-soon-line"></p>
-      </div>
-
-      <div className="more-from-us-projects-cards-container">
-        <div className="more-from-us-projects-card">
-          <div className="more-from-us-projects-card-content">
-            <div className="more-from-us-projects-card-content-header">
-              <img
-                src="./flexPay26.png"
-                alt="Project Icon"
-                className="more-from-us-projects-card-content-header-logo"
-              />
-              <div className="more-from-us-projects-card-content-header-text">
-                <p className="more-from-us-projects-card-content-header-text-title">
-                  FlexPay 26
-                </p>
-                <p className="more-from-us-projects-card-content-header-text-description">
-                  Gaming Top-Up Programme
-                </p>
-              </div>
-            </div>
-
-            <p className="more-from-us-projects-card-content-description">
-              Tailored to provide quick and affordable Gold and Diamonds to Free
-              Fire gamers. Coming soon: support for PUBG, Delta Force, Call of
-              Duty, and Fortnite.
+      <div className="more-from-us-main-container"> 
+        <div className="more-from-us-project-container">
+          <div className="more-from-us-project-details">
+            <h2>Riser</h2>
+            <h3>TikTok Creator/Earner App</h3>
+            <p>
+              This app creates a balanced marketplace where creators can invest
+              in growing their follower base, while users are rewarded for
+              engaging with those creators. Strict safeguards are built into
+              both sides of the platform to ensure fairness, transparency, and a
+              positive experience for everyone involved.
             </p>
+            <div className="more-from-us-buttons">
+              <button className="more-from-us-learn-more-button">
+                <p>Learn More</p>
+                <ArrowBarRight />
+              </button>
+              <button className="more-from-us-in-development">In Development</button>
+            </div>
           </div>
-          <img
-            src="./gameCollage.png"
-            alt="Project Image"
-            className="more-from-us-projects-card-image"
-          />
-
-          <div className="more-from-us-projects-card-buttons">
-            <button className="more-from-us-projects-card-button-in-progress">
-              Completed
-            </button>
-            <button className="more-from-us-projects-card-button-learn-more">
-              <a href="https://flexpay26.vercel.app/" target="_blank">
-                Learn More
-              </a>
-            </button>
+          <div className="more-from-us-project-image">
+            <img src="/riserFlyer2.png" alt="" className="project-image" />
           </div>
         </div>
-      </div>
 
-      <div className="more-from-us-more-projects-container">
-        <p>More programmes on the way — stay tuned!</p>
+        <div className="more-from-us-join-wishlist-container">
+          <RocketTakeoff className="more-from-us-join-wishlist-icon" />
+          <h2>Join the Waitlist</h2>
+          <p>
+            Be the first to know when we launch new services for your favorite
+            games.
+          </p>
+          <input type="email" placeholder="johnDoe@gmail.com" />
+          <button>Notify Me</button>
+        </div>
       </div>
-
-      
     </>
   );
 }

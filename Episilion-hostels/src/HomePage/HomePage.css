@@ -241,7 +241,7 @@
   /* enable flexbox */
   justify-content: center;
   height: calc(100vh - 80px); /* 100px = header height */
-  background-image: url("../pexels-designecologist-1248582.jpg");
+  background-image: url("../homePageWallpaper.png");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;

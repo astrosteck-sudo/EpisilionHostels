@@ -48,7 +48,7 @@ export function AboutUsPage() {
 
       <div className="who-we-are-container">
         <div className="unity-image">
-          <img src="/unity@.jpg" alt="unityImage" />
+          <img src="/newUnityImage2.png" alt="unityImage" />
         </div>
         <div className="who-we-are-description">
           <h2>Who We Are</h2>
