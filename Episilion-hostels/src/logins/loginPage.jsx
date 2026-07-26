@@ -191,7 +191,7 @@ export function LoginPage({ setIsLoggedIn, setManagerIsLoggedIn }) {
               <span className="join-us-span">WELCOME BACK</span>
             </p>
             <h4 className="create-account-text login">
-              <span className="create-account-span">STUDENT LOGIN</span>
+              <span className="create-account-span">Student Login</span>
             </h4>
             <p className="start-journey-text">
               Good to see you again - let's get you in
@@ -211,9 +211,9 @@ export function LoginPage({ setIsLoggedIn, setManagerIsLoggedIn }) {
                   className="external-sign-up-image"
                 ></img>
                 <span className="external-sign-up-button-span">
-                  Log in with
+                  Log in with Google
                 </span>
-                Google
+                
               </a>
             </div>
           </div>
