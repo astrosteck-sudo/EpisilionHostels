@@ -15,7 +15,7 @@ export function OAuthError(){
   }, [navigate]);
 
   return (
-    <div style={{ textAlign: "center", marginTop: "50px" }}>
+    <div style={{ textAlign: "center", marginTop: "80px" }}>
       <h2>Login failed</h2>
       <p>Redirecting you back to the homepage...</p>
     </div>

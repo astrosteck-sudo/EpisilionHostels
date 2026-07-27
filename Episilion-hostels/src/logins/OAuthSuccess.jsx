@@ -25,5 +25,5 @@ export function OAuthSuccess({ setIsLoggedIn }) {
     }
   }, [navigate]);
 
-  return <h2 style={{ textAlign: "center" }}>Redirecting to homepage...</h2>;
+  return <h2 style={{ textAlign: "center", marginTop: '80px' }}>Redirecting to homepage...</h2>;
 }

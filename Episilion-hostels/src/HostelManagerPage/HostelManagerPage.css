@@ -15,6 +15,13 @@
   padding-top: 20px;
   padding-bottom: 20px;
 }
+
+@media only screen and (min-width: 900px){
+.hostel-manager-logOut-button{
+  display: none;
+}
+}
+
 .dashboard-text {
   font-family: AntipastoPro;
   color: #d3c84d;
