@@ -17,6 +17,7 @@ export function LoginPage({ setIsLoggedIn, setManagerIsLoggedIn }) {
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [managerErrorMessage, setManagerErrorMessage] = useState("");
+  const [loggingInUser, setLoggingInUser] = useState(false)
 
   //THIS USEEFFECT ADDS A BACKGROUND PICTURE TO THE BODY WHEN THE LOGIN PAGE IS RENDERED AND REMOVES IT WHEN THE COMPONENT UNMOUNTS
   useEffect(() => {
@@ -97,6 +98,7 @@ export function LoginPage({ setIsLoggedIn, setManagerIsLoggedIn }) {
   async function handleLogin(e) {
     e.preventDefault();
     setErrorMessage("");
+    setLoggingInUser(true)
 
     try {
       const res = await axios.post(`/api/auth/login`, {
@@ -127,6 +129,9 @@ export function LoginPage({ setIsLoggedIn, setManagerIsLoggedIn }) {
       setTimeout(() => {
         setErrorMessage("");
       }, 2000);
+    }
+    finally{
+      setLoggingInUser(false)
     }
   }
 
@@ -268,7 +273,7 @@ export function LoginPage({ setIsLoggedIn, setManagerIsLoggedIn }) {
 
             <div className="create-account-button-container">
               <button className="create-account-button" type="submit">
-                Login
+               {loggingInUser? 'Getting you in' : 'Login'}
               </button>
             </div>
           </form>

@@ -2,8 +2,6 @@ import "./MoreDetailsPage.css";
 import { PageHeader } from "../PageHeader/PageHeader";
 import { Link } from "react-router-dom";
 import { SiteFooter } from "../SiteFooter/SiteFooter";
-// import favoriteImage from "../assets/icons/wishlist.png";
-// import selectedFavoriteImage from "../assets/icons/wishlist_2.png";
 import emptyStar from "../assets/icons/empty-star.png";
 import fullStar from "../assets/icons/star.png";
 import { useState, useEffect } from "react";
@@ -31,7 +29,7 @@ export function MoreDetailsPage({ originalHostelCardData }) {
   const [reviewsResponse, setReviewsResponse] = useState([]); //THIS STATE VARIABLE STORES THE RESPONSE FROM THE BACKEND WHEN WE RETRIEVE THE REVIEWS FOR A PARTICULAR HOSTEL
   const [rating, setRating] = useState(0); //THIS CONTROLS HOW THE STARS SELECTED BEHAVE
   const [maxReview, setMaxReview] = useState(2); //THIS CONTROLLS THE NUMBER OF REVIEWS SHOWN
-  //const [isFavorite, setIsFavorite] = useState(false); //THIS CONTROLS THE FAVORITE BUTTON TO SHOW IF THE HOSTEL IS IN THE FAVORITES OR NOT
+  const [isFavorite, setIsFavorite] = useState(false); //THIS CONTROLS THE FAVORITE BUTTON TO SHOW IF THE HOSTEL IS IN THE FAVORITES OR NOT
 
   const url = "https://episilion-backend-2lt0.onrender.com"; //THIS IS THE URL FOR THE BACKEND, THIS IS USED TO ACCESS THE IMAGES IN THE PUBLIC FOLDER OF THE BACKEND
 
@@ -151,29 +149,29 @@ export function MoreDetailsPage({ originalHostelCardData }) {
     }
   }
 
-  // const addHostelToFavorite = async () => {
-  //   try {
-  //     setIsFavorite(true);
-  //     const token = localStorage.getItem("token");
-  //     if (!token) {
-  //       navigate("/login");
-  //       return;
-  //     }
-  //     const response = await axios.post(
-  //       "/api/favorites/" + hostelId,
-  //       {},
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${token}`,
-  //         },
-  //       },
-  //     );
-  //     return response.data;
-  //   } catch (error) {
-  //     console.error(error);
-  //     throw error;
-  //   }
-  // };
+  const addHostelToFavorite = async () => {
+    try {
+      setIsFavorite(true);
+      const token = localStorage.getItem("token");
+      if (!token) {
+        navigate("/login");
+        return;
+      }
+      const response = await axios.post(
+        "/api/favorites/" + hostelId,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      return response.data;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  };
   //http://localhost:5173/moreDetails?hostelId=d3582f55-470e-49d9-bd94-39dab2ba0cab
 
   return (
@@ -261,14 +259,23 @@ export function MoreDetailsPage({ originalHostelCardData }) {
                     <p>{hostel.location.directions}</p>
                   </div>
 
-                  <button
-                    className="view-location-button"
-                    onClick={() =>
-                      getDirectionsOnMap(originalHostelCardData, hostelId)
-                    }
-                  >
-                    Get Directions
-                  </button>
+                  <div className="directions-and-favorite-container">
+                    <button
+                      className="favorite-button"
+                      onClick={addHostelToFavorite}
+                    >
+                      <p>{isFavorite ? 'Added to favorite' : 'Add to favorite'}</p>
+                    </button>
+
+                    <button
+                      className="view-location-button"
+                      onClick={() =>
+                        getDirectionsOnMap(originalHostelCardData, hostelId)
+                      }
+                    >
+                      Get Directions
+                    </button>
+                  </div>
 
                   <iframe
                     src={`https://www.google.com/maps?q=${hostel.location.latitude},${hostel.location.longitude}&hl=en&z=15&output=embed`}

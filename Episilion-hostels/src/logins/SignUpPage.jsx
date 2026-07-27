@@ -16,6 +16,7 @@ export function SignUpPage() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [signingUserIn, setSigningUserIn] = useState(false)
 
   function handleFullname(event) {
     setFullName(event.target.value);
@@ -64,6 +65,7 @@ export function SignUpPage() {
     }
 
     setErrorMessage("");
+    setSigningUserIn(true)
     try {
       console.log("Submitting data:");
       await axios.post("/api/auth/signup", {
@@ -87,6 +89,8 @@ export function SignUpPage() {
         "Error submitting users:",
         error.response?.data || error.message,
       );
+    } finally{
+      setSigningUserIn(false)
     }
   }
 
@@ -201,7 +205,7 @@ export function SignUpPage() {
 
             <div className="create-account-button-container">
               <button className="create-account-button" type="submit">
-                Create Account
+                {signingUserIn ? 'Creating account' : 'Create Account'}
               </button>
             </div>
             <div className="error-message-container login">
