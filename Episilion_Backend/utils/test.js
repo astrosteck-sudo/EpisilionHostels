@@ -8,8 +8,13 @@ const client = new OpenAI({
 
 async function run() {
   const completion = await client.chat.completions.create({
-    model: "minimaxai/minimax-m2.7",
-    messages: [{ role: "user", content: "Suggest a cheap hostel for a student in Accra" }],
+    model: "nvidia/llama-3.3-nemotron-super-49b-v1.5",
+    messages: [
+      {
+        role: "user",
+        content: "Suggest a cheap hostel for a student in Accra",
+      },
+    ],
     temperature: 1,
     top_p: 0.95,
     max_tokens: 8192,
@@ -21,7 +26,9 @@ async function run() {
   }
 }
 
-run();
-
-
-
+run().catch((err) => {
+  console.log(err);
+  console.log(err.status);
+  console.log(err.message);
+  console.log(err.response?.data);
+});
