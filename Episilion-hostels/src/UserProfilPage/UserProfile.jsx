@@ -8,6 +8,7 @@ import { SiteFooter } from "../SiteFooter/SiteFooter";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { FavoriteHostels } from "./FavoriteHostels";
+import { Envelope, Calendar } from "react-bootstrap-icons";
 //import { useNavigate } from "react-router-dom";
 
 export function UserProfilePage({ isLoggedIn, setShowLogoutModal }) {
@@ -41,62 +42,51 @@ export function UserProfilePage({ isLoggedIn, setShowLogoutModal }) {
     <>
       <title>Profile Page | Episilion Hostels</title>
 
-      <div className="user-profile-container">
-        <div className="user-profile-name-initials">
-          {getInitials(user.name)}
-        </div>
+      <div className="user-favorite-page">
+        <div className="user-profile-container">
+          <div className="user-profile-name-initials">
+            {getInitials(user.name)}
+          </div>
 
-        <div>
-          <p className="user-profile-name">{user.name}</p>
-          <p className="user-profile-email">{user.email}</p>
-          <div className="user-profile-joined">
-            <img
-              loading="lazy"
-              className="user-profile-icons"
-              src={CalenderImage}
-              alt=""
-            />
-            Joined{" "}
-            <span className="user-joined-date-span">
-              {dayjs(user.createdAt).format("MMMM D, YYYY")}
-            </span>
+          <div className="user-profile-info">
+            <p className="user-profile-name">{user.name}</p>
+            <p className="user-profile-email">
+              <Envelope />
+              <p>{user.email}</p>
+            </p>
+            <div className="user-profile-joined">
+              <Calendar/>
+              <p>Joined</p>
+              <span className="user-joined-date-span">
+                {dayjs(user.createdAt).format("MMMM D, YYYY")}
+              </span>
+            </div>
+          </div>
+
+          <div
+            className="user-profile-log-out"
+            onClick={() => setShowLogoutModal(true)}
+          >
+            <p>Log Out</p>
           </div>
         </div>
 
-        <div className="user-profile-log-out" onClick={() => setShowLogoutModal(true)}>
-          <svg
-            xmlns="http://w3.org"
-            viewBox="0 0 24 24"
-            width="24"
-            height="24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9" />
-          </svg>
+        <div className="user-favorites-title">
+          Your Favorite Hostels ({favoriteHostelResponse.length})
+        </div>
+
+        <div className="user-favorites-container">
+          <div className={`reviews-and-ratings-display `}>
+            {favoriteHostelResponse.map((favoriteHostel) => (
+              <FavoriteHostels
+                key={favoriteHostel.hostel_id}
+                favoriteHostel={favoriteHostel}
+                loadFavoriteHostel={loadFavoriteHostel}
+              ></FavoriteHostels>
+            ))}
+          </div>
         </div>
       </div>
-
-      <div className="user-favorites-title">
-        Your Favorite Hostels ({favoriteHostelResponse.length})
-      </div>
-
-      <div className="user-favorites-container">
-        <div className={`reviews-and-ratings-display `}>
-          {favoriteHostelResponse.map((favoriteHostel) => (
-            <FavoriteHostels
-              key={favoriteHostel.hostel_id}
-              favoriteHostel={favoriteHostel}
-              loadFavoriteHostel={loadFavoriteHostel}
-            ></FavoriteHostels>
-          ))}
-        </div>
-      </div>
-
-      
     </>
   );
 }

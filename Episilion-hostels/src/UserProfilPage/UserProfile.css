@@ -1,26 +1,39 @@
+.user-favorite-page {
+  padding: 100px;
+  padding-top: 15px;
+  margin-top: 80px;
+  min-height: calc(100vh - 80px);
+}
+
 .user-profile-container {
-  height: 10%;
+  height: 150px;
   display: flex;
   gap: 8px;
   width: 95%;
   margin: auto;
-  margin-top: 80px;
+  align-items: center;
   /* background-color: rgb(231, 221, 221); */
+  background-color: rgb(255 255 255);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.082);
   padding: 20px;
-  border: solid black 0.2px;
   border-radius: 30px;
 }
 .user-profile-name-initials {
   margin: 5px;
-  min-width: 50px;
+  width: 110px;
+  min-width: 100px;
   border-radius: 50%;
   display: flex;
+  height: 100%;
+  min-height: 100px;
   justify-content: center;
   align-items: center;
-  color: #d3c84d;
-  background-color: black;
+  color: #ffffff;
+  background-color: rgb(6 78 59);
   font-weight: bolder;
   display: flex;
+  font-family: OutfitMedium;
+  font-size: clamp(25px, 2vw, 30px);
 }
 
 .user-profile-icons {
@@ -29,22 +42,35 @@
 }
 
 .user-profile-name {
-  font-size: clamp(15px, 2vw, 20px);
-  font-weight: bolder;
+  font-size: clamp(25px, 2vw, 30px);
+  font-family: OutfitBold;
+}
+.user-profile-info{
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
 .user-profile-email {
-  font-size: clamp(13px, 2vw, 15px);
+  font-size: clamp(15px, 2vw, 16px);
   margin-bottom: 5px;
   color: grey;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  font-family: OutfitLight;
 }
 
 .user-profile-joined {
   display: flex;
   gap: 5px;
-  font-size: clamp(13px, 2vw, 16px);
-}
-.user-joined-date-span {
-  font-weight: bolder;
+  font-size: 14px;
+  color: rgb(4 120 87);
+  background-color: rgb(236 253 245);
+  padding: 10px;
+  border-radius: 20px;
+  font-family: OutfitMedium;
+  align-items: center;
+  justify-content: center;
 }
 
 .user-favorites-container {
@@ -95,10 +121,12 @@
   border-radius: 5px;
   padding-top: 2px;
   padding-bottom: 2px;
-  background-color: rgb(243, 234, 234);
+  background-color: rgb(236 253 245);
+  font-family: OutfitLight;
   font-family: lato;
   border-radius: 10px;
   font-weight: bolder;
+  color: rgb(4 120 87);
 }
 
 .user-favorite-hostel-price {
@@ -108,7 +136,7 @@
 }
 .user-favorite-hostel-button {
   padding: 10px;
-  background-color: #d3c84d;
+  background-color: rgb(0 133 93);
   color: white;
   font-weight: bolder;
   border: none;
@@ -123,7 +151,8 @@
   font-size: clamp(13px, 2vw, 16px);
   cursor: pointer;
   width: 100%;
-  text-align: right;
+  text-align: center;
+  font-family: OutfitLight;
   padding-right: 10px;
   border: solid black 0.2px;
   border-radius: 5px;
@@ -139,33 +168,49 @@
 }
 
 .user-favorites-title {
-  font-size: clamp(13px, 3vw, 15px);
+  font-size: clamp(20px, 3vw, 25px);
   font-weight: bolder;
-  margin-top: 20px;
-  margin-left: 30px;
-  color: #30302f;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  color: #000000;
+  font-family: OutfitSemiBold;
 }
-.user-profile-log-out{
-  border: solid black .5px;
+.user-profile-log-out {
   border-radius: 10px;
   /* margin: 5px; */
   padding: 10px;
   text-align: center;
-  color: black;
+  color: #ffffff;
+  font-family: OutfitSemiBold;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 45px;
+  background-color: rgba(243, 5, 5, 0.92);
+  transition: transform 0.15s ease;
 }
-@media only screen and (min-width: 992px){
-  .user-profile-log-out{
+.user-profile-log-out:active{
+  transform: scale(0.9);
+}
+@media only screen and (min-width: 992px) {
+  .user-profile-log-out {
     display: none;
   }
 }
 
 @media only screen and (max-width: 992px) {
+  .user-favorite-page{
+    padding: 13px;
+  }
+  .user-profile-container{
+    flex-direction: column;
+    height: auto;
+  }
   .user-favorites-container {
     width: 100%;
+  }
+  .user-profile-info{
+    justify-content: center;
   }
   .user-favorite-hostel-image {
     width: 100px;
@@ -197,7 +242,7 @@
     padding: 3px;
     gap: 3px;
   }
-  .user-favorite-hostel-amenities p{
+  .user-favorite-hostel-amenities p {
     font-size: clamp(9px, 2vw, 10px);
     padding-left: 5px;
     padding-right: 5px;
