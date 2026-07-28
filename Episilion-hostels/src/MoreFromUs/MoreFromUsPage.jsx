@@ -6,8 +6,51 @@ import { Link } from "react-router-dom";
 //import axios from "axios";
 import { ProjectsCards } from "./ProjectsCards";
 import { ArrowBarRight, RocketTakeoff } from "react-bootstrap-icons";
+import { useState } from "react";
+import axios from "axios";
+import validator from "validator";
 
 export function MoreFromUsPage() {
+  const [email, setEmail] = useState("");
+  const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
+  function handleEmail(event) {
+    setEmail(event.target.value);
+  }
+
+  const joinWaitlist = async () => {
+    if (email.length === 0) {
+      return;
+    }
+    if (!validator.isEmail(email)) {
+      setError(true);
+      setMessage("Enter a valid email");
+      return;
+    }
+    try {
+      const response = await axios.post(`/api/subscribers/waitlist`, {
+        email,
+      });
+
+      setError(false);
+      setMessage("You email has been saved");
+      setTimeout(() => {
+        setMessage("")
+      }, 3000)
+      return response.data;
+    } catch (error) {
+      setError(true);
+      setMessage("You email could not be sent, try again!");
+      throw (
+        error.response?.data || {
+          success: false,
+          message: "Something went wrong.",
+        }
+      );
+    } finally {
+      setEmail("");
+    }
+  };
   //const [moreFromUsData, setMoreFromUs] = useState([]);
 
   // const loadMoreFromUsCards = async () => {
@@ -32,7 +75,7 @@ export function MoreFromUsPage() {
         </p>
       </div>
 
-      <div className="more-from-us-main-container"> 
+      <div className="more-from-us-main-container">
         <div className="more-from-us-project-container">
           <div className="more-from-us-project-details">
             <h2>Riser</h2>
@@ -49,7 +92,9 @@ export function MoreFromUsPage() {
                 <p>Learn More</p>
                 <ArrowBarRight />
               </button>
-              <button className="more-from-us-in-development">In Development</button>
+              <button className="more-from-us-in-development">
+                In Development
+              </button>
             </div>
           </div>
           <div className="more-from-us-project-image">
@@ -64,8 +109,14 @@ export function MoreFromUsPage() {
             Be the first to know when we launch new services for your favorite
             games.
           </p>
-          <input type="email" placeholder="johnDoe@gmail.com" />
-          <button>Notify Me</button>
+          <input
+            type="email"
+            placeholder="johnDoe@gmail.com"
+            value={email}
+            onChange={handleEmail}
+          />
+          <button onClick={joinWaitlist} className="notify-me-button">Notify Me</button>
+          <div className={error ? "emailError" : "emailSuccess"}>{message}</div>
         </div>
       </div>
     </>

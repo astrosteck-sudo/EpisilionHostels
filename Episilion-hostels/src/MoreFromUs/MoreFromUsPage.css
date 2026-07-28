@@ -145,6 +145,13 @@
   font-family: OutfitMedium;
 }
 
+.notify-me-button{
+  transition: transform 0.15s ease; /* smooth scaling */
+}
+.notify-me-button:active{
+  transform: scale(0.97);
+}
+
 
 
 @media only screen and (max-width: 992px) {
