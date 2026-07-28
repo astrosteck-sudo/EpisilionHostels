@@ -97,6 +97,7 @@
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.185);
   overflow: hidden;
   border-radius: 20px;
+  margin: 10px;
   /* max-height: 300px; */
 }
 .project-image{

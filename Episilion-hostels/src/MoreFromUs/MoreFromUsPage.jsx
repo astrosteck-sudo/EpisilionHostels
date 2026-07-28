@@ -33,14 +33,14 @@ export function MoreFromUsPage() {
       });
 
       setError(false);
-      setMessage("You email has been saved");
+      setMessage("Your email has been saved");
       setTimeout(() => {
         setMessage("")
       }, 3000)
       return response.data;
     } catch (error) {
       setError(true);
-      setMessage("You email could not be sent, try again!");
+      setMessage("Your email could not be sent, try again!");
       throw (
         error.response?.data || {
           success: false,
