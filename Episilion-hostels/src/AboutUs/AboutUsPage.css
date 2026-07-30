@@ -280,7 +280,7 @@
 .about-us-contacts p {
   font-family: OutfitLight;
   color: #ffffff;
-  font-size: clamp(12px, 2vw, 15px);
+  font-size: 18px;
   width: 70%;
 }
 .about-us-contact {
@@ -293,7 +293,7 @@
   text-decoration: none;
   font-family: OutfitMedium;
   color: white;
-  font-size: 12px;
+  font-size: 17px;
 }
 .contacts-icon {
   color: rgb(0, 255, 0);
@@ -372,9 +372,10 @@
   }
 
   .about-us-contacts,
-  .message-container {
+  .message-container, .about-us-contacts p {
     width: 100%;
   }
+  
   .about-us-contacts {
     border-radius: 20px 20px 0 0;
   }

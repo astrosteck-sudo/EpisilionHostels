@@ -35,8 +35,8 @@ export function MoreFromUsPage() {
       setError(false);
       setMessage("Your email has been saved");
       setTimeout(() => {
-        setMessage("")
-      }, 3000)
+        setMessage("");
+      }, 3000);
       return response.data;
     } catch (error) {
       setError(true);
@@ -81,11 +81,17 @@ export function MoreFromUsPage() {
             <h2>Riser</h2>
             <h3>TikTok Creator/Earner App</h3>
             <p>
-              This app creates a balanced marketplace where creators can invest
-              in growing their follower base, while users are rewarded for
-              engaging with those creators. Strict safeguards are built into
-              both sides of the platform to ensure fairness, transparency, and a
-              positive experience for everyone involved.
+              Riser is a marketplace designed to help new and growing
+              creators build momentum with real, verified followers. Instead of
+              starting from an empty profile, creators can kick-start their
+              growth by connecting with real people, while users earn cash for
+              discovering and following new creators. We don't promise viral
+              success or guaranteed engagement—great content is still what keeps
+              an audience. Our goal is to help creators overcome the hardest
+              part of the journey: getting noticed. Every follow comes from a
+              real person, and strict safeguards are built into the platform to
+              ensure fairness, transparency, and a trusted experience for both
+              creators and users.
             </p>
             <div className="more-from-us-buttons">
               <button className="more-from-us-learn-more-button">
@@ -98,7 +104,7 @@ export function MoreFromUsPage() {
             </div>
           </div>
           <div className="more-from-us-project-image">
-            <img src="/riserFlyer2.png" alt="" className="project-image" />
+            <img src="/riserPromotionImage.png" alt="riserPromotionImage" className="project-image" />
           </div>
         </div>
 
@@ -115,7 +121,9 @@ export function MoreFromUsPage() {
             value={email}
             onChange={handleEmail}
           />
-          <button onClick={joinWaitlist} className="notify-me-button">Notify Me</button>
+          <button onClick={joinWaitlist} className="notify-me-button">
+            Notify Me
+          </button>
           <div className={error ? "emailError" : "emailSuccess"}>{message}</div>
         </div>
       </div>
