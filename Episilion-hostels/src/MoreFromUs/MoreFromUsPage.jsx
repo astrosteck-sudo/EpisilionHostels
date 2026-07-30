@@ -112,8 +112,7 @@ export function MoreFromUsPage() {
           <RocketTakeoff className="more-from-us-join-wishlist-icon" />
           <h2>Join the Waitlist</h2>
           <p>
-            Be the first to know when we launch new services for your favorite
-            games.
+            Be the first to know when we launch this app.
           </p>
           <input
             type="email"
