@@ -3,7 +3,7 @@ import React from "react";
 
 export function PrivacyPolicy (){
   return (
-    <div style={{ maxWidth: "800px", margin: "40px auto", padding: "20px" }}>
+    <div style={{ maxWidth: "800px", margin: "40px auto",marginTop: '80px', padding: "20px" }}>
       <h1>Privacy Policy</h1>
       <p><strong>Last updated:</strong> June 18, 2026</p>
 
