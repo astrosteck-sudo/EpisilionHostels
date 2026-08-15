@@ -53,11 +53,9 @@ body.episilion-bg {
   width: 226px;
   padding: 10px;
   background-color: white;
-  border-right: .5px solid grey;
+  border-right: 0.5px solid grey;
   height: 100vh;
   overflow: hidden;
-
-
 
   width: 260px;
   /* was unset on mobile */
@@ -72,8 +70,6 @@ body.episilion-bg {
   /* background-color: white; */
   min-width: 250px;
 
-
-
   position: fixed;
   top: 0;
   left: 0;
@@ -81,13 +77,11 @@ body.episilion-bg {
   transform: translateX(-100%);
   transition: transform 0.3s ease;
   overflow: scroll;
-
 }
 
 .epsilion-wrapper-one.open {
   transform: translateX(0);
 }
-
 
 .menu-btn {
   font-size: 20px;
@@ -113,15 +107,8 @@ body.episilion-bg {
   height: 15%;
 }
 
-
-
-
-
-
-
-
-
-.user-AI-usage-container, .user-AI-usage-container-subscription {
+.user-AI-usage-container,
+.user-AI-usage-container-subscription {
   padding: 10px;
   background: rgba(0, 133, 93, 0.247);
   border-radius: 10px;
@@ -139,7 +126,7 @@ body.episilion-bg {
 .user-number-request-left {
   margin-left: 80px;
   font-weight: bold;
-  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
 }
 
 .upgrade-text {
@@ -181,18 +168,18 @@ body.episilion-bg {
   background-color: rgb(0 133 93);
   color: white;
   font-weight: bold;
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-family:
+    "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
 }
 
 .epsilion-wrapper-two {
   width: 80%;
-background-color: red;
-
+  background-color: red;
 
   flex: 1;
   width: 100%;
   transition: transform 0.3s ease;
-  
 }
 
 .epsilion-wrapper-two.shift {
@@ -202,7 +189,7 @@ background-color: red;
 .your-usage-text {
   color: grey;
   font-weight: bold;
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
 }
 
 .ask-episilion-search-conatainer {
@@ -230,15 +217,11 @@ background-color: red;
   height: 30%;
 }
 
-
-
 @media only screen and (min-width: 1200px) {
   .ask-episilion-search {
     bottom: 40px;
   }
 }
-
-
 
 .ask-episilion-search-bar {
   background-color: rgb(231, 221, 221);
@@ -318,7 +301,7 @@ background-color: red;
 
   /* border: solid red; */
 }
-@media only screen and (min-width: 800px) and (max-width: 1200px){
+@media only screen and (min-width: 800px) and (max-width: 1200px) {
   .messages {
     max-height: 100%;
   }
@@ -337,6 +320,7 @@ background-color: red;
   word-wrap: break-word;
   border-top-right-radius: 0;
   font-size: clamp(12px, 2vw, 16px);
+  font-family: OutfitMedium;
   /* Flattens corner where tail meets */
 }
 
@@ -344,7 +328,6 @@ background-color: red;
   display: flex;
   gap: 10px;
 }
-
 
 .ask-episilion-robot-image {
   width: min(30px, 20%);
@@ -360,7 +343,7 @@ background-color: red;
 .ask-episilion-message-first-Paragraph {
   font-size: clamp(10px, 2vw, 15px);
   font-weight: bold;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .ask-episilion-message-second-Paragraph {
@@ -391,7 +374,6 @@ background-color: red;
 
 /* Epsilon message aligned left */
 .episilion-message {
-
   align-self: flex-start;
   /* pushes bubble to far left */
   background: #f1f1f1;
@@ -401,14 +383,14 @@ background-color: red;
   max-width: 70%;
   word-wrap: break-word;
   border-top-left-radius: 0;
+  font-family: OutfitLight;
   /* Flattens corner where tail meets */
 }
 
-.episilion-response-price-view-details{
+.episilion-response-price-view-details {
   display: flex;
   gap: 10px;
 }
-
 
 .episilion-response-header {
   text-align: center;
@@ -417,14 +399,13 @@ background-color: red;
   font-family: Playfair Display;
 }
 
-.episilion-response-card-details{
+.episilion-response-card-details {
   display: flex;
   margin: 10px;
   /* justify-content: center; */
   align-items: center;
   justify-content: space-between;
 }
-
 
 .episilion-response {
   /* display: flex; */
@@ -463,8 +444,7 @@ background-color: red;
 }
 
 @media only screen and (max-width: 992px) {
-
-  .epsilion-wrapper-one{
+  .epsilion-wrapper-one {
     /* display: none; */
     padding-top: 80px;
   }
@@ -509,7 +489,6 @@ background-color: red;
   .epsilion-wrapper-two {
     /* margin-left: 20%; */
     transform: none !important;
-
   }
 
   .menu-btn,
@@ -517,9 +496,6 @@ background-color: red;
     display: none;
   }
 }
-
-
-
 
 /* .ask-episilion-loader {
   color: black;
@@ -581,7 +557,6 @@ background-color: red;
     -2em 2em 0 0, -3em 0em 0 0, -2em -2em 0 0.2em;
   }
 } */
-  
 
 /* HTML: <div class="loader"></div> */
 .ask-episilion-loader.active {
@@ -592,11 +567,13 @@ background-color: red;
   border-color: #000 #0000;
   animation: l1 1s infinite;
 }
-@keyframes l1 {to{transform: rotate(.5turn)}}
+@keyframes l1 {
+  to {
+    transform: rotate(0.5turn);
+  }
+}
 
-
-
-.ask-episilion-loader-container{
+.ask-episilion-loader-container {
   width: 5%;
   height: 50px;
   background-color: white;
@@ -607,19 +584,286 @@ background-color: red;
   border-radius: 10px;
   min-width: 50px;
 }
-.ask-episilion-loader-container.hide{
+.ask-episilion-loader-container.hide {
   display: none;
   /* border: solid red; */
 }
 .ask-episilion-input-box:focus {
   outline: none;
 }
-.ask-episilion-input-box{
-  font-family: 'Inter', 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  
+.ask-episilion-input-box {
+  font-family:
+    "Inter",
+    "Roboto",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+
   /* Styling tweaks to make it look premium */
-  font-size: 16px;       /* Prevents iOS from zooming in automatically */
-  line-height: 1.5;      /* Adds breathing room between lines */
-  padding: 12px;         /* Keeps text away from the edges */
-  color: #333333;   
+  font-size: 16px; /* Prevents iOS from zooming in automatically */
+  line-height: 1.5; /* Adds breathing room between lines */
+  padding: 12px; /* Keeps text away from the edges */
+  color: #333333;
+}
+
+/* ---------- container ---------- */
+.epi-ai-response {
+  width: 100%;
+  max-width: 620px;
+  box-sizing: border-box;
+  min-width: 0; /* lets it shrink inside flex chat rows */
+  background: #ffffff;
+  border: 1px solid #e8e4de;
+  border-radius: 14px;
+  padding: 12px;
+  box-shadow: 0 1px 2px rgba(16, 40, 32, 0.04);
+  overflow-wrap: anywhere; /* long hostel names never overflow */
+}
+
+/* ---------- header ---------- */
+.epi-ai-response-head {
+  display: flex;
+  align-items: stretch;
+  gap: 9px;
+  margin-bottom: 12px;
+}
+.epi-ai-response-bar {
+  width: 3px;
+  min-height: 18px;
+  flex: 0 0 3px;
+  border-radius: 99px;
+  background: linear-gradient(180deg, #0e8c6b, #14b88b);
+}
+.epi-ai-response-header {
+  margin: 0;
+  min-width: 0;
+  font-size: 14px;
+  /* font-weight: 700; */
+  line-height: 1.45;
+  color: #15211d;
+  letter-spacing: -0.01em;
+  text-transform: none;
+  font-family: OutfitBold;
+}
+.epi-ai-response-text {
+  margin: 0;
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: #384741;
+}
+
+/* ---------- list ---------- */
+.epi-hostel-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* card: stacked on mobile */
+.epi-hostel-card {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  background: #fbfaf8;
+  border: 1px solid #eae6e0;
+  border-radius: 13px;
+  padding: 10px;
+  transition:
+    border-color 0.18s ease,
+    background 0.18s ease,
+    box-shadow 0.18s ease,
+    transform 0.18s ease;
+}
+.epi-hostel-card:active {
+  transform: scale(0.99);
+}
+.epi-hostel-card:focus-visible {
+  outline: 2px solid #0e8c6b;
+  outline-offset: 2px;
+}
+
+/* thumb + text row */
+.epi-hostel-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.epi-hostel-thumb {
+  width: 56px;
+  height: 56px;
+  flex: 0 0 56px; /* never squashed */
+  border-radius: 10px;
+  overflow: hidden;
+  background: #edf4f1;
+  display: grid;
+  place-items: center;
+}
+.epi-hostel-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.epi-hostel-thumb-fallback {
+  font-size: 24px;
+  color: #9dbdb1;
+}
+
+.epi-hostel-text {
+  flex: 1 1 auto;
+  min-width: 0; /* required for truncation */
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.epi-hostel-name {
+  margin: 0;
+  font-size: 14.5px;
+  font-weight: 700;
+  color: #15211d;
+  letter-spacing: -0.01em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* wraps to 2 lines on tiny screens */
+  -webkit-box-orient: vertical;
+  line-height: 1.3;
+  font-family: OutfitMedium;
+}
+.epi-hostel-meta {
+  margin: 0;
+  font-size: 12px;
+  color: #7c8a84;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: OutfitLight;
+}
+.epi-hostel-price {
+  margin: 2px 0 0;
+  display: flex;
+  align-items: baseline;
+  gap: 3px;
+  font-size: 15px;
+  font-weight: 800;
+  color: #0e8c6b;
+  font-family: OutfitSemiBold;
+}
+.epi-hostel-price small {
+  font-size: 10.5px;
+  font-weight: 600;
+  color: #90a09a;
+}
+
+/* CTA: full-width tap target on mobile */
+.epi-hostel-cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  min-height: 38px; /* comfortable thumb target */
+  background: #0e8c6b;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 700;
+  border-radius: 10px;
+  transition: background 0.18s ease;
+  font-family: OutfitMedium;
+}
+.epi-hostel-cta svg {
+  transition: transform 0.18s ease;
+}
+
+.epi-ai-response-note {
+  margin: 10px 0 0;
+  padding-top: 9px;
+  border-top: 1px dashed #e8e4de;
+  font-size: 11.5px;
+  color: #8b9691;
+}
+
+/* ---------- ≥480px: single row, inline pill ---------- */
+@media (min-width: 480px) {
+  .epi-ai-response {
+    padding: 16px;
+    border-radius: 18px;
+  }
+  .epi-ai-response-header {
+    font-size: 15px;
+  }
+
+  .epi-hostel-card {
+    flex-direction: row;
+    align-items: center;
+    gap: 14px;
+    border-radius: 14px;
+  }
+  .epi-hostel-info {
+    flex: 1 1 auto;
+  }
+  .epi-hostel-thumb {
+    width: 64px;
+    height: 64px;
+    flex-basis: 64px;
+  }
+  .epi-hostel-name {
+    -webkit-line-clamp: 1;
+  }
+
+  .epi-hostel-cta {
+    width: auto;
+    flex: 0 0 auto;
+    min-height: 0;
+    padding: 8px 15px;
+    border-radius: 99px;
+  }
+}
+
+/* ---------- hover only on real pointers ---------- */
+@media (hover: hover) and (pointer: fine) {
+  .epi-hostel-card:hover {
+    background: #ffffff;
+    border-color: #bfe6d8;
+    box-shadow: 0 8px 20px rgba(14, 140, 107, 0.1);
+    transform: translateY(-2px);
+  }
+  .epi-hostel-card:hover .epi-hostel-cta {
+    background: #0b7458;
+  }
+  .epi-hostel-card:hover .epi-hostel-cta svg {
+    transform: translateX(2px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .epi-hostel-card,
+  .epi-hostel-cta,
+  .epi-hostel-cta svg {
+    transition: none;
+  }
+  .epi-hostel-card:hover {
+    transform: none;
+  }
+}
+
+@media only screen and (max-width: 992px){
+  .epi-hostel-info{
+    flex-direction: column;
+  }
+  .epi-hostel-thumb{
+    width: 100%;
+    object-fit: fill;
+    min-height: 150px
+  }
 }

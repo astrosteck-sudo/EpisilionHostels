@@ -6,8 +6,15 @@ const { searchHostelsAI } = require("../controllers/intentController");
 const verifyToken = require("../middleware/verifyToken");
 const checkAIUsage = require("../middleware/checkAIUsage");
 const checkDeviceUsage = require("../middleware/checkDeviceUsage");
-const subscriptionMiddleware = require('../middleware/subscriptionMiddleware')
+const subscriptionMiddleware = require("../middleware/subscriptionMiddleware");
 
-router.post("/search", verifyToken,checkDeviceUsage, checkAIUsage,subscriptionMiddleware, searchHostelsAI);
+router.post(
+  "/search",
+  verifyToken,
+  checkAIUsage,
+  checkDeviceUsage,
+  subscriptionMiddleware,
+  searchHostelsAI,
+);
 
 module.exports = router;

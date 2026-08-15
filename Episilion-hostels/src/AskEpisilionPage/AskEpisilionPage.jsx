@@ -8,7 +8,7 @@ import { getDeviceId } from "../UTILS/deviceId.js";
 
 import { initializePayment } from "../services/paymentService";
 
-import { Robot, Send, LightbulbFill } from "react-bootstrap-icons";
+import { Robot, Send, LightbulbFill, Building } from "react-bootstrap-icons";
 
 export function AskEpisilionPage({ isLoggedIn }) {
   const [userSearchInput, setUserSearchInput] = useState(""); //THIS IS TO TRACK THE USER INPUT IN THE SEARCH BAR
@@ -24,6 +24,8 @@ export function AskEpisilionPage({ isLoggedIn }) {
 
   //THIS IS TO TRACK THE LOADING STATE OF THE AI RESPONSE
   const [isLoading, setIsLoading] = useState(false);
+  const url = "https://episilion-backend-2lt0.onrender.com"; //THIS IS THE URL FOR THE BACKEND, THIS IS USED TO ACCESS THE IMAGES IN THE PUBLIC FOLDER OF THE BACKEND
+
   //const [userCautionText, setUserCautionText] = useState(true)
   const navigate = useNavigate();
 
@@ -100,36 +102,59 @@ export function AskEpisilionPage({ isLoggedIn }) {
         },
       );
 
-      const result = res.data.result;
-      // console.log(res.data);
-      setRemainingRequest(res.data.remainingRequests);
-      setAiSubscriptionRemaining(res.data.remainingSubscriptionRequests);
+      const data = res.data;
+      console.log("AI Response:", data);
+      setRemainingRequest(data.remainingRequests);
       localStorage.setItem(
         "episilionRemainingRequests",
-        res.data.remainingRequests,
+        data.remainingRequests,
       );
-      // console.log(localStorage.getItem("episilionRemainingRequests"));
 
-      setChatMessages((prev) => [
-        ...prev,
-        {
-          message: result,
-          type: "episilionResults",
-          sender: "episilion",
-          header: res.data.reason,
-        },
-      ]);
+      if (data.type === "hostels") {
+        setChatMessages((prev) => [
+          ...prev,
+          {
+            message: data.result,
+            type: "episilionResults",
+            sender: "episilion",
+            header: data.reason,
+          },
+        ]);
+      } else {
+        // "chat" type — plain conversational reply, no cards
+        setChatMessages((prev) => [
+          ...prev,
+          {
+            message: data.message,
+            type: "chat",
+            sender: "episilion",
+          },
+        ]);
+      }
     } catch (error) {
+      const data = error.response?.data;
       const errorMessage =
-        error.response?.data?.message ||
-        error.response?.data?.error ||
+        data?.message ||
+        data?.error ||
         "Something went wrong. Please try again.";
+
+      // "no_match" comes back as an HTTP error status but still carries a
+      // real remainingRequests count — keep the sidebar counter in sync
+      // even on this path, or it'll drift from what the server recorded.
+      if (typeof data?.remainingRequests === "number") {
+        setRemainingRequest(data.remainingRequests);
+        localStorage.setItem(
+          "episilionRemainingRequests",
+          data.remainingRequests,
+        );
+      }
 
       setChatMessages((prev) => [
         ...prev,
         {
           message: errorMessage,
-          type: "error",
+          // no_match isn't really an "error" — render it like a normal reply
+          type: data?.type === "no_match" ? "chat" : "error",
           sender: "episilion",
         },
       ]);
@@ -144,6 +169,7 @@ export function AskEpisilionPage({ isLoggedIn }) {
 
   //Allow sending with Enter key
   function handleKeyDown(event) {
+    //event.preventDefault(); // Prevents the default behavior of the Enter key (like adding a new line)
     //THIS RETURNS THE USER WHEN THE USER IS NOT LOGGED IN
     if (event.key === "Enter") {
       if (!isLoggedIn) {
@@ -273,7 +299,7 @@ export function AskEpisilionPage({ isLoggedIn }) {
               ☰
             </button>
             <div className="ask-episilion-page-header">
-              <Robot className="ask-episilion-page-header-robot-image"/>
+              <Robot className="ask-episilion-page-header-robot-image" />
               {/* <img
                 src={robotImage}
                 className="ask-episilion-page-header-robot-image"
@@ -287,7 +313,7 @@ export function AskEpisilionPage({ isLoggedIn }) {
 
           <div className="messages">
             <div className="episilion-message-and-bot-conatainer">
-              <Robot className="ask-episilion-robot-image"/>
+              <Robot className="ask-episilion-robot-image" />
               <div className="episilion-message">
                 <p className="ask-episilion-message-first-Paragraph">
                   Hi {!isLoggedIn ? "student" : user?.name || "student"}! 👋 How
@@ -299,7 +325,7 @@ export function AskEpisilionPage({ isLoggedIn }) {
                   I'll find the best options for you.
                 </p>
                 <p className="ask-episilion-message-third-Paragraph">
-                  <LightbulbFill className="ask-episilion-light-bulb"/>
+                  <LightbulbFill className="ask-episilion-light-bulb" />
                   Tip: Keep questions short and direct for the most accurate
                   answers
                 </p>
@@ -314,33 +340,85 @@ export function AskEpisilionPage({ isLoggedIn }) {
                 }
               >
                 {chat.type === "episilionResults" ? (
-                  <div className="episilion-response">
-                    <p className="episilion-response-header">{chat.header}</p>
-                    {Array.isArray(chat.message) ? (
-                      chat.message.map((hostel) => (
-                        <div key={hostel.id}>
-                          {/* <img loading='lazy'src={hostel.image} alt={`${hostel.name} image`} className="episilion-response-image" /> */}
-                          <div className="episilion-response-card-details">
-                            <p className="episilion-response-hostel-name">
-                              {hostel.name}
-                            </p>
-                            <div className="episilion-response-price-view-details">
-                              <p className="episilion-response-hostel-price">
-                                $({hostel.price})
-                              </p>
+                  <div className="epi-ai-response">
+                    <div className="epi-ai-response-head">
+                      <span
+                        className="epi-ai-response-bar"
+                        aria-hidden="true"
+                      />
+                      <p className="epi-ai-response-header">{chat.header}</p>
+                    </div>
 
-                              <p
-                                className="episilion-response-hostel-link"
-                                onClick={() => goToHostelPage(hostel.id)}
-                              >
+                    {Array.isArray(chat.message) ? (
+                      <>
+                        <div className="epi-hostel-grid">
+                          {chat.message.map((hostel) => (
+                            <button
+                              key={hostel.id}
+                              type="button"
+                              className="epi-hostel-card"
+                              onClick={() => goToHostelPage(hostel.id)}
+                            >
+                              <div className="epi-hostel-info">
+                                <div className="epi-hostel-thumb">
+                                  {hostel.image ? (
+                                    <img
+                                      loading="lazy"
+                                      src={url + hostel.image}
+                                      alt={hostel.name}
+                                    />
+                                  ) : (
+                                    <Buildings className="epi-hostel-thumb-fallback" />
+                                  )}
+                                </div>
+
+                                <div className="epi-hostel-text">
+                                  <p className="epi-hostel-name">
+                                    {hostel.name}
+                                  </p>
+                                  <p className="epi-hostel-meta">
+                                    {hostel.gender || "Mixed"} ·{" "}
+                                    {hostel.location || "Near campus"}
+                                  </p>
+                                  <p className="epi-hostel-price">
+                                    <span>
+                                      GH₵{Number(hostel.price).toLocaleString()}
+                                    </span>
+                                    <small>/year</small>
+                                  </p>
+                                </div>
+                              </div>
+
+                              <span className="epi-hostel-cta">
                                 View
-                              </p>
-                            </div>
-                          </div>
+                                <svg
+                                  width="12"
+                                  height="12"
+                                  viewBox="0 0 24 24"
+                                  fill="none"
+                                  aria-hidden="true"
+                                >
+                                  <path
+                                    d="M5 12h14M13 6l6 6-6 6"
+                                    stroke="currentColor"
+                                    strokeWidth="2.4"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                  />
+                                </svg>
+                              </span>
+                            </button>
+                          ))}
                         </div>
-                      ))
+
+                        <p className="epi-ai-response-note">
+                          {chat.message.length} hostel
+                          {chat.message.length === 1 ? "" : "s"} matched your
+                          request
+                        </p>
+                      </>
                     ) : (
-                      <p>{chat.message}</p>
+                      <p className="epi-ai-response-text">{chat.message}</p>
                     )}
                   </div>
                 ) : (
@@ -369,7 +447,7 @@ export function AskEpisilionPage({ isLoggedIn }) {
                 className="ask-episilion-search-button"
                 onClick={sendMessage}
               >
-                <Send className="send-image-epislion"/>
+                <Send className="send-image-epislion" />
               </button>
             </div>
             <div className="ask-epislion-warning-message">
@@ -379,8 +457,6 @@ export function AskEpisilionPage({ isLoggedIn }) {
           </div>
         </div>
       </div>
-
-     
     </>
   );
 }
