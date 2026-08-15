@@ -384,7 +384,7 @@ export function AskEpisilionPage({ isLoggedIn }) {
                                     <span>
                                       GH₵{Number(hostel.price).toLocaleString()}
                                     </span>
-                                    <small>/year</small>
+                                    <small>/sem</small>
                                   </p>
                                 </div>
                               </div>
