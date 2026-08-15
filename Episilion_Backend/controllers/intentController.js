@@ -11,7 +11,7 @@ const client = new OpenAI({
 const queryDB = (sql, values = []) =>
   pool.query(sql, values).then(([rows]) => rows);
 
-// Classify query
+// Classify query — decides which AI mode to use, not whether to block it
 function classifyQuery(query) {
   const keywords = [
     "hostel",
@@ -84,9 +84,19 @@ function formatHostels(hostels, pricing, locations, amenities) {
 
       name: h.name,
 
-      type: normalizeGender(h.type),
+      // Used internally by applySmartFilter — never sent to the AI as-is.
+      genderFilter: normalizeGender(h.type),
+
+      // Sent to the AI verbatim, in the same words the user and your DB
+      // use ("Girls" / "Boys" / "Mixed"), so the model never has to
+      // translate "girls" -> "female" on its own.
+      type: h.type || "Mixed",
 
       price: price?.price_min || null,
+
+      // NOTE: assumed column name — adjust if your hostels table uses a
+      // different field (e.g. cover_image, thumbnail_url).
+      image: h.main_image || null,
 
       distanceMeters,
 
@@ -105,12 +115,15 @@ function applySmartFilter(data, query) {
 
   // CLOSE / NEAR
   if (q.includes("close") || q.includes("near")) {
-    filtered.sort((a, b) => a.distanceMeters - b.distanceMeters);
+    filtered.sort(
+      (a, b) =>
+        (a.distanceMeters ?? Infinity) - (b.distanceMeters ?? Infinity),
+    );
   }
 
   // CHEAP
   if (q.includes("cheap") || q.includes("budget") || q.includes("affordable")) {
-    filtered.sort((a, b) => a.price - b.price);
+    filtered.sort((a, b) => (a.price ?? Infinity) - (b.price ?? Infinity));
   }
 
   // WITHIN X METERS
@@ -132,7 +145,7 @@ function applySmartFilter(data, query) {
     q.includes("ladies")
   ) {
     filtered = filtered.filter(
-      (h) => h.type === "female" || h.type === "mixed",
+      (h) => h.genderFilter === "female" || h.genderFilter === "mixed",
     );
   }
 
@@ -143,49 +156,86 @@ function applySmartFilter(data, query) {
     q.includes("male") ||
     q.includes("men")
   ) {
-    filtered = filtered.filter((h) => h.type === "male" || h.type === "mixed");
+    filtered = filtered.filter(
+      (h) => h.genderFilter === "male" || h.genderFilter === "mixed",
+    );
   }
 
   return filtered;
 }
 
-// Extract limit
+// Extract limit — ignores numbers that belong to a "within X meters" phrase
 function extractLimit(query) {
-  const match = query.match(/\b(\d+)\b/);
+  const stripped = query.replace(/within\s+\d+\s*meters?/gi, "");
+  const match = stripped.match(/\b(\d+)\b/);
   return match ? parseInt(match[1]) : 5;
 }
 
-// Parse AI response — handles both [ID: xxx] and bare UUID formats
+// Parse the hostel-mode AI response.
+// The model only returns IDs (+ reason) — never name/price — so nothing
+// about the real data can be mis-typed or hallucinated on the way back.
 function parseAI(text) {
   const cleaned = text.replace(/<think>[\s\S]*?<\/think>/g, "").trim();
 
-  // Extract overall reason
   const reasonMatch = cleaned.match(/^Reason:\s*(.+)$/m);
   const overallReason = reasonMatch ? reasonMatch[1].trim() : null;
 
-  // Extract no match message
   const noMatchMatch = cleaned.match(/^No match:\s*(.+)$/m);
   const noMatch = noMatchMatch ? noMatchMatch[1].trim() : null;
 
   const lines = cleaned.split("\n").filter((l) => l.trim());
-  const results = [];
+  const ids = [];
 
   for (const line of lines) {
-    // Try both formats the AI might return
     const match =
-      line.match(/^\d+\.\s*\[ID:\s*([^\]]+)\]\s*(.+?)\s*-\s*(\d+)/) || // [ID: xxx] format
-      line.match(/^\d+\.\s*([a-f0-9-]{36})\s+(.+?)\s*-\s*(\d+)/i); // bare UUID format
+      line.match(/^\d+\.\s*\[ID:\s*([^\]]+)\]/) || // [ID: xxx] format
+      line.match(/^\d+\.\s*([a-f0-9-]{36})\b/i); // bare UUID format
 
     if (match) {
-      results.push({
-        id: match[1].trim(),
-        name: match[2].trim(),
-        price: parseInt(match[3].trim()),
-      });
+      ids.push(match[1].trim());
     }
   }
 
-  return { results, overallReason, noMatch };
+  return { ids, overallReason, noMatch };
+}
+
+// Increment + return remaining AI requests for the current user/device
+async function incrementUsage(req) {
+  const today = new Date().toISOString().split("T")[0];
+
+  if (req.isPremium) {
+    await pool.execute(
+      `UPDATE usage_logs
+       SET requests_used = requests_used + 1
+       WHERE user_id = ? AND usage_date = ?`,
+      [req.user.user_id, today],
+    );
+
+    const [updatedUsage] = await pool.query(
+      `SELECT requests_used, usage_date
+       FROM usage_logs
+       WHERE user_id = ? AND usage_date = ?`,
+      [req.user.user_id, today],
+    );
+
+    return req.aiUsage.requests_limit - updatedUsage[0].requests_used;
+  }
+
+  await pool.query(
+    `UPDATE device_ai_usage
+     SET requests_used = requests_used + 1
+     WHERE device_id = ?`,
+    [req.headers["x-device-id"]],
+  );
+
+  const [updatedUsage] = await pool.query(
+    `SELECT requests_used, requests_limit
+     FROM device_ai_usage
+     WHERE device_id = ?`,
+    [req.headers["x-device-id"]],
+  );
+
+  return updatedUsage[0].requests_limit - updatedUsage[0].requests_used;
 }
 
 // Main controller
@@ -197,31 +247,44 @@ exports.searchHostelsAI = async (req, res) => {
     return res.status(400).json({ error: "Query is required" });
   }
 
-  // 2. CLASSIFY
-  if (!classifyQuery(query)) {
-    return res.status(400).json({
-      error: "out_of_scope",
-      message:
-        "I can only help you find hostels. Try asking something like 'show me cheap girls hostels near campus with wifi'.",
-    });
-  }
+  const isHostelQuery = classifyQuery(query);
 
   try {
-    // 3. FETCH DATA
+    // 2A. NON-HOSTEL QUERY → plain chatbot mode, no site data involved
+    if (!isHostelQuery) {
+      const completion = await client.chat.completions.create({
+        model: "meta/llama-3.1-8b-instruct",
+        temperature: 0.5,
+        messages: [
+          {
+            role: "system",
+            content: `You are the assistant for Episilion Hostels, a hostel-booking platform. Answer the user's message helpfully and naturally, like a normal chatbot. Do not mention hostel listings, IDs, or pricing formats — this message isn't about finding a hostel. Keep replies concise.`,
+          },
+          { role: "user", content: query },
+        ],
+        max_tokens: 300,
+      });
+
+      const message = completion.choices[0].message.content
+        .replace(/<think>[\s\S]*?<\/think>/g, "")
+        .trim();
+
+      const remainingRequests = await incrementUsage(req);
+
+      return res.json({ type: "chat", message, remainingRequests });
+    }
+
+    // 2B. HOSTEL QUERY → structured search flow
     const hostels = await queryDB("SELECT * FROM hostels");
     const pricing = await queryDB("SELECT * FROM pricing");
     const locations = await queryDB("SELECT * FROM locations");
     const amenities = await queryDB("SELECT * FROM amenities");
 
     let aiData = formatHostels(hostels, pricing, locations, amenities);
-
-    // 4. SMART FILTER
     aiData = applySmartFilter(aiData, query);
 
-    // 5. EXTRACT LIMIT
     const limit = extractLimit(query);
 
-    // 6. CALL AI
     const completion = await client.chat.completions.create({
       model: "meta/llama-3.1-8b-instruct",
       temperature: 0,
@@ -240,23 +303,21 @@ RULES:
 - The Reason must describe what the user asked for and what was found, NOT the data or how many hostels exist in the database
 - DO NOT explain the database contents
 - DO NOT say things like "the database only has mixed hostels"
-- A hostel with type "mixed" accommodates both male and female residents
-- If the user asks for a boys or girls hostel and none exist, recommend mixed hostels instead
-- NEVER return "No match" if any hostels exist in the data
-
+- Each hostel's "type" field is exactly "Girls", "Boys", or "Mixed" — this matches the user's own wording (e.g. a "girls hostel" request means type "Girls")
+- A hostel with type "Mixed" accommodates both male and female residents
+- If the user asks for a boys or girls hostel and none exist, recommend Mixed hostels instead
+- NEVER return "No match" if the Hostels list below is non-empty
+- Only return the "id" field for each hostel you pick. Copy it EXACTLY, character for character, from the data. NEVER output a hostel name or price yourself.
 
 IF hostels match, return ONLY in this exact format:
 
-Reason: [one sentence telling the user what was found based on their request. Example: "Here are 3 affordable girls hostels near campus with wifi for you."]
-1. [ID: uuid] Hostel Name - price
-2. [ID: uuid] Hostel Name - price
+Reason: [one sentence telling the user what was found based on their request]
+1. [ID: <exact id from data>]
+2. [ID: <exact id from data>]
 
 IF no hostels match, return ONLY:
 
 No match: [one sentence explaining why and what the user could try instead]
-
-
-Where price is a number only, no currency symbol.
 `,
         },
         {
@@ -266,7 +327,9 @@ User request:
 ${query}
 
 Hostels:
-${JSON.stringify(aiData)}
+${JSON.stringify(
+  aiData.map(({ genderFilter, ...visible }) => visible),
+)}
 
 Return best matches only.
           `,
@@ -276,67 +339,31 @@ Return best matches only.
     });
 
     const raw = completion.choices[0].message.content;
-    // console.log("RAW AI:", raw);
 
-    // 7. PARSE
-    const { results, overallReason, noMatch } = parseAI(raw);
+    const { ids, overallReason, noMatch } = parseAI(raw);
 
-    // 8. HANDLE NO MATCH
-    if (noMatch || results.length === 0) {
+    // Ground every ID against the real data — anything the model
+    // hallucinated or mistyped simply won't be found and is dropped.
+    const matched = ids
+      .map((id) => aiData.find((h) => h.id === id))
+      .filter(Boolean);
+
+    if (noMatch || matched.length === 0) {
+      const remainingRequests = await incrementUsage(req);
       return res.status(404).json({
-        error: "no_match",
+        type: "no_match",
         message:
           noMatch ||
           "No hostels found matching your request. Try adjusting your search.",
+        remainingRequests,
       });
     }
 
-    // 9. ENFORCE LIMIT
-    // 9. LIMIT RESULTS
-    const finalResults = results.slice(0, limit);
+    const finalResults = matched.slice(0, limit);
+    const remainingRequests = await incrementUsage(req);
 
-    // After AI results are parsed
-    const today = new Date().toISOString().split("T")[0];
-    let remainingRequests;
-
-    if (req.isPremium) {
-      await pool.execute(
-        `UPDATE usage_logs
-     SET requests_used = requests_used + 1
-     WHERE user_id = ? AND usage_date = ?`,
-        [req.user.user_id, today],
-      );
-
-      const [updatedUsage] = await pool.query(
-        `SELECT requests_used, usage_date
-     FROM usage_logs
-     WHERE user_id = ? AND usage_date = ?`,
-        [req.user.user_id, today],
-      );
-
-      remainingRequests =
-        req.aiUsage.requests_limit - updatedUsage[0].requests_used;
-    } else {
-      await pool.query(
-        `UPDATE device_ai_usage
-     SET requests_used = requests_used + 1
-     WHERE device_id = ?`,
-        [req.headers["x-device-id"]],
-      );
-
-      const [updatedUsage] = await pool.query(
-        `SELECT requests_used, requests_limit
-     FROM device_ai_usage
-     WHERE device_id = ?`,
-        [req.headers["x-device-id"]],
-      );
-
-      remainingRequests =
-        updatedUsage[0].requests_limit - updatedUsage[0].requests_used;
-    }
-
-    // FINAL RESPONSE
     res.json({
+      type: "hostels",
       reason: overallReason,
       total: finalResults.length,
       remainingRequests,
@@ -344,6 +371,7 @@ Return best matches only.
         id: h.id,
         name: h.name,
         price: h.price,
+        image: h.image,
       })),
     });
   } catch (err) {

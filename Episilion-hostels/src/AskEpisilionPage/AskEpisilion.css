@@ -287,7 +287,7 @@ background-color: red;
 
 .ask-epislion-warning-message {
   text-align: center;
-  font-size: clamp(9px, 2vw, 14px);
+  font-size: clamp(11px, 2vw, 14px);
   color: grey;
   font-family: cursive;
 }
