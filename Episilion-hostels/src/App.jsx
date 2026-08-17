@@ -23,6 +23,7 @@ import { useLocation } from "react-router-dom";
 import { MobileNavButtons } from "./SiteFooter/MobileNavButtons.jsx";
 import { buildHostelSlug } from "./UTILS/slugFunctions.js";
 import { CampusLandingPage } from "./CampusLandingPage/CampusLandingPage.jsx";
+import { NotFoundPage } from "./NotFoundPage/NotFoundPage.jsx";
 
 function LegacyHostelRedirect({ originalHostelCardData }) {
   const [searchParams] = useSearchParams();
@@ -146,6 +147,7 @@ function App() {
         <Route path="aboutus" element={<AboutUsPage />} />
         <Route path="hostels-near-upsa" element={<CampusLandingPage originalHostelCardData={originalHostelCardData} />} />
         <Route path="signup" element={<SignUpPage />} />
+        <Route path="*" element={<NotFoundPage />} />
         <Route
           path="askepisilion"
           element={

@@ -88,7 +88,7 @@ export function SiteFooter() {
 
           <p>
             <Link className="site-footer-links" to="/hostels-near-upsa">
-              hostels Near UPSA
+              Hostels Near UPSA
             </Link>
           </p>
         </div>
