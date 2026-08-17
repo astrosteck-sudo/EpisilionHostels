@@ -4,6 +4,8 @@ import { SiteFooter } from "../SiteFooter/SiteFooter";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { TeamCards } from "./TeamCards";
+import { Helmet } from "react-helmet-async";
+
 import {
   RocketTakeoff,
   Eye,
@@ -20,6 +22,7 @@ import {
 import "./AboutUsPage.css";
 export function AboutUsPage() {
   const [teamData, setTeamData] = useState([]);
+  const [openIndex, setOpenIndex] = useState(null);
 
   const loadTeamCards = async () => {
     const reposnse = await axios.get("/api/teamMembers");
@@ -30,9 +33,67 @@ export function AboutUsPage() {
     loadTeamCards();
   }, []);
 
+  const faqs = [
+    {
+      q: "How do I find a hostel near UPSA as a fresher?",
+      a: "Use Episilion Hostels to browse verified hostels near UPSA's main campus. You can filter by gender, price range, and distance to campus, then compare amenities before booking online.",
+    },
+    {
+      q: "How much do hostels near UPSA cost per semester?",
+      a: "Hostel prices near UPSA typically range from GHS 2,000 to GHS 7,500 per semester depending on room type, amenities, and distance to campus. All current prices are listed on each hostel's page.",
+    },
+    {
+      q: "Can I pay for a UPSA hostel with Mobile Money?",
+      a: "No. Episilion Hostels just lists verified hostels and provides contact information for hostel managers. Payment methods are determined by the hostel itself, so please contact the hostel manager directly to confirm payment options.",
+    },
+    {
+      q: "Are the hostels on Episilion Hostels verified?",
+      a: "Yes, every hostel listed on Episilion Hostels is manually verified before it appears on the platform, so students and freshers can book with confidence.",
+    },
+    {
+      q: "Do you have hostels for both boys and girls near UPSA?",
+      a: "Yes, Episilion Hostels lists hostels near UPSA for boys, girls, and mixed accommodation. You can filter by gender directly on the homepage.",
+    },
+    {
+      q: "How early should I book a hostel before the UPSA semester starts?",
+      a: "We recommend reserving a hostel near UPSA at least one month before the semester begins, as popular hostels close to campus fill up quickly.",
+    },
+  ];
+
   return (
     <>
-      <title>About Us | Episilion Hostels</title>
+      <Helmet>
+        <title>
+          About Us | Episilion Hostels — Verified Student Housing Near UPSA
+        </title>
+        <link rel="canonical" href="https://www.episilionhostels.com/aboutus" />
+        <meta
+          name="description"
+          content="Learn how Episilion Hostels helps UPSA students find safe, affordable, and verified hostels near campus. Our mission, team, and answers to common hostel-booking questions."
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="About Episilion Hostels" />
+        <meta
+          property="og:description"
+          content="Helping UPSA students find safe, affordable, and comfortable hostels with ease."
+        />
+        <meta
+          property="og:url"
+          content="https://www.episilionhostels.com/aboutus"
+        />
+
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: faqs.map((item) => ({
+              "@type": "Question",
+              name: item.q,
+              acceptedAnswer: { "@type": "Answer", text: item.a },
+            })),
+          })}
+        </script>
+      </Helmet>
       <div className="about-episilion-header">
         <h1 className="about-epislion-about">About Episilion</h1>
         <p className="about-epislion-helping-students">
@@ -152,55 +213,20 @@ export function AboutUsPage() {
         </div>
       </div>
 
-      {/* <div className="about-epislion-contact-options">
-        <div className="about-epislion-contact-option">
-          <img
-            loading="lazy"
-            src={facebook}
-            alt="Facebook Icon"
-            className="contact-icon"
-          />
-          <p>Follow us on Facebook</p>
-        </div>
-        <div className="about-epislion-contact-option">
-          <img
-            loading="lazy"
-            src={email}
-            alt="Email Icon"
-            className="contact-icon"
-          />
-          <a
-            href={`mailto:episilionhostels26@gmail.com?subject=${encodeURIComponent("Hostel Inquiry")}&body=${encodeURIComponent("Hello, I would like to inquire about...")}`}
+      <div className="about-us-faq-container">
+        <h2>Frequently Asked Questions</h2>
+        {faqs.map((item, i) => (
+          <div
+            className={`about-us-faq-item ${openIndex === i ? "open" : ""}`}
+            key={i}
+            onClick={() => setOpenIndex(openIndex === i ? null : i)}
           >
-            episilionhostels26@gmail.com
-          </a>
-        </div>
-        <div className="about-epislion-contact-option">
-          <img
-            loading="lazy"
-            src={whatsapp}
-            alt="WhatsApp Icon"
-            className="contact-icon"
-          />
-          <a
-            href="https://wa.me/0537222558"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            0537222558
-          </a>
-        </div>
+            <h3>{item.q}</h3>
+            <p>{item.a}</p>
+          </div>
+        ))}
+      </div>
 
-        <div className="about-epislion-contact-option">
-          <img
-            loading="lazy"
-            src={phone}
-            alt="Phone Icon"
-            className="contact-icon"
-          />
-          <a href="tel:0537222558">0537222558</a>
-        </div>
-      </div> */}
 
       <div className="contacts-container">
         <div className="about-us-contacts">
