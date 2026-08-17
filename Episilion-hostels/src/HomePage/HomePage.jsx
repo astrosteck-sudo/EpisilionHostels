@@ -34,6 +34,7 @@ export function HomePage({
   const [girlsActive, setGirlsActive] = useState(false);
   const [mixedActive, setMixedActive] = useState(false);
   const [underActive, setUnderActive] = useState(false);
+  const [learnMoreOpen, setLearnMoreOpen] = useState(false);
 
   //console.log(hostelsCardData)
 
@@ -314,7 +315,7 @@ export function HomePage({
 
         <meta
           name="keywords"
-          content="hostels near UPSA, UPSA hostel booking, student hostels Accra, UPSA accommodation, affordable hostels UPSA, hostel booking Ghana"
+          content="hostels near UPSA, UPSA hostel booking, UPSA freshers hostel, UPSA fresher accommodation, affordable hostels near UPSA, cheap hostels near UPSA, best hostels for UPSA students, hostels near UPSA for girls, hostels near UPSA for boys, mixed hostels near UPSA, UPSA off-campus hostels, UPSA hostel prices, UPSA hostel registration, student hostels Madina, student hostels Legon Road, student hostels Accra, hostel booking Ghana, verified student housing Ghana, how to find a hostel at UPSA, self-contained hostel near UPSA, UPSA accommodation for new students"
         />
 
         {/* Open Graph */}
@@ -518,7 +519,7 @@ export function HomePage({
           </div>
 
           <p className="intro-text-one">
-            Find Comfortable,{" "}
+            Find Comfortable,
             <span className="affodable-and-safe-text">Affordable & Safe </span>
             Hostels Near You
           </p>
@@ -704,6 +705,80 @@ export function HomePage({
             return <HostelCard key={hostel.id} hostel={hostel} />;
           })}
         </div>
+
+        <section className="homepage-seo-content">
+          <button
+            className="learn-more-toggle"
+            onClick={() => setLearnMoreOpen(!learnMoreOpen)}
+            aria-expanded={learnMoreOpen}
+          >
+            <span>Learn more about hostels near UPSA</span>
+            <span className={`learn-more-arrow ${learnMoreOpen ? "open" : ""}`}>
+              ▾
+            </span>
+          </button>
+
+          <div
+            className={`learn-more-content ${learnMoreOpen ? "open" : "closed"}`}
+          >
+            <div className="homepage-intro-text">
+              <h1>Find Verified Student Hostels Near UPSA</h1>
+              <p>
+                Starting fresh at the University of Professional Studies, Accra
+                (UPSA)? Finding the right hostel is one of the most stressful
+                parts of freshman year — Episilion Hostels makes it simple. We
+                list verified, student-friendly hostels near UPSA's main campus,
+                so you can compare prices, room types, amenities, and walking
+                distance to campus, all in one place, before you commit to
+                anything.
+              </p>
+              <p>
+                Whether you're a UPSA fresher looking for an affordable hostel
+                on a tight budget, a hostel with Wi-Fi and 24-hour security, or
+                a self-contained room close to Madina and Legon Road, our
+                listings cover a range of options for boys, girls, and mixed
+                accommodation. Every hostel on Episilion Hostels is verified
+                before it's listed, so new students moving to Accra for the
+                first time can book with confidence instead of guessing from
+                word of mouth.
+              </p>
+            </div>
+
+            <div className={`homepage-how-it-works ${learnMoreOpen ? "open" : "closed"}`}>
+              <h2>How Booking a Hostel Near UPSA Works</h2>
+              <div className="how-it-works-steps">
+                <div className="how-it-works-step">
+                  <h3>1. Search</h3>
+                  <p>
+                    Filter hostels near UPSA by gender, price, and distance to
+                    campus.
+                  </p>
+                </div>
+                <div className="how-it-works-step">
+                  <h3>2. Compare</h3>
+                  <p>
+                    Check amenities, room types, and real student reviews side
+                    by side.
+                  </p>
+                </div>
+                <div className="how-it-works-step">
+                  <h3>3. Book</h3>
+                  <p>
+                    Reserve your room and pay securely with Mobile Money or
+                    Paystack.
+                  </p>
+                </div>
+                <div className="how-it-works-step">
+                  <h3>4. Move In</h3>
+                  <p>
+                    Get direct contact details for your hostel manager and
+                    settle in before semester begins.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
 
         <div className="more-hostels-container">
           <p>More Hostels on the way — stay tuned!</p>

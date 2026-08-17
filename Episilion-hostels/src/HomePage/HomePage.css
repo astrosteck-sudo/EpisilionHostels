@@ -789,6 +789,237 @@ input[type="number"] {
   font-weight: bold;
 }
 
+
+/* === Learn More / SEO Section === */
+.homepage-seo-content {
+  --epi-green: #0b7a3e;
+  --epi-green-dark: #085c2f;
+  --epi-green-light: #e8f5ee;
+  --epi-cream: #f9f7f4;
+  --epi-cream-dark: #f0ece5;
+  --epi-text: #1f2937;
+  --epi-muted: #6b7280;
+  --epi-radius: 16px;
+  --epi-radius-sm: 12px;
+  --epi-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  --epi-shadow-hover: 0 8px 28px rgba(0, 0, 0, 0.1);
+
+  max-width: 1100px;
+  margin: 48px auto;
+  padding: 0 20px;
+  font-family: inherit;
+  height: auto;
+}
+
+/* Toggle button */
+.learn-more-toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 24px;
+  background: #fff;
+  border: 1px solid var(--epi-cream-dark);
+  border-radius: var(--epi-radius);
+  box-shadow: var(--epi-shadow);
+  color: var(--epi-text);
+  font-size: 1.05rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.learn-more-toggle:hover {
+  box-shadow: var(--epi-shadow-hover);
+  border-color: var(--epi-green-light);
+}
+
+.learn-more-toggle:focus-visible {
+  outline: 2px solid var(--epi-green);
+  outline-offset: 2px;
+}
+
+.learn-more-arrow {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--epi-green-light);
+  color: var(--epi-green);
+  font-size: 0.85rem;
+  transition: transform 0.3s ease, background 0.2s ease;
+  flex-shrink: 0;
+}
+
+.learn-more-arrow.open {
+  transform: rotate(180deg);
+}
+
+/* Collapsible content */
+.learn-more-content {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.35s ease, opacity 0.3s ease;
+  opacity: 0;
+  margin-top: 16px;
+}
+
+.learn-more-content.open {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+.learn-more-content > div {
+  overflow: hidden;
+}
+
+/* Intro card */
+.homepage-intro-text {
+  background: #fff;
+  border: 1px solid var(--epi-cream-dark);
+  border-radius: var(--epi-radius);
+  padding: 32px;
+  box-shadow: var(--epi-shadow);
+  margin-bottom: 24px;
+}
+
+.homepage-intro-text h1 {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 700;
+  color: var(--epi-green);
+  margin: 0 0 18px 0;
+  line-height: 1.25;
+  font-family: OutfitSemiBold;
+}
+
+.homepage-intro-text p {
+  font-size: 1rem;
+  line-height: 1.75;
+  color: var(--epi-text);
+  margin: 0 0 16px 0;
+  font-family: OutfitLight;
+}
+
+.homepage-intro-text p:last-child {
+  margin-bottom: 0;
+}
+
+/* How it works */
+.homepage-how-it-works {
+  background: var(--epi-cream);
+  border: 1px solid var(--epi-cream-dark);
+  border-radius: var(--epi-radius);
+  padding: 32px;
+}
+.homepage-how-it-works.closed{
+  display: none;
+}
+
+.homepage-how-it-works h2 {
+  font-size: clamp(1.25rem, 2.5vw, 1.6rem);
+  font-weight: 700;
+  color: var(--epi-text);
+  margin: 0 0 24px 0;
+  text-align: center;
+}
+
+.how-it-works-steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.how-it-works-step {
+  background: #fff;
+  border: 1px solid var(--epi-cream-dark);
+  border-radius: var(--epi-radius-sm);
+  padding: 22px;
+  box-shadow: var(--epi-shadow);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.how-it-works-step:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--epi-shadow-hover);
+}
+
+.how-it-works-step h3 {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--epi-green);
+  margin: 0 0 10px 0;
+  font-family: OutfitMedium;
+}
+
+.how-it-works-step h3::before {
+  content: attr(data-step);
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--epi-green);
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+/* If you can't add data-step attributes, use this fallback numbering */
+.how-it-works-step:nth-child(1) h3::before { content: "1"; }
+.how-it-works-step:nth-child(2) h3::before { content: "2"; }
+.how-it-works-step:nth-child(3) h3::before { content: "3"; }
+.how-it-works-step:nth-child(4) h3::before { content: "4"; }
+
+.how-it-works-step p {
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: var(--epi-muted);
+  margin: 0;
+  font-family: OutfitLight;
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+  .homepage-seo-content {
+    margin: 32px auto;
+    padding: 0 16px;
+  }
+
+  .learn-more-toggle {
+    padding: 16px 18px;
+    font-size: 0.95rem;
+  }
+
+  .homepage-intro-text,
+  .homepage-how-it-works {
+    padding: 22px;
+  }
+
+  .how-it-works-steps {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .learn-more-content,
+  .learn-more-arrow,
+  .learn-more-toggle,
+  .how-it-works-step {
+    transition: none;
+  }
+
+  .how-it-works-step:hover {
+    transform: none;
+  }
+}
+
+
 @media only screen and (max-width: 600px) {
   .filter-buttons {
     padding-top: 5px;

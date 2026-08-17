@@ -1,16 +1,23 @@
-import fs from 'fs';
-//import fetch from 'node-fetch'; // Install via: npm install node-fetch
+import fs from "fs";
 
-const BASE_URL = 'https://episilionhostels.com';
-const API_URL = 'https://episilion-backend-2lt0.onrender.com/api/hostels'; // Your actual API endpoint
+const BASE_URL = "https://www.episilionhostels.com";
+const API_URL = "https://episilion-backend-2lt0.onrender.com/api/hostels";
+
+function buildHostelSlug(hostel) {
+  if (!hostel?.name || !hostel?.id) return hostel?.id || "";
+  const namePart = hostel.name
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
+  return `${namePart}-${hostel.id}`;
+}
 
 async function generateSitemap() {
   try {
-    // 1. Fetch all hostel IDs from your database API
     const response = await fetch(API_URL);
     const hostels = await response.json();
 
-    // 2. Start building the XML structure with your static pages
     let xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <!-- Static Pages -->
@@ -20,16 +27,16 @@ async function generateSitemap() {
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>${BASE_URL}/about</loc>
+    <loc>${BASE_URL}/aboutus</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
 `;
 
-    // 3. Loop through your API array and dynamically append your hostel pages
     hostels.forEach((hostel) => {
+      const slug = buildHostelSlug(hostel);
       xml += `  <url>
-    <loc>${BASE_URL}/moreDetails?hostelId=${hostel.id}</loc>
+    <loc>${BASE_URL}/hostels/${slug}</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>\n`;
@@ -37,11 +44,10 @@ async function generateSitemap() {
 
     xml += `</urlset>`;
 
-    // 4. Write the file straight to your React public directory
-    fs.writeFileSync('./public/sitemap.xml', xml);
-    console.log('✅ Sitemap successfully generated in public folder!');
+    fs.writeFileSync("./public/sitemap.xml", xml);
+    console.log("✅ Sitemap successfully generated with slug URLs!");
   } catch (error) {
-    console.error('Error generating sitemap:', error);
+    console.error("Error generating sitemap:", error);
   }
 }
 
