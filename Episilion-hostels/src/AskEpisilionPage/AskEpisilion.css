@@ -667,6 +667,7 @@ body.episilion-bg {
   align-items: stretch;
   gap: 10px;
   width: 100%;
+  text-decoration: none;
   box-sizing: border-box;
   text-align: left;
   font: inherit;

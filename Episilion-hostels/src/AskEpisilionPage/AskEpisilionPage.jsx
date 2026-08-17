@@ -7,6 +7,7 @@ import axios from "axios";
 import { getDeviceId } from "../UTILS/deviceId.js";
 
 import { initializePayment } from "../services/paymentService";
+import {buildHostelSlug } from "../UTILS/slugFunctions.js";
 
 import { Robot, Send, LightbulbFill, Building } from "react-bootstrap-icons";
 
@@ -161,10 +162,6 @@ export function AskEpisilionPage({ isLoggedIn }) {
     } finally {
       setIsLoading(false);
     }
-  }
-
-  function goToHostelPage(parameter) {
-    navigate(`/moreDetails?hostelId=${parameter}`);
   }
 
   //Allow sending with Enter key
@@ -353,11 +350,11 @@ export function AskEpisilionPage({ isLoggedIn }) {
                       <>
                         <div className="epi-hostel-grid">
                           {chat.message.map((hostel) => (
-                            <button
+                            <Link
                               key={hostel.id}
                               type="button"
                               className="epi-hostel-card"
-                              onClick={() => goToHostelPage(hostel.id)}
+                              to={`/hostels/${buildHostelSlug(hostel)}`}
                             >
                               <div className="epi-hostel-info">
                                 <div className="epi-hostel-thumb">
@@ -407,7 +404,7 @@ export function AskEpisilionPage({ isLoggedIn }) {
                                   />
                                 </svg>
                               </span>
-                            </button>
+                            </Link>
                           ))}
                         </div>
 

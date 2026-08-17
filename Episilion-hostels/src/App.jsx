@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router";
+import { Routes, Route, Navigate, useSearchParams } from "react-router";
 import { HomePage } from "./HomePage/HomePage";
 import { MoreDetailsPage } from "./MoreDetailsPage/MoreDetailsPage";
 import { useState, useEffect } from "react";
@@ -21,6 +21,16 @@ import { PrivacyPolicy } from "./services/PrivacyPolicy.jsx";
 import { SiteFooter } from "./SiteFooter/SiteFooter.jsx";
 import { useLocation } from "react-router-dom";
 import { MobileNavButtons } from "./SiteFooter/MobileNavButtons.jsx";
+import { buildHostelSlug } from "./UTILS/slugFunctions.js";
+
+function LegacyHostelRedirect({ originalHostelCardData }) {
+  const [searchParams] = useSearchParams();
+  const hostelId = searchParams.get("hostelId");
+  const hostel = originalHostelCardData.find((h) => h.id === hostelId);
+
+  if (!hostel) return <Navigate to="/" replace />;
+  return <Navigate to={`/hostels/${buildHostelSlug(hostel)}`} replace />;
+}
 
 function App() {
   const [hostelsCardData, sethostelsCardData] = useState([]);
@@ -29,8 +39,6 @@ function App() {
   const [showLogoutModal, setShowLogoutModal] = useState(false); //this is for the pop up that appears when the user is trying to log out
   const [showManagerLogoutModal, setShowManagerLogoutModal] = useState(false);
   const [loading, setLoading] = useState(true); //THIS CONTROLS THE CSS LOADING STATE
-
-  
 
   const loadHostelsCard = async () => {
     try {
@@ -72,7 +80,6 @@ function App() {
     "/oauthsuccess",
     "/oautherror",
   ].includes(location.pathname);
-
 
   useEffect(() => {
     if (hostelsCardData?.length > 0) {
@@ -122,9 +129,17 @@ function App() {
         />
 
         <Route
-          path="moreDetails"
+          path="hostels/:slug"
           element={
             <MoreDetailsPage originalHostelCardData={originalHostelCardData} />
+          }
+        />
+        <Route
+          path="moreDetails"
+          element={
+            <LegacyHostelRedirect
+              originalHostelCardData={originalHostelCardData}
+            />
           }
         />
         <Route path="aboutus" element={<AboutUsPage />} />

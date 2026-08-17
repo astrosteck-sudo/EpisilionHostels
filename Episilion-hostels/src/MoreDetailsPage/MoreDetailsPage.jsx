@@ -10,6 +10,8 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Reviews } from "./ReviewsData.jsx";
 import { Helmet } from "react-helmet-async";
+import { useParams } from "react-router-dom";
+import { extractHostelIdFromSlug } from "../UTILS/slugFunctions.js";
 import {
   CheckCircleFill,
   InfoCircle,
@@ -33,8 +35,8 @@ export function MoreDetailsPage({ originalHostelCardData }) {
 
   const url = "https://episilion-backend-2lt0.onrender.com"; //THIS IS THE URL FOR THE BACKEND, THIS IS USED TO ACCESS THE IMAGES IN THE PUBLIC FOLDER OF THE BACKEND
 
-  const params = new URLSearchParams(window.location.search);
-  const hostelId = params.get("hostelId");
+  const { slug } = useParams();
+  const hostelId = extractHostelIdFromSlug(slug);
   //let foundHostel = null;
 
   const foundHostel = originalHostelCardData.find(
@@ -181,7 +183,7 @@ export function MoreDetailsPage({ originalHostelCardData }) {
 
         <link
           rel="canonical"
-          href={`https://www.episilionhostels.com/moreDetails?hostelId=${foundHostel?.id}`}
+          href={`https://www.episilionhostels.com/hostels/${slug}`}
         />
         <meta
           name="description"
@@ -195,7 +197,7 @@ export function MoreDetailsPage({ originalHostelCardData }) {
         <meta property="og:image" content={foundHostel?.image} />
         <meta
           property="og:url"
-          content={`https://www.episilionhostels.com/moreDetails?hostelId=${foundHostel?.id}`}
+          content={`https://www.episilionhostels.com/hostels/${slug}`}
         />
         <meta name="twitter:card" content="summary_large_image" />
 
@@ -220,7 +222,7 @@ export function MoreDetailsPage({ originalHostelCardData }) {
             },
             telephone: foundHostel?.contact?.phone,
             email: foundHostel?.contact?.email,
-            url: `https://www.episilionhostels.com/moreDetails?hostelId=${foundHostel?.id}`,
+            url: `https://www.episilionhostels.com/hostels/${slug}`,
             description: `Affordable ${foundHostel?.rooms?.types?.map((r) => r.type).join(", ")} hostel near UPSA with ${foundHostel?.amenities?.join(", ")}.`,
           })}
         </script>

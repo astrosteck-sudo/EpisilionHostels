@@ -9,12 +9,17 @@ export default async function middleware(request: Request) {
   const userAgent = request.headers.get('user-agent')?.toLowerCase() || '';
 
   const bots = [
-    'googlebot', 'bingbot', 'yandexbot', 'baiduspider', 'facebookexternalhit',
-    'twitterbot', 'rogerbot', 'linkedinbot', 'embedly', 'quora link preview',
-    'showyoubot', 'outbrain', 'pinterest/0.', '://google.com',
-    'slackbot', 'vkshare', 'w3c_validator', 'redditbot', 'applebot', 'whatsapp', 'flipboard', 'tumblr',
-    'prerender' // 🌟 REQUIRED: Allows Prerender.io's verification wizard to see your integration!
-  ];
+  'googlebot', 'bingbot', 'yandexbot', 'baiduspider', 'facebookexternalhit',
+  'twitterbot', 'rogerbot', 'linkedinbot', 'embedly', 'quora link preview',
+  'showyoubot', 'outbrain', 'pinterest/0.', '://google.com',
+  'slackbot', 'vkshare', 'w3c_validator', 'redditbot', 'applebot', 'whatsapp', 'flipboard', 'tumblr',
+  'prerender',
+  // AI crawlers
+  'gptbot', 'chatgpt-user', 'oai-searchbot',
+  'claudebot', 'claude-web', 'anthropic-ai',
+  'perplexitybot', 'perplexity-user',
+  'ccbot', 'google-extended', 'bytespider', 'diffbot', 'youbot'
+];
 
   const isBot = bots.some(bot => userAgent.includes(bot));
 

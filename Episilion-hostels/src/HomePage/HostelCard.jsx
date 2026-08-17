@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import "./HostelCard.css";
 import { kilometersToMeters } from "../UTILS/kilometerConvertor";
 import { Link } from "react-router-dom";
+import { buildHostelSlug } from "../UTILS/slugFunctions.js";
 
 export function HostelCard({ hostel }) {
   //THIS IS THE URL FOR THE BACKEND, THIS IS USED TO ACCESS THE IMAGES IN THE PUBLIC FOLDER OF THE BACKEND
@@ -132,11 +133,11 @@ export function HostelCard({ hostel }) {
         </div>
         <p className="view-more-details">
           <Link
-            to={`/moreDetails?hostelId=${hostel?.id}`}
-            className="view-more-details-link js-view-more-details"
-          >
-            View Details
-          </Link>
+  to={`/hostels/${buildHostelSlug(hostel)}`}
+  className="view-more-details-link js-view-more-details"
+>
+  View Details
+</Link>
         </p>
       </div>
     </div>
