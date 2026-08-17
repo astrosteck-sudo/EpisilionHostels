@@ -31,6 +31,11 @@ async function generateSitemap() {
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
+  <url>
+    <loc>${BASE_URL}/hostels-near-upsa</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
 `;
 
     hostels.forEach((hostel) => {

@@ -1,0 +1,157 @@
+/* === Campus Landing Page === */
+.campus-landing-container {
+  --epi-green: #0b7a3e;
+  --epi-green-dark: #085c2f;
+  --epi-green-light: #e8f5ee;
+  --epi-cream: #f9f7f4;
+  --epi-cream-dark: #f0ece5;
+  --epi-text: #1f2937;
+  --epi-muted: #6b7280;
+  --epi-radius: 16px;
+  --epi-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 20px 64px;
+  background-color: var(--epi-cream);
+  color: var(--epi-text);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.7;
+  margin-top: 80px;
+}
+
+/* Hero */
+.campus-landing-hero {
+  text-align: center;
+  padding: 48px 24px;
+  margin-bottom: 40px;
+  background: linear-gradient(135deg, #ffffff 0%, var(--epi-cream-dark) 100%);
+  border-radius: var(--epi-radius);
+  box-shadow: var(--epi-shadow);
+  border: 1px solid rgba(11, 122, 62, 0.08);
+}
+
+.campus-landing-hero h1 {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 800;
+  color: var(--epi-green-dark);
+  margin: 0 0 16px;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.campus-landing-subtitle {
+  font-size: clamp(1rem, 2vw, 1.125rem);
+  color: var(--epi-muted);
+  margin: 0 auto;
+  max-width: 600px;
+  line-height: 1.6;
+}
+
+/* Sections */
+.campus-landing-section {
+  margin-bottom: 40px;
+  padding: 32px;
+  background: #ffffff;
+  border-radius: var(--epi-radius);
+  box-shadow: var(--epi-shadow);
+  border: 1px solid rgba(11, 122, 62, 0.06);
+}
+
+.campus-landing-section h2 {
+  font-size: 1.375rem;
+  font-weight: 700;
+  color: var(--epi-green-dark);
+  margin: 0 0 20px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--epi-green-light);
+  display: inline-block;
+}
+
+.campus-landing-section p {
+  margin: 0 0 18px;
+  color: var(--epi-text);
+  font-size: 1rem;
+}
+
+.campus-landing-section p:last-child {
+  margin-bottom: 0;
+}
+
+/* Featured Hostels Grid */
+.campus-landing-hostel-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+  margin: 24px 0 28px;
+}
+
+/* CTA Link */
+.campus-landing-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 24px;
+  background-color: var(--epi-green);
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: none;
+  border-radius: 999px;
+  transition: background-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 14px rgba(11, 122, 62, 0.25);
+}
+
+.campus-landing-cta:hover {
+  background-color: var(--epi-green-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(11, 122, 62, 0.32);
+}
+
+.campus-landing-cta:active {
+  transform: translateY(0);
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .campus-landing-container {
+    padding: 24px 16px 48px;
+  }
+
+  .campus-landing-hero {
+    padding: 32px 20px;
+    margin-bottom: 28px;
+  }
+
+  .campus-landing-section {
+    padding: 24px;
+    margin-bottom: 24px;
+  }
+
+  .campus-landing-section h2 {
+    font-size: 1.25rem;
+  }
+
+  .campus-landing-hostel-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin: 20px 0 24px;
+  }
+
+  .campus-landing-cta {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+    padding: 14px 20px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .campus-landing-cta {
+    transition: none;
+  }
+
+  .campus-landing-cta:hover {
+    transform: none;
+  }
+}

@@ -85,6 +85,12 @@ export function SiteFooter() {
               Privacy Policy
             </Link>
           </p>
+
+          <p>
+            <Link className="site-footer-links" to="/hostels-near-upsa">
+              hostels Near UPSA
+            </Link>
+          </p>
         </div>
 
         <div className="site-footer-short-descriptions">
