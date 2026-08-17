@@ -26,7 +26,7 @@ export function HomePage({
   const [suggestionBoxOpen, setSuggestionBoxOpen] = useState(false); //THIS CONTOLS THE CSS THAT DETERMINES WHEATHER OR NOT THE SUGGESTION BOX IS OPEN
   const [value, setValue] = useState(""); //THIS CONTROLLS THE TEXT THE USER TYPES IN THE SEARCH BOX
   const [hostelsFound, setHostelsFound] = useState(true); //THIS CONTROLS THE not found image AND text
-  
+
   const [filterMenu, setFilterMenu] = useState(false); // THIS CONTROLS THE FILTER MENU OPEN AND CLOSE
   //THESE CONTROLS THE COLOR OF THE BACKGROUND OF THE TEXT WHEN IT IS CLICKED
   const [allActive, setAllActive] = useState(true);
@@ -36,7 +36,6 @@ export function HomePage({
   const [underActive, setUnderActive] = useState(false);
 
   //console.log(hostelsCardData)
-  
 
   //const filterMenu = useRef(null) //THIS WILL SELECT THE filter menu
 
@@ -301,11 +300,84 @@ export function HomePage({
             </div> */}
 
       <Helmet>
-        <title>Epsilion Hostels</title>
+        <title>
+          Hostels Near UPSA | Book Verified Student Hostels Online – Episilion
+          Hostels
+        </title>
+
+        <link rel="canonical" href="https://www.episilionhostels.com/" />
+
         <meta
           name="description"
-          content="Find affordable and verified student hostels near UPSA. Browse our up-to-date listings, compare prices, and book your perfect stay with confidence. Your next home awaits!"
+          content="Find and book verified student hostels near UPSA (University of Professional Studies, Accra). Compare prices, room types, and amenities, read real reviews, and pay securely with Mobile Money or Paystack — no site visits required."
         />
+
+        <meta
+          name="keywords"
+          content="hostels near UPSA, UPSA hostel booking, student hostels Accra, UPSA accommodation, affordable hostels UPSA, hostel booking Ghana"
+        />
+
+        {/* Open Graph */}
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="Episilion Hostels" />
+        <meta
+          property="og:title"
+          content="Hostels Near UPSA | Episilion Hostels"
+        />
+        <meta
+          property="og:description"
+          content="Browse and book verified student hostels near UPSA. Compare prices, amenities, and locations — secure payments, real reviews, direct manager contact."
+        />
+        <meta property="og:url" content="https://www.episilionhostels.com/" />
+        <meta
+          property="og:image"
+          content="https://www.episilionhostels.com/og-image.jpg"
+        />
+        <meta property="og:locale" content="en_GH" />
+
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta
+          name="twitter:title"
+          content="Hostels Near UPSA | Episilion Hostels"
+        />
+        <meta
+          name="twitter:description"
+          content="Find and book verified student hostels near UPSA — compare prices, amenities, and pay securely online."
+        />
+        <meta
+          name="twitter:image"
+          content="https://www.episilionhostels.com/og-image.jpg"
+        />
+
+        {/* WebSite + SearchAction JSON-LD */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            name: "Episilion Hostels",
+            url: "https://www.episilionhostels.com/",
+            description:
+              "Book verified student hostels near UPSA. Compare prices, amenities, and locations, and pay securely with Mobile Money or Paystack.",
+          })}
+        </script>
+
+        {/* Organization JSON-LD - builds brand entity recognition */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            name: "Episilion Hostels",
+            url: "https://www.episilionhostels.com/",
+            logo: "https://www.episilionhostels.com/logo.png",
+            description:
+              "A platform for finding and booking verified student hostels near UPSA, Accra.",
+            areaServed: {
+              "@type": "City",
+              name: "Accra",
+            },
+          })}
+        </script>
       </Helmet>
 
       <section>
@@ -491,9 +563,7 @@ export function HomePage({
             </div>
           </div>
 
-          <div
-            className={`filter-horizontal-bar`}
-          >
+          <div className={`filter-horizontal-bar`}>
             {/* <div
               className={`filter-buttons main-filter`}
               onClick={openFilterMenu}

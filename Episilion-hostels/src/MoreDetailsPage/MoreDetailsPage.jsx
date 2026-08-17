@@ -185,7 +185,7 @@ export function MoreDetailsPage({ originalHostelCardData }) {
         />
         <meta
           name="description"
-          content={`Affordable ${foundHostel?.type} hostel near UPSA with ${foundHostel?.amenities.join(", ")}.`}
+          content={`Affordable ${foundHostel?.rooms?.types?.map((r) => r.type).join(", ")} hostel near UPSA with ${foundHostel?.amenities?.join(", ")}. Rooms from GHS ${foundHostel?.pricing?.priceMin} - GHS ${foundHostel?.pricing?.priceMax} per semester.`}
         />
         <meta property="og:title" content={foundHostel?.name} />
         <meta
@@ -205,22 +205,23 @@ export function MoreDetailsPage({ originalHostelCardData }) {
             "@type": "LodgingBusiness",
             name: foundHostel?.name,
             image: foundHostel?.image,
-            priceRange: foundHostel?.priceMin
-              ? `GHS ${foundHostel.priceMin} - GHS ${foundHostel.priceMax}`
+            priceRange: foundHostel?.pricing?.priceMin
+              ? `GHS ${foundHostel.pricing.priceMin} - GHS ${foundHostel.pricing.priceMax}`
               : "Price not available",
             address: {
               "@type": "PostalAddress",
               streetAddress:
-                foundHostel?.latitude && foundHostel?.longitude
-                  ? `Latitude: ${foundHostel.latitude}, Longitude: ${foundHostel.longitude}`
+                foundHostel?.location?.latitude &&
+                foundHostel?.location?.longitude
+                  ? `Latitude: ${foundHostel.location.latitude}, Longitude: ${foundHostel.location.longitude}`
                   : "Address not available",
               addressLocality: "Accra",
               addressCountry: "GH",
             },
-            telephone: foundHostel?.contact.phone,
-            email: foundHostel?.contact.email,
+            telephone: foundHostel?.contact?.phone,
+            email: foundHostel?.contact?.email,
             url: `https://www.episilionhostels.com/moreDetails?hostelId=${foundHostel?.id}`,
-            description: `Affordable ${foundHostel?.type} hostel near UPSA with ${foundHostel?.amenities.join(", ")}.`,
+            description: `Affordable ${foundHostel?.rooms?.types?.map((r) => r.type).join(", ")} hostel near UPSA with ${foundHostel?.amenities?.join(", ")}.`,
           })}
         </script>
       </Helmet>
@@ -264,7 +265,9 @@ export function MoreDetailsPage({ originalHostelCardData }) {
                       className="favorite-button"
                       onClick={addHostelToFavorite}
                     >
-                      <p>{isFavorite ? 'Added to favorite' : 'Add to favorite'}</p>
+                      <p>
+                        {isFavorite ? "Added to favorite" : "Add to favorite"}
+                      </p>
                     </button>
 
                     <button
