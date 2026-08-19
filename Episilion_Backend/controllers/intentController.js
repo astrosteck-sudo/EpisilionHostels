@@ -212,7 +212,7 @@ async function incrementUsage(req) {
     );
 
     const [updatedUsage] = await pool.query(
-      `SELECT requests_used, usage_date
+      `SELECT requests_used
        FROM usage_logs
        WHERE user_id = ? AND usage_date = ?`,
       [req.user.user_id, today],
@@ -221,21 +221,23 @@ async function incrementUsage(req) {
     return req.aiUsage.requests_limit - updatedUsage[0].requests_used;
   }
 
+  // FREE USER — burn one credit from both the account and the device
   await pool.query(
-    `UPDATE device_ai_usage
-     SET requests_used = requests_used + 1
-     WHERE device_id = ?`,
+    `UPDATE ai_usage SET requests_used = requests_used + 1 WHERE user_id = ?`,
+    [req.user.user_id],
+  );
+
+  await pool.query(
+    `UPDATE device_ai_usage SET requests_used = requests_used + 1 WHERE device_id = ?`,
     [req.headers["x-device-id"]],
   );
 
-  const [updatedUsage] = await pool.query(
-    `SELECT requests_used, requests_limit
-     FROM device_ai_usage
-     WHERE device_id = ?`,
-    [req.headers["x-device-id"]],
+  const [updatedAiUsage] = await pool.query(
+    `SELECT requests_used, requests_limit FROM ai_usage WHERE user_id = ?`,
+    [req.user.user_id],
   );
 
-  return updatedUsage[0].requests_limit - updatedUsage[0].requests_used;
+  return updatedAiUsage[0].requests_limit - updatedAiUsage[0].requests_used;
 }
 
 // Main controller

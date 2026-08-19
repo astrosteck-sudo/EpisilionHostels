@@ -77,62 +77,42 @@ const checkAIUsage = async (req, res, next) => {
       return next();
     }
 
+       // =========================
+    // 3. FREE USER LOGIC (ACCOUNT)
     // =========================
-    // 3. FREE USER LOGIC (DEVICE)
-    // =========================
-    const deviceId = req.headers["x-device-id"];
-
-    if (!deviceId) {
-      return res.status(400).json({
-        error: "No device ID provided",
-      });
-    }
-
-    let [rows] = await pool.query(
-      `
-      SELECT *
-      FROM device_ai_usage
-      WHERE device_id = ?
-      `,
-      [deviceId]
+    let [aiRows] = await pool.query(
+      `SELECT * FROM ai_usage WHERE user_id = ?`,
+      [userId]
     );
 
-    if (rows.length === 0) {
+    if (aiRows.length === 0) {
       await pool.query(
-        `
-        INSERT INTO device_ai_usage (device_id)
-        VALUES (?)
-        `,
-        [deviceId]
+        `INSERT INTO ai_usage (user_id, requests_used, requests_limit)
+         VALUES (?, 0, 3)`,
+        [userId]
       );
 
-      [rows] = await pool.query(
-        `
-        SELECT *
-        FROM device_ai_usage
-        WHERE device_id = ?
-        `,
-        [deviceId]
+      [aiRows] = await pool.query(
+        `SELECT * FROM ai_usage WHERE user_id = ?`,
+        [userId]
       );
     }
 
-    const deviceUsage = rows[0];
+    const aiUsage = aiRows[0];
 
-    if (deviceUsage.requests_used >= deviceUsage.requests_limit) {
+    if (aiUsage.requests_used >= aiUsage.requests_limit) {
       return res.status(403).json({
-        error: "device_limit_reached",
-        message: "This device has used all free AI requests.",
+        error: "account_limit_reached",
+        message: "This account has used all free AI requests. Please subscribe to continue.",
       });
     }
 
     req.isPremium = false;
 
     req.aiUsage = {
-      requests_used: deviceUsage.requests_used,
-      requests_limit: deviceUsage.requests_limit,
+      requests_used: aiUsage.requests_used,
+      requests_limit: aiUsage.requests_limit,
     };
-
-    req.deviceUsage = deviceUsage;
 
     return next();
   } catch (err) {
