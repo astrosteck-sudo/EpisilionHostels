@@ -521,7 +521,7 @@ export function HomePage({
           <p className="intro-text-one">
             Find Comfortable,
             <span className="affodable-and-safe-text">Affordable & Safe </span>
-            Hostels Near You
+            Hostels Near UPSA
           </p>
 
           <p className="intro-text-two">
@@ -563,7 +563,7 @@ export function HomePage({
               </svg>
             </div>
           </div>
-
+you
           <div className={`filter-horizontal-bar`}>
             {/* <div
               className={`filter-buttons main-filter`}
