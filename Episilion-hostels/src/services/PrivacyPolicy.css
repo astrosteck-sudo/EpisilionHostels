@@ -1,0 +1,127 @@
+/* === Privacy Policy === */
+.epi-privacy {
+  --epi-green: #0b7a3e;
+  --epi-green-dark: #085c2f;
+  --epi-green-light: #e8f5ee;
+  --epi-cream: #f9f7f4;
+  --epi-cream-dark: #f0ece5;
+  --epi-text: #1f2937;
+  --epi-muted: #6b7280;
+  --epi-radius: 20px;
+
+  min-height: 100vh;
+  padding: 48px 20px;
+  background: var(--epi-cream);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  margin-top: 80px;
+}
+
+.epi-privacy-card {
+  width: 100%;
+  max-width: 760px;
+  background: #ffffff;
+  border: 1px solid var(--epi-cream-dark);
+  border-radius: var(--epi-radius);
+  padding: 40px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.05);
+}
+
+.epi-privacy-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 8px;
+}
+
+.epi-privacy-bar {
+  width: 6px;
+  height: 32px;
+  background: var(--epi-green);
+  border-radius: 999px;
+}
+
+.epi-privacy-header h1 {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--epi-text);
+  letter-spacing: -0.02em;
+  margin: 0;
+  font-family: OutfitSemiBold;
+}
+
+.epi-privacy-updated {
+  margin: 0 0 28px 20px;
+  font-size: 14px;
+  color: var(--epi-muted);
+}
+
+.epi-privacy-section {
+  padding: 22px 0;
+  border-top: 1px solid var(--epi-cream-dark);
+}
+
+.epi-privacy-section:first-of-type {
+  border-top: none;
+  padding-top: 0;
+}
+
+.epi-privacy-section h2 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--epi-green);
+  margin: 0 0 10px;
+  font-family: OutfitMedium;
+}
+
+.epi-privacy-section p {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--epi-text);
+  margin: 0;
+  font-family: OutfitLight;
+}
+
+.epi-privacy-link {
+  color: var(--epi-green);
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s ease;
+}
+
+.epi-privacy-link:hover {
+  border-bottom-color: var(--epi-green);
+}
+
+@media (max-width: 640px) {
+  .epi-privacy {
+    padding: 24px 16px;
+  }
+
+  .epi-privacy-card {
+    padding: 28px 22px;
+    border-radius: 16px;
+  }
+
+  .epi-privacy-header h1 {
+    font-size: 26px;
+  }
+
+  .epi-privacy-bar {
+    height: 26px;
+  }
+
+  .epi-privacy-updated {
+    margin-left: 0;
+  }
+
+  .epi-privacy-section h2 {
+    font-size: 16px;
+  }
+
+  .epi-privacy-section p {
+    font-size: 14px;
+  }
+}
