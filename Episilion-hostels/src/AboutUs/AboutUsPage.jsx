@@ -259,7 +259,7 @@ export function AboutUsPage() {
             </a>
           </div>
         </div>
-        <div className="message-container">
+        {/* <div className="message-container">
           <div className="inputs-container">
             <p>Full Name</p>
             <input type="text" placeholder="John Doe" />
@@ -274,7 +274,7 @@ export function AboutUsPage() {
             <p>Message</p>
             <textarea></textarea>
           </div>
-        </div>
+        </div> */}
       </div>
     </>
   );
