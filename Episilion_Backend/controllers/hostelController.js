@@ -2,6 +2,7 @@ const pool = require("../config/db.js"); // ✅ import pool
 const cache = require("../utils/cache");
 
 exports.getHostels = async (req, res) => {
+  console.log("Fetching hostels...");
   try {
     const cachedData = cache.get("allHostels");
     if (cachedData) {
@@ -106,7 +107,7 @@ exports.getHostels = async (req, res) => {
 
     cache.set("allHostels", fullData);
     console.log("Hostels cached");
-    console.log(fullData)
+    //console.log(fullData)
     res.json(fullData);
   } catch (err) {
     console.error("Error fetching hostels:", err);

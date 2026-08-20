@@ -320,7 +320,7 @@ body.episilion-bg {
   word-wrap: break-word;
   border-top-right-radius: 0;
   font-size: clamp(12px, 2vw, 16px);
-  font-family: OutfitMedium;
+  font-family: OutfitLight;
   /* Flattens corner where tail meets */
 }
 

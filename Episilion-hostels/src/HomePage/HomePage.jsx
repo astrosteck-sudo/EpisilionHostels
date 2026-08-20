@@ -558,7 +558,7 @@ export function HomePage({
                 >
                   <circle cx="11.5" cy="11.5" r="4" />
 
-                  <line x1="14.5" y1="14.5" x2="17.5" x2="17.5" y2="17.5" />
+                  <line x1="14.5" y1="14.5" x2="17.5" y2="17.5" />
                 </g>
               </svg>
             </div>

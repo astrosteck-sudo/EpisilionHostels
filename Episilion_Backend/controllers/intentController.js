@@ -5,6 +5,7 @@ const { getDistance } = require("geolib");
 const client = new OpenAI({
   apiKey: process.env.NVIDIA_API_KEY,
   baseURL: "https://integrate.api.nvidia.com/v1",
+  timeout: 30000, // reasoning models can take longer than plain instruct models
 });
 
 // DB helper
@@ -201,6 +202,7 @@ function parseAI(text) {
 
 // Increment + return remaining AI requests for the current user/device
 async function incrementUsage(req) {
+  console.log("[incrementUsage] start, isPremium:", req.isPremium);
   const today = new Date().toISOString().split("T")[0];
 
   if (req.isPremium) {
@@ -218,6 +220,7 @@ async function incrementUsage(req) {
       [req.user.user_id, today],
     );
 
+    console.log("[incrementUsage] premium done");
     return req.aiUsage.requests_limit - updatedUsage[0].requests_used;
   }
 
@@ -237,12 +240,14 @@ async function incrementUsage(req) {
     [req.user.user_id],
   );
 
+  console.log("[incrementUsage] free user done:", updatedAiUsage[0]);
   return updatedAiUsage[0].requests_limit - updatedAiUsage[0].requests_used;
 }
 
 // Main controller
 exports.searchHostelsAI = async (req, res) => {
   const { query } = req.body;
+  console.log("[1] Received query:", query);
 
   // 1. VALIDATE
   if (!query || typeof query !== "string" || query.trim() === "") {
@@ -250,12 +255,14 @@ exports.searchHostelsAI = async (req, res) => {
   }
 
   const isHostelQuery = classifyQuery(query);
+  console.log("[2] isHostelQuery:", isHostelQuery);
 
   try {
     // 2A. NON-HOSTEL QUERY → plain chatbot mode, no site data involved
     if (!isHostelQuery) {
+      console.log("[3a] entering chat branch, calling AI...");
       const completion = await client.chat.completions.create({
-        model: "meta/llama-3.1-8b-instruct",
+        model: "nvidia/nemotron-3-super-120b-a12b",
         temperature: 0.5,
         messages: [
           {
@@ -264,31 +271,56 @@ exports.searchHostelsAI = async (req, res) => {
           },
           { role: "user", content: query },
         ],
-        max_tokens: 300,
+        max_tokens: 1000,
+        // NVIDIA NIM-specific extension for Nemotron 3 reasoning control.
+        // Not part of the official OpenAI type defs (the JS SDK just
+        // serializes whatever is on the params object, unlike the Python
+        // SDK's separate extra_body kwarg), so it goes directly here.
+        // @ts-ignore
+        chat_template_kwargs: { thinking: false },
       });
+      console.log("[4a] AI responded (chat branch)");
+      console.log(
+        "[4a-raw] content:",
+        completion.choices[0].message.content,
+        "| reasoning_content:",
+        completion.choices[0].message.reasoning_content,
+      );
 
-      const message = completion.choices[0].message.content
+      const message = (
+        completion.choices[0].message.content ??
+        completion.choices[0].message.reasoning_content ??
+        ""
+      )
         .replace(/<think>[\s\S]*?<\/think>/g, "")
         .trim();
 
       const remainingRequests = await incrementUsage(req);
+      console.log("[5a] usage incremented, sending response");
 
       return res.json({ type: "chat", message, remainingRequests });
     }
 
     // 2B. HOSTEL QUERY → structured search flow
+    console.log("[3b] entering hostel branch, querying DB...");
     const hostels = await queryDB("SELECT * FROM hostels");
+    console.log("[4b] hostels fetched:", hostels.length);
     const pricing = await queryDB("SELECT * FROM pricing");
+    console.log("[5b] pricing fetched:", pricing.length);
     const locations = await queryDB("SELECT * FROM locations");
+    console.log("[6b] locations fetched:", locations.length);
     const amenities = await queryDB("SELECT * FROM amenities");
+    console.log("[7b] amenities fetched:", amenities.length);
 
     let aiData = formatHostels(hostels, pricing, locations, amenities);
     aiData = applySmartFilter(aiData, query);
+    console.log("[8b] aiData built, count:", aiData.length);
 
     const limit = extractLimit(query);
 
+    console.log("[9b] calling AI for hostel matching...");
     const completion = await client.chat.completions.create({
-      model: "meta/llama-3.1-8b-instruct",
+      model: "nvidia/nemotron-3-super-120b-a12b",
       temperature: 0,
       messages: [
         {
@@ -337,21 +369,38 @@ Return best matches only.
           `,
         },
       ],
-      max_tokens: 300,
+      max_tokens: 1000,
+      // Same reasoning-disable flag as the chat branch above.
+      // @ts-ignore
+      chat_template_kwargs: { thinking: false },
     });
+    console.log("[10b] AI responded (hostel branch)");
+    console.log(
+      "[10b-raw] content:",
+      completion.choices[0].message.content,
+      "| reasoning_content:",
+      completion.choices[0].message.reasoning_content,
+    );
 
-    const raw = completion.choices[0].message.content;
+    const raw =
+      completion.choices[0].message.content ??
+      completion.choices[0].message.reasoning_content ??
+      "";
+    console.log("[10b-combined] Full AI text used for parsing:\n", raw);
 
     const { ids, overallReason, noMatch } = parseAI(raw);
+    console.log("[11b] parsed AI response, ids:", ids, "noMatch:", noMatch);
 
     // Ground every ID against the real data — anything the model
     // hallucinated or mistyped simply won't be found and is dropped.
     const matched = ids
       .map((id) => aiData.find((h) => h.id === id))
       .filter(Boolean);
+    console.log("[12b] matched against real data, count:", matched.length);
 
     if (noMatch || matched.length === 0) {
       const remainingRequests = await incrementUsage(req);
+      console.log("[13b] no_match path, sending response");
       return res.status(404).json({
         type: "no_match",
         message:
@@ -363,6 +412,7 @@ Return best matches only.
 
     const finalResults = matched.slice(0, limit);
     const remainingRequests = await incrementUsage(req);
+    console.log("[13b] success path, sending response");
 
     res.json({
       type: "hostels",
@@ -377,7 +427,7 @@ Return best matches only.
       })),
     });
   } catch (err) {
-    console.error("searchHostelsAI error:", err);
+    console.error("[ERROR] searchHostelsAI error:", err);
     res.status(500).json({ error: "AI search failed" });
   }
 };
