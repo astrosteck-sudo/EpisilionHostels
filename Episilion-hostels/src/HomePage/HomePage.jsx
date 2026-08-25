@@ -563,7 +563,6 @@ export function HomePage({
               </svg>
             </div>
           </div>
-you
           <div className={`filter-horizontal-bar`}>
             {/* <div
               className={`filter-buttons main-filter`}
@@ -744,7 +743,9 @@ you
               </p>
             </div>
 
-            <div className={`homepage-how-it-works ${learnMoreOpen ? "open" : "closed"}`}>
+            <div
+              className={`homepage-how-it-works ${learnMoreOpen ? "open" : "closed"}`}
+            >
               <h2>How Booking a Hostel Near UPSA Works</h2>
               <div className="how-it-works-steps">
                 <div className="how-it-works-step">
