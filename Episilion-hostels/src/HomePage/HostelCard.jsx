@@ -31,7 +31,7 @@ export function HostelCard({ hostel }) {
         <img
           id="hostel-card-image"
           src={url + hostel.image}
-          alt="hostel-image"
+          alt= {`${hostel.name}-image`}
         ></img>
         <div className="hostel-rating-text">
           <svg xmlns="http://w3.org" viewBox="0 0 24 24">
