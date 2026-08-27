@@ -12,6 +12,9 @@ import { Reviews } from "./ReviewsData.jsx";
 import { Helmet } from "react-helmet-async";
 import { useParams } from "react-router-dom";
 import { extractHostelIdFromSlug } from "../UTILS/slugFunctions.js";
+import { getDistance } from "geolib";
+import { kilometersToMeters } from "../UTILS/kilometerConvertor";
+
 import {
   CheckCircleFill,
   InfoCircle,
@@ -42,6 +45,7 @@ export function MoreDetailsPage({ originalHostelCardData }) {
   const foundHostel = originalHostelCardData.find(
     (hostel) => hostel.id === hostelId,
   );
+  console.log("Found hostel:", foundHostel); // Debugging log to check the found hostel
 
   // const [googleMapSrc, setGoogleMapSrc] = useState("");
 
@@ -403,17 +407,27 @@ export function MoreDetailsPage({ originalHostelCardData }) {
                       })}
                     </div>
                   </div>
-                  <div className="more-details-caution-text">
-                    <div className="more-details-caution-header">
-                      <InfoCircle />
-                      <p>Quick Note </p>
+                  {getDistance(
+                    { latitude: 5.660969, longitude: -0.166374 },
+                    {
+                      latitude: hostel.location.latitude,
+                      longitude: hostel.location.longitude,
+                    },
+                  ) < 500 ? (
+                    <div className="more-details-caution-text">
+                      <div className="more-details-caution-header">
+                        <InfoCircle />
+                        <p>Quick Note </p>
+                      </div>
+                      <p className="more-details-caution">
+                        This hostel is highly sought after due to its proximity
+                        to Legon campus. We recommend reserving at least 1 month
+                        before the semester begins.
+                      </p>
                     </div>
-                    <p className="more-details-caution">
-                      This hostel is highly sought after due to its proximity to
-                      Legon campus. We recommend reserving at least 1 month
-                      before the semester begins.
-                    </p>
-                  </div>
+                  ) : (
+                    ""
+                  )}
                 </div>
               </section>
             </>
