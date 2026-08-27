@@ -13,7 +13,6 @@ import { Helmet } from "react-helmet-async";
 import { useParams } from "react-router-dom";
 import { extractHostelIdFromSlug } from "../UTILS/slugFunctions.js";
 import { getDistance } from "geolib";
-import { kilometersToMeters } from "../UTILS/kilometerConvertor";
 
 import {
   CheckCircleFill,
@@ -244,6 +243,21 @@ export function MoreDetailsPage({ originalHostelCardData }) {
                       alt={`${hostel.name} image`}
                     ></img>
                   </div>
+                  {hostel.id === "76fe5625-8d1e-42de-8551-0ffc588f037e" ? (
+                    <div className="epi-availability-badge">
+                      <span
+                        className="epi-availability-pulse"
+                        aria-hidden="true"
+                      >
+                        <span className="epi-availability-dot" />
+                      </span>
+                      <span className="epi-availability-text">
+                        Rooms Available
+                      </span>
+                    </div>
+                  ) : (
+                    ""
+                  )}
 
                   <h2 className="more-details-hostel-name">{hostel.name}</h2>
 
@@ -261,10 +275,14 @@ export function MoreDetailsPage({ originalHostelCardData }) {
                     })}
                   </div>
 
-                  <h2 className="sub-headings">How to get here</h2>
-                  <div className="locations-directions-container">
-                    <p>{hostel.location.directions}</p>
-                  </div>
+                  {hostel.location.directions && (
+                    <>
+                      <h2 className="sub-headings">How to get here</h2>
+                      <div className="locations-directions-container">
+                        <p>{hostel.location.directions}</p>
+                      </div>
+                    </>
+                  )}
 
                   <div className="directions-and-favorite-container">
                     <button
@@ -407,6 +425,7 @@ export function MoreDetailsPage({ originalHostelCardData }) {
                       })}
                     </div>
                   </div>
+
                   {getDistance(
                     { latitude: 5.660969, longitude: -0.166374 },
                     {
