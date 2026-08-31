@@ -1,7 +1,4 @@
 import "./MoreDetailsPage.css";
-import { PageHeader } from "../PageHeader/PageHeader";
-import { Link } from "react-router-dom";
-import { SiteFooter } from "../SiteFooter/SiteFooter";
 import emptyStar from "../assets/icons/empty-star.png";
 import fullStar from "../assets/icons/star.png";
 import { useState, useEffect } from "react";
@@ -13,6 +10,7 @@ import { Helmet } from "react-helmet-async";
 import { useParams } from "react-router-dom";
 import { extractHostelIdFromSlug } from "../UTILS/slugFunctions.js";
 import { getDistance } from "geolib";
+import { NotFoundPage } from "../NotFoundPage/NotFoundPage.jsx";
 
 import {
   CheckCircleFill,
@@ -44,26 +42,18 @@ export function MoreDetailsPage({ originalHostelCardData }) {
   const foundHostel = originalHostelCardData.find(
     (hostel) => hostel.id === hostelId,
   );
-  console.log("Found hostel:", foundHostel); // Debugging log to check the found hostel
-
-  // const [googleMapSrc, setGoogleMapSrc] = useState("");
-
-  // function closeMap() {
-  //   if (!close) {
-  //     setActivate(false);
-  //     setClose(true);
-  //   } else {
-  //     setClose(false);
-  //   }
-  // }
+  //console.log("Found hostel:", foundHostel); // Debugging log to check the found hostel
 
   const navigate = useNavigate();
   // function comapareHostels(parameter) {
   //   navigate(`/comparehostels?hostelId=${parameter}`);
   // }
 
-  //THIS USEEFFECT WILL CHECK IF THE HOSTEL DATA HAS BEEN LOADED, IF IT HAS THEN IT WILL CLOSE THE LOADING ANIMATION
-
+  //THIS USEEFFECT WILL CHECK IF THE HOSTEL DATA HAS BEEN LOADED,
+  // IF IT HAS THEN IT WILL CLOSE THE LOADING ANIMATION
+  if (!foundHostel) {
+    return <NotFoundPage />;
+  }
   function handleStarClick(value) {
     if (rating === value) {
       setRating(0);
@@ -231,228 +221,198 @@ export function MoreDetailsPage({ originalHostelCardData }) {
         </script>
       </Helmet>
 
-      {originalHostelCardData.map((hostel) => {
-        if (hostel.id === hostelId) {
-          return (
+      <section className="more-details-main-container">
+        <div className="scrollable-side-bar">
+          <div className="more-details-hostel-image">
+            <img src={url + foundHostel.image} alt={`${foundHostel.name} image`}></img>
+          </div>
+          {foundHostel.id === "76fe5625-8d1e-42de-8551-0ffc588f037e" ? (
+            <div className="epi-availability-badge">
+              <span className="epi-availability-pulse" aria-hidden="true">
+                <span className="epi-availability-dot" />
+              </span>
+              <span className="epi-availability-text">Rooms Available</span>
+            </div>
+          ) : (
+            ""
+          )}
+
+          <h2 className="more-details-hostel-name">{foundHostel.name}</h2>
+
+          <h2 className="sub-headings">Hostel Facilities & Amenities</h2>
+          <div className="facilities-and-amenities-container">
+            {foundHostel.amenities.map((amenity) => {
+              return (
+                <div className="facilities-and-amenities">
+                  <CheckCircleFill className="more-details-room-types-icon" />
+                  <p>{amenity}</p>
+                </div>
+              );
+            })}
+          </div>
+
+          {foundHostel.location.directions && (
             <>
-              <section className="more-details-main-container">
-                <div className="scrollable-side-bar">
-                  <div className="more-details-hostel-image">
-                    <img
-                      src={url + hostel.image}
-                      alt={`${hostel.name} image`}
-                    ></img>
-                  </div>
-                  {hostel.id === "76fe5625-8d1e-42de-8551-0ffc588f037e" ? (
-                    <div className="epi-availability-badge">
-                      <span
-                        className="epi-availability-pulse"
-                        aria-hidden="true"
-                      >
-                        <span className="epi-availability-dot" />
-                      </span>
-                      <span className="epi-availability-text">
-                        Rooms Available
-                      </span>
-                    </div>
-                  ) : (
-                    ""
-                  )}
-
-                  <h2 className="more-details-hostel-name">{hostel.name}</h2>
-
-                  <h2 className="sub-headings">
-                    Hostel Facilities & Amenities
-                  </h2>
-                  <div className="facilities-and-amenities-container">
-                    {hostel.amenities.map((amenity) => {
-                      return (
-                        <div className="facilities-and-amenities">
-                          <CheckCircleFill className="more-details-room-types-icon" />
-                          <p>{amenity}</p>
-                        </div>
-                      );
-                    })}
-                  </div>
-
-                  {hostel.location.directions && (
-                    <>
-                      <h2 className="sub-headings">How to get here</h2>
-                      <div className="locations-directions-container">
-                        <p>{hostel.location.directions}</p>
-                      </div>
-                    </>
-                  )}
-
-                  <div className="directions-and-favorite-container">
-                    <button
-                      className="favorite-button"
-                      onClick={addHostelToFavorite}
-                    >
-                      <p>
-                        {isFavorite ? "Added to favorite" : "Add to favorite"}
-                      </p>
-                    </button>
-
-                    <button
-                      className="view-location-button"
-                      onClick={() =>
-                        getDirectionsOnMap(originalHostelCardData, hostelId)
-                      }
-                    >
-                      Get Directions
-                    </button>
-                  </div>
-
-                  <iframe
-                    src={`https://www.google.com/maps?q=${hostel.location.latitude},${hostel.location.longitude}&hl=en&z=15&output=embed`}
-                    frameborder="0"
-                    className="hostel-map-location"
-                  ></iframe>
-
-                  <div className="rules-and-contact-container">
-                    <div>
-                      <h2 className="sub-headings">Rules & Regulations</h2>
-
-                      {hostel.rules.map((rule) => {
-                        return (
-                          <div className="rules-container">
-                            <ExclamationTriangle className="rules-icon" />
-                            <p>{rule}</p>
-                          </div>
-                        );
-                      })}
-                    </div>
-
-                    <div>
-                      <h2 className="sub-headings">Contact Details</h2>
-
-                      <div className="more-details-contact">
-                        <Telephone className="more-details-contact-icon" />
-                        <p>{hostel.contact.phone}</p>
-                      </div>
-                      <div className="more-details-contact">
-                        <Envelope className="more-details-contact-icon" />
-                        <p>{hostel.contact.email}</p>
-                      </div>
-                      <div className="more-details-contact">
-                        <Whatsapp className="more-details-contact-icon" />
-                        <p>{hostel.contact.whatsapp}</p>
-                      </div>
-                      <div className="more-details-contact">
-                        <Person className="more-details-contact-icon" />
-                        <p>{hostel.contact.managerName}</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div>
-                    <h2 className="sub-headings">Leave a Review</h2>
-
-                    <div className="review-container">
-                      <h1>Your Rating</h1>
-                      <div className="star-container">
-                        {[1, 2, 3, 4, 5].map((star) => (
-                          <img
-                            key={star}
-                            value={star}
-                            className="star"
-                            src={star <= rating ? fullStar : emptyStar}
-                            alt={`star-${star}`}
-                            onClick={() => handleStarClick(star)}
-                          />
-                        ))}
-                      </div>
-                      <h1>Share your experience</h1>
-                      <textarea
-                        className="more-details-text-area"
-                        maxLength={100}
-                        placeholder="Share your honest experience - what did you love? What could be improved"
-                        onChange={userTypedReview}
-                        value={reviewTextValue}
-                        onKeyDown={listenForEnterKey}
-                      ></textarea>
-
-                      <button
-                        onClick={handleSubmit}
-                        className={`review-submit-button  ${!isSubmitting ? "notSubmitting" : "submitting"}`}
-                      >
-                        {!isSubmitting ? "Submit Review" : "Submitting Review"}
-                      </button>
-                    </div>
-
-                    <div
-                      className="see-more-reviews-text"
-                      onClick={showAllReviews}
-                    >
-                      <p>
-                        {maxReview > 2
-                          ? "Show less reviews"
-                          : "See all reviews"}
-                      </p>
-                    </div>
-
-                    <div className={`reviews-and-ratings-display `}>
-                      {reviewsResponse.slice(0, maxReview).map((item) => (
-                        <Reviews key={item.reviewId} item={item}></Reviews>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-
-                <div className="sticky-side-Bar-container">
-                  <div className="more-details-price-container">
-                    <p className="more-details-prices">
-                      {hostel.pricing.priceMin} - {hostel.pricing.priceMax}
-                    </p>
-                    <p className="more-details-ghs">GHS / semester</p>
-                    <div className="more-details-info-container">
-                      <h2>PAYMENT MODE</h2>
-                      <p>{`${hostel.pricing.installmentAllowed ? "Installment Is Allowed" : "Installment Is Not Allowed"}`}</p>
-                    </div>
-
-                    <div className="more-details-info-container">
-                      <h2>ROOM TYPE</h2>
-                      {hostel.rooms.types.map((room) => {
-                        return (
-                          <div className="more-details-room-types">
-                            <CheckCircleFill className="more-details-room-types-icon" />
-                            <p>
-                              {room.type} - GHS {room.price}
-                            </p>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
-
-                  {getDistance(
-                    { latitude: 5.660969, longitude: -0.166374 },
-                    {
-                      latitude: hostel.location.latitude,
-                      longitude: hostel.location.longitude,
-                    },
-                  ) < 500 ? (
-                    <div className="more-details-caution-text">
-                      <div className="more-details-caution-header">
-                        <InfoCircle />
-                        <p>Quick Note </p>
-                      </div>
-                      <p className="more-details-caution">
-                        This hostel is highly sought after due to its proximity
-                        to Legon campus. We recommend reserving at least 1 month
-                        before the semester begins.
-                      </p>
-                    </div>
-                  ) : (
-                    ""
-                  )}
-                </div>
-              </section>
+              <h2 className="sub-headings">How to get here</h2>
+              <div className="locations-directions-container">
+                <p>{foundHostel.location.directions}</p>
+              </div>
             </>
-          );
-        }
-      })}
+          )}
+
+          <div className="directions-and-favorite-container">
+            <button className="favorite-button" onClick={addHostelToFavorite}>
+              <p>{isFavorite ? "Added to favorite" : "Add to favorite"}</p>
+            </button>
+
+            <button
+              className="view-location-button"
+              onClick={() =>
+                getDirectionsOnMap(originalHostelCardData, hostelId)
+              }
+            >
+              Get Directions
+            </button>
+          </div>
+
+          <iframe
+            src={`https://www.google.com/maps?q=${foundHostel.location.latitude},${foundHostel.location.longitude}&hl=en&z=15&output=embed`}
+            frameborder="0"
+            className="hostel-map-location"
+          ></iframe>
+
+          <div className="rules-and-contact-container">
+            <div>
+              <h2 className="sub-headings">Rules & Regulations</h2>
+
+              {foundHostel.rules.map((rule) => {
+                return (
+                  <div className="rules-container">
+                    <ExclamationTriangle className="rules-icon" />
+                    <p>{rule}</p>
+                  </div>
+                );
+              })}
+            </div>
+
+            <div>
+              <h2 className="sub-headings">Contact Details</h2>
+
+              <div className="more-details-contact">
+                <Telephone className="more-details-contact-icon" />
+                <p>{foundHostel.contact.phone}</p>
+              </div>
+              <div className="more-details-contact">
+                <Envelope className="more-details-contact-icon" />
+                <p>{foundHostel.contact.email}</p>
+              </div>
+              <div className="more-details-contact">
+                <Whatsapp className="more-details-contact-icon" />
+                <p>{foundHostel.contact.whatsapp}</p>
+              </div>
+              <div className="more-details-contact">
+                <Person className="more-details-contact-icon" />
+                <p>{foundHostel.contact.managerName}</p>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h2 className="sub-headings">Leave a Review</h2>
+
+            <div className="review-container">
+              <h1>Your Rating</h1>
+              <div className="star-container">
+                {[1, 2, 3, 4, 5].map((star) => (
+                  <img
+                    key={star}
+                    value={star}
+                    className="star"
+                    src={star <= rating ? fullStar : emptyStar}
+                    alt={`star-${star}`}
+                    onClick={() => handleStarClick(star)}
+                  />
+                ))}
+              </div>
+              <h1>Share your experience</h1>
+              <textarea
+                className="more-details-text-area"
+                maxLength={100}
+                placeholder="Share your honest experience - what did you love? What could be improved"
+                onChange={userTypedReview}
+                value={reviewTextValue}
+                onKeyDown={listenForEnterKey}
+              ></textarea>
+
+              <button
+                onClick={handleSubmit}
+                className={`review-submit-button  ${!isSubmitting ? "notSubmitting" : "submitting"}`}
+              >
+                {!isSubmitting ? "Submit Review" : "Submitting Review"}
+              </button>
+            </div>
+
+            <div className="see-more-reviews-text" onClick={showAllReviews}>
+              <p>{maxReview > 2 ? "Show less reviews" : "See all reviews"}</p>
+            </div>
+
+            <div className={`reviews-and-ratings-display `}>
+              {reviewsResponse.slice(0, maxReview).map((item) => (
+                <Reviews key={item.reviewId} item={item}></Reviews>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="sticky-side-Bar-container">
+          <div className="more-details-price-container">
+            <p className="more-details-prices">
+              {foundHostel.pricing.priceMin} - {foundHostel.pricing.priceMax}
+            </p>
+            <p className="more-details-ghs">GHS / semester</p>
+            <div className="more-details-info-container">
+              <h2>PAYMENT MODE</h2>
+              <p>{`${foundHostel.pricing.installmentAllowed ? "Installment Is Allowed" : "Installment Is Not Allowed"}`}</p>
+            </div>
+
+            <div className="more-details-info-container">
+              <h2>ROOM TYPE</h2>
+              {foundHostel.rooms.types.map((room) => {
+                return (
+                  <div className="more-details-room-types">
+                    <CheckCircleFill className="more-details-room-types-icon" />
+                    <p>
+                      {room.type} - GHS {room.price}
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {getDistance(
+            { latitude: 5.660969, longitude: -0.166374 },
+            {
+              latitude: foundHostel.location.latitude,
+              longitude: foundHostel.location.longitude,
+            },
+          ) < 500 ? (
+            <div className="more-details-caution-text">
+              <div className="more-details-caution-header">
+                <InfoCircle />
+                <p>Quick Note </p>
+              </div>
+              <p className="more-details-caution">
+                This hostel is highly sought after due to its proximity to Legon
+                campus. We recommend reserving at least 1 month before the
+                semester begins.
+              </p>
+            </div>
+          ) : (
+            ""
+          )}
+        </div>
+      </section>
     </>
   );
 }

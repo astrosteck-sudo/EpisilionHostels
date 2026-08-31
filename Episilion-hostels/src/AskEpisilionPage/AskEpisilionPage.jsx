@@ -365,7 +365,7 @@ export function AskEpisilionPage({ isLoggedIn }) {
                                       alt={hostel.name}
                                     />
                                   ) : (
-                                    <Buildings className="epi-hostel-thumb-fallback" />
+                                    <Building className="epi-hostel-thumb-fallback" />
                                   )}
                                 </div>
 
