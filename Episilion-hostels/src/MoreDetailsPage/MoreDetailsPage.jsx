@@ -172,7 +172,7 @@ export function MoreDetailsPage({ originalHostelCardData }) {
   return (
     <>
       <Helmet>
-        <title>{`${foundHostel?.name || "Hostel"} near UPSA | Hostel Finder`}</title>
+        <title>{`${foundHostel?.name || "Hostel"} near UPSA | Episilion Hostels`}</title>
 
         <link
           rel="canonical"
@@ -187,7 +187,7 @@ export function MoreDetailsPage({ originalHostelCardData }) {
           property="og:description"
           content={`Check out ${foundHostel?.name} near UPSA.`}
         />
-        <meta property="og:image" content={foundHostel?.image} />
+        <meta property="og:image" content={`${url}${foundHostel?.image}`} />
         <meta
           property="og:url"
           content={`https://www.episilionhostels.com/hostels/${slug}`}
@@ -199,20 +199,27 @@ export function MoreDetailsPage({ originalHostelCardData }) {
             "@context": "https://schema.org",
             "@type": "LodgingBusiness",
             name: foundHostel?.name,
-            image: foundHostel?.image,
+            image: foundHostel?.image
+              ? `${url}${foundHostel.image}`
+              : undefined,
             priceRange: foundHostel?.pricing?.priceMin
               ? `GHS ${foundHostel.pricing.priceMin} - GHS ${foundHostel.pricing.priceMax}`
               : "Price not available",
             address: {
               "@type": "PostalAddress",
-              streetAddress:
-                foundHostel?.location?.latitude &&
-                foundHostel?.location?.longitude
-                  ? `Latitude: ${foundHostel.location.latitude}, Longitude: ${foundHostel.location.longitude}`
-                  : "Address not available",
               addressLocality: "Accra",
+              addressRegion: "Greater Accra",
               addressCountry: "GH",
             },
+            geo:
+              foundHostel?.location?.latitude &&
+              foundHostel?.location?.longitude
+                ? {
+                    "@type": "GeoCoordinates",
+                    latitude: foundHostel.location.latitude,
+                    longitude: foundHostel.location.longitude,
+                  }
+                : undefined,
             telephone: foundHostel?.contact?.phone,
             email: foundHostel?.contact?.email,
             url: `https://www.episilionhostels.com/hostels/${slug}`,
@@ -224,7 +231,10 @@ export function MoreDetailsPage({ originalHostelCardData }) {
       <section className="more-details-main-container">
         <div className="scrollable-side-bar">
           <div className="more-details-hostel-image">
-            <img src={url + foundHostel.image} alt={`${foundHostel.name} image`}></img>
+            <img
+              src={url + foundHostel.image}
+              alt={`${foundHostel.name} image`}
+            ></img>
           </div>
           {foundHostel.id === "76fe5625-8d1e-42de-8551-0ffc588f037e" ? (
             <div className="epi-availability-badge">

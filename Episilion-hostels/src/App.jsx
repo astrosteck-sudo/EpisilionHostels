@@ -24,6 +24,7 @@ import { MobileNavButtons } from "./SiteFooter/MobileNavButtons.jsx";
 import { buildHostelSlug } from "./UTILS/slugFunctions.js";
 import { CampusLandingPage } from "./CampusLandingPage/CampusLandingPage.jsx";
 import { NotFoundPage } from "./NotFoundPage/NotFoundPage.jsx";
+import { Helmet } from "react-helmet-async";
 
 function LegacyHostelRedirect({ originalHostelCardData }) {
   const [searchParams] = useSearchParams();
@@ -91,18 +92,44 @@ function App() {
 
   if (loading) {
     return (
-      <div className={`loader-container ${loading ? "open" : "close"}`}>
-        <div className="loading-animation-conatainer">
-          <div class="loader"></div>
-        </div>
+      <>
+        <Helmet>
+          <meta property="og:site_name" content="Episilion Hostels" />
+          <script type="application/ld+json">
+            {JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              name: "Episilion Hostels",
+              url: "https://www.episilionhostels.com/",
+            })}
+          </script>
+        </Helmet>
 
-        <p className="shimmmer">EPISILION LOADING</p>
-      </div>
+        <div className={`loader-container ${loading ? "open" : "close"}`}>
+          <div className="loading-animation-conatainer">
+            <div class="loader"></div>
+          </div>
+
+          <p className="shimmmer">EPISILION LOADING</p>
+        </div>
+      </>
     );
   }
 
   return (
     <>
+      <Helmet>
+        <meta property="og:site_name" content="Episilion Hostels" />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            name: "Episilion Hostels",
+            url: "https://www.episilionhostels.com/",
+          })}
+        </script>
+      </Helmet>
+
       <PageHeader
         navlink={navlink}
         setNavLink={setNavLink}
@@ -145,7 +172,14 @@ function App() {
           }
         />
         <Route path="aboutus" element={<AboutUsPage />} />
-        <Route path="hostels-near-upsa" element={<CampusLandingPage originalHostelCardData={originalHostelCardData} />} />
+        <Route
+          path="hostels-near-upsa"
+          element={
+            <CampusLandingPage
+              originalHostelCardData={originalHostelCardData}
+            />
+          }
+        />
         <Route path="signup" element={<SignUpPage />} />
         <Route path="*" element={<NotFoundPage />} />
         <Route
