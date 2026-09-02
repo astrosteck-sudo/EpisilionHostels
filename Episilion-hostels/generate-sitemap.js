@@ -38,8 +38,12 @@ async function generateSitemap() {
   </url>
 `;
 
+    // NEW: collect hostel slug paths as we go, so we can reuse them below
+    const hostelRoutes = [];
+
     hostels.forEach((hostel) => {
       const slug = buildHostelSlug(hostel);
+      hostelRoutes.push(`/hostels/${slug}`);
       xml += `  <url>
     <loc>${BASE_URL}/hostels/${slug}</loc>
     <changefreq>weekly</changefreq>
@@ -51,6 +55,10 @@ async function generateSitemap() {
 
     fs.writeFileSync("./public/sitemap.xml", xml);
     console.log("✅ Sitemap successfully generated with slug URLs!");
+
+    // NEW: write routes.json for vite.config.js to consume during prerendering
+    fs.writeFileSync("./routes.json", JSON.stringify(hostelRoutes, null, 2));
+    console.log(`✅ routes.json written with ${hostelRoutes.length} hostel routes!`);
   } catch (error) {
     console.error("Error generating sitemap:", error);
   }

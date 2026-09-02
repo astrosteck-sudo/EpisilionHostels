@@ -87,6 +87,9 @@ function App() {
   useEffect(() => {
     if (hostelsCardData?.length > 0) {
       setLoading(false);
+      // Tells the prerender renderer the real page has loaded —
+      // without this, it would snapshot the "EPISILION LOADING" screen instead.
+      document.dispatchEvent(new Event("app-ready"));
     }
   }, [hostelsCardData]);
 
