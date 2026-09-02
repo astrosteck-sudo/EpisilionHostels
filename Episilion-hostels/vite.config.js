@@ -19,44 +19,54 @@ function getRoutesToPrerender() {
   }
 }
 
-export default defineConfig({
-  plugins: [
-    react(),
-    prerender({
-      routes: getRoutesToPrerender(),
-      fallback: true,
-      server: {
-        // Proxies /api requests during the prerender step's local static server,
-        // same job server.proxy does for `vite dev` — but that one doesn't apply here.
-        proxy: {
-          "/api": {
-            target: "https://episilion-backend-2lt0.onrender.com",
-            changeOrigin: true,
-            secure: true,
+export default defineConfig(async () => {
+  // On Vercel's build machine, use the special serverless-compatible Chromium.
+  // Locally, let Puppeteer use the full Chrome it already downloaded.
+  let launchOptions = {};
+  if (process.env.VERCEL) {
+    const chromium = (await import("@sparticuz/chromium")).default;
+    launchOptions = {
+      args: chromium.args,
+      executablePath: await chromium.executablePath(),
+    };
+  }
+
+  return {
+    plugins: [
+      react(),
+      prerender({
+        routes: getRoutesToPrerender(),
+        fallback: true,
+        server: {
+          proxy: {
+            "/api": {
+              target: "https://episilion-backend-2lt0.onrender.com",
+              changeOrigin: true,
+              secure: true,
+            },
           },
         },
-      },
-      renderer: "@prerenderer/renderer-puppeteer",
-      rendererOptions: {
-        renderAfterDocumentEvent: "app-ready",
-        headless: true,
-        timeout: 30000,
-        // Logs anything the browser's console.* prints — including our
-        // "HOSTEL FETCH ERROR:" from App.jsx's catch block, if it fires.
-        consoleHandler: (route, message) => {
-          console.log(`[Puppeteer] [${route}]`, message.text());
+        renderer: "@prerenderer/renderer-puppeteer",
+        rendererOptions: {
+          renderAfterDocumentEvent: "app-ready",
+          timeout: 30000,
+          headless: true,
+          launchOptions,
+          consoleHandler: (route, message) => {
+            console.log(`[Puppeteer] [${route}]`, message.text());
+          },
+        },
+      }),
+    ],
+
+    server: {
+      proxy: {
+        "/api": {
+          target: "https://episilion-backend-2lt0.onrender.com",
+          changeOrigin: true,
+          secure: true,
         },
       },
-    }),
-  ],
-
-  server: {
-    proxy: {
-      "/api": {
-        target: "https://episilion-backend-2lt0.onrender.com",
-        changeOrigin: true,
-        secure: true,
-      },
     },
-  },
+  };
 });

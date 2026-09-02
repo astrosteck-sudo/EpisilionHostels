@@ -8,10 +8,10 @@
     "build": "node generate-sitemap.js && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "sitemap": "node generate-sitemap.js",
-    "postinstall": "npx puppeteer browsers install chrome"
+    "sitemap": "node generate-sitemap.js"
   },
   "dependencies": {
+    "@sparticuz/chromium": "^149.0.0",
     "axios": "^1.8.4",
     "dayjs": "^1.11.20",
     "dompurify": "^3.4.8",
