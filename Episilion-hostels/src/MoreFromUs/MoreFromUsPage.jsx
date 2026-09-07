@@ -79,19 +79,13 @@ export function MoreFromUsPage() {
         <div className="more-from-us-project-container">
           <div className="more-from-us-project-details">
             <h2>Riser</h2>
-            <h3>TikTok Creator/Earner App</h3>
+            <h3>Creator Marketing Analytics</h3>
             <p>
-              Riser is a marketplace designed to help new and growing
-              creators build momentum with real, verified followers. Instead of
-              starting from an empty profile, creators can kick-start their
-              growth by connecting with real people, while users earn cash for
-              discovering and following new creators. We don't promise viral
-              success or guaranteed engagement—great content is still what keeps
-              an audience. Our goal is to help creators overcome the hardest
-              part of the journey: getting noticed. Every follow comes from a
-              real person, and strict safeguards are built into the platform to
-              ensure fairness, transparency, and a trusted experience for both
-              creators and users.
+              A powerful TikTok creator analytics platform that transforms
+              public profile and content data into actionable insights. Analyze
+              audience quality, engagement, content performance, growth
+              patterns, and marketing potential to help businesses identify and
+              make smarter decisions when partnering with creators.
             </p>
             <div className="more-from-us-buttons">
               <button className="more-from-us-learn-more-button">
@@ -104,16 +98,18 @@ export function MoreFromUsPage() {
             </div>
           </div>
           <div className="more-from-us-project-image">
-            <img src="/riserPromotionImage.png" alt="riserPromotionImage" className="project-image" />
+            <img
+              src="/riser_rebrand.png"
+              alt="riserPromotionImage"
+              className="project-image"
+            />
           </div>
         </div>
 
         <div className="more-from-us-join-wishlist-container">
           <RocketTakeoff className="more-from-us-join-wishlist-icon" />
           <h2>Join the Waitlist</h2>
-          <p>
-            Be the first to know when we launch this app.
-          </p>
+          <p>Be the first to know when we launch this app.</p>
           <input
             type="email"
             placeholder="johnDoe@gmail.com"
