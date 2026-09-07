@@ -1,13 +1,28 @@
 {
+  "redirects": [
+    {
+      "source": "/moreDetails",
+      "destination": "/",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     {
       "source": "/api/(.*)",
       "destination": "https://episilion-backend-2lt0.onrender.com/api/$1"
     },
-    {
-      "source": "/(.*)",
-      "destination": "/"
-    }
+    { "source": "/signup", "destination": "/" },
+    { "source": "/login", "destination": "/" },
+    { "source": "/askepisilion", "destination": "/" },
+    { "source": "/morefromus", "destination": "/" },
+    { "source": "/comparehostels", "destination": "/" },
+    { "source": "/userProfilePage", "destination": "/" },
+    { "source": "/hostelManagerPage", "destination": "/" },
+    { "source": "/changePasswordPage", "destination": "/" },
+    { "source": "/payment/success", "destination": "/" },
+    { "source": "/oauthsuccess", "destination": "/" },
+    { "source": "/oautherror", "destination": "/" },
+    { "source": "/privacypolicy", "destination": "/" }
   ],
   "headers": [
     {
