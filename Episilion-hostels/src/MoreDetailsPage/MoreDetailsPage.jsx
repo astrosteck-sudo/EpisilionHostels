@@ -42,7 +42,7 @@ export function MoreDetailsPage({ originalHostelCardData }) {
   const foundHostel = originalHostelCardData.find(
     (hostel) => hostel.id === hostelId,
   );
-  console.log("Found hostel:", foundHostel); // Debugging log to check the found hostel
+  //console.log("Found hostel:", foundHostel); // Debugging log to check the found hostel
 
   const navigate = useNavigate();
   // function comapareHostels(parameter) {
@@ -251,7 +251,7 @@ export function MoreDetailsPage({ originalHostelCardData }) {
 
           <h2 className="sub-headings">Hostel Facilities & Amenities</h2>
           <div className="facilities-and-amenities-container">
-            {foundHostel.furnishing.map((amenity) => {
+            {foundHostel.amenities.map((amenity) => {
               return (
                 <div className="facilities-and-amenities">
                   <CheckCircleFill className="more-details-room-types-icon" />
@@ -312,10 +312,14 @@ export function MoreDetailsPage({ originalHostelCardData }) {
                 <Telephone className="more-details-contact-icon" />
                 <p>{foundHostel.contact.phone}</p>
               </div>
-              <div className="more-details-contact">
-                <Envelope className="more-details-contact-icon" />
-                <p>{foundHostel.contact.email}</p>
-              </div>
+
+              {foundHostel.contact.email && (
+                <div className="more-details-contact">
+                  <Envelope className="more-details-contact-icon" />
+                  <p>{foundHostel.contact.email}</p>
+                </div>
+              )}
+
               <div className="more-details-contact">
                 <Whatsapp className="more-details-contact-icon" />
                 <p>{foundHostel.contact.whatsapp}</p>
