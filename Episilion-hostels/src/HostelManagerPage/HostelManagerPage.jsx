@@ -1,7 +1,9 @@
-import { SiteFooter } from "../SiteFooter/SiteFooter";
 import "./HostelManagerPage.css";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import passwordImage from "../assets/icons/shield.png";
+import userPopLogOutImage from "../assets/icons/logout.png";
 //import locationPin from "../assets/icons/pin.png";
 
 export function HostelManagerPage({ setShowManagerLogoutModal }) {
@@ -143,7 +145,7 @@ export function HostelManagerPage({ setShowManagerLogoutModal }) {
     <>
       <title>Hostel Manager | Episilion Hostels</title>
       <div className="hostel-manager-info-container">
-        <div>
+        <div className="hostel-manager-welcome-section">
           <p className="dashboard-text">HOSTEL MANAGER DASHBOARD</p>
           <h1 className="hostel-manager-welcome-text">
             Welcome back, {managerHostel && JSON.parse(managerHostel).username}
@@ -156,29 +158,33 @@ export function HostelManagerPage({ setShowManagerLogoutModal }) {
           </p>
         </div>
 
-        <div className="logout-and-verified-account-container">
-          <div className="verified-account-container">
-            <p className="verified-account-hostel-name">
-              {managerHostel && JSON.parse(managerHostel).username}
-            </p>
-            <p className="verified-account-text">Verified Manager Account</p>
-          </div>
+        <div className="verified-account-container">
+          <p className="verified-account-hostel-name">
+            {managerHostel && JSON.parse(managerHostel).username}
+          </p>
+          <p className="verified-account-text">Verified Manager Account</p>
+        </div>
+      </div>
 
-          <svg
-            xmlns="http://w3.org"
-            viewBox="0 0 24 24"
-            width="24"
-            height="24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+      <div className="hostel-manager-settings-container">
+        <div className="hostel-manager-settings-header">
+          <div className="hostel-manager-settings-pin">⚙️</div>
+          <p>Account Settings</p>
+        </div>
+
+        <div className="hostel-manager-settings-buttons">
+          <Link to="/changePasswordPage" className="hostel-manager-settings-button">
+            <img src={passwordImage} alt="Change Password" className="settings-button-icon" />
+            <span>Change Password</span>
+          </Link>
+
+          <button 
+            className="hostel-manager-settings-button logout-button"
             onClick={() => setShowManagerLogoutModal(true)}
-            className="hostel-manager-logOut-button"
           >
-            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9" />
-          </svg>
+            <img src={userPopLogOutImage} alt="Log Out" className="settings-button-icon" />
+            <span>Log Out</span>
+          </button>
         </div>
       </div>
 

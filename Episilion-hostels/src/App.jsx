@@ -84,6 +84,11 @@ function App() {
     "/oautherror",
   ].includes(location.pathname);
 
+  // Scroll to top on route change
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
+
   useEffect(() => {
     if (hostelsCardData?.length > 0) {
       setLoading(false);

@@ -24,14 +24,13 @@ export function HostelCard({ hostel }) {
     setAmenities(hostel.amenities.slice(1, 4)); // first 3 amenities
   }, [hostel]);
 
-
   return (
     <div className="hostel-card">
       <div className="image-container">
         <img
           id="hostel-card-image"
           src={url + hostel.image}
-          alt= {`${hostel.name}-image`}
+          alt={`${hostel.name}-image`}
         ></img>
         <div className="hostel-rating-text">
           <svg xmlns="http://w3.org" viewBox="0 0 24 24">
@@ -133,11 +132,11 @@ export function HostelCard({ hostel }) {
         </div>
         <p className="view-more-details">
           <Link
-  to={`/hostels/${buildHostelSlug(hostel)}`}
-  className="view-more-details-link js-view-more-details"
->
-  View Details
-</Link>
+            to={`/hostels/${buildHostelSlug(hostel)}`}
+            className="view-more-details-link js-view-more-details"
+          >
+            View Details
+          </Link>
         </p>
       </div>
     </div>

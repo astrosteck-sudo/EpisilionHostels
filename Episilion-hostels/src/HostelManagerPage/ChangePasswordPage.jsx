@@ -1,7 +1,7 @@
 import { SiteFooter } from "../SiteFooter/SiteFooter";
 import "./changePasswordPage.css";
 import passwordImage from "../assets/icons/shield.png";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
 
 export function ChangePasswordPage({ managerIsLoggedIn }) {
@@ -10,13 +10,6 @@ export function ChangePasswordPage({ managerIsLoggedIn }) {
   const [hostelManagerComfirmPassword, setHostelManagerComfirmPassword] =
     useState("");
   const [passwordUpdateSuccessfull, setPasswordUpdateSuccessfull] = useState();
-
-  useEffect(() => {
-    document.body.classList.add("body-bg");
-    return () => {
-      document.body.classList.remove("body-bg");
-    };
-  }, []);
 
   if (!managerIsLoggedIn) {
     console.log("User is not logged in. Redirecting...");
@@ -84,13 +77,14 @@ export function ChangePasswordPage({ managerIsLoggedIn }) {
       >
         <div>
           <div className="hostel-manager-password-change-header-container">
-            <img
-              src={passwordImage}
-              alt=""
-              className="hostel-manager-password-change-header-image"
-            />
+            <div className="hostel-manager-password-change-header-image">
+              <img
+                src={passwordImage}
+                alt="Security Icon"
+              />
+            </div>
             <p className="hostel-manager-password-change-header-paragragh">
-              Change password
+              Change Password
             </p>
             <p className="hostel-manager-password-change-header-second-paragraph">
               Keep your account secure with a strong password
@@ -99,44 +93,48 @@ export function ChangePasswordPage({ managerIsLoggedIn }) {
 
           <div className="hostel-manager-password-change-main-container">
             <label
-              for=""
+              htmlFor="oldPassword"
               className="hostel-manager-password-change-input-headers"
             >
               OLD PASSWORD
             </label>
             <input
-              type="text"
+              type="password"
+              id="oldPassword"
               className="hostel-manager-password-change-input"
               value={hostelManagerOldpassword}
               onChange={handleOldPassword}
+              placeholder="Enter your current password"
             />
 
             <label
-              htmlFor=""
+              htmlFor="newPassword"
               className="hostel-manager-password-change-input-headers"
             >
               NEW PASSWORD
             </label>
             <input
-              type="text"
-              name=""
-              id=""
+              type="password"
+              id="newPassword"
               className="hostel-manager-password-change-input"
               value={hostelMangerNewPaswword}
               onChange={handleNewPassword}
+              placeholder="Enter your new password"
             />
 
             <label
-              htmlFor=""
+              htmlFor="confirmPassword"
               className="hostel-manager-password-change-input-headers"
             >
-              COMFIRM PASSWORD
+              CONFIRM PASSWORD
             </label>
             <input
-              type="text"
+              type="password"
+              id="confirmPassword"
               className="hostel-manager-password-change-input"
               value={hostelManagerComfirmPassword}
               onChange={handleComfirmPassword}
+              placeholder="Confirm your new password"
             />
 
             <div

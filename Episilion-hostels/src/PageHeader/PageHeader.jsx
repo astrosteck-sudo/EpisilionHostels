@@ -208,13 +208,13 @@ export function PageHeader({
                   </Link>
                 </div>
 
-                <div onClick={() => setShowManagerLogoutModal(true)}>
+                {/* <div onClick={() => setShowManagerLogoutModal(true)}>
                   <img
                     src={userPopLogOutImage}
                     className="user-option-pop-up-images"
                   />
                   <p>Log Out</p>
-                </div>
+                </div> */}
               </div>
             </div>
           </>

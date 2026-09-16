@@ -290,6 +290,8 @@
   /* border: solid red; */
   padding: 0;
   margin: 0;
+  font-family: OutfitLight;
+  font-size: clamp(10px, 1vw, 15px);
 }
 
 .user-option-pop-up-images {
