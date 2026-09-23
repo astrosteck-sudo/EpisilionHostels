@@ -33,7 +33,7 @@ export function FavoriteHostels({ favoriteHostel, loadFavoriteHostel }) {
     <div className="user-favorite-hostel">
       <img
         src={url + favoriteHostel.main_image}
-        alt="Profile"
+        alt={favoriteHostel.name}
         className="user-favorite-hostel-image"
       />
       <div className="user-favorite-hostel-info">
@@ -58,20 +58,20 @@ export function FavoriteHostels({ favoriteHostel, loadFavoriteHostel }) {
       </div>
       <div className="user-favorite-hostel-price-and-button">
         <p className="user-favorite-hostel-price">
-          {favoriteHostel.price_min}/sem
+          GHS {favoriteHostel.price_min}/sem
         </p>
         <button
           className="user-favorite-hostel-button"
           onClick={() => showHostelId(favoriteHostel.hostel_id)}
         >
-          View
+          View Details
         </button>
-        <p
+        <button
           className="user-favorite-hostel-remove"
           onClick={() => removeFavorite(favoriteHostel.hostel_id)}
         >
           Remove
-        </p>
+        </button>
       </div>
     </div>
   );

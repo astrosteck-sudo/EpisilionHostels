@@ -54,6 +54,7 @@
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
   border: 1px solid #e8f5ee;
   margin: 0 auto;
+  margin-bottom: 70px;
 }
 .sign-up-wrapper.openHostelManagerLoginPage {
   display: none;

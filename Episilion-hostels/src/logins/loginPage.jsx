@@ -358,9 +358,9 @@ export function LoginPage({ setIsLoggedIn, setManagerIsLoggedIn }) {
               <p>{managerErrorMessage}</p>
             </div>
           </form>
-          <div className="error-message-container login">
+          {/* <div className="error-message-container login">
             <p>{errorMessage}</p>
-          </div>
+          </div> */}
 
           <div
             className="hostel-manager-log-in"

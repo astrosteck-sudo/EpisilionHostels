@@ -8,7 +8,8 @@ import { SiteFooter } from "../SiteFooter/SiteFooter";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { FavoriteHostels } from "./FavoriteHostels";
-import { Envelope, Calendar } from "react-bootstrap-icons";
+import { Envelope, Calendar, BoxArrowRight, Person } from "react-bootstrap-icons";
+import { Link } from "react-router-dom";
 //import { useNavigate } from "react-router-dom";
 
 export function UserProfilePage({ isLoggedIn, setShowLogoutModal }) {
@@ -52,22 +53,26 @@ export function UserProfilePage({ isLoggedIn, setShowLogoutModal }) {
             <p className="user-profile-name">{user.name}</p>
             <p className="user-profile-email">
               <Envelope />
-              <p>{user.email}</p>
+              <span>{user.email}</span>
             </p>
             <div className="user-profile-joined">
               <Calendar/>
-              <p>Joined</p>
-              <span className="user-joined-date-span">
-                {dayjs(user.createdAt).format("MMMM D, YYYY")}
-              </span>
+              <span>Joined {dayjs(user.createdAt).format("MMMM D, YYYY")}</span>
             </div>
           </div>
 
-          <div
-            className="user-profile-log-out"
-            onClick={() => setShowLogoutModal(true)}
-          >
-            <p>Log Out</p>
+          <div className="user-profile-actions">
+            <Link to="/" className="user-profile-action-button">
+              <Person />
+              <span>Back to Home</span>
+            </Link>
+            <button 
+              className="user-profile-action-button logout"
+              onClick={() => setShowLogoutModal(true)}
+            >
+              <BoxArrowRight />
+              <span>Log Out</span>
+            </button>
           </div>
         </div>
 
