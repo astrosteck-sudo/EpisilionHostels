@@ -10,7 +10,9 @@ exports.getHostels = async (req, res) => {
       return res.json(cachedData);
     }
     // ✅ Run queries with async/await
-    const [hostels] = await pool.query("SELECT * FROM hostels");
+    const [hostels] = await pool.query(
+      "SELECT * FROM hostels WHERE status = 'approved'",
+    );
     const [pricing] = await pool.query("SELECT * FROM pricing");
     const [locations] = await pool.query("SELECT * FROM locations");
     const [rooms] = await pool.query("SELECT * FROM rooms");

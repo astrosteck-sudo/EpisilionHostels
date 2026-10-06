@@ -303,7 +303,9 @@ exports.searchHostelsAI = async (req, res) => {
 
     // 2B. HOSTEL QUERY → structured search flow
     console.log("[3b] entering hostel branch, querying DB...");
-    const hostels = await queryDB("SELECT * FROM hostels");
+    const hostels = await queryDB(
+      "SELECT * FROM hostels WHERE status = 'approved'",
+    );
     console.log("[4b] hostels fetched:", hostels.length);
     const pricing = await queryDB("SELECT * FROM pricing");
     console.log("[5b] pricing fetched:", pricing.length);
