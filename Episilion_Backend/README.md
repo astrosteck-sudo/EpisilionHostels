@@ -822,3 +822,36 @@ Place hostel images in the `public/images` directory. They will be accessible vi
 - No user profile update endpoints
 - No logout/token invalidation endpoint
 - No admin panel for system management
+
+
+key notes
+Heads-up note: where the approved-only filter is not applied
+
+Only two backend files filter hostels by status = 'approved':
+
+hostelController.js (getHostels, the homepage and hostel list)
+intentController.js (searchHostelsAI, the Ask Episilion chatbot)
+
+These controllers still read hostels or hostel data without checking status:
+
+reviewController.js (getReviews, addReview): works by hostel id, with no approval check.
+favoritesService.js and favoritesController.js (add, get, remove): no approval check. A hostel that was approved when favorited and later rejected would still appear in that user's favorites list.
+managerDashBoardController.js (getManagerDashboard): reads rooms, pricing and locations by the manager's hostel id. Left unfiltered on purpose, since managers need to see their own hostel.
+Review cleanup cron job (config/db.js): internal, not a public route.
+Any route not found in the audit. The AI found no approve/reject controller, no hostel-submission insert, and no detail-by-id or slug route in the folder it searched.
+
+Why this is safe for now: the public site only shows approved hostels, so users have no way to reach these controllers with an unapproved hostel id.
+
+Where a future crash could come from:
+
+Favorites: a favorited hostel that is later rejected or left incomplete. This is the most likely one.
+Direct API calls: someone calling the review or favorite routes with a hostel id they weren't shown.
+Stale pages: the homepage is cached for 24 hours, so a hostel that was rejected after caching can still appear and be favorited or reviewed.
+Unaudited code: the approve/reject and submission code, if it lives in a different folder or branch.
+
+Fix if that happens: add status = 'approved' to the query in that controller, or join to hostels with h.status = 'approved'.
+
+Two other open items:
+
+New submissions should default to status = 'pending': ALTER TABLE hostels ALTER COLUMN status SET DEFAULT 'pending';
+After approving or rejecting a hostel, clear the "allHostels" cache key or restart the Render service. Otherwise the homepage won't update for up to 24 hours.
