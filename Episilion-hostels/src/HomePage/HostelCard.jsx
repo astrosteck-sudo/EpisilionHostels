@@ -6,9 +6,6 @@ import { Link } from "react-router-dom";
 import { buildHostelSlug } from "../UTILS/slugFunctions.js";
 
 export function HostelCard({ hostel }) {
-  //THIS IS THE URL FOR THE BACKEND, THIS IS USED TO ACCESS THE IMAGES IN THE PUBLIC FOLDER OF THE BACKEND
-  //const url = "https://episilion-backend-2lt0.onrender.com"
-  const url = "https://episilion-backend-2lt0.onrender.com";
 
   //const navigate = useNavigate();
   // function showHostelId(parameter){
@@ -29,7 +26,7 @@ export function HostelCard({ hostel }) {
       <div className="image-container">
         <img
           id="hostel-card-image"
-          src={url + hostel.image}
+          src={hostel.image}
           alt={`${hostel.name}-image`}
         ></img>
         <div className="hostel-rating-text">

@@ -33,7 +33,6 @@ export function MoreDetailsPage({ originalHostelCardData }) {
   const [maxReview, setMaxReview] = useState(2); //THIS CONTROLLS THE NUMBER OF REVIEWS SHOWN
   const [isFavorite, setIsFavorite] = useState(false); //THIS CONTROLS THE FAVORITE BUTTON TO SHOW IF THE HOSTEL IS IN THE FAVORITES OR NOT
 
-  const url = "https://episilion-backend-2lt0.onrender.com"; //THIS IS THE URL FOR THE BACKEND, THIS IS USED TO ACCESS THE IMAGES IN THE PUBLIC FOLDER OF THE BACKEND
 
   const { slug } = useParams();
   const hostelId = extractHostelIdFromSlug(slug);
@@ -187,7 +186,7 @@ export function MoreDetailsPage({ originalHostelCardData }) {
           property="og:description"
           content={`Check out ${foundHostel?.name} near UPSA.`}
         />
-        <meta property="og:image" content={`${url}${foundHostel?.image}`} />
+        <meta property="og:image" content={`${foundHostel?.image}`} />
         <meta
           property="og:url"
           content={`https://www.episilionhostels.com/hostels/${slug}`}
@@ -200,7 +199,7 @@ export function MoreDetailsPage({ originalHostelCardData }) {
             "@type": "LodgingBusiness",
             name: foundHostel?.name,
             image: foundHostel?.image
-              ? `${url}${foundHostel.image}`
+              ? `${foundHostel.image}`
               : undefined,
             priceRange: foundHostel?.pricing?.priceMin
               ? `GHS ${foundHostel.pricing.priceMin} - GHS ${foundHostel.pricing.priceMax}`
@@ -232,7 +231,7 @@ export function MoreDetailsPage({ originalHostelCardData }) {
         <div className="scrollable-side-bar">
           <div className="more-details-hostel-image">
             <img
-              src={url + foundHostel.image}
+              src={foundHostel.image}
               alt={`${foundHostel.name} image`}
             ></img>
           </div>
