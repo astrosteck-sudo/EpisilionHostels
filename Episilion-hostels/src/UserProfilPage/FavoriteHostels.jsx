@@ -6,7 +6,7 @@ import { kilometersToMeters } from "../UTILS/kilometerConvertor";
 
 
 export function FavoriteHostels({ favoriteHostel, loadFavoriteHostel }) {
-  const url = "https://episilion-backend-2lt0.onrender.com";
+  const url = "https://episilionhostels.onrender.com";
   const navigate = useNavigate();
 
   function showHostelId(parameter) {

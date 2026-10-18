@@ -186,7 +186,7 @@ export function LoginPage({ setIsLoggedIn, setManagerIsLoggedIn }) {
 
             <div className="external-sign-up-buttons">
               <a
-                href="https://episilion-backend-2lt0.onrender.com/api/auth/google"
+                href="https://episilionhostels.onrender.com/api/auth/google"
                 className="external-sign-up-button"
               >
                 <img

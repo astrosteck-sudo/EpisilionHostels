@@ -114,7 +114,7 @@ export function SignUpPage() {
           </div>
 
           <div className="external-sign-up-buttons">
-            <a href="https://episilion-backend-2lt0.onrender.com/api/auth/google" className="external-sign-up-button">
+            <a href="https://episilionhostels.onrender.com/api/auth/google" className="external-sign-up-button">
               <img
                 loading="lazy"
                 src={googleImage}

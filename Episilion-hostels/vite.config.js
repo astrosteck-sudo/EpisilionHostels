@@ -40,7 +40,7 @@ export default defineConfig(async () => {
         server: {
           proxy: {
             "/api": {
-              target: "https://episilion-backend-2lt0.onrender.com",
+              target: "https://episilionhostels.onrender.com",
               changeOrigin: true,
               secure: true,
             },
@@ -62,7 +62,7 @@ export default defineConfig(async () => {
     server: {
       proxy: {
         "/api": {
-          target: "https://episilion-backend-2lt0.onrender.com",
+          target: "https://episilionhostels.onrender.com",
           changeOrigin: true,
           secure: true,
         },

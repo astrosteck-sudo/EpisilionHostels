@@ -1,7 +1,7 @@
 import fs from "fs";
 
 const BASE_URL = "https://www.episilionhostels.com";
-const API_URL = "https://episilion-backend-2lt0.onrender.com/api/hostels";
+const API_URL = "https://episilionhostels.onrender.com/api/hostels";
 
 function buildHostelSlug(hostel) {
   if (!hostel?.name || !hostel?.id) return hostel?.id || "";

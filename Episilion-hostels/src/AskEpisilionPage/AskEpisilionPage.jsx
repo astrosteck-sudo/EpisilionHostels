@@ -25,7 +25,7 @@ export function AskEpisilionPage({ isLoggedIn }) {
 
   //THIS IS TO TRACK THE LOADING STATE OF THE AI RESPONSE
   const [isLoading, setIsLoading] = useState(false);
-  const url = "https://episilion-backend-2lt0.onrender.com"; //THIS IS THE URL FOR THE BACKEND, THIS IS USED TO ACCESS THE IMAGES IN THE PUBLIC FOLDER OF THE BACKEND
+  const url = "https://episilionhostels.onrender.com"; //THIS IS THE URL FOR THE BACKEND, THIS IS USED TO ACCESS THE IMAGES IN THE PUBLIC FOLDER OF THE BACKEND
 
   //const [userCautionText, setUserCautionText] = useState(true)
   const navigate = useNavigate();
