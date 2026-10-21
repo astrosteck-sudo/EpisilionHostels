@@ -11,6 +11,7 @@ import resetImage from "../assets/icons/refresh.png";
 import { useEffect, useState } from "react";
 //import { all } from "axios";
 import { Helmet } from "react-helmet-async";
+import { Building, Search } from "react-bootstrap-icons";
 
 export function HomePage({
   hostelsCardData,
@@ -164,13 +165,26 @@ export function HomePage({
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (!event.target.closest(".suggestions-dropdown")) {
+      if (
+        !event.target.closest(".suggestions-dropdown") &&
+        !event.target.closest(".search-box")
+      ) {
         setSuggestionBoxOpen(false);
       }
     };
     document.addEventListener("click", handleClickOutside);
     return () => document.removeEventListener("click", handleClickOutside);
   }, []);
+
+  // Allows the user to run the search with the Enter key instead of
+  // having to reach for the search button.
+  function handleSearchKeyDown(event) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      setSuggestionBoxOpen(false);
+      searchHostelByName();
+    }
+  }
 
   //THIS FUNCTION TAKES THE HOSTEL NAME AS A PARAMETER, IT THE FILTERS THE HOSTEL IN THE originalHostelCardData
   //TO SEE IF ANY HOSTEL NAME MATCH IF IT DOES THEN IT sethostelsCardData TO THAT HOSTEL OBJECT
@@ -190,6 +204,7 @@ export function HomePage({
 
   function searchHostelByName() {
     setHostelsFound(true);
+    setSuggestionBoxOpen(false);
     //THIS WILL MAKE SURE NOTHING HAPPENS WHEN THE USER PREESES
     // THE SEARCH BUTTON WHEN THERE IS NOTHING IN THE SEARCH INPUT
     if (!searchHostelName) {
@@ -529,38 +544,74 @@ export function HomePage({
             lifestyle and budget. Your home away from home starts here.
           </p>
 
-          <div className="search-box">
-            <input
-              type="text"
-              name="search-box"
-              id="search-box-text"
-              placeholder="Search hostel by name"
-              list="Hostels"
-              onChange={userSearchedHostelName}
-              value={value}
-            ></input>
+          <div className="search-box-wrapper">
+            <div className="search-box">
+              <span className="search-box__icon" aria-hidden="true">
+                <Search />
+              </span>
+              <input
+                type="text"
+                name="search-box"
+                id="search-box-text"
+                className="search-box__input"
+                placeholder="Search hostel by name"
+                list="Hostels"
+                autoComplete="off"
+                aria-label="Search hostel by name"
+                aria-autocomplete="list"
+                aria-controls="suggestions"
+                onChange={userSearchedHostelName}
+                onKeyDown={handleSearchKeyDown}
+                value={value}
+              ></input>
 
-            <div className="search-button">
-              <svg
-                xmlns="http://w3.org"
-                viewBox="0 0 24 24"
-                width="70%"
-                height="70%"
+              <button
+                type="button"
+                className="search-button"
                 onClick={searchHostelByName}
+                aria-label="Search hostels"
               >
-                <circle cx="12" cy="12" r="11" fill="#1E8234" />
+                <span className="search-button__icon" aria-hidden="true">
+                  <Search />
+                </span>
+              </button>
+            </div>
 
-                <g
-                  stroke="#EBF7F2"
-                  strokeWidth="1"
-                  strokeLinecap="round"
-                  fill="none"
-                >
-                  <circle cx="11.5" cy="11.5" r="4" />
+            <div
+              id="suggestions"
+              className={`suggestions-dropdown ${!suggestionBoxOpen ? "close" : ""}`}
+              role="listbox"
+              aria-label="Hostel suggestions"
+            >
+              {value && filter.length > 0
+                ? filter.map((hostel) => {
+                    return (
+                      <div
+                        className="suggestion-item"
+                        role="option"
+                        aria-selected="false"
+                        key={hostel.id}
+                        onClick={() => suggestionHostelClicked(hostel.name)}
+                      >
+                        <span
+                          className="suggestion-item__icon"
+                          aria-hidden="true"
+                        >
+                          <Building />
+                        </span>
+                        <span className="suggestion-item__name">
+                          {hostel.name}
+                        </span>
+                      </div>
+                    );
+                  })
+                : ""}
 
-                  <line x1="14.5" y1="14.5" x2="17.5" y2="17.5" />
-                </g>
-              </svg>
+              {value && filter.length === 0 && (
+                <p className="suggestions-empty">
+                  No hostels match &ldquo;{value}&rdquo;
+                </p>
+              )}
             </div>
           </div>
           <div className={`filter-horizontal-bar`}>
@@ -610,23 +661,6 @@ export function HomePage({
             </div>
           </div>
 
-          <div
-            id="suggestions"
-            className={`suggestions-dropdown ${!suggestionBoxOpen ? "close" : ""}`}
-          >
-            {value
-              ? filter.map((hostel) => {
-                  return (
-                    <div
-                      className="suggestion-item"
-                      onClick={() => suggestionHostelClicked(hostel.name)}
-                    >
-                      {hostel.name}
-                    </div>
-                  );
-                })
-              : ""}
-          </div>
         </div>
         {/* <div className="episilion-hostels-changing-texts">
           <h1 className="changing-texts">{text}</h1>

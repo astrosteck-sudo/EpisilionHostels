@@ -5,6 +5,8 @@
  * They are intentionally dependency-free and screen-reader friendly.
  */
 
+import "./FormFeedback.css";
+
 /**
  * Inline message shown directly beneath a form field.
  *

@@ -16,7 +16,6 @@ import {
   Phone,
   Envelope,
   Whatsapp,
-  Textarea,
 } from "react-bootstrap-icons";
 
 import "./AboutUsPage.css";
@@ -95,23 +94,54 @@ export function AboutUsPage() {
         </script>
       </Helmet>
       <div className="about-episilion-header">
-        <h1 className="about-epislion-about">About Episilion</h1>
-        <p className="about-epislion-helping-students">
+        <p className="about-epislion-about">
+          <span className="about-epislion-about__dot" aria-hidden="true" />
+          About Episilion
+        </p>
+        <h1 className="about-epislion-helping-students">
           Helping students find safe, affordable, and comfortable hostels with
           ease.
-        </p>
+        </h1>
         <p className="about-epislion-header-short-description">
           We've redefined the housing search for the modern student, blending
           technology with deep local expertise to create a seamless marketplace
           for your next home.
         </p>
+        <div className="about-epislion-header__stats">
+          <div className="about-epislion-header__stat">
+            <span className="about-epislion-header__stat-value">
+              100%
+            </span>
+            <span className="about-epislion-header__stat-label">
+              Manually verified listings
+            </span>
+          </div>
+          <div className="about-epislion-header__stat">
+            <span className="about-epislion-header__stat-value">24/7</span>
+            <span className="about-epislion-header__stat-label">
+              AI hostel assistance
+            </span>
+          </div>
+          <div className="about-epislion-header__stat">
+            <span className="about-epislion-header__stat-value">
+              Near UPSA
+            </span>
+            <span className="about-epislion-header__stat-label">
+              Every hostel mapped to campus
+            </span>
+          </div>
+        </div>
       </div>
 
       <div className="who-we-are-container">
         <div className="unity-image">
-          <img src="/newUnityImage2.png" alt="unityImage" />
+          <img src="/newUnityImage2.png" alt="Students on the Episilion Hostels platform" />
         </div>
         <div className="who-we-are-description">
+          <p className="section-eyebrow">
+            <span className="section-eyebrow__dot" aria-hidden="true" />
+            Who we are
+          </p>
           <h2>Who We Are</h2>
           <p>
             Episilion Hostels is more than just a listing site; we are a
@@ -126,12 +156,47 @@ export function AboutUsPage() {
             proximity to campus. We believe that a better living environment
             leads to better academic performance.
           </p>
+          <ul className="who-we-are-highlights">
+            <li>
+              <span className="who-we-are-highlights__icon" aria-hidden="true">
+                <ShieldCheck />
+              </span>
+              <span>
+                <strong>Verified listings</strong> — every hostel checked by
+                hand, not scraped.
+              </span>
+            </li>
+            <li>
+              <span className="who-we-are-highlights__icon" aria-hidden="true">
+                <CashStack />
+              </span>
+              <span>
+                <strong>Transparent pricing</strong> — the full cost, with no
+                hidden fees.
+              </span>
+            </li>
+            <li>
+              <span className="who-we-are-highlights__icon" aria-hidden="true">
+                <Eye />
+              </span>
+              <span>
+                <strong>Built around students</strong> — every feature starts
+                from what a fresher actually needs.
+              </span>
+            </li>
+          </ul>
         </div>
       </div>
 
       <div className="mission-and-vision-container">
         <div className="mission">
-          <RocketTakeoff className="about-us-icon" />
+          <span className="mission-vision__icon" aria-hidden="true">
+            <RocketTakeoff />
+          </span>
+          <p className="section-eyebrow section-eyebrow--light">
+            <span className="section-eyebrow__dot" aria-hidden="true" />
+            What drives us
+          </p>
           <h2>Our Mission</h2>
           <p>
             To simplify the hostel searching process by providing a transparent,
@@ -141,7 +206,13 @@ export function AboutUsPage() {
         </div>
 
         <div className="vision">
-          <Eye className="about-us-icon" />
+          <span className="mission-vision__icon" aria-hidden="true">
+            <Eye />
+          </span>
+          <p className="section-eyebrow section-eyebrow--light">
+            <span className="section-eyebrow__dot" aria-hidden="true" />
+            Where we're going
+          </p>
           <h2>Our Vision</h2>
           <p>
             To become the leading global marketplace for student housing,
@@ -152,14 +223,21 @@ export function AboutUsPage() {
       </div>
 
       <div className="what-we-offer-container">
+        <p className="section-eyebrow section-eyebrow--center">
+          <span className="section-eyebrow__dot" aria-hidden="true" />
+          What we offer
+        </p>
         <h2>What We Offer</h2>
-        <h1>Tailored features designed for the modern university student.</h1>
+        <p className="what-we-offer-subtitle">
+          Tailored features designed for the modern university student.
+        </p>
 
         <div className="what-we-offers-container">
-          <div className="what-we-offer-long-container">
-            <ShieldCheck className="about-us-icon" />
+          <div className="what-we-offer-card">
+            <span className="what-we-offer-card__icon" aria-hidden="true">
+              <ShieldCheck />
+            </span>
             <h3>Verified Information</h3>
-
             <p>
               We manually verify every hostel listing. From water availability
               to security guards, the details you see are accurate and
@@ -167,22 +245,22 @@ export function AboutUsPage() {
             </p>
           </div>
 
-          <div className="what-we-offer-short-container">
-            <div>
-              <GenderMale className="about-us-icon" />
-              <GenderFemale className="about-us-icon" />
-            </div>
+          <div className="what-we-offer-card">
+            <span className="what-we-offer-card__icon" aria-hidden="true">
+              <GenderMale />
+              <GenderFemale />
+            </span>
             <h3>Gender-Based Filtering</h3>
             <p>
               Quickly browse hostels categorized by gender to find your perfect
               comfort zone.
             </p>
           </div>
-        </div>
 
-        <div className="what-we-offers-container">
-          <div className="what-we-offer-short-container">
-            <CashStack className="about-us-icon" />
+          <div className="what-we-offer-card">
+            <span className="what-we-offer-card__icon" aria-hidden="true">
+              <CashStack />
+            </span>
             <h3>Price Transparency</h3>
             <p>
               No hidden fees. Filter hostels based on your budget range and
@@ -190,8 +268,10 @@ export function AboutUsPage() {
             </p>
           </div>
 
-          <div className="what-we-offer-long-container contact">
-            <Phone className="about-us-icon" style={{ color: "white" }} />
+          <div className="what-we-offer-card what-we-offer-card--featured">
+            <span className="what-we-offer-card__icon" aria-hidden="true">
+              <Phone />
+            </span>
             <h3>Direct Contact</h3>
             <p>
               Found a place you love? Contact hostel managers directly through
@@ -202,8 +282,14 @@ export function AboutUsPage() {
       </div>
 
       <div className="about-epislion-team-section">
+        <p className="section-eyebrow section-eyebrow--center">
+          <span className="section-eyebrow__dot" aria-hidden="true" />
+          The people behind it
+        </p>
         <h2>Meet the Team</h2>
-        <h1>The passionate individuals behind your next home.</h1>
+        <p className="about-epislion-team-subtitle">
+          The passionate individuals behind your next home.
+        </p>
 
         <div className="about-epislion-team-cards">
           {teamData.map((teamMember) => {
@@ -214,67 +300,120 @@ export function AboutUsPage() {
       </div>
 
       <div className="about-us-faq-container">
+        <p className="section-eyebrow section-eyebrow--center">
+          <span className="section-eyebrow__dot" aria-hidden="true" />
+          Need to know
+        </p>
         <h2>Frequently Asked Questions</h2>
-        {faqs.map((item, i) => (
-          <div
-            className={`about-us-faq-item ${openIndex === i ? "open" : ""}`}
-            key={i}
-            onClick={() => setOpenIndex(openIndex === i ? null : i)}
-          >
-            <h3>{item.q}</h3>
-            <p>{item.a}</p>
-          </div>
-        ))}
+        {faqs.map((item, i) => {
+          const isOpen = openIndex === i;
+          return (
+            <div
+              className={`about-us-faq-item ${isOpen ? "open" : ""}`}
+              key={i}
+            >
+              <button
+                type="button"
+                className="about-us-faq-item__trigger"
+                aria-expanded={isOpen}
+                onClick={() => setOpenIndex(isOpen ? null : i)}
+              >
+                <h3>{item.q}</h3>
+                <span className="about-us-faq-item__icon" aria-hidden="true">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M12 5v14M5 12h14"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                </span>
+              </button>
+              <p>{item.a}</p>
+            </div>
+          );
+        })}
       </div>
 
 
       <div className="contacts-container">
         <div className="about-us-contacts">
-          <h2>Get in Touch</h2>
-          <p>
-            Have questions about a listing or need help finding the right place?
-            Our team is here to support you.
-          </p>
-          <div className="about-us-contact">
-            <Phone className="contacts-icon" />
-            <a href="tel:0537222558">0537222558</a>
-          </div>
-          <div className="about-us-contact">
-            <Envelope className="contacts-icon" />
-            <a
-              href={`mailto:episilionhostels26@gmail.com?subject=${encodeURIComponent("Hostel Inquiry")}&body=${encodeURIComponent("Hello, I would like to inquire about...")}`}
-            >
-              episilionhostels26@gmail.com
-            </a>
+          <div className="about-us-contacts__intro">
+            <p className="about-us-contacts__eyebrow">
+              <span className="about-us-contacts__eyebrow-dot" />
+              We're here to help
+            </p>
+            <h2>Get in Touch</h2>
+            <p className="about-us-contacts__lede">
+              Have questions about a listing or need help finding the right
+              place? Our team is here to support you.
+            </p>
           </div>
 
-          <div className="about-us-contact">
-            <Whatsapp className="contacts-icon" />
+          <div className="about-us-contacts__channels">
+            <a className="contact-channel" href="tel:0537222558">
+              <span className="contact-channel__icon" aria-hidden="true">
+                <Phone />
+              </span>
+              <span className="contact-channel__body">
+                <span className="contact-channel__label">Call us</span>
+                <span className="contact-channel__value">0537222558</span>
+              </span>
+              <span className="contact-channel__arrow" aria-hidden="true">
+                →
+              </span>
+            </a>
+
             <a
+              className="contact-channel"
+              href={`mailto:episilionhostels26@gmail.com?subject=${encodeURIComponent("Hostel Inquiry")}&body=${encodeURIComponent("Hello, I would like to inquire about...")}`}
+            >
+              <span className="contact-channel__icon" aria-hidden="true">
+                <Envelope />
+              </span>
+              <span className="contact-channel__body">
+                <span className="contact-channel__label">Email us</span>
+                <span className="contact-channel__value">
+                  episilionhostels26@gmail.com
+                </span>
+              </span>
+              <span className="contact-channel__arrow" aria-hidden="true">
+                →
+              </span>
+            </a>
+
+            <a
+              className="contact-channel"
               href="https://wa.me/0537222558"
               target="_blank"
               rel="noopener noreferrer"
             >
-              0537222558
+              <span
+                className="contact-channel__icon contact-channel__icon--whatsapp"
+                aria-hidden="true"
+              >
+                <Whatsapp />
+              </span>
+              <span className="contact-channel__body">
+                <span className="contact-channel__label">WhatsApp us</span>
+                <span className="contact-channel__value">0537222558</span>
+              </span>
+              <span className="contact-channel__arrow" aria-hidden="true">
+                →
+              </span>
             </a>
           </div>
+
+          <p className="about-us-contacts__note">
+            <span className="about-us-contacts__status" aria-hidden="true" />
+            We typically reply within a few hours during working days.
+          </p>
         </div>
-        {/* <div className="message-container">
-          <div className="inputs-container">
-            <p>Full Name</p>
-            <input type="text" placeholder="John Doe" />
-          </div>
-
-          <div className="inputs-container">
-            <p>Email Address</p>
-            <input type="text" placeholder="doe123@gmail.com" />
-          </div>
-
-          <div className="inputs-container">
-            <p>Message</p>
-            <textarea></textarea>
-          </div>
-        </div> */}
       </div>
     </>
   );

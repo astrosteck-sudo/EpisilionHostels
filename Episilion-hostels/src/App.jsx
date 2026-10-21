@@ -55,7 +55,7 @@ function App() {
     }
   };
   useEffect(() => {
-    loadHostelsCad();
+    loadHostelsCard();
   }, []);
 
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
