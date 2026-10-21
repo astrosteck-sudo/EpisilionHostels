@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const authMiddleware = require("../middleware/auth");
+const { readLimiter, writeLimiter } = require("../middleware/rateLimiters");
 
 const {
   addReview,
@@ -10,9 +11,9 @@ const {
 
 
 // POST review (needs login)
-router.post("/", authMiddleware, addReview);
+router.post("/", writeLimiter, authMiddleware, addReview);
 
 // GET reviews
-router.get("/:hostelId", getReviews);
+router.get("/:hostelId", readLimiter, getReviews);
 
 module.exports = router;

@@ -5,9 +5,10 @@ const {
     subscribeNewsletter,
     joinWaitlist,
 } = require("../controllers/subscriberController");
+const { subscribeLimiter } = require("../middleware/rateLimiters");
 
-router.post("/newsletter", subscribeNewsletter);
+router.post("/newsletter", subscribeLimiter, subscribeNewsletter);
 
-router.post("/waitlist", joinWaitlist);
+router.post("/waitlist", subscribeLimiter, joinWaitlist);
 
 module.exports = router;

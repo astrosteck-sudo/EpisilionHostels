@@ -150,6 +150,9 @@ The following environment variables are required for the application to function
 - `PORT` - Server port (defaults to 3000)
 - `NODE_ENV` - Environment (development/production)
 - `CLIENT_URL` - Frontend application URL for OAuth redirects
+- `TRUST_PROXY_HOPS` - Number of reverse-proxy hops in front of the API (defaults to 1)
+- `RATE_LIMIT_*_MAX` - Optional overrides for the rate limits listed under
+  [Rate Limiting](#rate-limiting)
 
 ## Database Schema
 
@@ -355,6 +358,96 @@ Based on the SQL queries in the codebase, the following database tables are used
 - **Middleware**: `authMiddleware` (middleware/auth.js)
 - **Usage**: Alternative authentication middleware
 - **Process**: Similar token verification but different error messages
+
+#### Rate Limiting
+
+- **Middleware**: `middleware/rateLimiters.js` (built on `express-rate-limit`)
+- **Usage**: Applied globally to `/api` and per-route for sensitive endpoints
+- **Keying**: Authenticated requests are keyed by account id (user or manager);
+  unauthenticated requests fall back to the client IP, IPv6-safe via
+  `ipKeyGenerator`
+- **Response**: `429` with `{ success: false, error: "rate_limit_exceeded", message }`
+  plus `RateLimit` / `Retry-After` headers
+- **Proxy awareness**: `app.set("trust proxy", TRUST_PROXY_HOPS || 1)` so the real
+  client IP is read from `X-Forwarded-For` behind Render
+
+| Limiter | Applies to | Default window | Default limit |
+| --- | --- | --- | --- |
+| `globalLimiter` | every `/api` request (webhooks skipped) | 15 min | 1000 |
+| `authLimiter` | `/api/auth/*`, `/api/manager/auth/login` (failed attempts only) | 15 min | 20 |
+| `aiLimiter` | `/api/intent/search` | 5 min | 20 |
+| `writeLimiter` | reviews, favorites, manager updates | 10 min | 40 |
+| `paymentLimiter` | `/api/payments/initialize`, `/api/payments/verify` | 10 min | 20 |
+| `subscribeLimiter` | `/api/subscribers/*` | 60 min | 5 |
+| `readLimiter` | hostels, reviews, favorites, dashboard, static JSON | 5 min | 300 |
+| `webhookLimiter` | `/api/payments/webhook` | 15 min | 600 |
+
+Each limit is overridable through the environment without a code change:
+`RATE_LIMIT_GLOBAL_MAX`, `RATE_LIMIT_AUTH_MAX`, `RATE_LIMIT_AI_MAX`,
+`RATE_LIMIT_WRITE_MAX`, `RATE_LIMIT_PAYMENT_MAX`, `RATE_LIMIT_SUBSCRIBE_MAX`,
+`RATE_LIMIT_READ_MAX`, `RATE_LIMIT_WEBHOOK_MAX`, and `TRUST_PROXY_HOPS`.
+
+#### Rate Limit Storage: Why Limits Are Per-Instance
+
+**Read this before scaling the API beyond one instance.**
+
+No `store` is passed to `rateLimit()`, so `express-rate-limit` uses its built-in
+`MemoryStore`. That store keeps hit counters in two plain `Map` objects on the
+Node heap — no database, no network call, no shared state. The library flags this
+itself with `localKeys = true`, meaning the counters are visible only to the
+process that created them.
+
+**This is correct for the current deployment** (a single Render service): one
+process means one set of counters, so every limit above is exact.
+
+**It breaks the moment you run more than one instance.** Each instance keeps a
+private tally, so a limit of *N* effectively becomes *N × (number of instances)*:
+
+```mermaid
+flowchart TD
+    A[Client] --> LB[Load balancer]
+    LB --> I1[Instance 1<br/>user101 = 333]
+    LB --> I2[Instance 2<br/>user101 = 333]
+    LB --> I3[Instance 3<br/>user101 = 334]
+```
+
+With `globalLimiter` at 1000/15min and 3 instances, an attacker sending 3000
+requests gets roughly 1000 counted per instance. No instance sees the full
+picture, so **nothing is blocked** and the effective limit silently triples. The
+same multiplication weakens the security-sensitive limiters most:
+
+| Limiter | Intended | With 3 instances |
+| --- | --- | --- |
+| `authLimiter` (brute force) | 20 failed logins / 15 min | 60 attempts |
+| `aiLimiter` (LLM cost) | 20 searches / 5 min | 60 searches |
+| `subscribeLimiter` | 5 signups / hour | 15 signups |
+
+A secondary symptom is inconsistent `Retry-After` values: a client blocked by one
+instance may be waved through by another, so 429s look random rather than
+deterministic.
+
+**The fix** is a shared store so all instances read and write the same counters.
+`rate-limit-redis` (v6, requires `express-rate-limit >= 8.6.0`) is the standard
+choice:
+
+```js
+const { RedisStore } = require("rate-limit-redis");
+const { createClient } = require("redis");
+
+const client = createClient({ url: process.env.REDIS_URL });
+await client.connect();
+
+const store = new RedisStore({
+  sendCommand: (...args) => client.sendCommand(args),
+});
+```
+
+> **Note for whoever implements this:** `createLimiter()` in
+> `middleware/rateLimiters.js` does **not** currently accept a `store` option —
+> it would need a `store` parameter added and spread into the `rateLimit()`
+> options. Passing `store` today would be silently ignored. Behaviour is
+> unchanged when no store is supplied, so adding it is a safe, non-breaking
+> change.
 
 ### Authorization
 

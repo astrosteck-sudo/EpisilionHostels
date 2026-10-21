@@ -5,12 +5,19 @@ const path = require("path");
 const passport = require("./passport.js");
 const session = require("express-session");
 
+const { globalLimiter, readLimiter } = require("../middleware/rateLimiters.js");
+
 require('dotenv').config();
 
 
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+// The API runs behind a reverse proxy (Render), so the real client IP only
+// arrives in X-Forwarded-For. Trusting exactly one hop keeps req.ip accurate
+// for rate limiting without letting clients spoof their own address.
+app.set("trust proxy", Number(process.env.TRUST_PROXY_HOPS) || 1);
 
 //THIS MAKES THE IMAGES IN THE PUBLIC FOLDER ACCESSIBLE TO THE FRONTEND
 app.use("/images", express.static("public/images")); // Serve images from the public/images directory
@@ -24,6 +31,11 @@ function readData(filename) {
 
 // ── Middleware ────────────────────────────────────────────────────────────────
 app.use(cors()); // Allow requests from any frontend origin
+
+// ── Rate limiting ─────────────────────────────────────────────────────────────
+// Applied before body parsing so floods are rejected as early as possible.
+app.use("/api", globalLimiter);
+
 app.use("/api/payments/webhook", express.raw({ type: "*/*" }));
 app.use(express.json()); // Parse JSON request bodies
 
@@ -38,8 +50,6 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(passport.initialize());
-app.use(passport.session());
 // ── Database Routes ────────────────────────────────────────────────────────────────
 app.use("/api/hostels", require("../routes/hostels.js"));
 app.use("/api/reviews", require("../routes/reviews.js"));
@@ -57,7 +67,7 @@ app.use("/api/subscribers", require("../routes/subscriberRoutes.js"));
 
 // ── Routes ────────────────────────────────────────────────────────────────────
 // GET /api/teamMembers  → return only the teamMembers array
-app.get("/api/teamMembers", (req, res) => {
+app.get("/api/teamMembers", readLimiter, (req, res) => {
   try {
     const teamMembers = readData("../data/team_Members_data.json");
     res.json({ success: true, teamMembers });
@@ -70,7 +80,7 @@ app.get("/api/teamMembers", (req, res) => {
 });
 
 // GET /api/moreProjects  → return only the moreProjects array
-app.get("/api/moreProjects", (req, res) => {
+app.get("/api/moreProjects", readLimiter, (req, res) => {
   try {
     const moreProjects = readData("./data/More_From_Us.json");
     res.json({ success: true, moreProjects });

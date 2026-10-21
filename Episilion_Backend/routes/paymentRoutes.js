@@ -9,11 +9,12 @@ const {
 } = require("../controllers/paymentController");
 
 const authMiddleware = require("../middleware/auth.js");
+const { paymentLimiter, webhookLimiter } = require("../middleware/rateLimiters");
 
-router.post("/initialize", authMiddleware, initialize);
+router.post("/initialize", paymentLimiter, authMiddleware, initialize);
 
-router.get("/verify/:reference", authMiddleware, verify);
+router.get("/verify/:reference", paymentLimiter, authMiddleware, verify);
 
-router.post("/webhook", webhook);
+router.post("/webhook", webhookLimiter, webhook);
 
 module.exports = router;
