@@ -1,0 +1,273 @@
+/* ==========================================================================
+   Full-screen recovery page shown when the app hits an unexpected error.
+   Matches the Episilion green design language used across the site.
+   ========================================================================== */
+
+.error-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  padding: 40px 20px;
+  background:
+    radial-gradient(circle at 50% 0%, #e8f5ee 0%, transparent 55%),
+    linear-gradient(135deg, #f0f9f4 0%, #e8f5ee 100%);
+  font-family: OutfitLight;
+}
+
+.error-page__card {
+  background-color: #fff;
+  border-radius: 24px;
+  border: 1px solid #e8f5ee;
+  box-shadow: 0 18px 50px rgba(11, 122, 62, 0.12);
+  padding: 48px 40px;
+  max-width: 520px;
+  width: 100%;
+  text-align: center;
+}
+
+/* ---------- Animation ---------- */
+
+.error-page__animation {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  margin: 0 auto 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.error-page__ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 2px solid rgba(11, 122, 62, 0.28);
+}
+
+.error-page__ring--outer {
+  inset: 0;
+  border-style: dashed;
+  animation: errorPageSpin 9s linear infinite;
+}
+
+.error-page__ring--inner {
+  inset: 20px;
+  border-color: rgba(11, 122, 62, 0.16);
+  border-style: dotted;
+  animation: errorPageSpin 6s linear infinite reverse;
+}
+
+.error-page__pulse {
+  position: absolute;
+  inset: 38px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(11, 122, 62, 0.16) 0%,
+    rgba(11, 122, 62, 0) 70%
+  );
+  animation: errorPagePulse 2.2s ease-in-out infinite;
+}
+
+.error-page__house {
+  position: relative;
+  z-index: 1;
+  width: 58px;
+  height: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #0b7a3e;
+  animation: errorPageFloat 3.2s ease-in-out infinite;
+}
+
+.error-page__house svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* ---------- Copy ---------- */
+
+.error-page__title {
+  font-family: OutfitBold;
+  font-size: 28px;
+  line-height: 1.25;
+  color: #0b7a3e;
+  margin: 0 0 12px 0;
+}
+
+.error-page__message {
+  font-family: OutfitLight;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #6b7280;
+  margin: 0;
+}
+
+.error-page__dots {
+  font-family: OutfitBold;
+  font-size: 22px;
+  line-height: 1;
+  color: #0b7a3e;
+  margin: 14px 0 0 0;
+  min-height: 22px;
+}
+
+/* ---------- Actions ---------- */
+
+.error-page__actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 28px;
+}
+
+.error-page__button {
+  border: none;
+  padding: 14px 28px;
+  border-radius: 12px;
+  font-family: OutfitMedium;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.error-page__button--primary {
+  background: linear-gradient(135deg, #0b7a3e 0%, #00855d 100%);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(11, 122, 62, 0.2);
+}
+
+.error-page__button--primary:hover {
+  background: linear-gradient(135deg, #085c2f 0%, #006948 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(11, 122, 62, 0.3);
+}
+
+.error-page__button--primary:active {
+  transform: scale(0.98);
+}
+
+.error-page__button--ghost {
+  background: transparent;
+  color: #0b7a3e;
+  border: 1px solid #cfe9db;
+}
+
+.error-page__button--ghost:hover {
+  background-color: #f0f9f4;
+  border-color: #0b7a3e;
+  transform: translateY(-2px);
+}
+
+.error-page__button--ghost:active {
+  transform: scale(0.98);
+}
+
+/* ---------- Developer details (dev only) ---------- */
+
+.error-page__details {
+  margin-top: 28px;
+  text-align: left;
+  font-family: OutfitLight;
+  font-size: 13px;
+  color: #6b7280;
+  border-top: 1px solid #e5e7eb;
+  padding-top: 16px;
+}
+
+.error-page__details summary {
+  cursor: pointer;
+  font-family: OutfitMedium;
+}
+
+.error-page__details pre {
+  margin: 10px 0 0 0;
+  padding: 12px;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  color: #9b2c2c;
+  font-size: 12px;
+}
+
+/* ---------- Footer ---------- */
+
+.error-page__footer {
+  font-family: OutfitLight;
+  font-size: 13px;
+  color: #6b7280;
+  margin: 0;
+}
+
+/* ---------- Keyframes ---------- */
+
+@keyframes errorPageSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes errorPagePulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.85;
+  }
+  50% {
+    transform: scale(1.18);
+    opacity: 1;
+  }
+}
+
+@keyframes errorPageFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-7px);
+  }
+}
+
+/* ---------- Respect reduced-motion preferences ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .error-page__ring,
+  .error-page__pulse,
+  .error-page__house {
+    animation: none;
+  }
+}
+
+/* ---------- Small screens ---------- */
+
+@media (max-width: 520px) {
+  .error-page__card {
+    padding: 36px 24px;
+  }
+
+  .error-page__title {
+    font-size: 23px;
+  }
+
+  .error-page__animation {
+    width: 116px;
+    height: 116px;
+  }
+
+  .error-page__actions {
+    flex-direction: column;
+  }
+
+  .error-page__button {
+    width: 100%;
+  }
+}

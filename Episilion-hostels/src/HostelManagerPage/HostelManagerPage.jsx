@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import passwordImage from "../assets/icons/shield.png";
 import userPopLogOutImage from "../assets/icons/logout.png";
+import { managerAuthHeaders } from "../UTILS/authHeaders";
 //import locationPin from "../assets/icons/pin.png";
 
 export function HostelManagerPage({ setShowManagerLogoutModal }) {
@@ -57,23 +58,13 @@ export function HostelManagerPage({ setShowManagerLogoutModal }) {
     setCautionDeposit(e.target.value);
   }
 
-  if (!managerHostel) {
-    console.log("User is not logged in. Redirecting...");
-    return (
-      <p className="login-To-see-this-page">
-        LOG IN AS A MANGER TO SEE THIS PAGE
-      </p>
-    );
-  }
   //console.log("manager hostel name", JSON.parse(managerHostel))
   //setManagerHostelName(JSON.parse(managerHostel).username)
-  const managerToken = localStorage.getItem("managerToken");
-
   const loadManagerDashBoardInfo = async () => {
     try {
       const response = await axios.get("/api/manager/dashboard", {
         headers: {
-          Authorization: `Bearer ${managerToken}`,
+          ...managerAuthHeaders(),
         },
       });
 
@@ -99,6 +90,16 @@ export function HostelManagerPage({ setShowManagerLogoutModal }) {
   useEffect(() => {
     loadManagerDashBoardInfo();
   }, []);
+
+  // Rendered after every hook above, so the hook order stays stable.
+  if (!managerHostel) {
+    console.log("User is not logged in. Redirecting...");
+    return (
+      <p className="login-To-see-this-page">
+        LOG IN AS A MANGER TO SEE THIS PAGE
+      </p>
+    );
+  }
 
   const updateHostel = async (e) => {
     e.preventDefault();
@@ -129,7 +130,7 @@ export function HostelManagerPage({ setShowManagerLogoutModal }) {
 
         {
           headers: {
-            Authorization: `Bearer ${managerToken}`,
+            ...managerAuthHeaders(),
             "Content-Type": "application/json",
           },
         },

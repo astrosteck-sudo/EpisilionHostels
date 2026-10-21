@@ -171,8 +171,8 @@ export function PageHeader({
                     d="M7.5 17c0-2.2 1.8-4 4.5-4s4.5 1.8 4.5 4"
                     fill="none"
                     stroke="#006644"
-                    stroke-width="2"
-                    stroke-linecap="round"
+                    strokeWidth="2"
+                    strokeLinecap="round"
                   />
                 </svg>
 
@@ -281,9 +281,9 @@ export function PageHeader({
                 height="24"
                 fill="none"
                 stroke="#006644"
-                stroke-width="2.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               >
                 <line x1="3" y1="12" x2="16" y2="12" />
                 <polyline points="11 7 16 12 11 17" />

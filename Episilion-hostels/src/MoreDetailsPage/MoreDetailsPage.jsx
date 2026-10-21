@@ -9,6 +9,7 @@ import { Reviews } from "./ReviewsData.jsx";
 import { Helmet } from "react-helmet-async";
 import { useParams } from "react-router-dom";
 import { extractHostelIdFromSlug } from "../UTILS/slugFunctions.js";
+import { authHeaders } from "../UTILS/authHeaders";
 import { getDistance } from "geolib";
 import { NotFoundPage } from "../NotFoundPage/NotFoundPage.jsx";
 
@@ -50,9 +51,6 @@ export function MoreDetailsPage({ originalHostelCardData }) {
 
   //THIS USEEFFECT WILL CHECK IF THE HOSTEL DATA HAS BEEN LOADED,
   // IF IT HAS THEN IT WILL CLOSE THE LOADING ANIMATION
-  if (!foundHostel) {
-    return <NotFoundPage />;
-  }
   function handleStarClick(value) {
     if (rating === value) {
       setRating(0);
@@ -92,7 +90,7 @@ export function MoreDetailsPage({ originalHostelCardData }) {
         },
         {
           headers: {
-            Authorization: localStorage.getItem("token"),
+            ...authHeaders(),
           },
         },
       );
@@ -130,7 +128,12 @@ export function MoreDetailsPage({ originalHostelCardData }) {
 
   useEffect(() => {
     loadingReviews(hostelId);
-  }, []);
+  }, [hostelId]);
+
+  // Rendered after every hook above, so the hook order stays stable.
+  if (!foundHostel) {
+    return <NotFoundPage />;
+  }
 
   //THIS FUNCTION WILL TOGGLE THE DISPLAY OF THE REVIEWS WHEN THE "SHOW REVIEWS" BUTTON IS CLICKED
   function showAllReviews() {
@@ -156,7 +159,7 @@ export function MoreDetailsPage({ originalHostelCardData }) {
         {},
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            ...authHeaders(),
           },
         },
       );

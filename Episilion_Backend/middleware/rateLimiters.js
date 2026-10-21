@@ -11,6 +11,7 @@
  */
 const { rateLimit, ipKeyGenerator } = require("express-rate-limit");
 const jwt = require("jsonwebtoken");
+const extractToken = require("../utils/extractToken");
 
 const MINUTE = 60 * 1000;
 
@@ -32,10 +33,10 @@ function userOrIp(req) {
   const known = req.user?.user_id ?? req.user?.id ?? req.user?.managerId;
   if (known) return `user:${known}`;
 
-  const authHeader = req.headers.authorization;
-  if (authHeader?.startsWith("Bearer ")) {
+  const token = extractToken(req);
+  if (token) {
     try {
-      const decoded = jwt.verify(authHeader.slice(7), process.env.JWT_SECRET);
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
       const id = decoded.user_id ?? decoded.id ?? decoded.managerId;
       if (id) return `user:${id}`;
     } catch {

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { authHeaders } from "../UTILS/authHeaders";
 
 const PaymentSuccess = () => {
   const [message, setMessage] = useState("Verifying payment...");
@@ -11,14 +12,12 @@ const PaymentSuccess = () => {
       try {
         const params = new URLSearchParams(window.location.search);
         const reference = params.get("reference");
-        const token = localStorage.getItem("token");
 
-        const response = await axios.get(
-          `/api/payments/verify/${reference}`,
-          {
-            headers: { Authorization: token },
-          }
-        );
+        const response = await axios.get(`/api/payments/verify/${reference}`, {
+          headers: {
+            ...authHeaders(),
+          },
+        });
 
         setMessage(response.data.message);
       } catch (error) {

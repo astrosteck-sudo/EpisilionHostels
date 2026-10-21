@@ -1,19 +1,17 @@
 const jwt = require("jsonwebtoken");
+const extractToken = require("../utils/extractToken");
 
 const verifyToken = (req, res, next) => {
   try {
-    // Get authorization header
-    const authHeader = req.headers.authorization;
+    // Get the token from the Authorization header. Both "Bearer <token>"
+    // and a bare token are accepted.
+    const token = extractToken(req);
 
-    // Check if token exists
-    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    if (!token) {
       return res.status(401).json({
         error: "No token provided vg",
       });
     }
-
-    // Extract token
-    const token = authHeader.split(" ")[1];
 
     // Verify token
     const decoded = jwt.verify(

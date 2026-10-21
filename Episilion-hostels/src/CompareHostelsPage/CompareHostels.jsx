@@ -173,7 +173,7 @@ export function CompareHostels({ originalHostelCardData }) {
                                             hostel.amenities.map((amenity) => {
                                                 return (
                                                     <>
-                                                        <li class="special-font">{amenity}</li>
+                                                        <li className="special-font">{amenity}</li>
                                                     </>
                                                 )
                                             })
@@ -181,7 +181,7 @@ export function CompareHostels({ originalHostelCardData }) {
                                         {
                                             hostel.furnishing.map((funish) => {
                                                 return (
-                                                    <li class="special-font">{funish}</li>
+                                                    <li className="special-font">{funish}</li>
                                                 )
 
                                             })
@@ -192,7 +192,7 @@ export function CompareHostels({ originalHostelCardData }) {
                                     <ul className="grid rules-and-policies-style js-rules-and-regulations">
                                         {hostel.rules.map((rule) => {
                                             return (
-                                                <li class="special-font">{rule}</li>
+                                                <li className="special-font">{rule}</li>
                                             )
                                         })}
                                     </ul>
@@ -202,12 +202,12 @@ export function CompareHostels({ originalHostelCardData }) {
                                         {hostel.media.images.map((image) => {
 
                                             return (
-                                                <div class="compared-hostel-room-type-image">
+                                                <div className="compared-hostel-room-type-image">
                                                     <a href={url + image.url}>
                                                         <img loading='lazy'class="hostel-room" src={url + image.url} alt={image.type}></img>
                                                     </a>
-                                                    <div class="hostel-room-type-overlay">
-                                                        <span class="hostel-room-type-overlay-text">{image.type}</span>
+                                                    <div className="hostel-room-type-overlay">
+                                                        <span className="hostel-room-type-overlay-text">{image.type}</span>
                                                     </div>
                                                 </div>
                                             )
@@ -278,7 +278,7 @@ export function CompareHostels({ originalHostelCardData }) {
                                             hostel.amenities.map((amenity) => {
                                                 return (
                                                     <>
-                                                        <li class="special-font">{amenity}</li>
+                                                        <li className="special-font">{amenity}</li>
                                                     </>
                                                 )
                                             })
@@ -286,7 +286,7 @@ export function CompareHostels({ originalHostelCardData }) {
                                         {
                                             hostel.furnishing.map((funish) => {
                                                 return (
-                                                    <li class="special-font">{funish}</li>
+                                                    <li className="special-font">{funish}</li>
                                                 )
 
                                             })
@@ -297,7 +297,7 @@ export function CompareHostels({ originalHostelCardData }) {
                                     <ul className="grid rules-and-policies-style js-rules-and-regulations">
                                         {hostel.rules.map((rule) => {
                                             return (
-                                                <li class="special-font">{rule}</li>
+                                                <li className="special-font">{rule}</li>
                                             )
                                         })}
                                     </ul>
@@ -307,12 +307,12 @@ export function CompareHostels({ originalHostelCardData }) {
                                         {hostel.media.images.map((image) => {
 
                                             return (
-                                                <div class="compared-hostel-room-type-image">
+                                                <div className="compared-hostel-room-type-image">
                                                     <a href={url + image.url}>
                                                         <img loading='lazy'class="hostel-room" src={url + image.url} alt={image.type}></img>
                                                     </a>
-                                                    <div class="hostel-room-type-overlay">
-                                                        <span class="hostel-room-type-overlay-text">{image.type}</span>
+                                                    <div className="hostel-room-type-overlay">
+                                                        <span className="hostel-room-type-overlay-text">{image.type}</span>
                                                     </div>
                                                 </div>
                                             )

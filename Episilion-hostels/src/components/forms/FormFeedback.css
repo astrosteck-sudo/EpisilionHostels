@@ -1,0 +1,224 @@
+/* ==========================================================================
+   Shared form feedback — used by login, sign-up and (later) every other form.
+   Matches the existing Episilion green design language in logins.css.
+   ========================================================================== */
+
+/* ---------- Inline field message ---------- */
+
+.form-field-message {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  margin: 8px 0 0 0;
+  font-family: OutfitMedium;
+  font-size: 13px;
+  line-height: 1.4;
+  animation: formFieldMessageIn 220ms ease-out;
+}
+
+.form-field-message--error {
+  color: #c53030;
+}
+
+.form-field-message--success {
+  color: #0b7a3e;
+}
+
+.form-field-message--warning {
+  color: #b45309;
+}
+
+.form-field-message__icon {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  margin-top: 1px;
+  border-radius: 50%;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+  color: #fff;
+}
+
+.form-field-message--error .form-field-message__icon {
+  background: #c53030;
+}
+
+.form-field-message--success .form-field-message__icon {
+  background: #0b7a3e;
+}
+
+.form-field-message--warning .form-field-message__icon {
+  background: #b45309;
+}
+
+/* ---------- Form-level alert banner ---------- */
+
+.form-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  font-family: OutfitMedium;
+  font-size: 14px;
+  line-height: 1.5;
+  animation: formAlertIn 260ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.form-alert--error {
+  background-color: #fff5f5;
+  border-color: #fed7d7;
+  color: #9b2c2c;
+}
+
+.form-alert--success {
+  background-color: #f0fdf4;
+  border-color: #bbf7d0;
+  color: #14532d;
+}
+
+.form-alert--warning {
+  background-color: #fffbeb;
+  border-color: #fde68a;
+  color: #92400e;
+}
+
+.form-alert--info {
+  background-color: #eff6ff;
+  border-color: #bfdbfe;
+  color: #1e3a8a;
+}
+
+.form-alert__icon {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1;
+  color: #fff;
+}
+
+.form-alert--error .form-alert__icon {
+  background: #c53030;
+}
+
+.form-alert--success .form-alert__icon {
+  background: #0b7a3e;
+}
+
+.form-alert--warning .form-alert__icon {
+  background: #b45309;
+}
+
+.form-alert--info .form-alert__icon {
+  background: #1d4ed8;
+}
+
+.form-alert__body {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.form-alert__title {
+  margin: 0 0 2px 0;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.form-alert__message {
+  margin: 0;
+  font-weight: 400;
+  overflow-wrap: anywhere;
+}
+
+/* ---------- Help list (shown under network-failure alerts) ---------- */
+
+.form-help-list {
+  margin: 10px 0 0 0;
+  padding-left: 18px;
+  font-family: OutfitLight;
+  font-size: 13px;
+  line-height: 1.6;
+  color: inherit;
+  opacity: 0.9;
+}
+
+/* ---------- Animations ---------- */
+
+@keyframes formAlertIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes formFieldMessageIn {
+  from {
+    opacity: 0;
+    transform: translateY(-3px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ---------- Respect reduced-motion preferences ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .form-alert,
+  .form-field-message {
+    animation: none;
+  }
+}
+
+/* ---------- Wrapper used around FormAlert inside a form ---------- */
+
+.form-alert-wrapper {
+  margin: 16px 0;
+}
+
+.form-alert-wrapper .form-help-list {
+  margin-top: 8px;
+}
+
+/* ---------- Disabled / busy submit button ---------- */
+
+.create-account-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+  transform: none;
+  box-shadow: none;
+}
+
+/* ---------- Invalid input state ---------- */
+
+.email-address-input[aria-invalid="true"],
+.password-input[aria-invalid="true"],
+.full-name-input[aria-invalid="true"],
+.comfirm-password-input[aria-invalid="true"] {
+  border-color: #fc8181;
+  background-color: #fffafa;
+}
+
+.email-address-input[aria-invalid="true"]:focus,
+.password-input[aria-invalid="true"]:focus,
+.full-name-input[aria-invalid="true"]:focus,
+.comfirm-password-input[aria-invalid="true"]:focus {
+  border-color: #c53030;
+  box-shadow: 0 0 0 3px rgba(197, 48, 48, 0.12);
+}

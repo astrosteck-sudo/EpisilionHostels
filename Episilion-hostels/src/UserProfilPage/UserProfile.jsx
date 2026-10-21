@@ -10,10 +10,33 @@ import { useEffect, useState } from "react";
 import { FavoriteHostels } from "./FavoriteHostels";
 import { Envelope, Calendar, BoxArrowRight, Person } from "react-bootstrap-icons";
 import { Link } from "react-router-dom";
+import { authHeaders } from "../UTILS/authHeaders";
 //import { useNavigate } from "react-router-dom";
 
 export function UserProfilePage({ isLoggedIn, setShowLogoutModal }) {
   const [favoriteHostelResponse, setFavoriteHostelResponse] = useState([]);
+
+  const loadFavoriteHostel = async () => {
+    try {
+      const response = await axios.get("/api/favorites/", {
+        headers: {
+          ...authHeaders(),
+        },
+      });
+      setFavoriteHostelResponse(response.data.data);
+    } catch (error) {
+      console.error("Failed to load favourite hostels:", error);
+      setFavoriteHostelResponse([]);
+    }
+  };
+
+  // Hooks must run on every render, so this sits above the early return below.
+  useEffect(() => {
+    if (isLoggedIn) {
+      loadFavoriteHostel();
+    }
+  }, [isLoggedIn]);
+
   if (!isLoggedIn) {
     console.log("User is not logged in. Redirecting...");
     return (
@@ -26,18 +49,6 @@ export function UserProfilePage({ isLoggedIn, setShowLogoutModal }) {
   const storedUser = localStorage.getItem("user");
   const user = storedUser ? JSON.parse(storedUser) : null;
   //const navigate = useNavigate();
-  useEffect(() => {
-    loadFavoriteHostel();
-  }, []);
-
-  const loadFavoriteHostel = async () => {
-    const response = await axios.get("/api/favorites/", {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    });
-    setFavoriteHostelResponse(response.data.data);
-  };
 
   return (
     <>

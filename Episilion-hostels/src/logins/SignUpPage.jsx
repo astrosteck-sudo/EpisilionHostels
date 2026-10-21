@@ -1,12 +1,25 @@
 import { PageHeader } from "../PageHeader/PageHeader";
 import "./logins.css";
+import "../components/forms/FormFeedback.css";
 import { SiteFooter } from "../SiteFooter/SiteFooter";
 import googleImage from "../assets/icons/google.png";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import isValidEmail from "../UTILS/emailValidator.js";
+import {
+  FormAlert,
+  FieldMessage,
+  ConnectionHelp,
+} from "../components/forms/FormFeedback";
+import { useFormSubmission } from "../hooks/useFormSubmission";
+import { getErrorMessage, isRateLimitError } from "../UTILS/apiError";
+import {
+  validateEmail,
+  validateName,
+  validatePassword,
+  validatePasswordMatch,
+} from "../UTILS/validation";
 
 export function SignUpPage() {
   const navigate = useNavigate();
@@ -15,20 +28,59 @@ export function SignUpPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
-  const [signingUserIn, setSigningUserIn] = useState(false)
+
+  const signUpForm = useFormSubmission({
+    fallbackMessage: "We couldn't create your account. Please try again.",
+    mapError: (error) => {
+      // The signup endpoint answers with a plain-text body.
+      const serverMessage = getErrorMessage(error);
+      const alreadyExists =
+        typeof error?.response?.data === "string" &&
+        error.response.data.toLowerCase().includes("already exists");
+
+      if (alreadyExists) {
+        return {
+          type: "error",
+          title: "Account already exists",
+          message:
+            "An account with this email already exists. Try logging in instead.",
+        };
+      }
+
+      if (isRateLimitError(error)) {
+        return {
+          type: "warning",
+          title: "Too many attempts",
+          message:
+            serverMessage ||
+            "Please wait a few minutes before trying again.",
+        };
+      }
+
+      return {
+        type: "error",
+        title: "We couldn't create your account",
+        message: serverMessage,
+        showConnectionHelp: !error?.response,
+      };
+    },
+  });
 
   function handleFullname(event) {
     setFullName(event.target.value);
+    signUpForm.clearFieldError("fullName");
   }
   function handleEmail(event) {
     setEmail(event.target.value);
+    signUpForm.clearFieldError("email");
   }
   function handlePassword(event) {
     setPassword(event.target.value);
+    signUpForm.clearFieldError("password");
   }
   function handleConfirmPassword(event) {
     setConfirmPassword(event.target.value);
+    signUpForm.clearFieldError("confirmPassword");
   }
   useEffect(() => {
     document.body.classList.add("body-bg");
@@ -54,44 +106,34 @@ export function SignUpPage() {
 
   async function handleSumbit(event) {
     event.preventDefault();
-    if (password !== confirmPassword) {
-      setErrorMessage("Passwords do not match");
-      return;
-    }
-    event.preventDefault();
-    if (!isValidEmail(email)) {
-      setErrorMessage("Please enter a valid email address");
-      return;
-    }
 
-    setErrorMessage("");
-    setSigningUserIn(true)
-    try {
-      console.log("Submitting data:");
+    // Validate every field up front so the user sees all problems at once
+    // rather than fixing them one at a time.
+    const errors = {
+      fullName: validateName(fullName),
+      email: validateEmail(email),
+      password: validatePassword(password),
+      confirmPassword: validatePasswordMatch(password, confirmPassword),
+    };
+
+    const hasErrors = Object.values(errors).some(Boolean);
+    signUpForm.setFieldErrorsFrom(errors);
+    if (hasErrors) return;
+
+    await signUpForm.run(async () => {
       await axios.post("/api/auth/signup", {
-        name: fullName,
-        email: email,
-        password: password,
+        name: fullName.trim(),
+        email: email.trim(),
+        password,
       });
+
       setFullName("");
       setPassword("");
       setConfirmPassword("");
       setEmail("");
-      console.log("Signup successful");
+
       navigate("/login"); // Redirect to login page after successful signup
-      // Optionally, you can redirect the user to the login page or home page after successful signup
-      // For example: window.location.href = "/login";
-    } catch (error) {
-      setErrorMessage(
-        error.response?.data || "An error occurred during signup",
-      );
-      console.log(
-        "Error submitting users:",
-        error.response?.data || error.message,
-      );
-    } finally{
-      setSigningUserIn(false)
-    }
+    });
   }
 
   return (
@@ -129,65 +171,117 @@ export function SignUpPage() {
             <span>sign up with email</span>
           </div>
 
-          <form method="POST" id="myForm" onSubmit={handleSumbit}>
+          <form method="POST" id="myForm" onSubmit={handleSumbit} noValidate>
             <div className="fullname-conatainer">
-              <p for="fullname" className="full-name-header">
+              <label htmlFor="signup-fullname" className="full-name-header">
                 FULL NAME
-              </p>
+              </label>
               <input
                 type="text"
+                id="signup-fullname"
                 name="fullname"
                 placeholder="e.g. John Mensah"
                 className="full-name-input"
                 value={fullName}
                 onChange={handleFullname}
+                aria-invalid={
+                  signUpForm.fieldErrors.fullName ? "true" : "false"
+                }
+                aria-describedby={
+                  signUpForm.fieldErrors.fullName
+                    ? "signup-fullname-error"
+                    : undefined
+                }
+                autoComplete="name"
                 required
+              />
+              <FieldMessage
+                id="signup-fullname-error"
+                message={signUpForm.fieldErrors.fullName}
               />
             </div>
 
             <div className="email-address-conatainer">
-              <p for="email-address" className="email-address-header">
+              <label htmlFor="signup-email" className="email-address-header">
                 EMAIL ADDRESS
-              </p>
+              </label>
               <input
                 type="email"
+                id="signup-email"
                 name="email"
                 placeholder="you@example.com"
                 className="email-address-input"
                 value={email}
                 onChange={handleEmail}
+                aria-invalid={signUpForm.fieldErrors.email ? "true" : "false"}
+                aria-describedby={
+                  signUpForm.fieldErrors.email ? "signup-email-error" : undefined
+                }
+                autoComplete="email"
                 required
+              />
+              <FieldMessage
+                id="signup-email-error"
+                message={signUpForm.fieldErrors.email}
               />
             </div>
 
             <div className="passwords-container">
               <div className="password-conatainer">
-                <p for="password" className="password-header">
+                <label htmlFor="signup-password" className="password-header">
                   PASSWORD
-                </p>
+                </label>
                 <input
                   type={type}
+                  id="signup-password"
                   name="password"
                   placeholder="••••••••••••••••"
                   className="password-input"
                   value={password}
                   onChange={handlePassword}
+                  aria-invalid={
+                    signUpForm.fieldErrors.password ? "true" : "false"
+                  }
+                  aria-describedby={
+                    signUpForm.fieldErrors.password
+                      ? "signup-password-error"
+                      : undefined
+                  }
+                  autoComplete="new-password"
                   required
+                />
+                <FieldMessage
+                  id="signup-password-error"
+                  message={signUpForm.fieldErrors.password}
                 />
               </div>
 
               <div className="comfirm-password-conatainer">
-                <p for="comfirm-password" className="comfirm-password-header">
+                <label htmlFor="signup-confirm-password" className="comfirm-password-header">
                   COMFIRM PASSWORD
-                </p>
+                </label>
                 <input
                   type={type}
+                  id="signup-confirm-password"
                   name="comfirm-password"
                   placeholder="••••••••••••••••"
                   className="comfirm-password-input"
                   value={confirmPassword}
                   onChange={handleConfirmPassword}
+                  aria-invalid={
+                    signUpForm.fieldErrors.confirmPassword ? "true" : "false"
+                  }
+                  aria-describedby={
+                    signUpForm.fieldErrors.confirmPassword
+                      ? "signup-confirm-password-error"
+                      : undefined
+                  }
+                  autoComplete="new-password"
                   required
+                />
+                <FieldMessage
+                  id="signup-confirm-password-error"
+                  message={signUpForm.fieldErrors.confirmPassword}
                 />
               </div>
             </div>
@@ -198,19 +292,34 @@ export function SignUpPage() {
                 id="showPassword"
                 onClick={() => showPassword(type)}
               />
-              <label for="showPassword" className="show-password">
+              <label htmlFor="showPassword" className="show-password">
                 Show password
               </label>
             </div>
 
             <div className="create-account-button-container">
-              <button className="create-account-button" type="submit">
-                {signingUserIn ? 'Creating account' : 'Create Account'}
+              <button
+                className="create-account-button"
+                type="submit"
+                disabled={signUpForm.isSubmitting}
+                aria-busy={signUpForm.isSubmitting}
+              >
+                {signUpForm.isSubmitting
+                  ? "Creating your account…"
+                  : "Create Account"}
               </button>
             </div>
-            <div className="error-message-container login">
-              <p>{errorMessage}</p>
-            </div>
+
+            {signUpForm.alert && (
+              <div className="form-alert-wrapper">
+                <FormAlert
+                  type={signUpForm.alert.type}
+                  title={signUpForm.alert.title}
+                  message={signUpForm.alert.message}
+                />
+                {signUpForm.alert.showConnectionHelp && <ConnectionHelp />}
+              </div>
+            )}
           </form>
           <div className="alternate-link-container">
             <p>

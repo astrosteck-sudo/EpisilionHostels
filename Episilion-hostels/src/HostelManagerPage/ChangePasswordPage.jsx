@@ -3,6 +3,7 @@ import "./changePasswordPage.css";
 import passwordImage from "../assets/icons/shield.png";
 import { useState } from "react";
 import axios from "axios";
+import { managerAuthHeaders } from "../UTILS/authHeaders";
 
 export function ChangePasswordPage({ managerIsLoggedIn }) {
   const [hostelManagerOldpassword, setHostelManagerOldPassword] = useState("");
@@ -28,7 +29,6 @@ export function ChangePasswordPage({ managerIsLoggedIn }) {
     setHostelManagerComfirmPassword(e.target.value);
   }
 
-  const managerToken = localStorage.getItem("managerToken");
   const updateManagerPassword = async (e) => {
     e.preventDefault();
 
@@ -44,7 +44,7 @@ export function ChangePasswordPage({ managerIsLoggedIn }) {
 
         {
           headers: {
-            Authorization: `Bearer ${managerToken}`,
+            ...managerAuthHeaders(),
           },
         },
       );

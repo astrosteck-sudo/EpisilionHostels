@@ -1,11 +1,25 @@
 import { PageHeader } from "../PageHeader/PageHeader";
 import "./logins.css";
+import "../components/forms/FormFeedback.css";
 import { SiteFooter } from "../SiteFooter/SiteFooter";
 import googleImage from "../assets/icons/google.png";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import {
+  FormAlert,
+  FieldMessage,
+  ConnectionHelp,
+} from "../components/forms/FormFeedback";
+import { useFormSubmission } from "../hooks/useFormSubmission";
+import {
+  getErrorMessage,
+  INVALID_CREDENTIALS_MESSAGE,
+  isCredentialRejection,
+  isRateLimitError,
+} from "../UTILS/apiError";
+import { validateEmail, validateHostelName } from "../UTILS/validation";
 //import fullStar from '../assets/icons/favorite.png';
 
 export function LoginPage({ setIsLoggedIn, setManagerIsLoggedIn }) {
@@ -15,9 +29,62 @@ export function LoginPage({ setIsLoggedIn, setManagerIsLoggedIn }) {
   const [managerHostelName, setManagerHostelName] = useState("");
   const [managerPassword, setManagerPassword] = useState("");
   const [password, setPassword] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
-  const [managerErrorMessage, setManagerErrorMessage] = useState("");
-  const [loggingInUser, setLoggingInUser] = useState(false)
+
+  const studentForm = useFormSubmission({
+    fallbackMessage: "We couldn't log you in. Please try again.",
+    mapError: (error) => {
+      if (isCredentialRejection(error)) {
+        return {
+          type: "error",
+          title: "We couldn't sign you in",
+          message: INVALID_CREDENTIALS_MESSAGE,
+        };
+      }
+      if (isRateLimitError(error)) {
+        return {
+          type: "warning",
+          title: "Too many attempts",
+          message:
+            getErrorMessage(error) ||
+            "Please wait a few minutes before trying again.",
+        };
+      }
+      return {
+        type: "error",
+        title: "We couldn't sign you in",
+        message: getErrorMessage(error),
+        showConnectionHelp: !error?.response,
+      };
+    },
+  });
+
+  const managerForm = useFormSubmission({
+    fallbackMessage: "We couldn't log you in. Please try again.",
+    mapError: (error) => {
+      if (isCredentialRejection(error)) {
+        return {
+          type: "error",
+          title: "We couldn't sign you in",
+          message: INVALID_CREDENTIALS_MESSAGE,
+        };
+      }
+      if (isRateLimitError(error)) {
+        return {
+          type: "warning",
+          title: "Too many attempts",
+          message:
+            getErrorMessage(error) ||
+            "Please wait a few minutes before trying again.",
+        };
+      }
+      return {
+        type: "error",
+        title: "We couldn't sign you in",
+        message: getErrorMessage(error),
+        showConnectionHelp: !error?.response,
+      };
+    },
+  });
 
   //THIS USEEFFECT ADDS A BACKGROUND PICTURE TO THE BODY WHEN THE LOGIN PAGE IS RENDERED AND REMOVES IT WHEN THE COMPONENT UNMOUNTS
   useEffect(() => {
@@ -43,15 +110,19 @@ export function LoginPage({ setIsLoggedIn, setManagerIsLoggedIn }) {
   }
   function handleEmail(event) {
     setEmail(event.target.value);
+    studentForm.clearFieldError("email");
   }
   function handleManagerHostelName(event) {
     setManagerHostelName(event.target.value);
+    managerForm.clearFieldError("hostelName");
   }
   function handleManagerPassword(event) {
     setManagerPassword(event.target.value);
+    managerForm.clearFieldError("password");
   }
   function handlePasword(event) {
     setPassword(event.target.value);
+    studentForm.clearFieldError("password");
   }
   function handleBlur(event) {
     setManagerPassword(event.target.value.trim());
@@ -65,48 +136,52 @@ export function LoginPage({ setIsLoggedIn, setManagerIsLoggedIn }) {
   async function handleHostelManagerLogin(e) {
     e.preventDefault();
 
-    try {
+    const hostelNameError = validateHostelName(managerHostelName);
+    if (hostelNameError || !managerPassword) {
+      managerForm.setFieldErrorsFrom({
+        hostelName: hostelNameError,
+        password: managerPassword ? "" : "Password is required.",
+      });
+      return;
+    }
+
+    await managerForm.run(async () => {
       const res = await axios.post(`/api/manager/auth/login`, {
         managerHostelName,
         managerPassword,
       });
 
-      // const token = res.data.token;
-
       // ✅ STORE TOKEN
       localStorage.setItem("managerToken", res.data.token); // 1. store login proof
       localStorage.setItem("managerUser", JSON.stringify(res.data.manager)); // 2. store manager info
-      console.log("Manager token stored:", res.data.manager);
-      // setManagerHostelName("");
-      // setManagerPassword("");
+
       setManagerIsLoggedIn(true);
       navigate("/hostelManagerPage");
-      setManagerErrorMessage("");
+
+      // A manager session replaces any student session.
       localStorage.removeItem("token");
       localStorage.removeItem("user");
       setIsLoggedIn(false);
-    } catch (error) {
-      navigate("/login");
-      console.log(error);
-      setManagerErrorMessage("Something is wrong try again");
-      setTimeout(() => {
-        setManagerErrorMessage("");
-      }, 2000);
-    }
+    });
   }
 
   async function handleLogin(e) {
     e.preventDefault();
-    setErrorMessage("");
-    setLoggingInUser(true)
 
-    try {
+    const emailError = validateEmail(email);
+    if (emailError || !password) {
+      studentForm.setFieldErrorsFrom({
+        email: emailError,
+        password: password ? "" : "Password is required.",
+      });
+      return;
+    }
+
+    await studentForm.run(async () => {
       const res = await axios.post(`/api/auth/login`, {
-        email,
+        email: email.trim(),
         password,
       });
-
-      // const token = res.data.token;
 
       // ✅ STORE TOKEN
       localStorage.setItem("token", res.data.token); // 1. store login proof
@@ -114,25 +189,16 @@ export function LoginPage({ setIsLoggedIn, setManagerIsLoggedIn }) {
 
       setEmail("");
       setPassword("");
-      console.log("Login successful");
 
       // ✅ REDIRECT TO HOME
       setIsLoggedIn(true);
+
+      // A student session replaces any manager session.
       localStorage.removeItem("managerToken");
       localStorage.removeItem("managerUser");
       setManagerIsLoggedIn(false);
       navigate("/");
-    } catch (error) {
-      console.log(error);
-      //setErrorMessage(error.response?.data || "Login failed");
-      setErrorMessage("Something is wrong, Try again !!");
-      setTimeout(() => {
-        setErrorMessage("");
-      }, 2000);
-    }
-    finally{
-      setLoggingInUser(false)
-    }
+    });
   }
 
   const [openManagerLoginPage, setOpenManagerLoginPage] = useState(false);
@@ -206,35 +272,59 @@ export function LoginPage({ setIsLoggedIn, setManagerIsLoggedIn }) {
             <span>log in with email</span>
           </div>
 
-          <form onSubmit={handleLogin}>
+          <form onSubmit={handleLogin} noValidate>
             <div className="email-address-conatainer">
-              <p for="email-address" className="email-address-header">
+              <label htmlFor="login-email" className="email-address-header">
                 EMAIL ADDRESS
-              </p>
+              </label>
               <input
                 type="email"
+                id="login-email"
                 name="email"
                 placeholder="you@example.com"
                 className="email-address-input"
                 value={email}
                 onChange={handleEmail}
+                aria-invalid={studentForm.fieldErrors.email ? "true" : "false"}
+                aria-describedby={
+                  studentForm.fieldErrors.email ? "login-email-error" : undefined
+                }
+                autoComplete="email"
                 required
+              />
+              <FieldMessage
+                id="login-email-error"
+                message={studentForm.fieldErrors.email}
               />
             </div>
 
             <div className="passwords-container">
               <div className="password-conatainer">
-                <p for="password" className="password-header">
+                <label htmlFor="login-password" className="password-header">
                   PASSWORD
-                </p>
+                </label>
                 <input
                   type={type}
+                  id="login-password"
                   name="password"
                   placeholder="••••••••••••••••"
                   className="password-input"
                   value={password}
                   onChange={handlePasword}
+                  aria-invalid={
+                    studentForm.fieldErrors.password ? "true" : "false"
+                  }
+                  aria-describedby={
+                    studentForm.fieldErrors.password
+                      ? "login-password-error"
+                      : undefined
+                  }
+                  autoComplete="current-password"
                   required
+                />
+                <FieldMessage
+                  id="login-password-error"
+                  message={studentForm.fieldErrors.password}
                 />
               </div>
             </div>
@@ -245,20 +335,33 @@ export function LoginPage({ setIsLoggedIn, setManagerIsLoggedIn }) {
                 id="showPassword"
                 onClick={() => showPassword(type)}
               />
-              <label for="showPassword" className="show-password">
+              <label htmlFor="showPassword" className="show-password">
                 Show password
               </label>
             </div>
 
             <div className="create-account-button-container">
-              <button className="create-account-button" type="submit">
-               {loggingInUser? 'Getting you in' : 'Login'}
+              <button
+                className="create-account-button"
+                type="submit"
+                disabled={studentForm.isSubmitting}
+                aria-busy={studentForm.isSubmitting}
+              >
+                {studentForm.isSubmitting ? "Getting you in…" : "Login"}
               </button>
             </div>
           </form>
-          <div className="error-message-container login">
-            <p>{errorMessage}</p>
-          </div>
+
+          {studentForm.alert && (
+            <div className="form-alert-wrapper">
+              <FormAlert
+                type={studentForm.alert.type}
+                title={studentForm.alert.title}
+                message={studentForm.alert.message}
+              />
+              {studentForm.alert.showConnectionHelp && <ConnectionHelp />}
+            </div>
+          )}
 
           <div
             className="hostel-manager-log-in"
@@ -303,37 +406,65 @@ export function LoginPage({ setIsLoggedIn, setManagerIsLoggedIn }) {
             <span>log in with hostel name</span>
           </div>
 
-          <form method="POST" id="myForm" onSubmit={handleHostelManagerLogin}>
+          <form method="POST" id="myForm" onSubmit={handleHostelManagerLogin} noValidate>
             <div className="email-address-conatainer">
-              <p for="hostel-name" className="email-address-header">
+              <label htmlFor="manager-hostel-name" className="email-address-header">
                 HOSTEL NAME
-              </p>
+              </label>
               <input
                 type="text"
+                id="manager-hostel-name"
                 name="hostel-name"
                 placeholder="e.g. prestige hostel"
                 className="email-address-input"
                 value={managerHostelName}
                 onChange={handleManagerHostelName}
                 onBlur={handleNameBlur}
+                aria-invalid={
+                  managerForm.fieldErrors.hostelName ? "true" : "false"
+                }
+                aria-describedby={
+                  managerForm.fieldErrors.hostelName
+                    ? "manager-hostel-name-error"
+                    : undefined
+                }
+                autoComplete="organization"
                 required
+              />
+              <FieldMessage
+                id="manager-hostel-name-error"
+                message={managerForm.fieldErrors.hostelName}
               />
             </div>
 
             <div className="passwords-container">
               <div className="password-conatainer">
-                <p for="password" className="password-header">
+                <label htmlFor="manager-password" className="password-header">
                   PASSWORD
-                </p>
+                </label>
                 <input
                   type={type}
+                  id="manager-password"
                   name="password"
                   placeholder="••••••••••••••••"
                   className="password-input"
                   value={managerPassword}
                   onChange={handleManagerPassword}
                   onBlur={handleBlur}
+                  aria-invalid={
+                    managerForm.fieldErrors.password ? "true" : "false"
+                  }
+                  aria-describedby={
+                    managerForm.fieldErrors.password
+                      ? "manager-password-error"
+                      : undefined
+                  }
+                  autoComplete="current-password"
                   required
+                />
+                <FieldMessage
+                  id="manager-password-error"
+                  message={managerForm.fieldErrors.password}
                 />
               </div>
             </div>
@@ -344,23 +475,33 @@ export function LoginPage({ setIsLoggedIn, setManagerIsLoggedIn }) {
                 id="managerShowPassword"
                 onClick={() => managerShowPassword(type)}
               />
-              <label for="managerShowPassword" className="show-password">
+              <label htmlFor="managerShowPassword" className="show-password">
                 Show password
               </label>
             </div>
 
             <div className="create-account-button-container">
-              <button className="create-account-button" type="submit">
-                Login
+              <button
+                className="create-account-button"
+                type="submit"
+                disabled={managerForm.isSubmitting}
+                aria-busy={managerForm.isSubmitting}
+              >
+                {managerForm.isSubmitting ? "Getting you in…" : "Login"}
               </button>
             </div>
-            <div className="error-message-container login">
-              <p>{managerErrorMessage}</p>
-            </div>
+
+            {managerForm.alert && (
+              <div className="form-alert-wrapper">
+                <FormAlert
+                  type={managerForm.alert.type}
+                  title={managerForm.alert.title}
+                  message={managerForm.alert.message}
+                />
+                {managerForm.alert.showConnectionHelp && <ConnectionHelp />}
+              </div>
+            )}
           </form>
-          {/* <div className="error-message-container login">
-            <p>{errorMessage}</p>
-          </div> */}
 
           <div
             className="hostel-manager-log-in"

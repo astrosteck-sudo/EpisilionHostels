@@ -55,7 +55,7 @@ function App() {
     }
   };
   useEffect(() => {
-    loadHostelsCard();
+    loadHostelsCad();
   }, []);
 
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
@@ -92,7 +92,7 @@ function App() {
   useEffect(() => {
     if (hostelsCardData?.length > 0) {
       setLoading(false);
-      // Tells the prerender renderer the real page has loaded —
+      // Tells the prerender renderer the real page has loaded â€”
       // without this, it would snapshot the "EPISILION LOADING" screen instead.
       document.dispatchEvent(new Event("app-ready"));
     }
@@ -115,7 +115,7 @@ function App() {
 
         <div className={`loader-container ${loading ? "open" : "close"}`}>
           <div className="loading-animation-conatainer">
-            <div class="loader"></div>
+            <div className="loader"></div>
           </div>
 
           <p className="shimmmer">EPISILION LOADING</p>

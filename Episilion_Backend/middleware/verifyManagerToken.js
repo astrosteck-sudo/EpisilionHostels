@@ -1,22 +1,22 @@
 const jwt = require("jsonwebtoken");
+const extractToken = require("../utils/extractToken");
 
 // Middleware: Verify manager JWT token
 const verifyManagerToken = (req, res, next) => {
-  
-  try {
-    const authHeader = req.headers.authorization;
 
-    // 1. Check if Authorization header exists and starts with "Bearer"
-    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+  try {
+    // Get the token from the Authorization header. Both "Bearer <token>"
+    // and a bare token are accepted.
+    const token = extractToken(req);
+
+    // 1. Check if a token was provided at all
+    if (!token) {
       return res.status(401).json({
         error: "Access denied", // No token provided
       });
     }
 
-    // 2. Extract token from header
-    const token = authHeader.split(" ")[1];
-
-    // 3. Verify token using secret key
+    // 2. Verify token using secret key
     const decoded = jwt.verify(
       token,
       process.env.JWT_SECRET

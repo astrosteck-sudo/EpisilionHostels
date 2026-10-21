@@ -208,7 +208,7 @@ export function AboutUsPage() {
         <div className="about-epislion-team-cards">
           {teamData.map((teamMember) => {
             //WITH THIS FOR EACH TEAM MEMEBER IT WILL GENERATE A TeamCards COMPONENT
-            return <TeamCards key={teamData.Name} teamMember={teamMember} />;
+            return <TeamCards key={teamMember.Name} teamMember={teamMember} />;
           })}
         </div>
       </div>

@@ -302,7 +302,7 @@ export function HomePage({
 
       <Helmet>
         <title>
-          Hostels Near UPSA | Book Verified Student Hostels Online – Episilion
+          Hostels Near UPSA | Book Verified Student Hostels Online â€“ Episilion
           Hostels
         </title>
 
@@ -310,7 +310,7 @@ export function HomePage({
 
         <meta
           name="description"
-          content="Find and book verified student hostels near UPSA (University of Professional Studies, Accra). Compare prices, room types, and amenities, read real reviews, and pay securely with Mobile Money or Paystack — no site visits required."
+          content="Find and book verified student hostels near UPSA (University of Professional Studies, Accra). Compare prices, room types, and amenities, read real reviews, and pay securely with Mobile Money or Paystack â€” no site visits required."
         />
 
         <meta
@@ -327,7 +327,7 @@ export function HomePage({
         />
         <meta
           property="og:description"
-          content="Browse and book verified student hostels near UPSA. Compare prices, amenities, and locations — secure payments, real reviews, direct manager contact."
+          content="Browse and book verified student hostels near UPSA. Compare prices, amenities, and locations â€” secure payments, real reviews, direct manager contact."
         />
         <meta property="og:url" content="https://www.episilionhostels.com/" />
         <meta
@@ -344,7 +344,7 @@ export function HomePage({
         />
         <meta
           name="twitter:description"
-          content="Find and book verified student hostels near UPSA — compare prices, amenities, and pay securely online."
+          content="Find and book verified student hostels near UPSA â€” compare prices, amenities, and pay securely online."
         />
         <meta
           name="twitter:image"
@@ -510,9 +510,9 @@ export function HomePage({
                 d="M9.5 12l1.5 1.5 3.5-3.5"
                 fill="none"
                 stroke="#003311"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               />
             </svg>
             <p>Over 10+ Verified Hostels</p>
@@ -552,8 +552,8 @@ export function HomePage({
 
                 <g
                   stroke="#EBF7F2"
-                  stroke-width="1"
-                  stroke-linecap="round"
+                  strokeWidth="1"
+                  strokeLinecap="round"
                   fill="none"
                 >
                   <circle cx="11.5" cy="11.5" r="4" />
@@ -654,14 +654,14 @@ export function HomePage({
                   r="16"
                   fill="none"
                   stroke="#006644"
-                  stroke-width="4.5"
+                  strokeWidth="4.5"
                 />
 
                 <path
                   d="M38 38l8 8M46 38l-8 8"
                   stroke="#006644"
-                  stroke-width="3"
-                  stroke-linecap="round"
+                  strokeWidth="3"
+                  strokeLinecap="round"
                   opacity="0.4"
                 />
 
@@ -671,8 +671,8 @@ export function HomePage({
                   x2="68"
                   y2="68"
                   stroke="#006644"
-                  stroke-width="5.5"
-                  stroke-linecap="round"
+                  strokeWidth="5.5"
+                  strokeLinecap="round"
                 />
               </g>
 
@@ -682,8 +682,8 @@ export function HomePage({
                 x2="48"
                 y2="72"
                 stroke="#006644"
-                stroke-width="3"
-                stroke-linecap="round"
+                strokeWidth="3"
+                strokeLinecap="round"
                 opacity="0.25"
               />
               <line
@@ -692,8 +692,8 @@ export function HomePage({
                 x2="72"
                 y2="72"
                 stroke="#006644"
-                stroke-width="3"
-                stroke-linecap="round"
+                strokeWidth="3"
+                strokeLinecap="round"
                 opacity="0.25"
               />
             </svg>
@@ -713,7 +713,7 @@ export function HomePage({
           >
             <span>Learn more about hostels near UPSA</span>
             <span className={`learn-more-arrow ${learnMoreOpen ? "open" : ""}`}>
-              ▾
+              â–¾
             </span>
           </button>
 
@@ -725,7 +725,7 @@ export function HomePage({
               <p>
                 Starting fresh at the University of Professional Studies, Accra
                 (UPSA)? Finding the right hostel is one of the most stressful
-                parts of freshman year — Episilion Hostels makes it simple. We
+                parts of freshman year â€” Episilion Hostels makes it simple. We
                 list verified, student-friendly hostels near UPSA's main campus,
                 so you can compare prices, room types, amenities, and walking
                 distance to campus, all in one place, before you commit to
@@ -782,7 +782,7 @@ export function HomePage({
         </section>
 
         <div className="more-hostels-container">
-          <p>More Hostels on the way — stay tuned!</p>
+          <p>More Hostels on the way â€” stay tuned!</p>
         </div>
       </section>
     </>

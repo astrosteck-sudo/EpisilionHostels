@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { getDistance } from "geolib";
 import { kilometersToMeters } from "../UTILS/kilometerConvertor";
+import { authHeaders } from "../UTILS/authHeaders";
 
 
 export function FavoriteHostels({ favoriteHostel, loadFavoriteHostel }) {
@@ -14,13 +15,11 @@ export function FavoriteHostels({ favoriteHostel, loadFavoriteHostel }) {
   }
 
   const removeFavorite = async (hostelId) => {
-    const token = localStorage.getItem("token");
-
     const response = await axios.delete(
       `/api/favorites/${hostelId}`,
       {
         headers: {
-          Authorization: `Bearer ${token}`,
+          ...authHeaders(),
         },
       },
     );

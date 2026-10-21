@@ -307,18 +307,6 @@
   transform: scale(0.98);
 }
 
-.error-message-container.login {
-  text-align: center;
-  color: #c53030;
-  font-family: OutfitMedium;
-  background-color: #fff5f5;
-  border: 1px solid #fed7d7;
-  border-radius: 12px;
-  padding: 12px 16px;
-  margin: 16px 0;
-  font-size: 14px;
-}
-
 .logins-page-link {
   color: #0b7a3e;
   font-weight: 600;

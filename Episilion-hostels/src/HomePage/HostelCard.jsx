@@ -35,8 +35,8 @@ export function HostelCard({ hostel }) {
               points="12 1.5 15.4 8.5 23 9.6 17.5 15 18.8 22.5 12 19 5.2 22.5 6.5 15 1 9.6 8.6 8.5"
               fill="#ffffff"
               stroke="#ffffff"
-              stroke-width="1"
-              stroke-linejoin="miter"
+              strokeWidth="1"
+              strokeLinejoin="miter"
             />
           </svg>
 
@@ -52,7 +52,7 @@ export function HostelCard({ hostel }) {
             <p id="hostel-name">{hostel.name}</p>
           </td>
           <td className="td-vetical">
-            <p id="hostel-price">₵{hostel.pricing.priceMin}</p>
+            <p id="hostel-price">â‚µ{hostel.pricing.priceMin}</p>
           </td>
         </tr>
         <tr width="20px">
@@ -95,7 +95,7 @@ export function HostelCard({ hostel }) {
       <div className="hostel-card-info">
         <div className="hostel-name-and-price">
           <p id="hostel-name">{hostel.name}</p>
-          <p id="hostel-price">₵{hostel.pricing.priceMin}</p>
+          <p id="hostel-price">â‚µ{hostel.pricing.priceMin}</p>
         </div>
         <p id="hostel-distace">
           <svg xmlns="http://w3.org" viewBox="0 0 24 24" width="15" height="15">
@@ -103,8 +103,8 @@ export function HostelCard({ hostel }) {
               d="M12 3c-3.87 0-7 3.13-7 7 0 5.25 7 11 7 11s7-5.75 7-11c0-3.87-3.13-7-7-7z"
               fill="none"
               stroke="#555555"
-              stroke-width="2"
-              stroke-linejoin="round"
+              strokeWidth="2"
+              strokeLinejoin="round"
             />
 
             <circle cx="12" cy="10" r="2" fill="#555555" />

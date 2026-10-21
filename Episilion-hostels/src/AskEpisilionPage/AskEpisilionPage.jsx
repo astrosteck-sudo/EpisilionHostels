@@ -7,7 +7,8 @@ import axios from "axios";
 import { getDeviceId } from "../UTILS/deviceId.js";
 
 import { initializePayment } from "../services/paymentService";
-import {buildHostelSlug } from "../UTILS/slugFunctions.js";
+import { buildHostelSlug } from "../UTILS/slugFunctions.js";
+import { authHeaders } from "../UTILS/authHeaders";
 
 import { Robot, Send, LightbulbFill, Building } from "react-bootstrap-icons";
 
@@ -97,7 +98,7 @@ export function AskEpisilionPage({ isLoggedIn }) {
         { query: userMessage },
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            ...authHeaders(),
             "x-device-id": getDeviceId(),
           },
         },
@@ -208,10 +209,9 @@ export function AskEpisilionPage({ isLoggedIn }) {
 
   const getMe = async () => {
     try {
-      const token = localStorage.getItem("token");
       const response = await axios.get(`/api/me`, {
         headers: {
-          Authorization: token,
+          ...authHeaders(),
         },
       });
       // console.log(response.data);
