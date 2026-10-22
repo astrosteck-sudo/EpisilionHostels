@@ -11,7 +11,14 @@ import resetImage from "../assets/icons/refresh.png";
 import { useEffect, useState } from "react";
 //import { all } from "axios";
 import { Helmet } from "react-helmet-async";
-import { Building, Search } from "react-bootstrap-icons";
+import {
+  Building,
+  CashStack,
+  ChatDots,
+  GeoAlt,
+  Search,
+  ShieldCheck,
+} from "react-bootstrap-icons";
 
 export function HomePage({
   hostelsCardData,
@@ -505,166 +512,190 @@ export function HomePage({
         </div>
       </section>
 
-      <section className="search-box-container">
-        <div className="intro-text-container">
-          <div className="verified-hostel-number">
-            <svg
-              xmlns="http://w3.org"
-              viewBox="0 0 24 24"
-              width="24"
-              height="24"
-            >
-              <circle cx="12" cy="12" r="11" fill="" />
+      <section className="hero">
+        <div className="hero__media" aria-hidden="true">
+          <img src="/homePageWallpaper.png" alt="" className="hero__image" />
+          <div className="hero__scrim" />
+        </div>
 
-              <path
-                d="M12 5.5s3.5-1 6-0.5v5c0 4-3.5 7-6 8.5-2.5-1.5-6-4.5-6-8.5v-5c2.5-0.5 6 0.5 6 0.5z"
-                fill="#FFFFFF"
-              />
+        <div className="hero__inner">
+          <div className="hero__content">
+            <p className="hero__badge">
+              <span className="hero__badge-dot" aria-hidden="true" />
+              Over 10+ Verified Hostels
+            </p>
 
-              <path
-                d="M9.5 12l1.5 1.5 3.5-3.5"
-                fill="none"
-                stroke="#003311"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-            <p>Over 10+ Verified Hostels</p>
-          </div>
+            <h1 className="hero__title">
+              Find Comfortable,
+              <span className="hero__title-accent">Affordable &amp; Safe</span>
+              Hostels Near UPSA
+            </h1>
 
-          <p className="intro-text-one">
-            Find Comfortable,
-            <span className="affodable-and-safe-text">Affordable & Safe </span>
-            Hostels Near UPSA
-          </p>
+            <p className="hero__lede">
+              Discover verified, student-friendly accommodations that match your
+              lifestyle and budget. Your home away from home starts here.
+            </p>
 
-          <p className="intro-text-two">
-            Discover verified, student-friendly accommodations that match your
-            lifestyle and budget. Your home away from home starts here.
-          </p>
-
-          <div className="search-box-wrapper">
-            <div className="search-box">
-              <span className="search-box__icon" aria-hidden="true">
-                <Search />
-              </span>
-              <input
-                type="text"
-                name="search-box"
-                id="search-box-text"
-                className="search-box__input"
-                placeholder="Search hostel by name"
-                list="Hostels"
-                autoComplete="off"
-                aria-label="Search hostel by name"
-                aria-autocomplete="list"
-                aria-controls="suggestions"
-                onChange={userSearchedHostelName}
-                onKeyDown={handleSearchKeyDown}
-                value={value}
-              ></input>
-
-              <button
-                type="button"
-                className="search-button"
-                onClick={searchHostelByName}
-                aria-label="Search hostels"
-              >
-                <span className="search-button__icon" aria-hidden="true">
+            <div className="search-box-wrapper">
+              <div className="search-box">
+                <span className="search-box__icon" aria-hidden="true">
                   <Search />
                 </span>
-              </button>
-            </div>
+                <input
+                  type="text"
+                  name="search-box"
+                  id="search-box-text"
+                  className="search-box__input"
+                  placeholder="Search hostel by name"
+                  list="Hostels"
+                  autoComplete="off"
+                  aria-label="Search hostel by name"
+                  aria-autocomplete="list"
+                  aria-controls="suggestions"
+                  onChange={userSearchedHostelName}
+                  onKeyDown={handleSearchKeyDown}
+                  value={value}
+                ></input>
 
-            <div
-              id="suggestions"
-              className={`suggestions-dropdown ${!suggestionBoxOpen ? "close" : ""}`}
-              role="listbox"
-              aria-label="Hostel suggestions"
-            >
-              {value && filter.length > 0
-                ? filter.map((hostel) => {
-                    return (
-                      <div
-                        className="suggestion-item"
-                        role="option"
-                        aria-selected="false"
-                        key={hostel.id}
-                        onClick={() => suggestionHostelClicked(hostel.name)}
-                      >
-                        <span
-                          className="suggestion-item__icon"
-                          aria-hidden="true"
-                        >
-                          <Building />
-                        </span>
-                        <span className="suggestion-item__name">
-                          {hostel.name}
-                        </span>
-                      </div>
-                    );
-                  })
-                : ""}
-
-              {value && filter.length === 0 && (
-                <p className="suggestions-empty">
-                  No hostels match &ldquo;{value}&rdquo;
-                </p>
-              )}
-            </div>
-          </div>
-          <div className={`filter-horizontal-bar`}>
-            {/* <div
-              className={`filter-buttons main-filter`}
-              onClick={openFilterMenu}
-            >
-              <div className="filter-button ">
-                <img
-                  loading="lazy"
-                  src={filterImage}
-                  alt=""
-                  className="filter-button-image"
-                />
-                <p>Filter</p>
+                <button
+                  type="button"
+                  className="search-button"
+                  onClick={searchHostelByName}
+                  aria-label="Search hostels"
+                >
+                  <span className="search-button__icon" aria-hidden="true">
+                    <Search />
+                  </span>
+                </button>
               </div>
-            </div> */}
-            <div
-              className={`filter-buttons ${allActive ? "active" : "inactive"}`}
-              onClick={() => handleFilterSelection("allActive")}
-            >
-              All
+
+              <div
+                id="suggestions"
+                className={`suggestions-dropdown ${!suggestionBoxOpen ? "close" : ""}`}
+                role="listbox"
+                aria-label="Hostel suggestions"
+              >
+                {value && filter.length > 0
+                  ? filter.map((hostel) => {
+                      return (
+                        <div
+                          className="suggestion-item"
+                          role="option"
+                          aria-selected="false"
+                          key={hostel.id}
+                          onClick={() => suggestionHostelClicked(hostel.name)}
+                        >
+                          <span
+                            className="suggestion-item__icon"
+                            aria-hidden="true"
+                          >
+                            <Building />
+                          </span>
+                          <span className="suggestion-item__name">
+                            {hostel.name}
+                          </span>
+                        </div>
+                      );
+                    })
+                  : ""}
+
+                {value && filter.length === 0 && (
+                  <p className="suggestions-empty">
+                    No hostels match &ldquo;{value}&rdquo;
+                  </p>
+                )}
+              </div>
             </div>
-            <div
-              className={`filter-buttons ${girlsActive ? "active" : "inactive"}`}
-              onClick={() => handleFilterSelection("girlsActive")}
-            >
-              Girls
-            </div>
-            <div
-              className={`filter-buttons ${boysActive ? "active" : "inactive"}`}
-              onClick={() => handleFilterSelection("boysActive")}
-            >
-              Boys
-            </div>
-            <div
-              className={`filter-buttons ${mixedActive ? "active" : "inactive"}`}
-              onClick={() => handleFilterSelection("mixedActive")}
-            >
-              Mixed
-            </div>
-            <div
-              className={`filter-buttons ${underActive ? "active" : "inactive"}`}
-              onClick={() => handleFilterSelection("underActive")}
-            >
-              {"<"}$2500
+
+            <div className="hero__filters">
+              <span className="hero__filters-label">Filter by</span>
+              <div className="filter-horizontal-bar">
+                <button
+                  type="button"
+                  className={`filter-buttons ${allActive ? "active" : "inactive"}`}
+                  aria-pressed={allActive}
+                  onClick={() => handleFilterSelection("allActive")}
+                >
+                  All
+                </button>
+                <button
+                  type="button"
+                  className={`filter-buttons ${girlsActive ? "active" : "inactive"}`}
+                  aria-pressed={girlsActive}
+                  onClick={() => handleFilterSelection("girlsActive")}
+                >
+                  Girls
+                </button>
+                <button
+                  type="button"
+                  className={`filter-buttons ${boysActive ? "active" : "inactive"}`}
+                  aria-pressed={boysActive}
+                  onClick={() => handleFilterSelection("boysActive")}
+                >
+                  Boys
+                </button>
+                <button
+                  type="button"
+                  className={`filter-buttons ${mixedActive ? "active" : "inactive"}`}
+                  aria-pressed={mixedActive}
+                  onClick={() => handleFilterSelection("mixedActive")}
+                >
+                  Mixed
+                </button>
+                <button
+                  type="button"
+                  className={`filter-buttons ${underActive ? "active" : "inactive"}`}
+                  aria-pressed={underActive}
+                  onClick={() => handleFilterSelection("underActive")}
+                >
+                  {"<"}$2500
+                </button>
+              </div>
             </div>
           </div>
 
+          <aside className="hero__panel">
+            <h2 className="hero__panel-heading">Why students choose us</h2>
+            <ul className="hero__panel-list">
+              <li>
+                <span className="hero__panel-icon" aria-hidden="true">
+                  <ShieldCheck />
+                </span>
+                <span>
+                  <strong>Hand-verified listings</strong>
+                  Every hostel is checked by a person, not scraped.
+                </span>
+              </li>
+              <li>
+                <span className="hero__panel-icon" aria-hidden="true">
+                  <CashStack />
+                </span>
+                <span>
+                  <strong>Transparent pricing</strong>
+                  The full cost up front, with no hidden fees.
+                </span>
+              </li>
+              <li>
+                <span className="hero__panel-icon" aria-hidden="true">
+                  <GeoAlt />
+                </span>
+                <span>
+                  <strong>Mapped to campus</strong>
+                  See exactly how far each hostel is from UPSA.
+                </span>
+              </li>
+              <li>
+                <span className="hero__panel-icon" aria-hidden="true">
+                  <ChatDots />
+                </span>
+                <span>
+                  <strong>24/7 AI assistance</strong>
+                  Get answers about rooms and payments at any hour.
+                </span>
+              </li>
+            </ul>
+          </aside>
         </div>
-        {/* <div className="episilion-hostels-changing-texts">
-          <h1 className="changing-texts">{text}</h1>
-        </div> */}
       </section>
 
       <section className="hostels-section">
@@ -755,7 +786,7 @@ export function HomePage({
             className={`learn-more-content ${learnMoreOpen ? "open" : "closed"}`}
           >
             <div className="homepage-intro-text">
-              <h1>Find Verified Student Hostels Near UPSA</h1>
+              <h2>Find Verified Student Hostels Near UPSA</h2>
               <p>
                 Starting fresh at the University of Professional Studies, Accra
                 (UPSA)? Finding the right hostel is one of the most stressful
