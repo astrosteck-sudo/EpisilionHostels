@@ -1,34 +1,341 @@
-.amenities-homepage {
-    /* border: solid red; */
-    /* display: flex;
-  justify-content: center; */
-    text-align: center;
-    font-size: clamp(0.6rem, 2vw, 1rem);
-    
+/* ==========================================================================
+   Hostel card
+   --------------------------------------------------------------------------
+   These styles live here rather than in HomePage.css so the card travels
+   with the component — the homepage and the "hostels near UPSA" landing page
+   both render it, and each needs the card to look identical.
+
+   Every card is the same height regardless of its content: the media block
+   has a fixed aspect ratio, the body is a flex column, and the call to
+   action is pinned to the bottom with `margin-top: auto`.
+   ========================================================================== */
+
+.hostel-card {
+  --hc-green: #0b7a3e;
+  --hc-green-dark: #085c2f;
+  --hc-green-soft: #e8f5ee;
+  --hc-ink: #16241d;
+  --hc-muted: #64756c;
+  --hc-border: #e4ece7;
+  --hc-surface: #ffffff;
+  --hc-radius: 18px;
+
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-width: 0;
+  overflow: hidden;
+  text-align: left;
+  background-color: var(--hc-surface);
+  border: 1px solid var(--hc-border);
+  border-radius: var(--hc-radius);
+  box-shadow: 0 4px 18px rgba(11, 42, 26, 0.06);
+  transition:
+    transform 0.28s ease,
+    box-shadow 0.28s ease,
+    border-color 0.28s ease;
+}
+
+.hostel-card:hover {
+  transform: translateY(-6px);
+  border-color: #cfe3d7;
+  box-shadow: 0 16px 34px rgba(11, 42, 26, 0.12);
+}
+
+.hostel-card:focus-within {
+  border-color: var(--hc-green);
+  box-shadow: 0 16px 34px rgba(11, 42, 26, 0.12);
+}
+
+/* --------------------------------------------------------------------------
+   Media
+   -------------------------------------------------------------------------- */
+
+.hostel-card__media {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  width: 100%;
+  overflow: hidden;
+  background-color: #eaf1ec;
+}
+
+.hostel-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.45s ease;
+}
+
+.hostel-card:hover .hostel-card__image {
+  transform: scale(1.05);
+}
+
+/* Keeps the badge text readable on any photo. */
+.hostel-card__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(8, 26, 18, 0.42) 0%,
+    rgba(8, 26, 18, 0) 38%,
+    rgba(8, 26, 18, 0.12) 100%
+  );
+  pointer-events: none;
+}
+
+.hostel-card__badges {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  right: 12px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.hostel-card__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  font-family: OutfitMedium;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  line-height: 1.2;
+  white-space: nowrap;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.hostel-card__badge svg {
+  font-size: 12px;
+  flex: none;
+}
+
+.hostel-card__badge--type {
+  background-color: rgba(255, 255, 255, 0.92);
+  color: var(--hc-green-dark);
+  border: 1px solid rgba(11, 122, 62, 0.16);
+}
+
+.hostel-card__badge--rating {
+  background-color: rgba(11, 122, 62, 0.92);
+  color: #ffffff;
+  margin-left: auto;
+}
+
+.hostel-card__badge--rating svg {
+  color: #ffd666;
+}
+
+.hostel-card__badge--new {
+  background-color: rgba(20, 32, 26, 0.62);
+  color: #ffffff;
+  margin-left: auto;
+}
+
+/* --------------------------------------------------------------------------
+   Body
+   -------------------------------------------------------------------------- */
+
+.hostel-card__body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 12px;
+  padding: 18px 18px 18px;
+}
+
+.hostel-card__heading {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.hostel-card__name {
+  margin: 0;
+  font-family: OutfitBold;
+  font-size: 17px;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  color: var(--hc-ink);
+  /* Two lines maximum keeps every card the same height. */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: calc(1.3em * 2);
+}
+
+.hostel-card__price {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.hostel-card__price-value {
+  font-family: OutfitBold;
+  font-size: 17px;
+  line-height: 1.25;
+  color: var(--hc-green);
+  letter-spacing: -0.01em;
+}
+
+.hostel-card__price-period {
+  font-family: OutfitMedium;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--hc-muted);
+}
+
+.hostel-card__meta {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-family: OutfitLight;
+  font-size: 13px;
+  color: var(--hc-muted);
+  min-height: 18px;
+}
+
+.hostel-card__meta-icon {
+  font-size: 14px;
+  color: var(--hc-green);
+  flex: none;
+}
+
+/* --------------------------------------------------------------------------
+   Amenities
+   -------------------------------------------------------------------------- */
+
+.hostel-card__amenities {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 6px;
+  /* Fixed height so a card with one amenity is the same height as one with three. */
+  min-height: 26px;
+  overflow: hidden;
+}
+
+.hostel-card__amenity {
+  display: inline-flex;
+  align-items: center;
+  flex: 0 1 auto;
+  min-width: 0;
+  max-width: 100%;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background-color: var(--hc-green-soft);
+  border: 1px solid #d6ebdf;
+  color: var(--hc-green-dark);
+  font-family: OutfitMedium;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* --------------------------------------------------------------------------
+   Call to action
+   -------------------------------------------------------------------------- */
+
+.hostel-card__cta {
+  margin-top: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px 18px;
+  border-radius: 12px;
+  background-color: var(--hc-green);
+  color: #ffffff;
+  text-decoration: none;
+  font-family: OutfitSemiBold;
+  font-size: 13.5px;
+  letter-spacing: 0.02em;
+  transition:
+    background-color 0.22s ease,
+    box-shadow 0.22s ease,
+    gap 0.22s ease;
+}
+
+.hostel-card__cta:hover,
+.hostel-card__cta:focus-visible {
+  background-color: var(--hc-green-dark);
+  color: #ffffff;
+  gap: 12px;
+  box-shadow: 0 8px 18px rgba(11, 122, 62, 0.28);
+}
+
+.hostel-card__cta:focus-visible {
+  outline: 2px solid var(--hc-green);
+  outline-offset: 3px;
+}
+
+.hostel-card__cta-icon {
+  font-size: 14px;
+  transition: transform 0.22s ease;
+}
+
+.hostel-card__cta:hover .hostel-card__cta-icon {
+  transform: translateX(2px);
+}
+
+/* --------------------------------------------------------------------------
+   Responsive
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 1024px) {
+  .hostel-card__body {
+    padding: 16px;
+  }
 }
 
 @media (max-width: 600px) {
-    .amenities-homepage {
-        border: solid red;
-    }
+  .hostel-card__name {
+    font-size: 16px;
+  }
+
+  .hostel-card__price-value {
+    font-size: 16px;
+  }
+
+  .hostel-card__amenities {
+    min-height: 24px;
+  }
 }
 
-/* .amenity {
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .hostel-card,
+  .hostel-card__image,
+  .hostel-card__cta,
+  .hostel-card__cta-icon {
+    transition: none;
+  }
 
+  .hostel-card:hover {
+    transform: none;
+  }
 
-    border-radius: 15px;
-    padding-left: 10px;
-    padding-right: 10px;
+  .hostel-card:hover .hostel-card__image {
+    transform: none;
+  }
 
-    padding-top: 3px;
-    padding-bottom: 3px;
-    font-size: clamp(0.6rem, 1vw, 1rem);
-
-    display: inline-block;
-    font-weight: bold;
-
-    box-shadow: 0 0 12px reba(76, 175, 80, 0.6);
-    background: rgba(237, 236, 230, 0.217);
-    border: 2px solid rgb(255, 217, 0);
-    color: rgb(255, 217, 0);
-} */
+  .hostel-card__cta:hover {
+    gap: 8px;
+  }
+}

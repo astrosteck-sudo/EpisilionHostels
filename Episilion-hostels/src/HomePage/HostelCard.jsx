@@ -1,164 +1,121 @@
-import { getDistance } from "geolib";
-import { useEffect, useState } from "react";
-import "./HostelCard.css";
-import { kilometersToMeters } from "../UTILS/kilometerConvertor";
 import { Link } from "react-router-dom";
+import {
+  ArrowRight,
+  Building,
+  Clock,
+  GeoAlt,
+  StarFill,
+} from "react-bootstrap-icons";
 import { buildHostelSlug } from "../UTILS/slugFunctions.js";
+import {
+  formatBillingPeriod,
+  formatDistance,
+  formatHostelType,
+  formatPriceRange,
+  formatRating,
+  selectAmenities,
+} from "../UTILS/hostelFormatters.js";
+import "./HostelCard.css";
+
+const FALLBACK_IMAGE =
+  "https://episilionhostels.onrender.com/images/hostel-images/htc_towers.webp";
 
 export function HostelCard({ hostel }) {
+  const price = formatPriceRange(hostel?.pricing);
+  const rating = formatRating(hostel?.reviews);
+  const distance = formatDistance(hostel);
+  const billingPeriod = formatBillingPeriod(hostel?.pricing);
+  const typeLabel = formatHostelType(hostel?.type);
+  const amenities = selectAmenities(hostel?.amenities, 2);
 
-  //const navigate = useNavigate();
-  // function showHostelId(parameter){
-  //     window.location.href = `moreDetails?hostelId=${parameter}`;
-  // }
-  // function showHostelId(parameter) {
-  //   navigate(`/moreDetails?hostelId=${parameter}`);
-  // }
-
-  const [amenities, setAmenities] = useState([]);
-
-  useEffect(() => {
-    setAmenities(hostel.amenities.slice(1, 4)); // first 3 amenities
-  }, [hostel]);
+  const hostelName = hostel?.name || "Hostel";
+  const imageSrc = hostel?.image || FALLBACK_IMAGE;
 
   return (
-    <div className="hostel-card">
-      <div className="image-container">
+    <article className="hostel-card">
+      <div className="hostel-card__media">
         <img
-          id="hostel-card-image"
-          src={hostel.image}
-          alt={`${hostel.name}-image`}
-        ></img>
-        <div className="hostel-rating-text">
-          <svg xmlns="http://w3.org" viewBox="0 0 24 24">
-            <polygon
-              points="12 1.5 15.4 8.5 23 9.6 17.5 15 18.8 22.5 12 19 5.2 22.5 6.5 15 1 9.6 8.6 8.5"
-              fill="#ffffff"
-              stroke="#ffffff"
-              strokeWidth="1"
-              strokeLinejoin="miter"
-            />
-          </svg>
+          className="hostel-card__image"
+          src={imageSrc}
+          alt={`${hostelName} exterior`}
+          loading="lazy"
+          onError={(event) => {
+            if (event.currentTarget.src !== FALLBACK_IMAGE) {
+              event.currentTarget.src = FALLBACK_IMAGE;
+            }
+          }}
+        />
 
-          <p>{hostel?.reviews?.averageRating}</p>
-        </div>
-        {/* <div className="hostel-type-text">
-          <span className="overlay-text-hostel-type">{hostel?.type}</span>
-        </div> */}
-      </div>
-      {/* <table border="3" width="100%">
-        <tr width="20px">
-          <td className="td-vetical">
-            <p id="hostel-name">{hostel.name}</p>
-          </td>
-          <td className="td-vetical">
-            <p id="hostel-price">â‚µ{hostel.pricing.priceMin}</p>
-          </td>
-        </tr>
-        <tr width="20px">
-          <td colSpan="2" className="td-vetical">
-            <p id="hostel-distace">
-              {kilometersToMeters(
-                getDistance(
-                  { latitude: 5.660969, longitude: -0.166374 },
-                  {
-                    latitude: hostel.location.latitude,
-                    longitude: hostel.location.longitude,
-                  },
-                ) / 1000,
-              ).toFixed(0)}
-              m from campus
-            </p>
-          </td>
-        </tr>
-        <tr className="amenities-homepage">
-          <td colSpan="2">
-            <div id="hostel-perks">
-              {amenities.slice(0, 2).map((amenity, index) => (
-                <span key={index} className="amenity">
-                  {amenity}
-                </span>
-              ))}
-            </div>
-          </td>
-        </tr>
-      </table> */}
-      {/* <p className="view-more-details">
-        <Link
-          to={`/moreDetails?hostelId=${hostel?.id}`}
-          className="view-more-details-link js-view-more-details"
-        >
-          View Details
-        </Link>
-      </p> */}
+        <div className="hostel-card__overlay" aria-hidden="true" />
 
-      <div className="hostel-card-info">
-        <div className="hostel-name-and-price">
-          <p id="hostel-name">{hostel.name}</p>
-          <p id="hostel-price">GH₵{hostel.pricing.priceMin}</p>
-        </div>
-        <p id="hostel-distace">
-          <svg xmlns="http://w3.org" viewBox="0 0 24 24" width="15" height="15">
-            <path
-              d="M12 3c-3.87 0-7 3.13-7 7 0 5.25 7 11 7 11s7-5.75 7-11c0-3.87-3.13-7-7-7z"
-              fill="none"
-              stroke="#555555"
-              strokeWidth="2"
-              strokeLinejoin="round"
-            />
-
-            <circle cx="12" cy="10" r="2" fill="#555555" />
-          </svg>
-          {kilometersToMeters(
-            getDistance(
-              { latitude: 5.660969, longitude: -0.166374 },
-              {
-                latitude: hostel.location.latitude,
-                longitude: hostel.location.longitude,
-              },
-            ) / 1000,
-          ).toFixed(0)}
-          m from campus
-        </p>
-        <div id="hostel-perks">
-          {amenities.slice(0, 3).map((amenity, index) => (
-            <span key={index} className="amenity">
-              {amenity}
+        <div className="hostel-card__badges">
+          {typeLabel && (
+            <span className="hostel-card__badge hostel-card__badge--type">
+              <Building aria-hidden="true" />
+              {typeLabel}
             </span>
-          ))}
+          )}
+
+          {rating.hasRating ? (
+            <span
+              className="hostel-card__badge hostel-card__badge--rating"
+              title={rating.tooltip}
+            >
+              <StarFill aria-hidden="true" />
+              {rating.label}
+            </span>
+          ) : (
+            <span
+              className="hostel-card__badge hostel-card__badge--new"
+              title={rating.tooltip}
+            >
+              {rating.label}
+            </span>
+          )}
         </div>
-        <p className="view-more-details">
-          <Link
-            to={`/hostels/${buildHostelSlug(hostel)}`}
-            className="view-more-details-link js-view-more-details"
-          >
-            View Details
-          </Link>
-        </p>
       </div>
-    </div>
+
+      <div className="hostel-card__body">
+        <div className="hostel-card__heading">
+          <h3 className="hostel-card__name">{hostelName}</h3>
+
+          {price && (
+            <p className="hostel-card__price">
+              <span className="hostel-card__price-value">{price.label}</span>
+              {billingPeriod && (
+                <span className="hostel-card__price-period">
+                  per {billingPeriod}
+                </span>
+              )}
+            </p>
+          )}
+        </div>
+
+        <p className="hostel-card__meta">
+          {distance.kind === "walk" ? (
+            <Clock aria-hidden="true" className="hostel-card__meta-icon" />
+          ) : (
+            <GeoAlt aria-hidden="true" className="hostel-card__meta-icon" />
+          )}
+          <span>{distance.label}</span>
+        </p>
+
+        <ul className="hostel-card__amenities">
+          {amenities.map((amenity) => (
+            <li key={amenity} className="hostel-card__amenity">
+              {amenity}
+            </li>
+          ))}
+        </ul>
+
+        <Link
+          to={`/hostels/${buildHostelSlug(hostel)}`}
+          className="hostel-card__cta js-view-more-details"
+        >
+          <span>View Details</span>
+          <ArrowRight aria-hidden="true" className="hostel-card__cta-icon" />
+        </Link>
+      </div>
+    </article>
   );
 }
-("ea7ae95e-7dd1-4bb7-acff-4ada2022ed2a");
-
-// UPDATE rooms
-// SET price_min = 3700,
-//     price_max = 12000,
-//     billing_period = 'Per Semester',
-//     installment_allowed = 0,
-//     utilities_fee=0,
-//     maintenance_fee=0,
-//     caution_deposit= 500,
-//     refund_policy= 'No Refunds'
-// WHERE hostel_id = '141c9727-155b-472c-b75e-27715725f27c';
-
-// update pricing
-// set price_min = 3000,
-// 	price_max = '5000',
-//     billing_period =  'Per Semester',
-//     installment_allowed = 0 ,
-//     utilities_fee = 0,
-//     maintenance_fee = 0,
-//     caution_deposit = 0,
-//     refund_policy = 'No refunds'
-// where hostel_id = '4ff107e9-6493-4d32-ad4f-a50dc864d0a5'

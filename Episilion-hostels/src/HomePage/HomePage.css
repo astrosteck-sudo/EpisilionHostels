@@ -1,211 +1,30 @@
 
 /*HOSTELS INFORMATION*/
-/*THIS IS FOR THE TWO CARDS ON MOBILER*/
+/* Grid layout keeps every card the same width and height across the row. */
 .hostels-cards {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 24px;
+  align-items: stretch;
   justify-content: center;
-  padding: 1rem;
+  padding: 16px;
   box-sizing: border-box;
-  padding-bottom: 0px;
-  height: 100%;
-  /* margin-bottom: 5px; */
+  max-width: 1280px;
+  margin: 0 auto;
 }
 
-.hostel-card {
-  background-color: #f5f5f5;
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  flex: 1 1 250px;
-  max-width: 300px;
-  min-width: 200px;
-  box-sizing: border-box;
-  text-align: left;
-  transition: transform 0.3s;
-  margin-bottom: 50px;
-
-  /* let content define height */
-  height: auto; 
-  display: flex;
-  flex-direction: column;
-
-  min-height: 200px;         /* ensures a taller card */
-  display: flex;
-  flex-direction: column;
-}
-
-
-.view-more-details {
-  width: 100%;
-  height: 40px;
-  background-color: #1e8234;
-  border-radius: 10px;
-  cursor: pointer;
-  
-  /* 2. PUSHES THE BUTTON TO THE BOTTOM AUTOMATICALLY */
-  margin-top: auto; 
-}
-
-@media (max-width: 600px) {
-  .hostel-card {
-    flex: 1 1 100%;
-    max-width: 100%;
-    min-width: 0;
-    margin:15px;
-    margin-bottom: 24px; 
-
+@media (max-width: 640px) {
+  .hostels-cards {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 16px;
+    padding: 12px;
   }
 }
 
-
-.image-container {
-  position: relative;
-  /*ALLOWS ABOLUTE POSITIONING INSIDE*/
-  display: inline-block;
-  max-height: 190px;
-  overflow: hidden;
-}
-
-#hostel-card-image {
-  width: 100%;
-  height: auto;              /* don’t force height */
-  max-height: 190px;         /* cap it */
-  object-fit: cover;         /* crop instead of stretch */
-  border-radius: 7px 7px 0 0;
-  display: block;
-}
-
-@media (max-width: 600px) {
-  #hostel-card-image {
-    max-height: 200px;
-    object-fit: cover;
+@media (max-width: 420px) {
+  .hostels-cards {
+    grid-template-columns: 1fr;
   }
-  .hostel-card {
-    min-height: 300px;
-    margin-bottom: 24px;
-  }
-}
-
-
-.hostel-rating-text {
-  position: absolute;
-  bottom: 8px;
-  /* distance from bottom edge */
-  right: 8px;
-  /* distance from right edge */
-  color: white;
-  padding: 4px 8px;
-  width: min(100px, 20%);
-  border-radius: 4px;
-  font-size: clamp(9px, 2vw, 13px);
-  font-weight: bolder;
-  background: #1e8234;
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  font-family: OutfitLight;
-}
-.hostel-rating-text svg{
-  width: 30%;
-  height: auto;
-}
-
-.hostel-card-info{
-  padding: 20px;
-}
-.hostel-type-text {
-  position: absolute;
-  font-size: clamp(9px, 2vw, 15px);
-  bottom: 8px;
-  /* distance from bottom edge */
-  left: 8px;
-  /* distance from right edge */
-  /* semi-transparent background */
-  color: white;
-  padding: 4px 8px;
-  border-radius: 4px;
-  /* font-size: 0.9rem; */
-  font-weight: bolder;
-  background: #1e8234;
-}
-
-.hostel-name-and-price{
-  display: flex;
-}
-
-#hostel-price {
-  color: green;
-  font-size: clamp(1rem, 2vw, 1.2rem);
-  font-family: OutfitSemiBold;
-}
-
-
-#hostel-name {
-  width: 100%;
-  font-size: 22px;
-  margin-top: 0px;
-  font-family: OutfitLight;
-  font-weight: bolder;
-  text-align: left;
-}
-
-#hostel-distace {
-  margin: 0.2rem;
-  font-size: 13px;
-  /*RESPONSIVE FONT SIZE*/
-  font-family: OutfitLight, sans-serif;
-  text-align: left;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-#hostel-perks {
-  font-family: OutfitLight;
-  /* text-align: center; */
-  font-size: 10px;
-  text-decoration: solid;
-  /* border: solid red; */
-  display: flex;
-  justify-content: first baseline;
-  gap: 10px;
-  margin-bottom: 20px;
-  margin-top: 20px;
-  color: rgb(37, 39, 38);
-}
-.amenity{
-  text-transform: uppercase;
-  background-color: rgb(240 243 255);
-  padding: 4px;
-  border: solid rgb(188 202 192 / 0.3);
-  border-radius: 5px;
-}
-
-.hostel-card:hover {
-  transform: translateY(-5px);
-}
-
-/* .view-more-details {
-  width: 100%;
-  height: 40px;
-
-  background-color: #1e8234;
-  border-radius: 10px;
-  cursor: pointer;
-  bottom: 0;
-} */
-.view-more-details-link {
-  text-align: center;
-  text-decoration: none;
-  color: #ffffff;
-  font-size: clamp(1rem, 2vw, 1rem);
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: OutfitSemiBold;
 }
 
 
@@ -1427,10 +1246,6 @@ input[type="number"] {
 
   .hero__panel-list li {
     font-size: 14px;
-  }
-
-  .hostel-card-info {
-    padding: 4px;
   }
 }
 

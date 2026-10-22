@@ -847,7 +847,7 @@ export function HomePage({
         </section>
 
         <div className="more-hostels-container">
-          <p>More Hostels on the way â€” stay tuned!</p>
+          <p>More Hostels on the way the stay tuned!</p>
         </div>
       </section>
     </>
