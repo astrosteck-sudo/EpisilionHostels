@@ -95,7 +95,7 @@ export function HostelCard({ hostel }) {
       <div className="hostel-card-info">
         <div className="hostel-name-and-price">
           <p id="hostel-name">{hostel.name}</p>
-          <p id="hostel-price">â‚µ{hostel.pricing.priceMin}</p>
+          <p id="hostel-price">GH₵{hostel.pricing.priceMin}</p>
         </div>
         <p id="hostel-distace">
           <svg xmlns="http://w3.org" viewBox="0 0 24 24" width="15" height="15">
@@ -121,7 +121,7 @@ export function HostelCard({ hostel }) {
           m from campus
         </p>
         <div id="hostel-perks">
-          {amenities.slice(0, 2).map((amenity, index) => (
+          {amenities.slice(0, 3).map((amenity, index) => (
             <span key={index} className="amenity">
               {amenity}
             </span>
