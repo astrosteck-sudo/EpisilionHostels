@@ -7,28 +7,34 @@ import relativeTime from "dayjs/plugin/relativeTime";
 
 dayjs.extend(relativeTime);
 export function Reviews({ item }) {
-  if (item === "no reviews") {
-    return <p className="no-review-text">No reviews</p>;
-  }
-
-  
   const safeReview = sanitizeHTML(item.reviewText);
-  //console.log("Review item:", item); // Debugging log to check the structure of the review item
+  const createdAt = item.createdAt || item.created_at;
 
   return (
-    <>
-      <div className="user-review-wrapper">
-        <div className="user-review-name-and-star-container">
-          <h1>{getInitials(item.name)}</h1>
-          <div className="users-ratings-display">
-            {[...Array(item.rating)].map((_, i) => (
-              <img loading='lazy'key={i} src={fullStar} alt="star" />
-            ))}
-          </div>
+    <article className="user-review-wrapper">
+      <div className="user-review-name-and-star-container">
+        <h3>{getInitials(item.name)}</h3>
+        <div className="users-ratings-display" aria-label={`${item.rating} out of 5 stars`}>
+          {[...Array(Number(item.rating) || 0)].map((_, index) => (
+            <img
+              loading="lazy"
+              key={index}
+              src={fullStar}
+              alt=""
+              aria-hidden="true"
+            />
+          ))}
         </div>
-        <p className="users-review-time">{dayjs(item.createdAt).fromNow()}</p>
-        <div dangerouslySetInnerHTML={{ __html: safeReview }} className="user-review-text" />
       </div>
-    </>
+      {createdAt && (
+        <p className="users-review-time">{dayjs(createdAt).fromNow()}</p>
+      )}
+      {safeReview && (
+        <div
+          dangerouslySetInnerHTML={{ __html: safeReview }}
+          className="user-review-text"
+        />
+      )}
+    </article>
   );
 }
