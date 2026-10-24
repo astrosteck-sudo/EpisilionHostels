@@ -1,16 +1,15 @@
 import "./SiteFooter.css";
 import { NavLink, useNavigate } from "react-router-dom";
 import {
-  House,
-  HouseFill,
-
+  ChatDots,
+  ChatDotsFill,
+  HouseDoor,
+  HouseDoorFill,
+  InfoCircle,
+  InfoCircleFill,
   Person,
   PersonFill,
-
-  People,
-  PeopleFill,
-  
-  Robot,
+  Stars,
 } from "react-bootstrap-icons";
 
 export function MobileNavButtons() {
@@ -18,107 +17,79 @@ export function MobileNavButtons() {
   const managerToken = localStorage.getItem("managerToken");
   const navigate = useNavigate();
   const profileLink = managerToken ? "/hostelManagerPage" : "/userProfilePage";
-  function handleUserLoggedIn(e) {
-    e.preventDefault();
-    if (token) {
-      navigate("/userProfilePage");
-      return;
-    } else if (managerToken) {
-      navigate("/hostelManagerPage");
-      return;
-    }
-    if (!token || !managerToken) {
+
+  function handleProfileClick(event) {
+    if (!token && !managerToken) {
+      event.preventDefault();
       navigate("/login");
-      return;
     }
   }
-  // Custom Solid Robot component
-  function RobotFill({ className }) {
-    return (
-      <svg
-        xmlns="http://w3.org"
-        viewBox="0 0 24 24"
-        className={className}
-        fill="currentColor" /* Inherits your CSS color instantly */
-        width="24"
-        height="24"
-      >
-        <path d="M12 2C7.5 2 6 5.5 6 10c0 4.5 1.5 8 6 10s6-3.5 6-8c0-4.5-1.5-8-6-8z" />
 
-        <circle cx="9.5" cy="9.5" r="1.5" fill="#ffffff" />
-        <circle cx="14.5" cy="9.5" r="1.5" fill="#ffffff" />
-
-        <path d="M9 14h6v1.5H9z" fill="#ffffff" />
-      </svg>
-    );
-  }
   return (
-    <>
-      <section className="mobile-nav-buttons">
-        <NavLink className="mobile-nav-button" to="/">
-          {({ isActive }) => (
-            <>
-              {/* 2. Swap the component instantly based on active route state */}
-              {isActive ? (
-                <HouseFill className="nav-icon active-style" />
-              ) : (
-                <House className="nav-icon" />
-              )}
+    <nav className="mobile-nav-buttons" aria-label="Mobile primary navigation">
 
-              <p>About Us</p>
-            </>
-          )}
-        </NavLink>
+      <NavLink className="mobile-nav-button" to="/" end>
+        {({ isActive }) => (
+          <>
+            <span className="mobile-nav-button__icon" aria-hidden="true">
+              {isActive ? <HouseDoorFill /> : <HouseDoor />}
+            </span>
+            <span className="mobile-nav-button__label">Home</span>
+          </>
+        )}
+      </NavLink>
 
-        <NavLink className="mobile-nav-button" to="/aboutus">
-          {({ isActive }) => (
-            <>
-              {/* 2. Swap the component instantly based on active route state */}
-              {isActive ? (
-                <PeopleFill className="nav-icon active-style" />
-              ) : (
-                <People className="nav-icon" />
-              )}
+      <NavLink className="mobile-nav-button" to="/aboutus" end>
+        {({ isActive }) => (
+          <>
+            <span className="mobile-nav-button__icon" aria-hidden="true">
+              {isActive ? <InfoCircleFill /> : <InfoCircle />}
+            </span>
+            <span className="mobile-nav-button__label">About Us</span>
+          </>
+        )}
+      </NavLink>
 
-              <p>About Us</p>
-            </>
-          )}
-        </NavLink>
+      <NavLink
+        className={({ isActive }) =>
+          `mobile-nav-button mobile-nav-button--profile${isActive ? " active" : ""}`
+        }
+        to={profileLink}
+        onClick={handleProfileClick}
+        end
+        aria-label="Profile"
+      >
+        {({ isActive }) => (
+          <>
+            <span className="mobile-nav-profile-icon" aria-hidden="true">
+              {isActive ? <PersonFill /> : <Person />}
+            </span>
+            <span className="mobile-nav-button__label">Profile</span>
+          </>
+        )}
+      </NavLink>
 
-        <NavLink className="mobile-nav-button" to="/askepisilion">
-          {({ isActive }) => (
-            <>
-              {/* 2. Swap the component instantly based on active route state */}
-              {isActive ? (
-                <Robot className="nav-icon active-style" />
-              ) : (
-                <Robot className="nav-icon" />
-              )}
+      <NavLink className="mobile-nav-button" to="/askepisilion" end>
+        {({ isActive }) => (
+          <>
+            <span className="mobile-nav-button__icon" aria-hidden="true">
+              {isActive ? <ChatDotsFill /> : <ChatDots />}
+            </span>
+            <span className="mobile-nav-button__label">Ask Episilion</span>
+          </>
+        )}
+      </NavLink>
 
-              <p>Episilion</p>
-            </>
-          )}
-        </NavLink>
-
-        <NavLink
-          className="mobile-nav-button"
-          onClick={handleUserLoggedIn}
-          to={profileLink}
-        >
-          {({ isActive }) => (
-            <>
-              {/* 2. Swap the component instantly based on active route state */}
-              {isActive ? (
-                <PersonFill className="nav-icon active-style" />
-              ) : (
-                <Person className="nav-icon" />
-              )}
-
-              <p>Profile</p>
-            </>
-          )}
-        </NavLink>
-      </section>
-    </>
+      <NavLink className="mobile-nav-button" to="/morefromus" end>
+        {() => (
+          <>
+            <span className="mobile-nav-button__icon" aria-hidden="true">
+              <Stars />
+            </span>
+            <span className="mobile-nav-button__label">More From Us</span>
+          </>
+        )}
+      </NavLink>
+    </nav>
   );
 }

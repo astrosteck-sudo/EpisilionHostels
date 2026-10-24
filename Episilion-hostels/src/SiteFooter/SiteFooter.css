@@ -459,77 +459,157 @@
    Mobile bottom navigation
    ========================================================================== */
 
-@media only screen and (min-width: 601px) {
+@media only screen and (min-width: 861px) {
   .mobile-nav-buttons {
     display: none;
   }
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 860px) {
+  #root {
+    padding-bottom: calc(88px + env(safe-area-inset-bottom));
+  }
+
   .mobile-nav-buttons {
     position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
     z-index: 2000;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    background-color: rgba(255, 255, 255, 0.95);
-    -webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(10px);
-    box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.06);
-    border-top: 1px solid rgba(0, 0, 0, 0.04);
-    height: calc(65px + env(safe-area-inset-bottom));
-    padding-bottom: env(safe-area-inset-bottom);
-    padding-left: 1rem;
-    padding-right: 1rem;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    align-items: end;
+    height: calc(78px + env(safe-area-inset-bottom));
+    padding: 6px max(8px, env(safe-area-inset-right))
+      calc(6px + env(safe-area-inset-bottom))
+      max(8px, env(safe-area-inset-left));
+    border-top: 1px solid rgba(225, 234, 228, 0.94);
+    background: rgba(255, 255, 255, 0.97);
+    box-shadow: 0 -8px 28px rgba(20, 53, 38, 0.09);
+    -webkit-backdrop-filter: blur(18px);
+    backdrop-filter: blur(18px);
     box-sizing: border-box;
   }
 
   .mobile-nav-button {
     display: flex;
-    align-items: center;
     flex-direction: column;
+    align-items: center;
     justify-content: center;
+    min-width: 0;
+    min-height: 62px;
+    gap: 4px;
+    padding: 3px 1px;
+    border-radius: 14px;
     text-decoration: none;
-    color: black;
-  }
-
-  .mobile-nav-buttons p {
-    font-family: OutfitLight;
-    font-size: 13px;
-  }
-
-  .nav-icon {
-    width: 24px;
-    height: 24px;
-    color: #555555;
+    color: #68776e;
+    -webkit-tap-highlight-color: transparent;
     transition:
       color 0.2s ease,
+      background-color 0.2s ease,
       transform 0.2s ease;
   }
 
-  .mobile-nav-button .nav-icon {
-    width: 24px;
-    height: 24px;
-    color: #555555;
-    transition: color 0.2s ease;
+  .mobile-nav-button:hover {
+    color: #075a3f;
   }
 
-  .mobile-nav-button p {
-    margin: 4px 0 0 0;
-    font-size: 0.75rem;
-    color: #555555;
+  .mobile-nav-button:focus-visible {
+    outline: 2px solid #006948;
+    outline-offset: 1px;
   }
 
-  .mobile-nav-button.active p {
-    color: #1e8234;
-    font-weight: 600;
+  .mobile-nav-button__icon {
+    display: grid;
+    width: 25px;
+    height: 25px;
+    flex: 0 0 25px;
+    place-items: center;
+    color: currentColor;
   }
 
-  .nav-icon.active-style {
-    color: #1e8234 !important;
+  .mobile-nav-button__icon svg {
+    width: 19px;
+    height: 19px;
+  }
+
+  .mobile-nav-button__label {
+    display: flex;
+    width: 100%;
+    min-height: 20px;
+    align-items: center;
+    justify-content: center;
+    color: currentColor;
+    font-family: OutfitMedium, sans-serif;
+    font-size: clamp(9px, 2.65vw, 10px);
+    line-height: 1.05;
+    text-align: center;
+  }
+
+  .mobile-nav-button.active {
+    color: #075a3f;
+  }
+
+  .mobile-nav-button.active .mobile-nav-button__label {
+    font-family: OutfitSemiBold, sans-serif;
+  }
+
+  .mobile-nav-button--profile {
+    z-index: 1;
+    gap: 2px;
+    transform: translateY(-10px);
+  }
+
+  .mobile-nav-profile-icon {
+    display: grid;
+    width: 52px;
+    height: 52px;
+    flex: 0 0 52px;
+    place-items: center;
+    border: 4px solid #ffffff;
+    border-radius: 50%;
+    background: #006948;
+    box-shadow: 0 5px 14px rgba(0, 105, 72, 0.2);
+    color: #ffffff;
+    transition:
+      box-shadow 0.2s ease,
+      transform 0.2s ease;
+  }
+
+  .mobile-nav-profile-icon svg {
+    width: 21px;
+    height: 21px;
+  }
+
+  .mobile-nav-button--profile.active .mobile-nav-profile-icon {
+    box-shadow:
+      0 0 0 2px #a5d5bb,
+      0 5px 14px rgba(0, 105, 72, 0.2);
+  }
+
+  .mobile-nav-button--profile .mobile-nav-button__label {
+    min-height: 14px;
+  }
+}
+
+@media only screen and (max-width: 360px) {
+  .mobile-nav-buttons {
+    padding-right: 5px;
+    padding-left: 5px;
+  }
+
+  .mobile-nav-button {
+    gap: 2px;
+  }
+
+  .mobile-nav-button__label {
+    font-size: 9px;
+  }
+
+  .mobile-nav-profile-icon {
+    width: 48px;
+    height: 48px;
+    flex-basis: 48px;
   }
 }
 
@@ -542,7 +622,9 @@
   .site-footer__link,
   .site-footer__link-arrow,
   .site-footer__newsletter,
-  .site-footer__newsletter-button {
+  .site-footer__newsletter-button,
+  .mobile-nav-button,
+  .mobile-nav-profile-icon {
     transition: none;
   }
 }
