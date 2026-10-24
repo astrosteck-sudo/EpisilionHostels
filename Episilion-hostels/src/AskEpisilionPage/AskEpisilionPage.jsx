@@ -1,6 +1,4 @@
-import { Link } from "react-router-dom";
-import { SiteFooter } from "../SiteFooter/SiteFooter";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./AskEpisilion.css";
 import { useState, useEffect } from "react";
 import axios from "axios";
@@ -10,7 +8,24 @@ import { initializePayment } from "../services/paymentService";
 import { buildHostelSlug } from "../UTILS/slugFunctions.js";
 import { authHeaders } from "../UTILS/authHeaders";
 
-import { Robot, Send, LightbulbFill, Building } from "react-bootstrap-icons";
+import {
+  ArrowRight,
+  Building,
+  ChatDots,
+  ClockHistory,
+  LightbulbFill,
+  Robot,
+  Send,
+  ShieldCheck,
+  Stars,
+  X,
+} from "react-bootstrap-icons";
+
+const STARTER_PROMPTS = [
+  "Show me hostels near UPSA under GH₵2,000",
+  "I need a female hostel with Wi-Fi",
+  "Which hostels have a private bathroom?",
+];
 
 export function AskEpisilionPage({ isLoggedIn }) {
   const [userSearchInput, setUserSearchInput] = useState(""); //THIS IS TO TRACK THE USER INPUT IN THE SEARCH BAR
@@ -27,6 +42,21 @@ export function AskEpisilionPage({ isLoggedIn }) {
   //THIS IS TO TRACK THE LOADING STATE OF THE AI RESPONSE
   const [isLoading, setIsLoading] = useState(false);
   const url = "https://episilionhostels.onrender.com"; //THIS IS THE URL FOR THE BACKEND, THIS IS USED TO ACCESS THE IMAGES IN THE PUBLIC FOLDER OF THE BACKEND
+  const isSubscribed = Boolean(userSubcriptionInfo?.subscription?.subscribed);
+  const requestLimit = isSubscribed ? 15 : 3;
+  const requestRemaining = Number(
+    isSubscribed ? aiSubscriptionRemaining : remainingRequests,
+  );
+  const safeRequestRemaining = Math.min(
+    requestLimit,
+    Math.max(0, Number.isFinite(requestRemaining) ? requestRemaining : 0),
+  );
+  const isLowOnRequests = !isSubscribed && safeRequestRemaining <= 1;
+  const hasNoRequests = !isSubscribed && safeRequestRemaining === 0;
+  const usagePercent = Math.min(
+    100,
+    Math.max(0, (safeRequestRemaining / requestLimit) * 100),
+  );
 
   //const [userCautionText, setUserCautionText] = useState(true)
   const navigate = useNavigate();
@@ -45,7 +75,7 @@ export function AskEpisilionPage({ isLoggedIn }) {
 
   //This hook scrolls to the bottom whenever chatMessages updates.
   useEffect(() => {
-    const messagesDiv = document.querySelector(".messages");
+    const messagesDiv = document.querySelector(".assistant-messages");
     if (messagesDiv) {
       messagesDiv.scrollTop = messagesDiv.scrollHeight;
     }
@@ -167,14 +197,9 @@ export function AskEpisilionPage({ isLoggedIn }) {
 
   //Allow sending with Enter key
   function handleKeyDown(event) {
-    //event.preventDefault(); // Prevents the default behavior of the Enter key (like adding a new line)
-    //THIS RETURNS THE USER WHEN THE USER IS NOT LOGGED IN
-    if (event.key === "Enter") {
-      if (!isLoggedIn) {
-        navigate("/login");
-      } else {
-        sendMessage();
-      }
+    if (event.key === "Enter" && !event.shiftKey) {
+      event.preventDefault();
+      sendMessage();
     }
   }
   //THIS IS TO EXTRACT THE USER IMFORMATION FROM THE TOKEN
@@ -227,233 +252,360 @@ export function AskEpisilionPage({ isLoggedIn }) {
   }, [aiSubscriptionRemaining]);
 
   useEffect(() => {
-    function handleClick(event) {
-      if (
-        !event.target.closest(".epsilion-wrapper-one") &&
-        !event.target.closest(".topbar .menu-btn")
-      ) {
-        setOpen(false);
-      }
+    if (!open) return undefined;
+    function handleEscape(event) {
+      if (event.key === "Escape") setOpen(false);
     }
-
-    document.addEventListener("click", handleClick);
-    return () => document.removeEventListener("click", handleClick);
-  }, [setOpen]);
+    document.addEventListener("keydown", handleEscape);
+    return () => document.removeEventListener("keydown", handleEscape);
+  }, [open]);
 
   return (
-    <>
-      <div className="main-epsilion-container">
-        <div className={`epsilion-wrapper-one ${open ? "open" : ""}`}>
-          <div className="sidebar-header">
-            <button className="close-btn" onClick={() => setOpen(false)}>
-              ✕
+    <main className="ask-assistant-page">
+      <div className="ask-assistant-layout">
+        <aside
+          className={`ask-assistant-sidebar${open ? " is-open" : ""}`}
+          aria-label="Assistant plan and usage"
+        >
+          <div className="assistant-sidebar-brand">
+            <div className="assistant-sidebar-brand-icon" aria-hidden="true">
+              <Robot />
+            </div>
+            <div>
+              <p>EPISILION AI</p>
+              <span>Your hostel guide</span>
+            </div>
+            <button
+              className="assistant-sidebar-close"
+              type="button"
+              onClick={() => setOpen(false)}
+              aria-label="Close assistant details"
+            >
+              <X />
             </button>
           </div>
-          <div className="ask-episilion-page-header-AI-description sidebar">
-            <p>Ask Episilion</p>
-            <p>AI powered hostel assistant</p>
-          </div>
-          <p className="your-usage-text">YOUR USAGE</p>
-          <div
-            className={`user-AI-usage-container ${!userSubcriptionInfo?.subscription?.subscribed ? "" : "no-opacity"}`}
-          >
-            <p className="free-request-text">
-              Free Request{" "}
-              <span className="user-number-request-left">
-                {remainingRequests}/3 left
-              </span>
+
+          <div className="assistant-sidebar-intro">
+            <span className="assistant-eyebrow">MADE FOR YOUR NEXT MOVE</span>
+            <h2>A better way to find your place.</h2>
+            <p>
+              Tell Episilion what matters to you. We’ll help you explore
+              hostels that fit your student life.
             </p>
-            <p className="upgrade-text">Upgrade for 15 request/day</p>
           </div>
-          {userSubcriptionInfo?.subscription?.subscribed && (
-            <div className="user-AI-usage-container-subscription">
-              <p className="free-request-text">
-                Free Request{" "}
-                <span className="user-number-request-left">
-                  {aiSubscriptionRemaining}/15 left
-                </span>
+
+          <section className="assistant-usage-card" aria-label="Daily request usage">
+            <div className="assistant-usage-heading">
+              <span className="assistant-usage-icon" aria-hidden="true">
+                <ClockHistory />
+              </span>
+              <div>
+                <span className="assistant-card-kicker">YOUR PLAN</span>
+                <strong>{isSubscribed ? "Premium access" : "Free access"}</strong>
+              </div>
+            </div>
+            <p className="assistant-usage-count">
+              <strong>{safeRequestRemaining}</strong>
+              <span> / {requestLimit} requests left today</span>
+            </p>
+            <div
+              className="assistant-usage-track"
+              role="progressbar"
+              aria-label="Daily requests remaining"
+              aria-valuemin="0"
+              aria-valuemax={requestLimit}
+              aria-valuenow={safeRequestRemaining}
+            >
+              <span style={{ width: `${usagePercent}%` }} />
+            </div>
+            <p className="assistant-usage-caption">
+              {isSubscribed
+                ? "Your daily searches refresh each day."
+                : "Upgrade for 15 AI hostel searches each day."}
+            </p>
+          </section>
+
+          {!isSubscribed ? (
+            <section
+              className={`assistant-premium-card${isLowOnRequests ? " is-low-credits" : ""}${hasNoRequests ? " is-out-of-credits" : ""}`}
+            >
+              <span className="assistant-premium-icon" aria-hidden="true">
+                <Stars />
+              </span>
+              <p className="assistant-premium-kicker">
+                {hasNoRequests
+                  ? "NO FREE SEARCHES LEFT"
+                  : isLowOnRequests
+                    ? "ONE FREE SEARCH LEFT"
+                    : "MORE ROOM TO EXPLORE"}
               </p>
-              <p className="upgrade-text">Upgraded Access</p>
-            </div>
-          )}
-
-          {userSubcriptionInfo?.subscription?.subscribed ? (
-            ""
-          ) : (
-            <div className="premuim-access-container">
-              <p>Unlock Full Access</p>
-              <p>Get 15 AI request per day for just GHS 10/month</p>
-              <button className="upgrade-now-button" onClick={handleSubscribe}>
-                Upgrade Now
+              <h3>
+                {hasNoRequests
+                  ? "Keep your hostel search moving."
+                  : "Find your fit, without the limit."}
+              </h3>
+              <p className="assistant-premium-copy">
+                {hasNoRequests
+                  ? "Upgrade for 15 AI hostel searches each day for GH₵10/month."
+                  : "Get up to 15 AI requests a day for GH₵10/month."}
+              </p>
+              <button
+                className="assistant-premium-button"
+                type="button"
+                onClick={handleSubscribe}
+              >
+                {hasNoRequests ? "Unlock 15 daily searches" : "Upgrade access"}
+                <ArrowRight aria-hidden="true" />
               </button>
+            </section>
+          ) : (
+            <div className="assistant-plan-note">
+              <ShieldCheck aria-hidden="true" />
+              <span>Your premium plan is active</span>
             </div>
           )}
-        </div>
-
-        <div className={`epsilion-wrapper-two ${open ? "shift" : ""}`}>
-          <div className="topbar">
-            <button className="menu-btn" onClick={() => setOpen(true)}>
-              ☰
-            </button>
-            <div className="ask-episilion-page-header">
-              <Robot className="ask-episilion-page-header-robot-image" />
-              {/* <img
-                src={robotImage}
-                className="ask-episilion-page-header-robot-image"
-              /> */}
-              <div className="ask-episilion-page-header-AI-description">
-                <p>Episilion AI</p>
-                <p>Online • Powered By Open AI • Hostel Specialist</p>
-              </div>
-            </div>
+          <div className="assistant-sidebar-footnote">
+            <ShieldCheck aria-hidden="true" />
+            <span>Helpful guidance for your hostel search</span>
           </div>
+        </aside>
 
-          <div className="messages">
-            <div className="episilion-message-and-bot-conatainer">
-              <Robot className="ask-episilion-robot-image" />
-              <div className="episilion-message">
-                <p className="ask-episilion-message-first-Paragraph">
-                  Hi {!isLoggedIn ? "student" : user?.name || "student"}! 👋 How
-                  can I help you today?
-                </p>
-                <p className="ask-episilion-message-second-Paragraph">
-                  I'm your Epislion AI assistant - ask me anything about
-                  hostels, prices, amenities, or locations near your campus.
-                  I'll find the best options for you.
-                </p>
-                <p className="ask-episilion-message-third-Paragraph">
-                  <LightbulbFill className="ask-episilion-light-bulb" />
-                  Tip: Keep questions short and direct for the most accurate
-                  answers
+        {open && (
+          <button
+            className="assistant-sidebar-backdrop"
+            type="button"
+            aria-label="Close assistant details"
+            onClick={() => setOpen(false)}
+          />
+        )}
+
+        <section className="ask-assistant-main" aria-label="Ask Episilion chat">
+          <header className="assistant-topbar">
+            <div className="assistant-topbar-identity">
+              <button
+                className="assistant-sidebar-toggle"
+                type="button"
+                onClick={() => setOpen(true)}
+                aria-label="Open assistant plan and usage"
+                aria-expanded={open}
+              >
+                <ChatDots aria-hidden="true" />
+              </button>
+              <div className="assistant-topbar-avatar" aria-hidden="true">
+                <Robot />
+                <span />
+              </div>
+              <div className="assistant-topbar-copy">
+                <h1>Ask Episilion</h1>
+                <p>
+                  <span className="assistant-online-dot" />
+                  Your AI hostel specialist
                 </p>
               </div>
             </div>
-            {/*Map over chatMessages array to render each bubble */}
+            <div className="assistant-topbar-actions">
+              <div
+                className={`assistant-requests-pill${isLowOnRequests ? " is-low-credits" : ""}`}
+                aria-label={`${safeRequestRemaining} of ${requestLimit} AI requests left today`}
+              >
+                <ClockHistory aria-hidden="true" />
+                <span>
+                  {safeRequestRemaining} / {requestLimit}{" "}
+                  <small>today</small>
+                </span>
+              </div>
+              {!isSubscribed && (
+                <button
+                  className="assistant-topbar-upgrade"
+                  type="button"
+                  onClick={handleSubscribe}
+                >
+                  <Stars aria-hidden="true" />
+                  <span>Upgrade</span>
+                </button>
+              )}
+            </div>
+          </header>
+
+          <div className="assistant-messages" aria-live="polite">
+            {chatMessages.length === 0 && (
+              <div className="assistant-welcome">
+                <span className="assistant-welcome-mark" aria-hidden="true">
+                  <Robot />
+                </span>
+                <span className="assistant-welcome-eyebrow">
+                  YOUR UPSA HOSTEL SPECIALIST
+                </span>
+                <h2>
+                  Hi {isLoggedIn ? user?.name || "there" : "there"}, let’s find
+                  your next home.
+                </h2>
+                <p className="assistant-welcome-copy">
+                  Ask about location, budget, amenities, or the kind of place
+                  you have in mind. I’ll help you narrow it down.
+                </p>
+                <div className="assistant-starter-heading">
+                  <LightbulbFill aria-hidden="true" />
+                  <span>Try asking</span>
+                </div>
+                <div className="assistant-starter-prompts">
+                  {STARTER_PROMPTS.map((prompt) => (
+                    <button
+                      key={prompt}
+                      type="button"
+                      onClick={() => setUserSearchInput(prompt)}
+                    >
+                      {prompt}
+                      <ArrowRight aria-hidden="true" />
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Render the saved conversation and matched hostels. */}
             {chatMessages.map((chat, index) => (
               <div
-                key={index}
-                className={
-                  chat.sender === "user" ? "user-message" : "episilion-message"
-                }
+                key={`${chat.sender}-${index}`}
+                className={`assistant-message-row${chat.sender === "user" ? " is-user" : ""}`}
               >
-                {chat.type === "episilionResults" ? (
-                  <div className="epi-ai-response">
-                    <div className="epi-ai-response-head">
-                      <span
-                        className="epi-ai-response-bar"
-                        aria-hidden="true"
-                      />
-                      <p className="epi-ai-response-header">{chat.header}</p>
-                    </div>
-
-                    {Array.isArray(chat.message) ? (
-                      <>
-                        <div className="epi-hostel-grid">
-                          {chat.message.map((hostel) => (
-                            <Link
-                              key={hostel.id}
-                              type="button"
-                              className="epi-hostel-card"
-                              to={`/hostels/${buildHostelSlug(hostel)}`}
-                            >
-                              <div className="epi-hostel-info">
-                                <div className="epi-hostel-thumb">
-                                  {hostel.image ? (
-                                    <img
-                                      loading="lazy"
-                                      src={url + hostel.image}
-                                      alt={hostel.name}
-                                    />
-                                  ) : (
-                                    <Building className="epi-hostel-thumb-fallback" />
-                                  )}
-                                </div>
-
-                                <div className="epi-hostel-text">
-                                  <p className="epi-hostel-name">
-                                    {hostel.name}
-                                  </p>
-                                  <p className="epi-hostel-meta">
-                                    {hostel.gender || "Mixed"} ·{" "}
-                                    {hostel.location || "Near campus"}
-                                  </p>
-                                  <p className="epi-hostel-price">
-                                    <span>
-                                      GH₵{Number(hostel.price).toLocaleString()}
-                                    </span>
-                                    <small>/sem</small>
-                                  </p>
-                                </div>
-                              </div>
-
-                              <span className="epi-hostel-cta">
-                                View
-                                <svg
-                                  width="12"
-                                  height="12"
-                                  viewBox="0 0 24 24"
-                                  fill="none"
-                                  aria-hidden="true"
-                                >
-                                  <path
-                                    d="M5 12h14M13 6l6 6-6 6"
-                                    stroke="currentColor"
-                                    strokeWidth="2.4"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                  />
-                                </svg>
-                              </span>
-                            </Link>
-                          ))}
-                        </div>
-
-                        <p className="epi-ai-response-note">
-                          {chat.message.length} hostel
-                          {chat.message.length === 1 ? "" : "s"} matched your
-                          request
-                        </p>
-                      </>
-                    ) : (
-                      <p className="epi-ai-response-text">{chat.message}</p>
-                    )}
-                  </div>
-                ) : (
-                  chat.message
+                {chat.sender !== "user" && (
+                  <span className="assistant-message-avatar" aria-hidden="true">
+                    <Robot />
+                  </span>
                 )}
+                <div
+                  className={`assistant-chat-bubble${chat.sender === "user" ? " is-user" : ""}${chat.type === "error" ? " is-error" : ""}${chat.type === "episilionResults" ? " has-results" : ""}`}
+                >
+                  {chat.type === "episilionResults" ? (
+                    <div className="epi-ai-response">
+                      <div className="epi-ai-response-head">
+                        <span
+                          className="epi-ai-response-bar"
+                          aria-hidden="true"
+                        />
+                        <p className="epi-ai-response-header">{chat.header}</p>
+                      </div>
+
+                      {Array.isArray(chat.message) ? (
+                        <>
+                          <div className="epi-hostel-grid">
+                            {chat.message.map((hostel) => (
+                              <Link
+                                key={hostel.id}
+                                className="epi-hostel-card"
+                                to={`/hostels/${buildHostelSlug(hostel)}`}
+                              >
+                                <div className="epi-hostel-info">
+                                  <div className="epi-hostel-thumb">
+                                    {hostel.image ? (
+                                      <img
+                                        loading="lazy"
+                                        src={url + hostel.image}
+                                        alt={hostel.name}
+                                      />
+                                    ) : (
+                                      <Building className="epi-hostel-thumb-fallback" />
+                                    )}
+                                  </div>
+
+                                  <div className="epi-hostel-text">
+                                    <p className="epi-hostel-name">
+                                      {hostel.name}
+                                    </p>
+                                    <p className="epi-hostel-meta">
+                                      {hostel.gender || "Mixed"} ·{" "}
+                                      {hostel.location || "Near campus"}
+                                    </p>
+                                    <p className="epi-hostel-price">
+                                      <span>
+                                        GH₵{Number(hostel.price).toLocaleString()}
+                                      </span>
+                                      <small>/sem</small>
+                                    </p>
+                                  </div>
+                                </div>
+
+                                <span className="epi-hostel-cta">
+                                  View hostel
+                                  <ArrowRight aria-hidden="true" />
+                                </span>
+                              </Link>
+                            ))}
+                          </div>
+
+                          <p className="epi-ai-response-note">
+                            {chat.message.length} hostel
+                            {chat.message.length === 1 ? "" : "s"} matched your
+                            request
+                          </p>
+                        </>
+                      ) : (
+                        <p className="epi-ai-response-text">{chat.message}</p>
+                      )}
+                    </div>
+                  ) : (
+                    <p className="assistant-message-copy">{chat.message}</p>
+                  )}
+                </div>
               </div>
             ))}
 
             {isLoading && (
-              <div className="ask-episilion-loader-container">
-                <div className="ask-episilion-loader active"></div>
+              <div className="assistant-message-row">
+                <span className="assistant-message-avatar" aria-hidden="true">
+                  <Robot />
+                </span>
+                <div className="assistant-typing" role="status">
+                  <span />
+                  <span />
+                  <span />
+                  <span className="assistant-sr-only">Episilion is replying</span>
+                </div>
               </div>
             )}
           </div>
 
-          <div className="ask-episilion-search-conatainer">
-            <div className="ask-episilion-search-bar">
+          <form
+            className="assistant-composer-area"
+            onSubmit={(event) => {
+              event.preventDefault();
+              sendMessage();
+            }}
+          >
+            <div className="assistant-composer">
               <textarea
-                className="ask-episilion-input-box"
+                id="assistant-message-input"
+                className="assistant-composer-input"
                 onChange={searchInput}
                 onKeyDown={handleKeyDown}
                 value={userSearchInput}
-                placeholder="Ask about hostels, pricing, and amenities.."
+                placeholder="Ask about hostels, prices, amenities…"
+                aria-label="Message Episilion AI"
+                rows={1}
               />
               <button
-                className="ask-episilion-search-button"
-                onClick={sendMessage}
+                className="assistant-send-button"
+                type="submit"
+                disabled={!userSearchInput.trim() || isLoading}
+                aria-label="Send message"
               >
-                <Send className="send-image-epislion" />
+                <Send aria-hidden="true" />
               </button>
             </div>
-            <div className="ask-epislion-warning-message">
-              Episilion AI can make mistakes. Always verify hostels details
-              before booking
-            </div>
-          </div>
-        </div>
+            <p className="assistant-composer-note">
+              <ShieldCheck aria-hidden="true" />
+              <span>
+                Episilion AI can make mistakes. Confirm hostel details before
+                booking.
+              </span>
+              <span className="assistant-composer-shortcut">
+                <kbd>Enter</kbd> to send · <kbd>Shift + Enter</kbd> for a new line
+              </span>
+            </p>
+          </form>
+        </section>
       </div>
-    </>
+    </main>
   );
 }

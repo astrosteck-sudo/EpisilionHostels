@@ -82,6 +82,7 @@ function App() {
     "/signup",
     "/oauthsuccess",
     "/oautherror",
+    "/askepisilion",
   ].includes(location.pathname);
 
   // Scroll to top on route change
