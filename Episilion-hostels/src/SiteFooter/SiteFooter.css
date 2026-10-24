@@ -426,7 +426,7 @@
 
 @media only screen and (max-width: 600px) {
   .site-footer {
-    margin-bottom: 65px;
+    margin-bottom: 0px;
   }
 
   .site-footer__inner {

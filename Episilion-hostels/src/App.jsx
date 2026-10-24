@@ -25,6 +25,7 @@ import { buildHostelSlug } from "./UTILS/slugFunctions.js";
 import { CampusLandingPage } from "./CampusLandingPage/CampusLandingPage.jsx";
 import { NotFoundPage } from "./NotFoundPage/NotFoundPage.jsx";
 import { Helmet } from "react-helmet-async";
+import "./AppLoading.css";
 
 function LegacyHostelRedirect({ originalHostelCardData }) {
   const [searchParams] = useSearchParams();
@@ -114,12 +115,49 @@ function App() {
           </script>
         </Helmet>
 
-        <div className={`loader-container ${loading ? "open" : "close"}`}>
-          <div className="loading-animation-conatainer">
-            <div className="loader"></div>
-          </div>
+        <div
+          className="site-loader"
+          role="status"
+          aria-live="polite"
+          aria-label="Loading Episilion Hostels"
+        >
+          <div className="site-loader__ambient site-loader__ambient--top" aria-hidden="true" />
+          <div className="site-loader__ambient site-loader__ambient--bottom" aria-hidden="true" />
 
-          <p className="shimmmer">EPISILION LOADING</p>
+          <div className="site-loader__card">
+            <div className="site-loader__brand">
+              <span className="site-loader__brand-mark">
+                <img src="/episilion_logo.svg" alt="" />
+              </span>
+              <span className="site-loader__brand-name">EPISILION</span>
+              <span className="site-loader__brand-caption">HOSTELS NEAR UPSA</span>
+            </div>
+
+            <div className="site-loader__visual" aria-hidden="true">
+              <span className="site-loader__orbit site-loader__orbit--outer" />
+              <span className="site-loader__orbit site-loader__orbit--inner" />
+              <span className="site-loader__orbit-dot" />
+              <span className="site-loader__visual-glow" />
+              <img src="/episilion_logo.svg" alt="" />
+            </div>
+
+            <div className="site-loader__message">
+              <p className="site-loader__eyebrow">YOUR NEXT CHAPTER</p>
+              <h1>Finding a place to feel at home.</h1>
+              <p className="site-loader__description">
+                Getting student stays around UPSA ready for you.
+              </p>
+            </div>
+
+            <div className="site-loader__progress" aria-hidden="true">
+              <span />
+            </div>
+
+            <p className="site-loader__status">
+              <span />
+              Preparing your hostel listings
+            </p>
+          </div>
         </div>
       </>
     );
