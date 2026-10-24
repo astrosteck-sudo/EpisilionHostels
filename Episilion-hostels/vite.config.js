@@ -50,6 +50,7 @@ export default defineConfig(async () => {
         rendererOptions: {
           renderAfterDocumentEvent: "app-ready",
           timeout: 30000,
+          skipThirdPartyRequests: true,
           headless: true,
           launchOptions,
           consoleHandler: (route, message) => {

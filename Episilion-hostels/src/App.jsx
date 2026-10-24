@@ -46,13 +46,15 @@ function App() {
 
   const loadHostelsCard = async () => {
     try {
-      const response = await axios.get("/api/hostels");
+      const response = await axios.get("/api/hostels", { timeout: 20000 });
       sethostelsCardData(response.data);
       setOriginalHostelCardData(response.data);
     } catch (error) {
       console.error("HOSTEL FETCH ERROR:", error);
       sethostelsCardData([]);
       setOriginalHostelCardData([]);
+    } finally {
+      setLoading(false);
     }
   };
   useEffect(() => {
@@ -92,13 +94,13 @@ function App() {
   }, [location.pathname]);
 
   useEffect(() => {
-    if (hostelsCardData?.length > 0) {
-      setLoading(false);
+    if (!loading) {
       // Tells the prerender renderer the real page has loaded â€”
-      // without this, it would snapshot the "EPISILION LOADING" screen instead.
+      // after hostel data resolves or the request fails, so prerendering
+      // cannot wait indefinitely on the backend.
       document.dispatchEvent(new Event("app-ready"));
     }
-  }, [hostelsCardData]);
+  }, [loading]);
 
   if (loading) {
     return (
