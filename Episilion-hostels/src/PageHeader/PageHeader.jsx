@@ -1,21 +1,15 @@
 import "./PageHeader.css";
-import HamburgerButton from "../assets/icons/hamburger-button-4.png";
 import { Link } from "react-router-dom";
-import { NavLink, useNavigate } from "react-router-dom";
-import { useState, useEffect, useRef } from "react";
-//import profilePicture from "../assets/icons/user.png";
-import downArrow from "../assets/icons/down-arrow.png";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { useState, useEffect, useRef, useCallback } from "react";
+import { ArrowRight, ChevronDown } from "react-bootstrap-icons";
 import userPopImage from "../assets/icons/user4.png";
-//import userPopFavoriteImage from "../assets/icons/star-black-fivepointed-shape-symbol.png";
 import userPopLogOutImage from "../assets/icons/logout.png";
 import dashboardImage from "../assets/icons/dashboard.png";
 import passwordImage from "../assets/icons/shield.png";
-//import managerProfileIcon from "../assets/icons/user-profile-icon.png";
 import { getInitials } from "../UTILS/initials";
 
 export function PageHeader({
-  navlink,
-  // setNavLink,
   originalHostelCardData,
   sethostelsCardData,
   setHostelFound,
@@ -29,10 +23,12 @@ export function PageHeader({
   setShowManagerLogoutModal,
 }) {
   const navigate = useNavigate();
+  const location = useLocation();
   const [openUserPopUpMenu, setOpenUserPopUpMenu] = useState(false);
   const [openManangerPopUpMenu, setOenManangerPopUpMenu] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
+  const user = JSON.parse(localStorage.getItem("user") || "null");
 
   const handleLogout = () => {
     console.log("logout clicked");
@@ -57,37 +53,41 @@ export function PageHeader({
   }
 
 
-  const user = JSON.parse(localStorage.getItem("user"));
-  // console.log(user)
-
   function handleDisplayUserPopUpMenu() {
-    if (openUserPopUpMenu) {
-      setOpenUserPopUpMenu(false);
-    } else {
-      setOpenUserPopUpMenu(true);
-    }
+    setOpenUserPopUpMenu((isOpen) => !isOpen);
   }
   useEffect(() => {
     function handleClick(event) {
       if (
         !event.target.closest(".user-option-pop-up-container") &&
-        !event.target.closest(".header-section")
+        !event.target.closest(".user-button-pill-container")
       ) {
         setOpenUserPopUpMenu(false);
+      }
+      if (
+        !event.target.closest(".manager-option-pop-up") &&
+        !event.target.closest(".hostel-manager-pill-container")
+      ) {
+        setOenManangerPopUpMenu(false);
       }
     }
 
     document.addEventListener("click", handleClick);
     return () => document.removeEventListener("click", handleClick);
-  }, [setOpenUserPopUpMenu]);
+  }, []);
 
   function handleManagerDisplayPopUpMenu() {
-    if (openManangerPopUpMenu) {
-      setOenManangerPopUpMenu(false);
-    } else {
-      setOenManangerPopUpMenu(true);
-    }
+    setOenManangerPopUpMenu((isOpen) => !isOpen);
   }
+
+  const closeNavigation = useCallback(() => {
+    setOpenUserPopUpMenu(false);
+    setOenManangerPopUpMenu(false);
+  }, []);
+
+  useEffect(() => {
+    closeNavigation();
+  }, [location.pathname, closeNavigation]);
 
   // Use a ref instead of state to track scroll position across renders
   // without triggering listener rebuilds
@@ -123,180 +123,199 @@ export function PageHeader({
   //onClick={() => setShowLogoutModal(true)}
   return (
     <>
-      <section
+      <header
         className={`header-section ${scrolled ? "scrolled" : ""} ${
           hidden ? "hidden" : ""
         }`}
       >
-        <Link className="episilion" to="/" onClick={resetValues}>
-          <img src="/episilion_logo.svg" alt="" className="episilion-logo" />
-          <p>EPISILION HOSTELS</p>
-        </Link>
+        <div className="header-shell">
+          <Link
+            className="episilion"
+            to="/"
+            onClick={() => {
+              resetValues();
+              closeNavigation();
+            }}
+            aria-label="Episilion Hostels home"
+          >
+            <span className="episilion-logo-wrap">
+              <img src="/episilion_logo.svg" alt="" className="episilion-logo" />
+            </span>
+            <span className="episilion-wordmark">
+              <strong>EPISILION</strong>
+              <small>HOSTELS NEAR UPSA</small>
+            </span>
+          </Link>
 
-        <nav className={`navigation-links ${navlink ? "active" : ""}`}>
-          <div className="navigation-links-pages">
-            <NavLink className="link about-us-link" to="/">
-              Home
-            </NavLink>
-            <NavLink className="link about-us-link" to="/aboutus">
-              About Us
-            </NavLink>
-            <NavLink className="link ask-episilion" to="/askepisilion">
-              Ask Episilion
-            </NavLink>
-            <NavLink className="link more-from-us" to="/morefromus">
-              More From Us
-            </NavLink>
-          </div>
-        </nav>
-
-        {managerIsLoggedIn ? (
-          <>
-            <div className="hostel-manager-pill-container">
-              <div
-                className="hostel-manager-pill"
-                onClick={handleManagerDisplayPopUpMenu}
+          <nav
+            className="navigation-links"
+            id="primary-navigation"
+            aria-label="Main navigation"
+          >
+            <div className="navigation-links-pages">
+              <NavLink
+                className="link about-us-link"
+                to="/"
+                end
+                onClick={closeNavigation}
               >
-                <svg
-                  xmlns="http://w3.org"
-                  viewBox="0 0 24 24"
-                  width="44"
-                  height="44"
-                >
-                  <circle cx="12" cy="12" r="11" fill="rgb(0 105 72 / 0.1)" />
-
-                  <circle cx="12" cy="9.5" r="2.2" fill="#006644" />
-
-                  <path
-                    d="M7.5 17c0-2.2 1.8-4 4.5-4s4.5 1.8 4.5 4"
-                    fill="none"
-                    stroke="#006644"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                  />
-                </svg>
-
-                <p>Manager</p>
-              </div>
-
-              <div
-                className={`manager-option-pop-up ${openManangerPopUpMenu ? "open" : "close"}`}
+                Home
+              </NavLink>
+              <NavLink
+                className="link about-us-link"
+                to="/aboutus"
+                onClick={closeNavigation}
               >
-                <div>
-                  <img
-                    src={dashboardImage}
-                    className="user-option-pop-up-images"
-                  />
-                  <Link
-                    className="user-profile-page-link"
-                    to="/hostelManagerPage"
-                  >
-                    <p>Manager dashboard</p>
-                  </Link>
-                </div>
-
-                <div>
-                  <img
-                    src={passwordImage}
-                    className="user-option-pop-up-images"
-                  />
-                  <Link
-                    className="user-profile-page-link"
-                    to="/changePasswordPage"
-                  >
-                    <p>Change Password</p>
-                  </Link>
-                </div>
-
-                {/* <div onClick={() => setShowManagerLogoutModal(true)}>
-                  <img
-                    src={userPopLogOutImage}
-                    className="user-option-pop-up-images"
-                  />
-                  <p>Log Out</p>
-                </div> */}
-              </div>
+                About Us
+              </NavLink>
+              <NavLink
+                className="link ask-episilion"
+                to="/askepisilion"
+                onClick={closeNavigation}
+              >
+                Ask Episilion
+              </NavLink>
+              <NavLink
+                className="link more-from-us"
+                to="/morefromus"
+                onClick={closeNavigation}
+              >
+                More From Us
+              </NavLink>
             </div>
-          </>
-        ) : null}
+          </nav>
 
-        {isLoggedIn ? (
-          <div>
-            <div
-              className="user-button-pill-container"
-              onClick={handleDisplayUserPopUpMenu}
-            >
-              <button className="user-button-pill">
-                <div>
-                  <div className="user-button-pill-initials">
-                    {getInitials(user?.name)}
+          <div className="header-account-actions">
+              {managerIsLoggedIn && (
+                <div className="hostel-manager-pill-container">
+                  <button
+                    className="hostel-manager-pill"
+                    type="button"
+                    aria-expanded={openManangerPopUpMenu}
+                    aria-haspopup="true"
+                    onClick={handleManagerDisplayPopUpMenu}
+                  >
+                    <span className="manager-avatar" aria-hidden="true">M</span>
+                    <span>Manager</span>
+                    <ChevronDown aria-hidden="true" />
+                  </button>
+
+                  <div
+                    className={`manager-option-pop-up ${openManangerPopUpMenu ? "open" : "close"}`}
+                  >
+                    <Link
+                      className="manager-menu-link"
+                      to="/hostelManagerPage"
+                      onClick={closeNavigation}
+                    >
+                      <img
+                        src={dashboardImage}
+                        className="user-option-pop-up-images"
+                        alt=""
+                      />
+                      <span>Manager dashboard</span>
+                      <ArrowRight aria-hidden="true" />
+                    </Link>
+
+                    <Link
+                      className="manager-menu-link"
+                      to="/changePasswordPage"
+                      onClick={closeNavigation}
+                    >
+                      <img
+                        src={passwordImage}
+                        className="user-option-pop-up-images"
+                        alt=""
+                      />
+                      <span>Change password</span>
+                      <ArrowRight aria-hidden="true" />
+                    </Link>
                   </div>
                 </div>
-                {user?.name}
-                <img src={downArrow} alt="" className="user-pill-down-arrow" />
-              </button>
-            </div>
+              )}
 
-            <div
-              className={`user-option-pop-up-container ${openUserPopUpMenu ? "open" : "close"}`}
-            >
-              <div className="user-option-pop-up-name-and-email-container">
-                <p>{user.name}</p>
-                <p className="user-option-pop-up-email">{user.email}</p>
-              </div>
-              <div className="user-option-pop-up-profile-container">
-                <img src={userPopImage} className="user-option-pop-up-images" />
-                <Link className="user-profile-page-link" to="userProfilePage">
-                  <p>My Profile</p>
-                </Link>
-              </div>
-              {/* <div className="user-option-pop-up-favorite-container">
-                  <img
-                    src={userPopFavoriteImage}
-                    className="user-option-pop-up-images"
-                  />
-                  <p>My Favorites</p>
-                </div> */}
-              <div
-                className="user-option-pop-up-logout-container logout"
-                onClick={() => setShowLogoutModal(true)}
-              >
-                <img
-                  src={userPopLogOutImage}
-                  className="user-option-pop-up-images"
-                />
-                <p>Log Out </p>
-              </div>
-            </div>
-          </div>
-        ) : (
-          <div
-            className={`login-systems ${managerIsLoggedIn ? "close-login-sytems" : ""}`}
-          >
-            <Link className="login-link" to="/login">
-              <svg
-                xmlns="http://w3.org"
-                viewBox="0 0 24 24"
-                width="24"
-                height="24"
-                fill="none"
-                stroke="#006644"
-                strokeWidth="2.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <line x1="3" y1="12" x2="16" y2="12" />
-                <polyline points="11 7 16 12 11 17" />
+              {isLoggedIn ? (
+                <div className="user-button-pill-container">
+                  <button
+                    className="user-button-pill"
+                    type="button"
+                    aria-expanded={openUserPopUpMenu}
+                    aria-haspopup="true"
+                    onClick={handleDisplayUserPopUpMenu}
+                  >
+                    <span className="user-button-pill-initials">
+                      {getInitials(user?.name)}
+                    </span>
+                    <span className="user-button-pill-name">
+                      {user?.name || "My account"}
+                    </span>
+                    <ChevronDown
+                      className="user-pill-down-arrow"
+                      aria-hidden="true"
+                    />
+                  </button>
 
-                <path d="M16 4h3v16h-3" />
-              </svg>
-              <p>Login</p>
-            </Link>
-            <Link to="/signup" className="signUp-link">
-              Sign Up
-            </Link>
+                  <div
+                    className={`user-option-pop-up-container ${openUserPopUpMenu ? "open" : "close"}`}
+                  >
+                    <div className="user-option-pop-up-name-and-email-container">
+                      <p>{user?.name || "My account"}</p>
+                      {user?.email && (
+                        <p className="user-option-pop-up-email">{user.email}</p>
+                      )}
+                    </div>
+                    <Link
+                      className="user-option-pop-up-profile-container"
+                      to="/userProfilePage"
+                      onClick={closeNavigation}
+                    >
+                      <img
+                        src={userPopImage}
+                        className="user-option-pop-up-images"
+                        alt=""
+                      />
+                      <span>My Profile</span>
+                      <ArrowRight aria-hidden="true" />
+                    </Link>
+                    <button
+                      className="user-option-pop-up-logout-container logout"
+                      type="button"
+                      onClick={() => {
+                        closeNavigation();
+                        setShowLogoutModal(true);
+                      }}
+                    >
+                      <img
+                        src={userPopLogOutImage}
+                        className="user-option-pop-up-images"
+                        alt=""
+                      />
+                      <span>Log Out</span>
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <div
+                  className={`login-systems ${managerIsLoggedIn ? "close-login-sytems" : ""}`}
+                >
+                  <Link
+                    className="login-link"
+                    to="/login"
+                    onClick={closeNavigation}
+                  >
+                    Log in <ArrowRight aria-hidden="true" />
+                  </Link>
+                  <Link
+                    to="/signup"
+                    className="signUp-link"
+                    onClick={closeNavigation}
+                  >
+                    Sign up
+                  </Link>
+                </div>
+              )}
           </div>
-        )}
+        </div>
 
         {showLogoutModal && (
           <div
@@ -343,7 +362,7 @@ export function PageHeader({
             </div>
           </div>
         )}
-      </section>
+      </header>
     </>
   );
 }
