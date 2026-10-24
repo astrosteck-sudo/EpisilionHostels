@@ -49,6 +49,26 @@ For a production build:
 npm run build
 ```
 
+### Production prerendering and SEO
+
+The production build generates the sitemap and hostel route list from the live
+hostel API, then uses Puppeteer to prerender the configured public routes into
+HTML. This gives search engines route-specific page content and metadata rather
+than only the client-side app shell.
+
+During prerendering, third-party network requests are skipped to avoid waiting
+on external services such as embedded maps. Same-origin API requests are still
+allowed. The app waits up to 20 seconds for the hostel API before completing
+its loading state and notifying the prerenderer that the page is ready. The
+prerenderer also has a 25-second fallback so a missing ready event cannot fail
+the entire deployment.
+
+Hostel detail pages can only be prerendered with their listing content when the
+hostel API is reachable and returns data during the build. If the API is
+unavailable or times out, the app can finish rendering without that data, so
+the fallback may capture the page before its listing data is available. Check
+the build logs and generated hostel pages if SEO output looks incomplete.
+
 There is no `.env.example` file in this frontend repository at the moment, so the app currently does not define any frontend environment variables in source control. If your local environment requires backend URLs or API configuration, those values need to be added in a local `.env` file outside the repo or in your deployment settings.
 
 ## Project structure

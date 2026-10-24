@@ -49,6 +49,7 @@ export default defineConfig(async () => {
         renderer: "@prerenderer/renderer-puppeteer",
         rendererOptions: {
           renderAfterDocumentEvent: "app-ready",
+          renderAfterTime: 25000,
           timeout: 30000,
           skipThirdPartyRequests: true,
           headless: true,
