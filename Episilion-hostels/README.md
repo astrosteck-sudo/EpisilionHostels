@@ -56,12 +56,15 @@ hostel API, then uses Puppeteer to prerender the configured public routes into
 HTML. This gives search engines route-specific page content and metadata rather
 than only the client-side app shell.
 
-During prerendering, third-party network requests are skipped to avoid waiting
-on external services such as embedded maps. Same-origin API requests are still
-allowed. The app waits up to 20 seconds for the hostel API before completing
-its loading state and notifying the prerenderer that the page is ready. The
-prerenderer also has a 25-second fallback so a missing ready event cannot fail
-the entire deployment.
+During prerendering, two routes are processed at a time to limit browser and
+memory pressure on build containers. Chromium is configured to avoid relying
+on `/dev/shm`, which can be limited in CI environments. Third-party network
+requests are skipped to avoid waiting on external services such as embedded
+maps; same-origin API requests are still allowed. The app waits up to 20
+seconds for the hostel API before completing its loading state and notifying
+the prerenderer that the page is ready. The prerenderer also has a 25-second
+fallback after navigation so a missing ready event cannot fail the entire
+deployment.
 
 Hostel detail pages can only be prerendered with their listing content when the
 hostel API is reachable and returns data during the build. If the API is

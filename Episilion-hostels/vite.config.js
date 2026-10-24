@@ -26,7 +26,7 @@ export default defineConfig(async () => {
   if (process.env.VERCEL) {
     const chromium = (await import("@sparticuz/chromium")).default;
     launchOptions = {
-      args: chromium.args,
+      args: [...chromium.args, "--disable-dev-shm-usage"],
       executablePath: await chromium.executablePath(),
     };
   }
@@ -48,6 +48,8 @@ export default defineConfig(async () => {
         },
         renderer: "@prerenderer/renderer-puppeteer",
         rendererOptions: {
+          maxConcurrentRoutes: 2,
+          args: ["--disable-dev-shm-usage"],
           renderAfterDocumentEvent: "app-ready",
           renderAfterTime: 25000,
           timeout: 30000,
@@ -55,7 +57,10 @@ export default defineConfig(async () => {
           headless: true,
           launchOptions,
           consoleHandler: (route, message) => {
-            console.log(`[Puppeteer] [${route}]`, message.text());
+            const sourceUrl = message.location()?.url;
+            console.log(
+              `[Puppeteer] [${route}] ${message.type()}: ${message.text()}${sourceUrl ? ` (${sourceUrl})` : ""}`,
+            );
           },
         },
       }),
