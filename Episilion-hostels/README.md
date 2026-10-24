@@ -72,6 +72,40 @@ unavailable or times out, the app can finish rendering without that data, so
 the fallback may capture the page before its listing data is available. Check
 the build logs and generated hostel pages if SEO output looks incomplete.
 
+### Adding features without destabilizing builds
+
+The latest successful Vercel deployment completed its Vite build in about 49
+seconds (54 seconds total) with an initial JavaScript bundle of about 708 kB
+minified (211 kB gzip). Vite reported that this chunk exceeds its 500 kB
+warning threshold. This warning is not itself a build failure: the deployment
+completed successfully. Treat the current bundle size and build time as a
+baseline to monitor as features are added, rather than assuming bundle size
+caused the earlier prerender timeouts.
+
+For each significant feature:
+
+1. Check whether the feature needs to load on the initial page. For heavy,
+   route-specific screens or optional interactions, consider React
+   `lazy()`/dynamic imports so their code is downloaded only when needed.
+2. Prefer existing dependencies and import only the icons, assets, and
+   components the feature uses. Avoid adding a large dependency for a small
+   piece of functionality.
+3. Run `npm run build` and compare the reported JavaScript/CSS chunk sizes and
+   build duration with the baseline. Investigate a growing initial chunk or a
+   new warning; do not just raise Vite's warning limit to hide the increase.
+4. If code splitting affects public pages, inspect the generated HTML for
+   representative static and hostel routes. Confirm route-specific content
+   and SEO metadata are still present, and that prerendering still completes.
+5. Review the complete deployment log. A chunk-size warning is distinct from a
+   failed build; for failures, identify the first actual error and whether it
+   occurred during route navigation, app readiness, or asset loading before
+   changing prerender settings.
+
+Keep the prerender route concurrency and readiness behavior conservative.
+Changes to route loading, API timing, or prerender timeouts must be checked
+against generated hostel pages so a faster build does not silently remove
+listing content needed for search indexing.
+
 There is no `.env.example` file in this frontend repository at the moment, so the app currently does not define any frontend environment variables in source control. If your local environment requires backend URLs or API configuration, those values need to be added in a local `.env` file outside the repo or in your deployment settings.
 
 ## Project structure
