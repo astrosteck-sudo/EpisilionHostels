@@ -35,6 +35,30 @@ const themeOptions = [
     swatch: "#b797f7",
   },
   {
+    id: "ocean",
+    name: "Ocean Breeze",
+    mood: "Cool, clear, and coastal",
+    swatch: "#57aee0",
+  },
+  {
+    id: "lavender",
+    name: "Lavender Haze",
+    mood: "A softer kind of daydream",
+    swatch: "#a77ce0",
+  },
+  {
+    id: "sunset",
+    name: "Sunset Glow",
+    mood: "Warm tones, golden hour",
+    swatch: "#ed9565",
+  },
+  {
+    id: "forest",
+    name: "Forest Calm",
+    mood: "Grounded in nature",
+    swatch: "#72a776",
+  },
+  {
     id: "original",
     name: "Original Episilion",
     mood: "The look you know",
